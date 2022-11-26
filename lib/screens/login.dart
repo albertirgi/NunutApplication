@@ -55,7 +55,9 @@ class _LoginPageState extends State<LoginPage> {
               NunutButton(
                 title: "Masuk",
                 widthButton: 200,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/main');
+                },
               ),
               SizedBox(height: 16),
               Row(
