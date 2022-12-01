@@ -6,13 +6,13 @@ import 'package:nunut_application/widgets/nunutText.dart';
 
 class NunutBubbleChat extends StatelessWidget {
   final String text;
-  final String? timeSent;
+  final String timeSent;
   final bool isSender;
 
   const NunutBubbleChat({
     super.key,
     required this.text,
-    this.timeSent,
+    required this.timeSent,
     this.isSender = true,
   });
 
@@ -24,12 +24,12 @@ class NunutBubbleChat extends StatelessWidget {
       children: [
         isSender
             ? NunutText(
-                title: "12:00",
+                title: timeSent,
                 size: 10,
                 color: Colors.grey,
               )
             : BubbleSpecialThree(
-                text: 'bubble special three with tail',
+                text: text,
                 color: nunutPrimaryColor,
                 tail: true,
                 textStyle: GoogleFonts.poppins(
@@ -40,10 +40,9 @@ class NunutBubbleChat extends StatelessWidget {
                 ),
                 isSender: false,
               ),
-
         isSender
             ? BubbleSpecialThree(
-                text: 'bubble special three with tail',
+                text: text,
                 color: Colors.white,
                 tail: true,
                 textStyle: GoogleFonts.poppins(
@@ -54,27 +53,10 @@ class NunutBubbleChat extends StatelessWidget {
                 ),
               )
             : NunutText(
-                title: "12:00",
+                title: timeSent,
                 size: 10,
                 color: Colors.grey,
               ),
-
-        // NunutText(
-        //   title: "12:00",
-        //   size: 10,
-        //   color: Colors.grey,
-        // ),
-        // BubbleSpecialThree(
-        //   text: 'bubble special three with tail',
-        //   color: Colors.white,
-        //   tail: true,
-        //   textStyle: GoogleFonts.poppins(
-        //     textStyle: TextStyle(
-        //       color: Colors.black,
-        //       fontSize: 14,
-        //     ),
-        //   ),
-        // ),
       ],
     );
   }
