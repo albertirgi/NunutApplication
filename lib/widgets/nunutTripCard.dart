@@ -4,16 +4,34 @@ import 'package:flutter/material.dart';
 import 'package:image_stack/image_stack.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
-class nunutTripCard extends StatelessWidget {
+import 'package:nunut_application/widgets/nunutText.dart';
+
+class NunutTripCard extends StatelessWidget {
   final List<String> images;
   final Widget? popupWidget;
-  nunutTripCard({
+  final String date;
+  final String totalPerson;
+  final String time;
+  final String carName;
+  final String plateNumber;
+  final String pickupLocation;
+  final String destination;
+  final bool isActive;
+
+  NunutTripCard({
     Key? key,
     required this.images,
     this.popupWidget,
+    required this.date,
+    required this.totalPerson,
+    required this.time,
+    required this.carName,
+    required this.plateNumber,
+    required this.pickupLocation,
+    required this.destination,
+    this.isActive = false,
   }) : super(key: key);
 
-  
   final GlobalKey widgetKey = GlobalKey();
 
   CustomPointedPopup getCustomPointedPopup(BuildContext context) {
@@ -27,12 +45,11 @@ class nunutTripCard extends StatelessWidget {
 
       ///you can also add border radius
       ////popupBorderRadius:,
-      item: CustomPointedPopupItem(
-        itemWidget: popupWidget ?? SizedBox()
+      item: CustomPointedPopupItem(itemWidget: popupWidget ?? SizedBox()
 
-        ///Or you can add custom item widget below instead above 3
-        ///itemWidget: Container(),
-      ),
+          ///Or you can add custom item widget below instead above 3
+          ///itemWidget: Container(),
+          ),
       onClickWidget: (onClickMenu) {
         print('popup item clicked');
       },
@@ -56,33 +73,35 @@ class nunutTripCard extends StatelessWidget {
         children: [
           Container(
             width: 350,
-            height: 220,
+            height: 230,
             child: Column(
               children: [
                 Container(
                   padding: EdgeInsets.only(top: 16, left: 16, right: 16),
+                  margin: EdgeInsets.only(bottom: 16),
                   child: Column(
                     children: [
                       Row(
                         children: [
-                          Text("Senin, 24 Oktober 2022"),
+                          NunutText(title: date, fontWeight: FontWeight.bold),
                           Spacer(),
                           Icon(Icons.person, size: 18),
                           SizedBox(width: 3),
-                          Text("3"),
+                          NunutText(title: totalPerson),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 8),
                       Row(
                         children: [
-                          Text("08.00"),
+                          NunutText(title: time, size: 28, fontWeight: FontWeight.bold),
                           SizedBox(width: 3),
-                          Text("WIB"),
+                          NunutText(title: "WIB", fontWeight: FontWeight.bold),
                           Spacer(),
                           Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Text("Toyota Innova"),
-                              Text("B 1234 ABC"),
+                              NunutText(title: carName, fontWeight: FontWeight.w500, size: 14),
+                              NunutText(title: plateNumber, fontWeight: FontWeight.w500, size: 14),
                             ],
                           )
                         ],
@@ -113,7 +132,7 @@ class nunutTripCard extends StatelessWidget {
                               Container(
                                 height: 40.0,
                                 child: Center(
-                                  child: Text("Galaxy Mall"),
+                                  child: NunutText(title: pickupLocation),
                                 ),
                               ),
                               SizedBox(height: 2),
@@ -122,7 +141,7 @@ class nunutTripCard extends StatelessWidget {
                                 margin: EdgeInsets.only(top: 4.0),
                                 child: Row(
                                   children: [
-                                    Text("Universitas Kristen Petra"),
+                                    NunutText(title: destination),
                                   ],
                                 ),
                               ),
@@ -156,17 +175,21 @@ class nunutTripCard extends StatelessWidget {
                         Text("+3 more"),
                         SizedBox(width: 8),
                         InkWell(
-                          key: widgetKey,
-                          onTap: () {
-                            getCustomPointedPopup(context)
-                            ..show(
-                              widgetKey: widgetKey,
-                            );
-                          },
-                          child: Icon(Icons.keyboard_arrow_down, size: 18)
-                        ),
+                            key: widgetKey,
+                            onTap: () {
+                              getCustomPointedPopup(context)
+                                ..show(
+                                  widgetKey: widgetKey,
+                                );
+                            },
+                            child: Icon(Icons.keyboard_arrow_down, size: 18)),
                         Spacer(),
-                        Text("ingin membatalkan?", style: TextStyle(fontSize: 10, decoration: TextDecoration.underline)),
+                        isActive
+                            ? Container(
+                                margin: EdgeInsets.only(top: 5),
+                                child: NunutText(title: "ingin membatalkan?", size: 10, textDecoration: TextDecoration.underline),
+                              )
+                            : Container(),
                       ],
                     ),
                   ),
@@ -175,17 +198,20 @@ class nunutTripCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 155,
-            left: 217.5,
+            top: 170,
+            left: 210,
             child: NunutButton(
-              title: "BERANGKAT",
+              title: isActive ? "BERANGKAT" : "SELESAI",
               backgroundColor: Colors.black,
               textColor: Colors.white,
-              textSize: 12,
+              textSize: 14,
               onPressed: () {},
-              iconButton: Icon(Icons.verified, size: 16,),
-              widthButton: 125,
-              heightButton: 25,
+              iconButton: Icon(
+                Icons.verified,
+                size: 16,
+              ),
+              widthButton: 130,
+              heightButton: 30,
             ),
           ),
         ],
