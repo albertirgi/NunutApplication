@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nunut_application/widgets/couponCard.dart';
+import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutCard.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:nunut_application/widgets/nunutTripCard.dart';
@@ -31,10 +32,21 @@ class _HomePageState extends State<HomePage> {
               margin: EdgeInsets.all(16),
               borderRadius: 16,
               content: Column(
-                children: [
-                  
-                ],
+                children: [],
               ),
+            ),
+            SizedBox(height: 50),
+            NunutButton(
+              title: "Booking Detail",
+              onPressed: () {
+                Navigator.pushNamed(context, '/bookingDetail');
+              },
+            ),
+            NunutButton(
+              title: "Promotion List",
+              onPressed: () {
+                Navigator.pushNamed(context, '/promotionList');
+              },
             ),
           ],
         ),
