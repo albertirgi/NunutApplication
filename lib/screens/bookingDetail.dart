@@ -101,8 +101,11 @@ class BookingDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black),
+        elevation: 0,
+        toolbarHeight: 100,
         centerTitle: true,
-        title: NunutText(title: "Booking Nunut #1234"),
+        title: NunutText(title: "Booking Nunut #1234", fontWeight: FontWeight.bold),
         backgroundColor: nunutPrimaryColor,
       ),
       body: SafeArea(
@@ -166,13 +169,17 @@ class BookingDetail extends StatelessWidget {
               },
               borderRadius: 8,
               widthBorder: 0,
+              borderColor: Colors.transparent,
+              fontWeight: FontWeight.bold,
             ),
             SizedBox(height: 16),
             NunutButton(
               title: "Ada Masalah?",
+              fontWeight: FontWeight.bold,
               onPressed: () {},
               borderRadius: 8,
               widthBorder: 0,
+              borderColor: Colors.transparent,
               backgroundColor: Colors.grey[300],
             ),
           ],

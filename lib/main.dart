@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:nunut_application/screens/bookingDetail.dart';
 import 'package:nunut_application/screens/login.dart';
 import 'package:nunut_application/screens/mainScreen.dart';
+import 'package:nunut_application/screens/orderList.dart';
+import 'package:nunut_application/screens/promotionDetail.dart';
 import 'package:nunut_application/screens/promotionList.dart';
 import 'package:nunut_application/screens/splashscreen.dart';
 
@@ -21,7 +23,9 @@ class MyApp extends StatelessWidget {
         '/main': (context) => const MainPage(),
         '/login': (context) => const LoginPage(),
         '/bookingDetail': (context) => const BookingDetail(),
-        '/promotionList': (context) => const PromotionList()
+        '/promotionList': (context) => const PromotionList(),
+        '/promotionDetail': (context) => const PromotionDetail(),
+        '/orderList': (context) => const OrderList(),
       },
     );
   }

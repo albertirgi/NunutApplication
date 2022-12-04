@@ -14,7 +14,7 @@ class NunutText extends StatelessWidget {
     required this.title,
     this.color = Colors.black,
     this.size = 16,
-    this.maxLines = 2,
+    this.maxLines = 999,
     this.fontWeight = FontWeight.normal,
     this.textDecoration = TextDecoration.none,
   });

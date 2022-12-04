@@ -94,6 +94,9 @@ class PromotionList extends StatelessWidget {
                       labelStyle: new TextStyle(
                         color: const Color(0xFF424242),
                       ),
+                      hintStyle: TextStyle(
+                        color: Colors.grey,
+                      ),
                     ),
                   ),
                 ),
@@ -103,7 +106,7 @@ class PromotionList extends StatelessWidget {
                   onPressed: () {},
                   widthButton: 115,
                   heightButton: 40,
-                  borderRadius: 0,
+                  borderRadius: 8,
                 ),
               ],
             ),
@@ -152,16 +155,20 @@ class PromotionList extends StatelessWidget {
               vertical: 16,
             ),
             itemBuilder: (context, index) {
-              return CouponCard(
-                imagePath:
-                    "https://t3.ftcdn.net/jpg/03/54/26/10/360_F_354261018_RD5YEbufu7Yjck3SNiRC6yfJLZoxIegZ.jpg",
-                date: NunutText(
-                  title: "28 Januari 2022",
-                  fontWeight: FontWeight.bold,
-                ),
-                minTransaction: NunutText(
-                  title: "Rp. 15.000",
-                  fontWeight: FontWeight.bold,
+              return InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, "/promotionDetail");
+                },
+                child: CouponCard(
+                  imagePath: "https://t3.ftcdn.net/jpg/03/54/26/10/360_F_354261018_RD5YEbufu7Yjck3SNiRC6yfJLZoxIegZ.jpg",
+                  date: NunutText(
+                    title: "28 Januari 2022",
+                    fontWeight: FontWeight.bold,
+                  ),
+                  minTransaction: NunutText(
+                    title: "Rp. 15.000",
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               );
             },

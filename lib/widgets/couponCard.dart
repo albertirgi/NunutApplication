@@ -6,6 +6,7 @@ class CouponCard extends StatelessWidget {
   final String imagePath;
   final Widget date;
   final Widget minTransaction;
+  final bool useBorder;
 
   const CouponCard({
     super.key,
@@ -13,18 +14,23 @@ class CouponCard extends StatelessWidget {
     required this.imagePath,
     required this.date,
     required this.minTransaction,
+    this.useBorder = true,
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: BorderSide(
-          color: Colors.black,
-          width: 2.0,
-        ),
-      ),
+      shape: useBorder
+          ? RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+              side: BorderSide(
+                color: Colors.black,
+                width: 1.5,
+              ),
+            )
+          : null,
+      elevation: 0.0,
+      color: useBorder ? Colors.white : Colors.transparent,
       child: Column(
         children: [
           Container(

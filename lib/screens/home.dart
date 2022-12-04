@@ -48,6 +48,12 @@ class _HomePageState extends State<HomePage> {
                 Navigator.pushNamed(context, '/promotionList');
               },
             ),
+            NunutButton(
+              title: "Order List",
+              onPressed: () {
+                Navigator.pushNamed(context, '/orderList');
+              },
+            )
           ],
         ),
       ),

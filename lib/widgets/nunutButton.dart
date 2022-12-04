@@ -5,6 +5,7 @@ import 'package:nunut_application/widgets/nunutText.dart';
 class NunutButton extends StatelessWidget {
   final String title;
   final Color? backgroundColor;
+  final Color? borderColor;
   final Color textColor;
   final Icon? iconButton;
   final double textSize;
@@ -12,8 +13,10 @@ class NunutButton extends StatelessWidget {
   final double widthButton;
   final double heightButton;
   final double borderRadius;
+  final double elevation;
   final Function() onPressed;
   final EdgeInsets margin;
+  final FontWeight fontWeight;
 
   const NunutButton({
     super.key,
@@ -28,6 +31,9 @@ class NunutButton extends StatelessWidget {
     this.textSize = 16.0,
     this.widthBorder = 1.0,
     this.borderRadius = 24.0,
+    this.borderColor = Colors.black,
+    this.elevation = 0.0,
+    this.fontWeight = FontWeight.normal,
   });
 
   @override
@@ -45,6 +51,7 @@ class NunutButton extends StatelessWidget {
               title: title,
               color: textColor,
               size: textSize,
+              fontWeight: fontWeight,
             ),
             if (iconButton != null) SizedBox(width: 8),
             if (iconButton != null) iconButton as Widget
@@ -55,10 +62,11 @@ class NunutButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius),
             side: BorderSide(
-              color: Colors.black,
+              color: borderColor!,
               width: widthBorder,
             ),
           ),
+          elevation: elevation,
         ),
       ),
     );
