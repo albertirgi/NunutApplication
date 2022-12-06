@@ -53,7 +53,15 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 Navigator.pushNamed(context, '/orderList');
               },
-            )
+              
+            ),
+            NunutButton(
+              title: "Chats",
+              onPressed: () {
+                Navigator.pushNamed(context, '/chat');
+              },
+              
+            ),
           ],
         ),
       ),
