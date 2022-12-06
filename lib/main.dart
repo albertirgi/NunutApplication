@@ -5,6 +5,7 @@ import 'package:nunut_application/screens/mainScreen.dart';
 import 'package:nunut_application/screens/orderList.dart';
 import 'package:nunut_application/screens/promotionDetail.dart';
 import 'package:nunut_application/screens/promotionList.dart';
+import 'package:nunut_application/screens/register.dart';
 import 'package:nunut_application/screens/splashscreen.dart';
 
 void main() {
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         '/promotionList': (context) => const PromotionList(),
         '/promotionDetail': (context) => const PromotionDetail(),
         '/orderList': (context) => const OrderList(),
+        '/register':(context) => const RegisterPage(),
       },
     );
   }

@@ -20,8 +20,8 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: nunutPrimaryColor,
       body: Center(
         child: Container(
-          margin: EdgeInsets.only(right: 24, left: 24),
-          padding: EdgeInsets.all(16),
+          margin: const EdgeInsets.only(right: 24, left: 24),
+          padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             color: Colors.white,
@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                margin: EdgeInsets.only(top: 24, bottom: 16),
+                margin: const EdgeInsets.only(top: 24, bottom: 16),
                 child: Image.asset(
                   "assets/icon.png",
                   width: 100,
@@ -59,23 +59,23 @@ class _LoginPageState extends State<LoginPage> {
                   Navigator.pushNamed(context, '/main');
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Row(
                 children: [
                   Expanded(
                     flex: 1,
                     child: Container(
-                      margin: EdgeInsets.only(right: 10),
+                      margin: const EdgeInsets.only(right: 10),
                       height: 1.5,
                       width: MediaQuery.of(context).size.width,
                       color: Colors.black,
                     ),
                   ),
-                  NunutText(title: "Atau"),
+                  const NunutText(title: "Atau"),
                   Expanded(
                     flex: 1,
                     child: Container(
-                      margin: EdgeInsets.only(left: 10),
+                      margin: const EdgeInsets.only(left: 10),
                       height: 1.5,
                       width: MediaQuery.of(context).size.width,
                       color: Colors.black,
@@ -83,18 +83,25 @@ class _LoginPageState extends State<LoginPage> {
                   )
                 ],
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               NunutButton(
                 title: "Masuk GOOGLE",
                 widthButton: 200,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/register');
+                },
               ),
-              SizedBox(height: 24),
-              NunutText(
-                title: "Belum punya akun? daftar sekarang",
-                size: 12,
-                color: nunutPrimaryColor,
-              ),
+              const SizedBox(height: 24),
+              InkWell(
+                child: NunutText(
+                  title: "Belum punya akun? daftar sekarang",
+                  size: 12,
+                  color: nunutPrimaryColor,
+                ),
+                onTap: () {
+                  Navigator.pushNamed(context, '/register');
+                },
+              )
             ],
           ),
         ),
