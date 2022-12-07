@@ -17,11 +17,14 @@ class NunutButton extends StatelessWidget {
   final Function() onPressed;
   final EdgeInsets margin;
   final FontWeight fontWeight;
+  final int type;
+  final Function()? onPressedArrowButton;
 
   const NunutButton({
     super.key,
     required this.title,
     required this.onPressed,
+    this.onPressedArrowButton,
     this.widthButton = double.infinity,
     this.heightButton = 55,
     this.margin = EdgeInsets.zero,
@@ -34,6 +37,7 @@ class NunutButton extends StatelessWidget {
     this.borderColor = Colors.black,
     this.elevation = 0.0,
     this.fontWeight = FontWeight.normal,
+    this.type = 1,
   });
 
   @override
@@ -45,7 +49,8 @@ class NunutButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment:
+              type != 1 ? MainAxisAlignment.start : MainAxisAlignment.center,
           children: [
             NunutText(
               title: title,
@@ -53,8 +58,28 @@ class NunutButton extends StatelessWidget {
               size: textSize,
               fontWeight: fontWeight,
             ),
-            if (iconButton != null) SizedBox(width: 8),
-            if (iconButton != null) iconButton as Widget
+            //if (iconButton != null) SizedBox(width: 8),
+            if (iconButton != null) Spacer(),
+            if (iconButton != null) iconButton as Widget,
+            if (type == 2 || type == 3) Spacer(),
+            if (type == 2)
+              InkWell(
+                onTap: onPressedArrowButton,
+                child: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.black,
+                  size: 16,
+                ),
+              ),
+            if (type == 3)
+              InkWell(
+                onTap: onPressedArrowButton,
+                child: Icon(
+                  Icons.keyboard_arrow_down,
+                  color: Colors.black,
+                  size: 16,
+                ),
+              )
           ],
         ),
         style: ElevatedButton.styleFrom(

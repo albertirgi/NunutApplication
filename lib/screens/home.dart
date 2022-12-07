@@ -37,6 +37,40 @@ class _HomePageState extends State<HomePage> {
             ),
             SizedBox(height: 50),
             NunutButton(
+              title: "Promo Berhasil Digunakan",
+              onPressed: () {
+                Navigator.pushNamed(context, '/bookingDetail');
+              },
+              iconButton: Icon(
+                Icons.verified_outlined,
+                color: Colors.green,
+              ),
+              backgroundColor: Colors.white,
+              widthButton: 325,
+              borderRadius: 12,
+              type: 2,
+              onPressedArrowButton: () {
+                print("TEST");
+              },
+              borderColor: Colors.grey[300],
+              elevation: 10,
+            ),
+            NunutButton(
+              title: "Direct Debit",
+              onPressed: () {
+                Navigator.pushNamed(context, '/bookingDetail');
+              },
+              backgroundColor: Colors.white,
+              widthButton: 325,
+              borderRadius: 12,
+              type: 3,
+              onPressedArrowButton: () {
+                print("TEST");
+              },
+              borderColor: Colors.grey[300],
+              elevation: 10,
+            ),
+            NunutButton(
               title: "Booking Detail",
               onPressed: () {
                 Navigator.pushNamed(context, '/bookingDetail');
@@ -53,14 +87,12 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 Navigator.pushNamed(context, '/orderList');
               },
-              
             ),
             NunutButton(
               title: "Chats",
               onPressed: () {
                 Navigator.pushNamed(context, '/chat');
               },
-              
             ),
           ],
         ),
