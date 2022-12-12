@@ -100,6 +100,12 @@ class _HomePageState extends State<HomePage> {
                 Navigator.pushNamed(context, '/payment');
               },
             ),
+            NunutButton(
+              title: "Booking Parkir",
+              onPressed: () {
+                Navigator.pushNamed(context, '/bookingParkir');
+              },
+            ),
           ],
         ),
       ),

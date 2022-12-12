@@ -50,14 +50,17 @@ class _ChatPageState extends State<ChatPage> {
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
-                  return ChatCard(
-                    margin: EdgeInsets.all(5),
-                    name: "Nunut",
-                    chatSpoil: "Halo, apa kabar?",
-                    time: "12:00",
-                    imagePath:
-                        "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiO",
-                    chatCount: 1,
+                  return InkWell(
+                    onTap: () => Navigator.pushNamed(context, '/chatInside'),
+                    child: ChatCard(
+                      margin: EdgeInsets.all(5),
+                      name: "Nunut",
+                      chatSpoil: "Halo, apa kabar?",
+                      time: "12:00",
+                      imagePath:
+                          "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiO",
+                      chatCount: 1,
+                    ),
                   );
                 },
                 itemCount: 5,

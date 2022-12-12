@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nunut_application/screens/bookingDetail.dart';
+import 'package:nunut_application/screens/bookingParkir.dart';
+import 'package:nunut_application/screens/chatInside.dart';
 import 'package:nunut_application/screens/chatPage.dart';
 import 'package:nunut_application/screens/login.dart';
 import 'package:nunut_application/screens/mainScreen.dart';
@@ -31,7 +33,9 @@ class MyApp extends StatelessWidget {
         '/orderList': (context) => const OrderList(),
         '/register': (context) => const RegisterPage(),
         '/chat': (context) => const ChatPage(),
+        '/chatInside': (context) => const ChatInsidePage(),
         '/payment': (context) => const Payment(),
+        '/bookingParkir': (context) => const BookingParkir(),
       },
     );
   }
