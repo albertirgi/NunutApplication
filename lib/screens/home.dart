@@ -94,6 +94,12 @@ class _HomePageState extends State<HomePage> {
                 Navigator.pushNamed(context, '/chat');
               },
             ),
+            NunutButton(
+              title: "Payment",
+              onPressed: () {
+                Navigator.pushNamed(context, '/payment');
+              },
+            ),
           ],
         ),
       ),

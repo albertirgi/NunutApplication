@@ -4,6 +4,7 @@ import 'package:nunut_application/screens/chatPage.dart';
 import 'package:nunut_application/screens/login.dart';
 import 'package:nunut_application/screens/mainScreen.dart';
 import 'package:nunut_application/screens/orderList.dart';
+import 'package:nunut_application/screens/payment.dart';
 import 'package:nunut_application/screens/promotionDetail.dart';
 import 'package:nunut_application/screens/promotionList.dart';
 import 'package:nunut_application/screens/register.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         '/orderList': (context) => const OrderList(),
         '/register': (context) => const RegisterPage(),
         '/chat': (context) => const ChatPage(),
+        '/payment': (context) => const Payment(),
       },
     );
   }
