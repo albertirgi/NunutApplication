@@ -6,6 +6,8 @@ import 'package:nunut_application/screens/chatPage.dart';
 import 'package:nunut_application/screens/login.dart';
 import 'package:nunut_application/screens/mainScreen.dart';
 import 'package:nunut_application/screens/orderList.dart';
+import 'package:nunut_application/screens/parkingList.dart';
+import 'package:nunut_application/screens/parkingSlotDetail.dart';
 import 'package:nunut_application/screens/payment.dart';
 import 'package:nunut_application/screens/promotionDetail.dart';
 import 'package:nunut_application/screens/promotionList.dart';
@@ -36,6 +38,8 @@ class MyApp extends StatelessWidget {
         '/chatInside': (context) => const ChatInsidePage(),
         '/payment': (context) => const Payment(),
         '/bookingParkir': (context) => const BookingParkir(),
+        '/parkingList': (context) => const ParkingList(),
+        '/parkingSlotDetail': (context) => const parkingSpotDetail(),
       },
     );
   }

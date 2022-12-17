@@ -49,13 +49,16 @@ class _BookingParkirState extends State<BookingParkir> {
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
-                  return profileParkingCard(
+                  return InkWell(
+                    onTap: () => Navigator.pushNamed(context, '/parkingList'),
+                    child:profileParkingCard(
                     image:
                         "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiO",
                     title: "Universitas Kristen Petra",
                     subtitle: "Surabaya, Indonesia",
                     count: "5",
                     maxCapacity: "16",
+                    ),
                   );
                 },
                 itemCount: 5,
