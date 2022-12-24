@@ -28,14 +28,14 @@ class _HomePageState extends State<HomePage> {
           children: [
             //nunutTripCard(images: images),
             // CouponCard(),
-            NunutCard(
-              margin: EdgeInsets.all(16),
-              borderRadius: 16,
-              content: Column(
-                children: [],
-              ),
-            ),
-            SizedBox(height: 50),
+            // NunutCard(
+            //   margin: EdgeInsets.all(16),
+            //   borderRadius: 16,
+            //   content: Column(
+            //     children: [],
+            //   ),
+            // ),
+            //SizedBox(height: 50),
             NunutButton(
               title: "Promo Berhasil Digunakan",
               onPressed: () {
@@ -104,6 +104,24 @@ class _HomePageState extends State<HomePage> {
               title: "Booking Parkir",
               onPressed: () {
                 Navigator.pushNamed(context, '/bookingParkir');
+              },
+            ),
+            NunutButton(
+              title: "My Ride",
+              onPressed: () {
+                Navigator.pushNamed(context, '/rideList');
+              },
+            ),
+            NunutButton(
+              title: "Trip History",
+              onPressed: () {
+                Navigator.pushNamed(context, '/tripHistory');
+              },
+            ),
+            NunutButton(
+              title: "QR Code",
+              onPressed: () {
+                Navigator.pushNamed(context, '/qrCode');
               },
             ),
           ],

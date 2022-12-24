@@ -11,8 +11,11 @@ import 'package:nunut_application/screens/parkingSlotDetail.dart';
 import 'package:nunut_application/screens/payment.dart';
 import 'package:nunut_application/screens/promotionDetail.dart';
 import 'package:nunut_application/screens/promotionList.dart';
+import 'package:nunut_application/screens/qrCode.dart';
 import 'package:nunut_application/screens/register.dart';
 import 'package:nunut_application/screens/splashscreen.dart';
+import 'package:nunut_application/screens/rideList.dart';
+import 'package:nunut_application/screens/tripHistory.dart';
 
 void main() {
   runApp(const MyApp());
@@ -40,6 +43,9 @@ class MyApp extends StatelessWidget {
         '/bookingParkir': (context) => const BookingParkir(),
         '/parkingList': (context) => const ParkingList(),
         '/parkingSlotDetail': (context) => const parkingSpotDetail(),
+        '/rideList': (context) => const RideList(),
+        '/tripHistory': (context) => const TripHistory(),
+        '/qrCode': (context) => const QRCode(),
       },
     );
   }
