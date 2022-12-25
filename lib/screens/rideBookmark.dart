@@ -55,8 +55,9 @@ class RideBookmark extends StatelessWidget {
               padding: EdgeInsets.all(16),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                mainAxisSpacing: 50,
+                mainAxisSpacing: 10,
                 crossAxisSpacing: 10,
+                childAspectRatio: 0.65,
               ),
               shrinkWrap: true,
               itemCount: 8,
@@ -67,8 +68,7 @@ class RideBookmark extends StatelessWidget {
                   destination: "UKP",
                   name: "Joko",
                   price: "5000",
-                  imagePath:
-                      "https://images.unsplash.com/photo-1458071103673-6a6e4c4a3413?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+                  imagePath: "https://images.unsplash.com/photo-1458071103673-6a6e4c4a3413?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
                   plateNumber: "L 1390 EQ",
                 );
               },

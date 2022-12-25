@@ -33,14 +33,8 @@ class PromotionDetail extends StatelessWidget {
         children: [
           CouponCard(
             imagePath: "https://t3.ftcdn.net/jpg/03/54/26/10/360_F_354261018_RD5YEbufu7Yjck3SNiRC6yfJLZoxIegZ.jpg",
-            date: NunutText(
-              title: "28 Januari 2022",
-              fontWeight: FontWeight.bold,
-            ),
-            minTransaction: NunutText(
-              title: "Rp. 15.000",
-              fontWeight: FontWeight.bold,
-            ),
+            date: NunutText(title: "28 Januari 2022", fontWeight: FontWeight.bold),
+            minTransaction: NunutText(title: "Rp. 15.000", fontWeight: FontWeight.bold),
             useBorder: false,
           ),
           Container(

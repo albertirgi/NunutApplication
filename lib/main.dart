@@ -15,6 +15,7 @@ import 'package:nunut_application/screens/qrCode.dart';
 import 'package:nunut_application/screens/register.dart';
 import 'package:nunut_application/screens/rideBookDetail.dart';
 import 'package:nunut_application/screens/rideBookmark.dart';
+import 'package:nunut_application/screens/rideShare.dart';
 import 'package:nunut_application/screens/splashscreen.dart';
 import 'package:nunut_application/screens/rideList.dart';
 import 'package:nunut_application/screens/tripHistory.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
         '/qrCode': (context) => const QRCode(),
         '/rideBookDetail': (context) => const RideBookDetail(),
         '/rideBookmark': (context) => const RideBookmark(),
+        '/rideShare': (context) => const rideShare(),
       },
     );
   }

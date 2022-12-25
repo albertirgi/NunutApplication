@@ -27,149 +27,152 @@ class _OrderListState extends State<OrderList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.grey[50],
-        elevation: 0,
-        toolbarHeight: 100,
-        leading: Container(
-          margin: EdgeInsets.only(top: 52),
-          child: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ),
-      ),
       body: SingleChildScrollView(
-        child: Container(
-          margin: EdgeInsets.only(top: 12, left: 28, right: 28),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              BorderedText(
-                child: Text(
-                  "Pesanan",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 32,
+        child: Stack(
+          children: [
+            Align(
+              alignment: Alignment.topCenter,
+              child: Image(
+                image: AssetImage('assets/backgroundCircle/backgroundCircle2.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 40, left: 28, right: 28),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  IconButton(
+                    padding: EdgeInsets.zero,
+                    icon: Icon(Icons.arrow_back, color: Colors.black, size: 18),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
-                ),
-                strokeWidth: 3.0,
-                strokeColor: Colors.black,
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 12, left: 8),
-                width: MediaQuery.of(context).size.width,
-                child: Row(
-                  children: [
-                    //searchbar
-                    Expanded(
-                      child: TextFormField(
-                        controller: searchController,
-                        decoration: InputDecoration(
-                          hintText: "Cari Pesanan",
-                          hintStyle: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
-                          ),
-                          contentPadding: EdgeInsets.only(top: 16, bottom: 16, left: 16),
-                          filled: true,
-                          fillColor: Colors.white,
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(14),
-                              bottomLeft: Radius.circular(14),
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(14),
-                              bottomLeft: Radius.circular(14),
+                  BorderedText(
+                    child: Text(
+                      "Pesanan",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 32,
+                      ),
+                    ),
+                    strokeWidth: 3.0,
+                    strokeColor: Colors.black,
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 12, left: 8),
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      children: [
+                        //searchbar
+                        Expanded(
+                          child: TextFormField(
+                            controller: searchController,
+                            decoration: InputDecoration(
+                              hintText: "Cari Pesanan",
+                              hintStyle: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 14,
+                              ),
+                              contentPadding: EdgeInsets.only(top: 16, bottom: 16, left: 16),
+                              filled: true,
+                              fillColor: Colors.white,
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(14),
+                                  bottomLeft: Radius.circular(14),
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(14),
+                                  bottomLeft: Radius.circular(14),
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                        SizedBox(width: 1),
+                        Container(
+                          height: 50,
+                          width: 60,
+                          child: IconButton(
+                            icon: Icon(Icons.search, color: Colors.white, size: 28),
+                            onPressed: () {},
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(14),
+                              bottomRight: Radius.circular(14),
+                            ),
+                            color: Colors.black,
+                          ),
+                        )
+                      ],
                     ),
-                    SizedBox(width: 1),
-                    Container(
-                      height: 50,
-                      width: 60,
-                      child: IconButton(
-                        icon: Icon(Icons.search, color: Colors.white, size: 28),
-                        onPressed: () {},
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(14),
-                          bottomRight: Radius.circular(14),
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    margin: EdgeInsets.only(top: 12, left: 8, right: 24),
+                    child: Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              isActiveClicked = true;
+                            });
+                          },
+                          child: NunutText(
+                            title: "Sedang Aktif",
+                            size: 18,
+                            fontWeight: isActiveClicked ? FontWeight.bold : FontWeight.normal,
+                          ),
                         ),
-                        color: Colors.black,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(height: 20),
-              Container(
-                margin: EdgeInsets.only(top: 12, left: 8, right: 24),
-                child: Row(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          isActiveClicked = true;
-                        });
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 8),
+                          height: 20,
+                          width: 1,
+                          color: Colors.black,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              isActiveClicked = false;
+                            });
+                          },
+                          child: NunutText(
+                            title: "Selesai",
+                            size: 18,
+                            fontWeight: isActiveClicked ? FontWeight.normal : FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  ListView.separated(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return NunutTripCard(
+                          images: images,
+                          date: "Senin, 24 Oktober 2022",
+                          totalPerson: "3",
+                          time: "08.00",
+                          carName: "Toyota Avanza",
+                          plateNumber: "H 0000 GG",
+                          pickupLocation: "Galaxy Mall 3",
+                          destination: "Bakmi GM",
+                        );
                       },
-                      child: NunutText(
-                        title: "Sedang Aktif",
-                        size: 18,
-                        fontWeight: isActiveClicked ? FontWeight.bold : FontWeight.normal,
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 8),
-                      height: 20,
-                      width: 1,
-                      color: Colors.black,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          isActiveClicked = false;
-                        });
+                      separatorBuilder: (context, index) {
+                        return SizedBox(height: 12);
                       },
-                      child: NunutText(
-                        title: "Selesai",
-                        size: 18,
-                        fontWeight: isActiveClicked ? FontWeight.normal : FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
+                      itemCount: 5)
+                ],
               ),
-              SizedBox(height: 20),
-              ListView.separated(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return NunutTripCard(
-                      images: images,
-                      date: "Senin, 24 Oktober 2022",
-                      totalPerson: "3",
-                      time: "08.00",
-                      carName: "Toyota Avanza",
-                      plateNumber: "H 0000 GG",
-                      pickupLocation: "Galaxy Mall 3",
-                      destination: "Bakmi GM",
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return SizedBox(height: 12);
-                  },
-                  itemCount: 5)
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
