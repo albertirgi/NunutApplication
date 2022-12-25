@@ -124,6 +124,18 @@ class _HomePageState extends State<HomePage> {
                 Navigator.pushNamed(context, '/qrCode');
               },
             ),
+            NunutButton(
+              title: "BUTUH 6",
+              onPressed: () {
+                Navigator.pushNamed(context, '/rideBookDetail');
+              },
+            ),
+            NunutButton(
+              title: "Bookmark",
+              onPressed: () {
+                Navigator.pushNamed(context, '/rideBookmark');
+              },
+            ),
           ],
         ),
       ),
