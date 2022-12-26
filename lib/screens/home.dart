@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nunut_application/widgets/couponCard.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
-import 'package:nunut_application/widgets/nunutCard.dart';
-import 'package:nunut_application/widgets/nunutText.dart';
-import 'package:nunut_application/widgets/nunutTripCard.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -23,126 +19,135 @@ class _HomePageState extends State<HomePage> {
     ];
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            //nunutTripCard(images: images),
-            // CouponCard(),
-            // NunutCard(
-            //   margin: EdgeInsets.all(16),
-            //   borderRadius: 16,
-            //   content: Column(
-            //     children: [],
-            //   ),
-            // ),
-            //SizedBox(height: 50),
-            NunutButton(
-              title: "Promo Berhasil Digunakan",
-              onPressed: () {
-                Navigator.pushNamed(context, '/bookingDetail');
-              },
-              iconButton: Icon(
-                Icons.verified_outlined,
-                color: Colors.green,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              //nunutTripCard(images: images),
+              // CouponCard(),
+              // NunutCard(
+              //   margin: EdgeInsets.all(16),
+              //   borderRadius: 16,
+              //   content: Column(
+              //     children: [],
+              //   ),
+              // ),
+              //SizedBox(height: 50),
+              NunutButton(
+                title: "Promo Berhasil Digunakan",
+                onPressed: () {
+                  Navigator.pushNamed(context, '/bookingDetail');
+                },
+                iconButton: Icon(
+                  Icons.verified_outlined,
+                  color: Colors.green,
+                ),
+                backgroundColor: Colors.white,
+                widthButton: 325,
+                borderRadius: 12,
+                type: 2,
+                onPressedArrowButton: () {
+                  print("TEST");
+                },
+                borderColor: Colors.grey[300],
+                elevation: 10,
               ),
-              backgroundColor: Colors.white,
-              widthButton: 325,
-              borderRadius: 12,
-              type: 2,
-              onPressedArrowButton: () {
-                print("TEST");
-              },
-              borderColor: Colors.grey[300],
-              elevation: 10,
-            ),
-            NunutButton(
-              title: "Direct Debit",
-              onPressed: () {
-                Navigator.pushNamed(context, '/bookingDetail');
-              },
-              backgroundColor: Colors.white,
-              widthButton: 325,
-              borderRadius: 12,
-              type: 3,
-              onPressedArrowButton: () {
-                print("TEST");
-              },
-              borderColor: Colors.grey[300],
-              elevation: 10,
-            ),
-            NunutButton(
-              title: "Booking Detail",
-              onPressed: () {
-                Navigator.pushNamed(context, '/bookingDetail');
-              },
-            ),
-            NunutButton(
-              title: "Promotion List",
-              onPressed: () {
-                Navigator.pushNamed(context, '/promotionList');
-              },
-            ),
-            NunutButton(
-              title: "Order List",
-              onPressed: () {
-                Navigator.pushNamed(context, '/orderList');
-              },
-            ),
-            NunutButton(
-              title: "Chats",
-              onPressed: () {
-                Navigator.pushNamed(context, '/chat');
-              },
-            ),
-            NunutButton(
-              title: "Payment",
-              onPressed: () {
-                Navigator.pushNamed(context, '/payment');
-              },
-            ),
-            NunutButton(
-              title: "Booking Parkir",
-              onPressed: () {
-                Navigator.pushNamed(context, '/bookingParkir');
-              },
-            ),
-            NunutButton(
-              title: "My Ride",
-              onPressed: () {
-                Navigator.pushNamed(context, '/rideList');
-              },
-            ),
-            NunutButton(
-              title: "Trip History",
-              onPressed: () {
-                Navigator.pushNamed(context, '/tripHistory');
-              },
-            ),
-            NunutButton(
-              title: "QR Code",
-              onPressed: () {
-                Navigator.pushNamed(context, '/qrCode');
-              },
-            ),
-            NunutButton(
-              title: "BUTUH 6",
-              onPressed: () {
-                Navigator.pushNamed(context, '/rideBookDetail');
-              },
-            ),
-            NunutButton(
-              title: "Bookmark",
-              onPressed: () {
-                Navigator.pushNamed(context, '/rideBookmark');
-              },
-            ),
-            NunutButton(
-              title: "Ride Share",
-              onPressed: () {
-                Navigator.pushNamed(context, '/rideShare');
-              },
-            ),
-          ],
+              NunutButton(
+                title: "Direct Debit",
+                onPressed: () {
+                  Navigator.pushNamed(context, '/bookingDetail');
+                },
+                backgroundColor: Colors.white,
+                widthButton: 325,
+                borderRadius: 12,
+                type: 3,
+                onPressedArrowButton: () {
+                  print("TEST");
+                },
+                borderColor: Colors.grey[300],
+                elevation: 10,
+              ),
+              NunutButton(
+                title: "Booking Detail",
+                onPressed: () {
+                  Navigator.pushNamed(context, '/bookingDetail');
+                },
+              ),
+              NunutButton(
+                title: "Promotion List",
+                onPressed: () {
+                  Navigator.pushNamed(context, '/promotionList');
+                },
+              ),
+              NunutButton(
+                title: "Order List",
+                onPressed: () {
+                  Navigator.pushNamed(context, '/orderList');
+                },
+              ),
+              NunutButton(
+                title: "Chats",
+                onPressed: () {
+                  Navigator.pushNamed(context, '/chat');
+                },
+              ),
+              NunutButton(
+                title: "Payment",
+                onPressed: () {
+                  Navigator.pushNamed(context, '/payment');
+                },
+              ),
+              NunutButton(
+                title: "Booking Parkir",
+                onPressed: () {
+                  Navigator.pushNamed(context, '/bookingParkir');
+                },
+              ),
+              NunutButton(
+                title: "My Ride",
+                onPressed: () {
+                  Navigator.pushNamed(context, '/rideList');
+                },
+              ),
+              NunutButton(
+                title: "Trip History",
+                onPressed: () {
+                  Navigator.pushNamed(context, '/tripHistory');
+                },
+              ),
+              NunutButton(
+                title: "QR Code",
+                onPressed: () {
+                  Navigator.pushNamed(context, '/qrCode');
+                },
+              ),
+              NunutButton(
+                title: "BUTUH 6",
+                onPressed: () {
+                  Navigator.pushNamed(context, '/rideBookDetail');
+                },
+              ),
+              NunutButton(
+                title: "Bookmark",
+                onPressed: () {
+                  Navigator.pushNamed(context, '/rideBookmark');
+                },
+              ),
+              NunutButton(
+                title: "Ride Share",
+                onPressed: () {
+                  Navigator.pushNamed(context, '/rideShare');
+                },
+              ),
+              NunutButton(
+                title: "My Profile",
+                onPressed: () {
+                  Navigator.pushNamed(context, '/profile');
+                },
+              ),
+              SizedBox(height: 50),
+            ],
+          ),
         ),
       ),
     );

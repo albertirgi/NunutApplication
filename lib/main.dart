@@ -3,8 +3,10 @@ import 'package:nunut_application/screens/bookingDetail.dart';
 import 'package:nunut_application/screens/bookingParkir.dart';
 import 'package:nunut_application/screens/chatInside.dart';
 import 'package:nunut_application/screens/chatPage.dart';
+import 'package:nunut_application/screens/detailProfilePage.dart';
 import 'package:nunut_application/screens/login.dart';
 import 'package:nunut_application/screens/mainScreen.dart';
+import 'package:nunut_application/screens/myProfilePage.dart';
 import 'package:nunut_application/screens/orderList.dart';
 import 'package:nunut_application/screens/parkingList.dart';
 import 'package:nunut_application/screens/parkingSlotDetail.dart';
@@ -52,6 +54,8 @@ class MyApp extends StatelessWidget {
         '/rideBookDetail': (context) => const RideBookDetail(),
         '/rideBookmark': (context) => const RideBookmark(),
         '/rideShare': (context) => const rideShare(),
+        '/profile': (context) => const ProfilePage(),
+        '/detailprofile': (context) => const DetailProfilePage(),
       },
     );
   }
