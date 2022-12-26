@@ -148,6 +148,12 @@ class _HomePageState extends State<HomePage> {
                 Navigator.pushNamed(context, '/myVehicle');
               },
             ),
+            NunutButton(
+              title: "Ride Share",
+              onPressed: () {
+                Navigator.pushNamed(context, '/rideShare');
+              },
+            ),
           ],
         ),
       ),

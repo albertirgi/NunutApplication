@@ -16,6 +16,7 @@ import 'package:nunut_application/screens/qrCode.dart';
 import 'package:nunut_application/screens/register.dart';
 import 'package:nunut_application/screens/rideBookDetail.dart';
 import 'package:nunut_application/screens/rideBookmark.dart';
+import 'package:nunut_application/screens/rideShare.dart';
 import 'package:nunut_application/screens/splashscreen.dart';
 import 'package:nunut_application/screens/rideList.dart';
 import 'package:nunut_application/screens/tripHistory.dart';
@@ -56,6 +57,7 @@ class MyApp extends StatelessWidget {
         '/rideBookmark': (context) => const RideBookmark(),
         '/offerMenu': (context) => const OfferMenu(),
         '/myVehicle': (context) => const MyVehicle(),
+        '/rideShare': (context) => const rideShare(),
       },
     );
   }

@@ -32,7 +32,7 @@ class TwoColumnView extends StatelessWidget {
       "https://images.unsplash.com/photo-1473700216830-7e08d47f858e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
     ];
     return Container(
-      height: 310,
+      height: 290,
       width: MediaQuery.of(context).size.width / 2 - 10,
       child: Card(
         shape: RoundedRectangleBorder(
@@ -51,22 +51,20 @@ class TwoColumnView extends StatelessWidget {
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  height: 200,
+                  height: 175,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(24),
                       topRight: Radius.circular(24),
                     ),
                     image: DecorationImage(
-                      image: NetworkImage(
-                        imagePath,
-                      ),
+                      image: NetworkImage(imagePath),
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
                 Positioned(
-                  top: 150,
+                  top: 130,
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     height: 70,
@@ -83,7 +81,7 @@ class TwoColumnView extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  top: 155,
+                  top: 130,
                   left: 15,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,24 +94,15 @@ class TwoColumnView extends StatelessWidget {
               ],
             ),
             Container(
-              margin: EdgeInsets.only(top: 10, left: 14, right: 14),
+              margin: EdgeInsets.only(top: 5, left: 14, right: 14),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  NunutText(title: name, fontWeight: FontWeight.bold, size: 16),
-                  SizedBox(height: 3),
+                  NunutText(title: name, fontWeight: FontWeight.bold, size: 14),
+                  NunutText(title: carName, size: 10),
+                  NunutText(title: plateNumber, size: 10),
+                  NunutText(title: destination, size: 10),
                   Row(
-                    children: [
-                      NunutText(title: carName, size: 12),
-                      Spacer(),
-                      NunutText(title: destination, size: 12),
-                    ],
-                  ),
-                  NunutText(title: plateNumber, size: 12),
-                  SizedBox(height: 5),
-                  Row(
-                    // crossAxisAlignment: CrossAxisAlignment.baseline,
-                    // textBaseline: TextBaseline.alphabetic,
                     children: [
                       Icon(Icons.person, size: 14),
                       Text(" 2/4", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
