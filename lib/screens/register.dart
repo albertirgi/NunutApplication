@@ -3,6 +3,8 @@ import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutTextFormField.dart';
 
+import '../widgets/nunutText.dart';
+
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
@@ -87,14 +89,71 @@ class _RegisterPageState extends State<RegisterPage> {
                   controller: password,
                   width: 1.5,
                 ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    NunutText(
+                      title: "Nomor Telepon",
+                      fontWeight: FontWeight.bold,
+                    ),
+                    SizedBox(height: 2),
+                    Row(
+                      children: [
+                        Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 1.5,
+                            ),
+                            color: nunutPrimaryColor,
+                          ),
+                          child: Center(
+                            child: NunutText(
+                              title: "+62",
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: TextFormField(
+                            cursorColor: Colors.black,
+                            obscureText: false,
+                            controller: noTelp,
+                            decoration: InputDecoration(
+                              hintText: "Nomor Telepon",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide(
+                                  color: Colors.black,
+                                  width: 1.5,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide(
+                                  color: Colors.black,
+                                  width: 1.5,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+                const SizedBox(height: 16),
                 NunutButton(
-                  title: "Daftart",
+                  title: "Daftar",
                   widthButton: 200,
                   onPressed: () {
                     Navigator.pushNamed(context, '/main');
                   },
                 ),
-                const SizedBox(height: 16),
               ],
             ),
           ),

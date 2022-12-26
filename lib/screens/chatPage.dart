@@ -82,10 +82,14 @@ class _ChatPageState extends State<ChatPage> {
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
-                  return NotifCard(
-                    margin: EdgeInsets.all(5),
-                    title: "title",
-                    desc: "desc",
+                  return InkWell(
+                    onTap: () =>
+                        Navigator.pushNamed(context, '/detailNotification'),
+                    child: NotifCard(
+                      margin: EdgeInsets.all(5),
+                      title: "title",
+                      desc: "desc",
+                    ),
                   );
                 },
                 itemCount: 5,
