@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
       "https://images.unsplash.com/photo-1473700216830-7e08d47f858e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
     ];
     return Scaffold(
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -134,6 +134,18 @@ class _HomePageState extends State<HomePage> {
               title: "Bookmark",
               onPressed: () {
                 Navigator.pushNamed(context, '/rideBookmark');
+              },
+            ),
+            NunutButton(
+              title: "Offer Menu",
+              onPressed: () {
+                Navigator.pushNamed(context, '/offerMenu');
+              },
+            ),
+            NunutButton(
+              title: "My Vehicle",
+              onPressed: () {
+                Navigator.pushNamed(context, '/myVehicle');
               },
             ),
           ],

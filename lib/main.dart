@@ -5,6 +5,7 @@ import 'package:nunut_application/screens/chatInside.dart';
 import 'package:nunut_application/screens/chatPage.dart';
 import 'package:nunut_application/screens/login.dart';
 import 'package:nunut_application/screens/mainScreen.dart';
+import 'package:nunut_application/screens/offerMenu.dart';
 import 'package:nunut_application/screens/orderList.dart';
 import 'package:nunut_application/screens/parkingList.dart';
 import 'package:nunut_application/screens/parkingSlotDetail.dart';
@@ -18,6 +19,8 @@ import 'package:nunut_application/screens/rideBookmark.dart';
 import 'package:nunut_application/screens/splashscreen.dart';
 import 'package:nunut_application/screens/rideList.dart';
 import 'package:nunut_application/screens/tripHistory.dart';
+import 'package:nunut_application/screens/rideDetail.dart';
+import 'package:nunut_application/screens/myVehicle.dart';
 
 void main() {
   runApp(const MyApp());
@@ -46,10 +49,13 @@ class MyApp extends StatelessWidget {
         '/parkingList': (context) => const ParkingList(),
         '/parkingSlotDetail': (context) => const parkingSpotDetail(),
         '/rideList': (context) => const RideList(),
+        '/rideDetail': (context) => const RideDetail(),
         '/tripHistory': (context) => const TripHistory(),
         '/qrCode': (context) => const QRCode(),
         '/rideBookDetail': (context) => const RideBookDetail(),
         '/rideBookmark': (context) => const RideBookmark(),
+        '/offerMenu': (context) => const OfferMenu(),
+        '/myVehicle': (context) => const MyVehicle(),
       },
     );
   }
