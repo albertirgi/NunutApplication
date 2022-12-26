@@ -35,11 +35,13 @@ dependencies:
   custom_pointed_popup: ^0.0.2
   flutter:
     sdk: flutter
+  flutter_dash: ^1.0.0
   google_fonts: ^2.3.1
   image_stack: ^2.1.1
   modal_bottom_sheet: ^2.1.2
   qr_code_scanner: ^1.0.1
   qr_flutter: ^4.0.0
+  roundcheckbox: ^2.0.5
   string_extensions: ^0.6.6
 
 dev_dependencies:

@@ -101,16 +101,19 @@ class _RideListState extends State<RideList> {
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
-                    return NunutTripCard(
-                      images: images,
-                      date: "Senin, 24 Oktober 2022",
-                      totalPerson: "3",
-                      time: "08.00",
-                      carName: "Toyota Avanza",
-                      plateNumber: "H 0000 GG",
-                      pickupLocation: "Galaxy Mall 3",
-                      destination: "Bakmi GM",
-                      isActive: true,
+                    return GestureDetector(
+                      onTap: () => Navigator.pushNamed(context, '/rideDetail'),
+                      child: NunutTripCard(
+                        images: images,
+                        date: "Senin, 24 Oktober 2022",
+                        totalPerson: "3",
+                        time: "08.00",
+                        carName: "Toyota Avanza",
+                        plateNumber: "H 0000 GG",
+                        pickupLocation: "Galaxy Mall 3",
+                        destination: "Bakmi GM",
+                        isActive: true,
+                      ),
                     );
                   },
                   separatorBuilder: (context, index) {
