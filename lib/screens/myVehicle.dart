@@ -80,349 +80,353 @@ class _MyVehicleState extends State<MyVehicle> {
                         ),
                       ),
                       builder: (context) {
-                        return Container(
-                          height: MediaQuery.of(context).size.height * 0.53,
-                          padding: EdgeInsets.all(24),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Align(
-                                alignment: Alignment.topCenter,
-                                child: GestureDetector(
-                                  child: Container(
-                                    width: 50,
-                                    height: 5,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[300],
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                  ),
-                                  onTap: () => Navigator.pop(context),
-                                  onVerticalDragUpdate: (details) {
-                                    int sensitivity = 8;
-                                    if (details.delta.dy > sensitivity) {
-                                      // Down Swipe
-                                    } else if (details.delta.dy <
-                                        -sensitivity) {
-                                      // Up Swipe
-                                    }
-                                  },
-                                ),
-                              ),
-                              SizedBox(height: 20),
-                              NunutText(
-                                title: "Tambah Kendaraan Baru",
-                                color: Colors.black,
-                                size: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              SizedBox(height: 20),
-                              NunutText(
-                                title: "Jenis Kendaraan",
-                                fontWeight: FontWeight.bold,
-                                size: 12,
-                              ),
-                              SizedBox(height: 5),
-                              TextFormField(
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                ),
-                                cursorColor: Colors.black,
-                                obscureText: false,
-                                controller: _vehicleTypeController,
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 10),
-                                  isDense: true,
-                                  hintText:
-                                      "e.g. Honda Jazz, Toyota Avanza, etc.",
-                                  hintStyle: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 12,
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.grey[300],
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(50),
-                                    borderSide: const BorderSide(
-                                      width: 0,
-                                      style: BorderStyle.none,
-                                    ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(50),
-                                    borderSide: const BorderSide(
-                                      width: 0,
-                                      style: BorderStyle.none,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: 20),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Flexible(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        NunutText(
-                                          title: "Nomor Plat",
-                                          fontWeight: FontWeight.bold,
-                                          size: 12,
-                                        ),
-                                        TextFormField(
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 12,
-                                          ),
-                                          cursorColor: Colors.black,
-                                          obscureText: false,
-                                          controller: _licensePlateController,
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                                    horizontal: 10,
-                                                    vertical: 10),
-                                            isDense: true,
-                                            hintText: "e.g. L 1234 XX",
-                                            hintStyle: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 12,
-                                            ),
-                                            filled: true,
-                                            fillColor: Colors.grey[300],
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
-                                              borderSide: const BorderSide(
-                                                width: 0,
-                                                style: BorderStyle.none,
-                                              ),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
-                                              borderSide: const BorderSide(
-                                                width: 0,
-                                                style: BorderStyle.none,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(width: 10),
-                                  Flexible(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        NunutText(
-                                          title: "Berlaku Hingga",
-                                          fontWeight: FontWeight.bold,
-                                          size: 12,
-                                        ),
-                                        TextFormField(
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 12,
-                                          ),
-                                          cursorColor: Colors.black,
-                                          obscureText: false,
-                                          controller: _licensePlateController,
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                                    horizontal: 10,
-                                                    vertical: 10),
-                                            isDense: true,
-                                            hintText: "e.g. 11/2024",
-                                            hintStyle: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 12,
-                                            ),
-                                            filled: true,
-                                            fillColor: Colors.grey[300],
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
-                                              borderSide: const BorderSide(
-                                                width: 0,
-                                                style: BorderStyle.none,
-                                              ),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
-                                              borderSide: const BorderSide(
-                                                width: 0,
-                                                style: BorderStyle.none,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 20),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Flexible(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        NunutText(
-                                          title: "Warna",
-                                          fontWeight: FontWeight.bold,
-                                          size: 12,
-                                        ),
-                                        TextFormField(
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 12,
-                                          ),
-                                          cursorColor: Colors.black,
-                                          obscureText: false,
-                                          controller: _licensePlateController,
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                                    horizontal: 10,
-                                                    vertical: 10),
-                                            isDense: true,
-                                            hintStyle: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 12,
-                                            ),
-                                            filled: true,
-                                            fillColor: Colors.grey[300],
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
-                                              borderSide: const BorderSide(
-                                                width: 0,
-                                                style: BorderStyle.none,
-                                              ),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
-                                              borderSide: const BorderSide(
-                                                width: 0,
-                                                style: BorderStyle.none,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(width: 10),
-                                  Flexible(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        NunutText(
-                                          title: "Catatan",
-                                          fontWeight: FontWeight.bold,
-                                          size: 12,
-                                        ),
-                                        TextFormField(
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 12,
-                                          ),
-                                          cursorColor: Colors.black,
-                                          obscureText: false,
-                                          controller: _licensePlateController,
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                                    horizontal: 10,
-                                                    vertical: 10),
-                                            isDense: true,
-                                            hintStyle: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 12,
-                                            ),
-                                            filled: true,
-                                            fillColor: Colors.grey[300],
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
-                                              borderSide: const BorderSide(
-                                                width: 0,
-                                                style: BorderStyle.none,
-                                              ),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
-                                              borderSide: const BorderSide(
-                                                width: 0,
-                                                style: BorderStyle.none,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 20),
-                              Row(
-                                children: [
-                                  RoundCheckBox(
-                                    checkedColor: Colors.black,
-                                    checkedWidget: Container(
-                                      child: Icon(
-                                        Icons.check,
-                                        color: Colors.transparent,
+                        return Padding(
+                          padding: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).viewInsets.bottom),
+                          child: Container(
+                            height: MediaQuery.of(context).size.height * 0.53,
+                            padding: EdgeInsets.all(24),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Align(
+                                  alignment: Alignment.topCenter,
+                                  child: GestureDetector(
+                                    child: Container(
+                                      width: 50,
+                                      height: 5,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[300],
+                                        borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
-                                    size: 20,
-                                    isChecked: _isMainVehicle,
-                                    onTap: (value) {
-                                      setState(
-                                        () {
-                                          _isMainVehicle = !_isMainVehicle;
-                                        },
-                                      );
+                                    onTap: () => Navigator.pop(context),
+                                    onVerticalDragUpdate: (details) {
+                                      int sensitivity = 8;
+                                      if (details.delta.dy > sensitivity) {
+                                        // Down Swipe
+                                      } else if (details.delta.dy <
+                                          -sensitivity) {
+                                        // Up Swipe
+                                      }
                                     },
                                   ),
-                                  SizedBox(width: 10),
-                                  NunutText(
-                                    title: "Jadikan Kendaraan Utama",
-                                    color: Colors.black,
-                                    size: 12,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 20),
-                              Align(
-                                alignment: Alignment.center,
-                                child: NunutButton(
-                                  title: "Tambah",
-                                  onPressed: () {},
-                                  heightButton: 35,
-                                  widthButton: 110,
-                                  fontWeight: FontWeight.w500,
-                                  widthBorder: 0.0,
-                                  borderColor: Colors.transparent,
                                 ),
-                              ),
-                            ],
+                                SizedBox(height: 20),
+                                NunutText(
+                                  title: "Tambah Kendaraan Baru",
+                                  color: Colors.black,
+                                  size: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                SizedBox(height: 20),
+                                NunutText(
+                                  title: "Jenis Kendaraan",
+                                  fontWeight: FontWeight.bold,
+                                  size: 12,
+                                ),
+                                SizedBox(height: 5),
+                                TextFormField(
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 12,
+                                  ),
+                                  cursorColor: Colors.black,
+                                  obscureText: false,
+                                  controller: _vehicleTypeController,
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 10),
+                                    isDense: true,
+                                    hintText:
+                                        "e.g. Honda Jazz, Toyota Avanza, etc.",
+                                    hintStyle: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 12,
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.grey[300],
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(50),
+                                      borderSide: const BorderSide(
+                                        width: 0,
+                                        style: BorderStyle.none,
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(50),
+                                      borderSide: const BorderSide(
+                                        width: 0,
+                                        style: BorderStyle.none,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 20),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Flexible(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          NunutText(
+                                            title: "Nomor Plat",
+                                            fontWeight: FontWeight.bold,
+                                            size: 12,
+                                          ),
+                                          TextFormField(
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 12,
+                                            ),
+                                            cursorColor: Colors.black,
+                                            obscureText: false,
+                                            controller: _licensePlateController,
+                                            decoration: InputDecoration(
+                                              contentPadding:
+                                                  EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 10),
+                                              isDense: true,
+                                              hintText: "e.g. L 1234 XX",
+                                              hintStyle: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 12,
+                                              ),
+                                              filled: true,
+                                              fillColor: Colors.grey[300],
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                                borderSide: const BorderSide(
+                                                  width: 0,
+                                                  style: BorderStyle.none,
+                                                ),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                                borderSide: const BorderSide(
+                                                  width: 0,
+                                                  style: BorderStyle.none,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(width: 10),
+                                    Flexible(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          NunutText(
+                                            title: "Berlaku Hingga",
+                                            fontWeight: FontWeight.bold,
+                                            size: 12,
+                                          ),
+                                          TextFormField(
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 12,
+                                            ),
+                                            cursorColor: Colors.black,
+                                            obscureText: false,
+                                            controller: _licensePlateController,
+                                            decoration: InputDecoration(
+                                              contentPadding:
+                                                  EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 10),
+                                              isDense: true,
+                                              hintText: "e.g. 11/2024",
+                                              hintStyle: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 12,
+                                              ),
+                                              filled: true,
+                                              fillColor: Colors.grey[300],
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                                borderSide: const BorderSide(
+                                                  width: 0,
+                                                  style: BorderStyle.none,
+                                                ),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                                borderSide: const BorderSide(
+                                                  width: 0,
+                                                  style: BorderStyle.none,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 20),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Flexible(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          NunutText(
+                                            title: "Warna",
+                                            fontWeight: FontWeight.bold,
+                                            size: 12,
+                                          ),
+                                          TextFormField(
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 12,
+                                            ),
+                                            cursorColor: Colors.black,
+                                            obscureText: false,
+                                            controller: _licensePlateController,
+                                            decoration: InputDecoration(
+                                              contentPadding:
+                                                  EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 10),
+                                              isDense: true,
+                                              hintStyle: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 12,
+                                              ),
+                                              filled: true,
+                                              fillColor: Colors.grey[300],
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                                borderSide: const BorderSide(
+                                                  width: 0,
+                                                  style: BorderStyle.none,
+                                                ),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                                borderSide: const BorderSide(
+                                                  width: 0,
+                                                  style: BorderStyle.none,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(width: 10),
+                                    Flexible(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          NunutText(
+                                            title: "Catatan",
+                                            fontWeight: FontWeight.bold,
+                                            size: 12,
+                                          ),
+                                          TextFormField(
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 12,
+                                            ),
+                                            cursorColor: Colors.black,
+                                            obscureText: false,
+                                            controller: _licensePlateController,
+                                            decoration: InputDecoration(
+                                              contentPadding:
+                                                  EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 10),
+                                              isDense: true,
+                                              hintStyle: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 12,
+                                              ),
+                                              filled: true,
+                                              fillColor: Colors.grey[300],
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                                borderSide: const BorderSide(
+                                                  width: 0,
+                                                  style: BorderStyle.none,
+                                                ),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                                borderSide: const BorderSide(
+                                                  width: 0,
+                                                  style: BorderStyle.none,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 20),
+                                Row(
+                                  children: [
+                                    RoundCheckBox(
+                                      checkedColor: Colors.black,
+                                      checkedWidget: Container(
+                                        child: Icon(
+                                          Icons.check,
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                      size: 20,
+                                      isChecked: _isMainVehicle,
+                                      onTap: (value) {
+                                        setState(
+                                          () {
+                                            _isMainVehicle = !_isMainVehicle;
+                                          },
+                                        );
+                                      },
+                                    ),
+                                    SizedBox(width: 10),
+                                    NunutText(
+                                      title: "Jadikan Kendaraan Utama",
+                                      color: Colors.black,
+                                      size: 12,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 20),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: NunutButton(
+                                    title: "Tambah",
+                                    onPressed: () {},
+                                    heightButton: 35,
+                                    widthButton: 110,
+                                    fontWeight: FontWeight.w500,
+                                    widthBorder: 0.0,
+                                    borderColor: Colors.transparent,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       },
@@ -464,7 +468,6 @@ class _MyVehicleState extends State<MyVehicle> {
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () => Navigator.pushNamed(context, '/rideDetail'),
                       child: Column(
                         children: [
                           Container(

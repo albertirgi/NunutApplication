@@ -42,160 +42,177 @@ class _OfferMenuState extends State<OfferMenu> {
     // }
 
     return Scaffold(
-      body: Container(
-        margin: EdgeInsets.only(top: 52, left: 28, right: 28),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            NunutText(
-              title: "Hai, Grace",
-              fontWeight: FontWeight.bold,
-            ),
-            BorderedText(
-              child: Text(
-                "Yuk tawarkan tumpangan!",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 32,
-                ),
-              ),
-              strokeWidth: 3.0,
-              strokeColor: Colors.black,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              width: 190,
+      body: Stack(
+        children: [
+          Positioned(
+            child: Container(
+              height: 200,
+              width: double.infinity,
               decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.black,
-                  width: 2,
+                borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(50),
                 ),
-                borderRadius: BorderRadius.circular(50),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Icon(Icons.money_outlined),
-                  NunutText(
-                    title: "IDR 50.000",
-                    fontWeight: FontWeight.bold,
-                    size: 18,
-                  ),
-                ],
+                color: nunutPrimaryColor,
               ),
             ),
-            SizedBox(
-              height: 20,
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 52, left: 28, right: 28),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                NunutText(
+                  title: "Hai, Grace",
+                  fontWeight: FontWeight.bold,
+                ),
+                BorderedText(
+                  child: Text(
+                    "Yuk tawarkan tumpangan!",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 32,
+                    ),
+                  ),
+                  strokeWidth: 3.0,
+                  strokeColor: Colors.black,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  width: 190,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Icon(Icons.money_outlined),
+                      NunutText(
+                        title: "IDR 50.000",
+                        fontWeight: FontWeight.bold,
+                        size: 18,
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Expanded(
+                  child: GridView.count(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 50,
+                    children: [
+                      Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(40),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.black,
+                            ),
+                            child: Icon(
+                              Icons.add,
+                              size: 50,
+                              color: Colors.white,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          NunutText(
+                            title: "Tawarkan",
+                            fontWeight: FontWeight.bold,
+                            size: 18,
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(40),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: nunutPrimaryColor,
+                            ),
+                            child: Icon(
+                              Icons.people_sharp,
+                              size: 50,
+                              color: Colors.black,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          NunutText(
+                            title: "Tumpanganku",
+                            fontWeight: FontWeight.bold,
+                            size: 18,
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(40),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: nunutPrimaryColor,
+                            ),
+                            child: Icon(
+                              Icons.chat_bubble,
+                              size: 50,
+                              color: Colors.black,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          NunutText(
+                            title: "Chat",
+                            fontWeight: FontWeight.bold,
+                            size: 18,
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(40),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: nunutPrimaryColor,
+                            ),
+                            child: Icon(
+                              Icons.car_crash,
+                              size: 50,
+                              color: Colors.black,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          NunutText(
+                            title: "Kendaraanku",
+                            fontWeight: FontWeight.bold,
+                            size: 18,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                )
+              ],
             ),
-            Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                mainAxisSpacing: 50,
-                children: [
-                  Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(40),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.black,
-                        ),
-                        child: Icon(
-                          Icons.add,
-                          size: 50,
-                          color: Colors.white,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      NunutText(
-                        title: "Tawarkan",
-                        fontWeight: FontWeight.bold,
-                        size: 18,
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(40),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: nunutPrimaryColor,
-                        ),
-                        child: Icon(
-                          Icons.people_sharp,
-                          size: 50,
-                          color: Colors.black,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      NunutText(
-                        title: "Tumpanganku",
-                        fontWeight: FontWeight.bold,
-                        size: 18,
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(40),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: nunutPrimaryColor,
-                        ),
-                        child: Icon(
-                          Icons.chat_bubble,
-                          size: 50,
-                          color: Colors.black,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      NunutText(
-                        title: "Chat",
-                        fontWeight: FontWeight.bold,
-                        size: 18,
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(40),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: nunutPrimaryColor,
-                        ),
-                        child: Icon(
-                          Icons.car_crash,
-                          size: 50,
-                          color: Colors.black,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      NunutText(
-                        title: "Kendaraanku",
-                        fontWeight: FontWeight.bold,
-                        size: 18,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
+          ),
+        ],
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(

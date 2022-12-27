@@ -11,7 +11,6 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-
   int _selectedNavbar = 0;
 
   void _changeSelectedNavBar(int index) {
@@ -38,31 +37,44 @@ class _MainPageState extends State<MainPage> {
 
     return Scaffold(
       body: Stack(
-        children: [
-          buildContent(_selectedNavbar)
-        ],
+        children: [buildContent(_selectedNavbar)],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.car_crash),
-            label: "Home",
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+          boxShadow: [
+            BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.0),
+            topRight: Radius.circular(20.0),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.connect_without_contact),
-            label: "Transaction",
+          child: BottomNavigationBar(
+            backgroundColor: Colors.black,
+            items: <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.car_crash),
+                label: "Home",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.route),
+                label: "Transaction",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: "Profile",
+              ),
+            ],
+            currentIndex: _selectedNavbar,
+            selectedItemColor: Colors.yellowAccent,
+            unselectedItemColor: Colors.grey,
+            showUnselectedLabels: true,
+            onTap: _changeSelectedNavBar,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: "Profile",
-          ),
-        ],
-        currentIndex: _selectedNavbar,
-        selectedItemColor: Colors.yellowAccent,
-        unselectedItemColor: Colors.grey,
-        showUnselectedLabels: true,
-        onTap: _changeSelectedNavBar,
+        ),
       ),
     );
   }

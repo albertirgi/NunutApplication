@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:nunut_application/theme.dart';
 // import 'package:otp_autofill/otp_autofill.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 // import 'package:firebase_storage/firebase_storage.dart';
@@ -810,18 +811,35 @@ class _QRCodeState extends State<QRCode> {
     );
   }
 
-  Widget buildResult() => Container(
-        padding: EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: Colors.white24,
-        ),
-        child: Text(
-          barcode != null
-              ? 'Result : ${barcode!.code}'
-              : "Scan QR Code Tumpangan Kamu",
-          maxLines: 3,
-        ),
+  Widget buildResult() => Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset(
+            "assets/icon.png",
+            width: 50,
+            height: 50,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            padding: EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: Color.fromARGB(255, 255, 255, 255),
+            ),
+            child: Column(
+              children: [
+                Text(
+                  barcode != null
+                      ? 'Result : ${barcode!.code}'
+                      : "Scan QR Code Tumpangan Kamu",
+                  maxLines: 3,
+                ),
+              ],
+            ),
+          ),
+        ],
       );
 
   //for scan box : overlay
@@ -830,6 +848,7 @@ class _QRCodeState extends State<QRCode> {
         key: qrKey,
         onQRViewCreated: onQRViewCreated,
         overlay: QrScannerOverlayShape(
+            borderColor: nunutPrimaryColor,
             borderWidth: 10,
             borderLength: 20, //length border sisi
             borderRadius: 10 //biar kelihatan rounded
