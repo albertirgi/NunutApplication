@@ -8,8 +8,6 @@ class TwoColumnView extends StatelessWidget {
   final String imagePath;
   final String departureTime;
   final String name;
-  final String carName;
-  final String plateNumber;
   final String destination;
   final String price;
   const TwoColumnView({
@@ -17,22 +15,14 @@ class TwoColumnView extends StatelessWidget {
     required this.imagePath,
     required this.departureTime,
     required this.name,
-    required this.carName,
-    required this.plateNumber,
     required this.destination,
     required this.price,
   });
 
   @override
   Widget build(BuildContext context) {
-    List<String> images = <String>[
-      "https://images.unsplash.com/photo-1458071103673-6a6e4c4a3413?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-      "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1470406852800-b97e5d92e2aa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-      "https://images.unsplash.com/photo-1473700216830-7e08d47f858e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
-    ];
     return Container(
-      height: 290,
+      height: 280,
       width: MediaQuery.of(context).size.width / 2 - 10,
       child: Card(
         shape: RoundedRectangleBorder(
@@ -64,10 +54,10 @@ class TwoColumnView extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  top: 130,
+                  top: 125,
                   child: Container(
                     width: MediaQuery.of(context).size.width,
-                    height: 70,
+                    height: 80,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
@@ -81,13 +71,13 @@ class TwoColumnView extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  top: 130,
+                  top: 127,
                   left: 15,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       NunutText(title: "Berangkat", color: Colors.white, size: 10),
-                      NunutText(title: departureTime, color: Colors.white, size: 28),
+                      NunutText(title: departureTime, color: Colors.white, size: 26),
                     ],
                   ),
                 ),
@@ -98,9 +88,7 @@ class TwoColumnView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  NunutText(title: name, fontWeight: FontWeight.bold, size: 14),
-                  NunutText(title: carName, size: 10),
-                  NunutText(title: plateNumber, size: 10),
+                  NunutText(title: name, fontWeight: FontWeight.bold, size: 14, maxLines: 1),
                   NunutText(title: destination, size: 10),
                   Row(
                     children: [

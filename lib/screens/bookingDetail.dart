@@ -152,7 +152,7 @@ class BookingDetail extends StatelessWidget {
                             embeddedImageStyle: QrEmbeddedImageStyle(
                               size: Size(75, 75),
                             ),
-                            size: 160,
+                            size: 150,
                             backgroundColor: Colors.white,
                             padding: EdgeInsets.all(0),
                           ),

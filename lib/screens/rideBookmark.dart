@@ -63,13 +63,11 @@ class RideBookmark extends StatelessWidget {
               itemCount: 8,
               itemBuilder: (context, index) {
                 return TwoColumnView(
-                  carName: "A",
                   departureTime: "18.00",
                   destination: "UKP",
                   name: "Joko",
                   price: "5000",
                   imagePath: "https://images.unsplash.com/photo-1458071103673-6a6e4c4a3413?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-                  plateNumber: "L 1390 EQ",
                 );
               },
             ),

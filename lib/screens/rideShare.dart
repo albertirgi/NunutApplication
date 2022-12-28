@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:nunut_application/resources/rideScheduleApi.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:nunut_application/widgets/nunutTextFormField.dart';
 import 'package:nunut_application/widgets/twoColumnView.dart';
+import 'package:intl/intl.dart';
 
+import '../models/mrideschedule.dart';
 import '../theme.dart';
 
 class rideShare extends StatefulWidget {
@@ -18,19 +21,29 @@ class rideShare extends StatefulWidget {
 }
 
 class _rideShareState extends State<rideShare> {
+  List<RideSchedule> rideScheduleList = [];
   TextEditingController pickUpController = TextEditingController();
   TextEditingController destinationController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController timeController = TextEditingController();
   bool isSearch = false;
 
+  @override
+  void initState() {
+    super.initState();
+    initRideScheduleList();
+  }
+
+  initRideScheduleList() async {
+    rideScheduleList.clear();
+    rideScheduleList = await rideScheduleApi.getRideScheduleList();
+  }
+
   Widget buildCustomPrefixIcon(IconData iconData) {
     return Container(
       width: 0,
       alignment: Alignment(-0.99, 0.0),
-      child: Icon(
-        iconData,
-      ),
+      child: Icon(iconData),
     );
   }
 
@@ -343,17 +356,19 @@ class _rideShareState extends State<rideShare> {
                     child: GridView.builder(
                       shrinkWrap: true,
                       physics: ScrollPhysics(),
-                      itemCount: 5,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.65, crossAxisSpacing: 15, mainAxisSpacing: 15),
+                      itemCount: rideScheduleList.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.7, crossAxisSpacing: 15, mainAxisSpacing: 15),
                       itemBuilder: (context, index) {
                         return TwoColumnView(
                           imagePath: "https://images.unsplash.com/photo-1470406852800-b97e5d92e2aa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-                          departureTime: "10.00",
-                          name: "Albert Wijaya",
-                          carName: "Honda Freed",
-                          plateNumber: "L 1234 SS",
+                          departureTime: rideScheduleList[index].time!,
+                          name: rideScheduleList[index].userId!,
                           destination: "SPBU Manyar",
-                          price: "15.000",
+                          price: NumberFormat.currency(
+                            locale: 'id',
+                            symbol: '',
+                            decimalDigits: 0,
+                          ).format(rideScheduleList[index].price!),
                         );
                       },
                     ),

@@ -24,6 +24,39 @@ class _OrderListState extends State<OrderList> {
     "https://images.unsplash.com/photo-1473700216830-7e08d47f858e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
   ];
 
+  Widget popupWidget() {
+    return ListView.separated(
+      padding: EdgeInsets.zero,
+      shrinkWrap: true,
+      physics: ScrollPhysics(),
+      itemCount: 3,
+      itemBuilder: (context, index) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                CircleAvatar(radius: 20, backgroundImage: NetworkImage(images[0])),
+                SizedBox(width: 10),
+                NunutText(title: "Rachel Tanuwidjaja", size: 18, color: Colors.black),
+              ],
+            ),
+            Row(
+              children: [
+                Icon(Icons.chat_bubble, color: Colors.black, size: 18),
+                SizedBox(width: 5),
+                Icon(Icons.call, color: Colors.black, size: 18),
+              ],
+            ),
+          ],
+        );
+      },
+      separatorBuilder: (context, index) {
+        return SizedBox(height: 10);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -151,24 +184,26 @@ class _OrderListState extends State<OrderList> {
                     ),
                   ),
                   ListView.separated(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return NunutTripCard(
-                          images: images,
-                          date: "Senin, 24 Oktober 2022",
-                          totalPerson: "3",
-                          time: "08.00",
-                          carName: "Toyota Avanza",
-                          plateNumber: "H 0000 GG",
-                          pickupLocation: "Galaxy Mall 3",
-                          destination: "Bakmi GM",
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return SizedBox(height: 12);
-                      },
-                      itemCount: 5)
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return NunutTripCard(
+                        images: images,
+                        date: "Senin, 24 Oktober 2022",
+                        totalPerson: "3",
+                        time: "08.00",
+                        carName: "Toyota Avanza",
+                        plateNumber: "H 0000 GG",
+                        pickupLocation: "Galaxy Mall 3",
+                        destination: "Bakmi GM",
+                        popupWidget: popupWidget(),
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return SizedBox(height: 12);
+                    },
+                    itemCount: 5,
+                  )
                 ],
               ),
             ),
