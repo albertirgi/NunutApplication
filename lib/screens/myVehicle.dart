@@ -84,7 +84,12 @@ class _MyVehicleState extends State<MyVehicle> {
                           padding: EdgeInsets.only(
                               bottom: MediaQuery.of(context).viewInsets.bottom),
                           child: Container(
-                            height: MediaQuery.of(context).size.height * 0.53,
+                            constraints: BoxConstraints(
+                              maxHeight: MediaQuery.of(context).size.height,
+                              minHeight:
+                                  MediaQuery.of(context).size.height * 0.65,
+                            ),
+                            height: MediaQuery.of(context).size.height * 0.65,
                             padding: EdgeInsets.all(24),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,20 +117,20 @@ class _MyVehicleState extends State<MyVehicle> {
                                     },
                                   ),
                                 ),
-                                SizedBox(height: 20),
+                                SizedBox(height: 30),
                                 NunutText(
                                   title: "Tambah Kendaraan Baru",
                                   color: Colors.black,
                                   size: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
-                                SizedBox(height: 20),
+                                SizedBox(height: 30),
                                 NunutText(
                                   title: "Jenis Kendaraan",
                                   fontWeight: FontWeight.bold,
                                   size: 12,
                                 ),
-                                SizedBox(height: 5),
+                                SizedBox(height: 10),
                                 TextFormField(
                                   style: TextStyle(
                                     color: Colors.black,
@@ -162,7 +167,7 @@ class _MyVehicleState extends State<MyVehicle> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: 20),
+                                SizedBox(height: 30),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -176,6 +181,7 @@ class _MyVehicleState extends State<MyVehicle> {
                                             fontWeight: FontWeight.bold,
                                             size: 12,
                                           ),
+                                          SizedBox(height: 10),
                                           TextFormField(
                                             style: TextStyle(
                                               color: Colors.black,
@@ -218,7 +224,7 @@ class _MyVehicleState extends State<MyVehicle> {
                                         ],
                                       ),
                                     ),
-                                    SizedBox(width: 10),
+                                    SizedBox(width: 20),
                                     Flexible(
                                       child: Column(
                                         crossAxisAlignment:
@@ -229,6 +235,7 @@ class _MyVehicleState extends State<MyVehicle> {
                                             fontWeight: FontWeight.bold,
                                             size: 12,
                                           ),
+                                          SizedBox(height: 10),
                                           TextFormField(
                                             style: TextStyle(
                                               color: Colors.black,
@@ -273,7 +280,7 @@ class _MyVehicleState extends State<MyVehicle> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 20),
+                                SizedBox(height: 30),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -287,6 +294,7 @@ class _MyVehicleState extends State<MyVehicle> {
                                             fontWeight: FontWeight.bold,
                                             size: 12,
                                           ),
+                                          SizedBox(height: 10),
                                           TextFormField(
                                             style: TextStyle(
                                               color: Colors.black,
@@ -328,7 +336,7 @@ class _MyVehicleState extends State<MyVehicle> {
                                         ],
                                       ),
                                     ),
-                                    SizedBox(width: 10),
+                                    SizedBox(width: 20),
                                     Flexible(
                                       child: Column(
                                         crossAxisAlignment:
@@ -339,6 +347,7 @@ class _MyVehicleState extends State<MyVehicle> {
                                             fontWeight: FontWeight.bold,
                                             size: 12,
                                           ),
+                                          SizedBox(height: 10),
                                           TextFormField(
                                             style: TextStyle(
                                               color: Colors.black,
@@ -382,7 +391,7 @@ class _MyVehicleState extends State<MyVehicle> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 20),
+                                SizedBox(height: 30),
                                 Row(
                                   children: [
                                     RoundCheckBox(
@@ -412,7 +421,7 @@ class _MyVehicleState extends State<MyVehicle> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 20),
+                                SizedBox(height: 30),
                                 Align(
                                   alignment: Alignment.center,
                                   child: NunutButton(
