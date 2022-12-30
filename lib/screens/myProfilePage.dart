@@ -135,11 +135,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                           //icons
                                           Icon(Icons.edit, color: Colors.black),
                                           SizedBox(width: 5),
-                                          Text("Edit Profile",
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.bold)),
+                                          Text(
+                                            "Edit Profile",
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold),
+                                          ),
                                         ],
                                       ),
                                     ),

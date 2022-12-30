@@ -8,6 +8,7 @@ class NunutText extends StatelessWidget {
   final int? maxLines;
   final FontWeight? fontWeight;
   final TextDecoration textDecoration;
+  
 
   const NunutText({
     super.key,

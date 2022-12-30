@@ -1,17 +1,7 @@
-import 'dart:ffi';
-
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:bordered_text/bordered_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
-import 'package:nunut_application/widgets/nunutTextFormField.dart';
-import 'package:nunut_application/widgets/nunutTripCard.dart';
 import 'package:flutter_dash/flutter_dash.dart';
 
 class RideDetail extends StatefulWidget {
@@ -299,6 +289,9 @@ class _RideDetailState extends State<RideDetail> {
                   ),
                   SizedBox(height: 10),
                   InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/pengaduanKendala');
+                    },
                     child: NunutText(
                       title: "Ada masalah dengan perjalanan?",
                       fontWeight: FontWeight.w500,

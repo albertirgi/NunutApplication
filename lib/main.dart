@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:nunut_application/screens/batalkanTumpangan.dart';
 import 'package:nunut_application/screens/bookingDetail.dart';
 import 'package:nunut_application/screens/bookingParkir.dart';
 import 'package:nunut_application/screens/chatInside.dart';
 import 'package:nunut_application/screens/chatPage.dart';
 import 'package:nunut_application/screens/detailNotification.dart';
 import 'package:nunut_application/screens/detailProfilePage.dart';
+import 'package:nunut_application/screens/home.dart';
 import 'package:nunut_application/screens/login.dart';
 import 'package:nunut_application/screens/mainScreen.dart';
 import 'package:nunut_application/screens/myProfilePage.dart';
+import 'package:nunut_application/screens/notifikasiSukses.dart';
 import 'package:nunut_application/screens/offerMenu.dart';
 import 'package:nunut_application/screens/orderList.dart';
 import 'package:nunut_application/screens/parkingList.dart';
 import 'package:nunut_application/screens/parkingSlotDetail.dart';
 import 'package:nunut_application/screens/payment.dart';
+import 'package:nunut_application/screens/pengaduanKendala.dart';
 import 'package:nunut_application/screens/promotionDetail.dart';
 import 'package:nunut_application/screens/promotionList.dart';
 import 'package:nunut_application/screens/qrCode.dart';
@@ -64,6 +68,10 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => const ProfilePage(),
         '/detailprofile': (context) => const DetailProfilePage(),
         '/detailNotification': (context) => const DetailNotificationPage(),
+        '/pengaduanKendala': (context) => const PengaduanKendalaPage(),
+        '/batalkanTumpangan': (context) => const BatalkanTumpangan(),
+        '/notifikasiSukses' : (context) => const NotifikasiSuksesPage(),
+        '/home': (context) => const HomePage(),
       },
     );
   }
