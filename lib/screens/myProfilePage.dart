@@ -22,7 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
               fit: BoxFit.cover,
             ),
             Container(
-              margin: EdgeInsets.only(top: 40, left: 20, right: 20),
+              margin: EdgeInsets.only(top: 40, left: 10, right: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -40,7 +40,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(26, 24, 0, 7),
+                    padding: const EdgeInsets.fromLTRB(20, 24, 0, 7),
                     child: BorderedText(
                       child: Text(
                         "Profilku",
@@ -54,7 +54,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(26, 0, 20, 21),
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 21),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -98,15 +98,15 @@ class _ProfilePageState extends State<ProfilePage> {
                                 Text(
                                   "+6287861907645",
                                   style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 16,
+                                    color: Color.fromARGB(255, 28, 27, 27),
+                                    fontSize: 12,
                                   ),
                                 ),
                                 SizedBox(height: 5),
                                 Text(
                                   "gracenatasha@gmail.com",
                                   style: TextStyle(
-                                    color: Colors.grey,
+                                    color: Color.fromARGB(255, 28, 27, 27),
                                     fontSize: 12,
                                   ),
                                 ),
@@ -155,7 +155,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   SizedBox(height: 20),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(26, 0, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                     child: Text(
                       "Menu",
                       style: TextStyle(
@@ -166,7 +166,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.fromLTRB(20, 0, 26, 0),
+                    margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),

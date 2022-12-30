@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 
@@ -12,6 +11,8 @@ class ChatInsidePage extends StatefulWidget {
 
 class _ChatInsidePageState extends State<ChatInsidePage> {
   TextEditingController messageController = TextEditingController();
+  bool _keyboardVisible = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,9 +58,12 @@ class _ChatInsidePageState extends State<ChatInsidePage> {
       ),
       body: Column(
         children: [
-          Expanded(flex: 9, child: Container()),
           Expanded(
-            flex: 1,
+            flex: 8,
+            child: Container(),
+          ),
+          Expanded(
+            flex: 2,
             child: Container(
               decoration: BoxDecoration(
                 color: nunutPrimaryColor,
@@ -67,48 +71,57 @@ class _ChatInsidePageState extends State<ChatInsidePage> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 20,
-                  vertical: 10,
+                  vertical: 0,
                 ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 9,
-                      child: TextFormField(
-                        controller: messageController,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          hintText: "Tulis pesan...",
-                          hintStyle: TextStyle(
-                            color: Colors.black,
-                          ),
-                          filled: true,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
+                child: Container(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 10,
                       ),
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.send,
-                            color: Colors.white,
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 8,
+                            child: TextFormField(
+                              controller: messageController,
+                              decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                hintText: "Tulis pesan...",
+                                hintStyle: TextStyle(
+                                  color: Colors.black,
+                                ),
+                                filled: true,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                            ),
                           ),
-                          onPressed: () {},
-                        ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.send,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {},
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

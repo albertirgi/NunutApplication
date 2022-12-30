@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/models/mresult.dart';
@@ -10,6 +9,8 @@ class RideScheduleApi {
   Future<List<RideSchedule>> getRideScheduleList() async {
     var url = Uri.parse(baseUrl + '/ride-schedule');
     var response = await http.get(url);
+
+    
 
     Result result;
     List<RideSchedule> rideScheduleList = [];

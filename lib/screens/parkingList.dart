@@ -236,7 +236,7 @@ class _ParkingListState extends State<ParkingList> {
                       Expanded(
                         flex: 2,
                         child: Text(
-                          "PENUH",
+                          "Penuh",
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,

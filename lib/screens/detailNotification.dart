@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:nunut_application/models/mnotification.dart';
 
 class DetailNotificationPage extends StatefulWidget {
   const DetailNotificationPage({super.key});
@@ -8,8 +11,15 @@ class DetailNotificationPage extends StatefulWidget {
 }
 
 class _DetailNotificationPageState extends State<DetailNotificationPage> {
+  //take data from notification page
+
   @override
   Widget build(BuildContext context) {
+    final data =
+        ModalRoute.of(context)!.settings.arguments as NotificationModel;
+    final title = data.title;
+    final Image = data.image;
+    final description = data.description;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey[50],
@@ -34,7 +44,7 @@ class _DetailNotificationPageState extends State<DetailNotificationPage> {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: NetworkImage(
-                      "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiO"),
+                      Image),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -48,24 +58,24 @@ class _DetailNotificationPageState extends State<DetailNotificationPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Notification Title",
+                    title,
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text(
-                    "Notification SubTitle",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
+                  // Text(
+                  //   "Notification SubTitle",
+                  //   style: TextStyle(
+                  //     fontSize: 20,
+                  //     fontWeight: FontWeight.w400,
+                  //   ),
+                  // ),
                   SizedBox(
                     height: 30,
                   ),
                   Text(
-                    "Content",
+                    description,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

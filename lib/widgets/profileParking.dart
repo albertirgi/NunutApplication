@@ -123,7 +123,7 @@ class profileParkingCard extends StatelessWidget {
                       ),
                       Expanded(
                         flex: 1,
-                        child: Icon(Icons.arrow_right,
+                        child: Icon(Icons.keyboard_arrow_right,
                             color: Colors.white, size: 30),
                       ),
                     ],

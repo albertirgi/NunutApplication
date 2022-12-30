@@ -1,7 +1,10 @@
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
+
+import 'package:nunut_application/resources/notificationApi.dart';
 import 'package:nunut_application/widgets/chatCard.dart';
 import 'package:nunut_application/widgets/notificationCard.dart';
+import '../models/mnotification.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -11,6 +14,28 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  List<NotificationModel> NotificationList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    initNotification();
+  }
+
+  initNotification() async {
+    NotificationList.clear();
+    NotificationList = await notificationApi.getNotificationList();
+    setState(() {
+      NotificationList = NotificationList;
+    });
+    //log("isi length " + NotificationList.length.toString());
+    //log("isi NotificationList " + NotificationList.toString());
+    //log("isi NotificationList " + NotificationList[0].title.toString());
+    // for(int i = 0; i < NotificationList.length; i++){
+    //   log("isi NotificationList " + NotificationList[i].title.toString());
+    // }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,22 +103,55 @@ class _ChatPageState extends State<ChatPage> {
                 strokeColor: Colors.black,
               ),
               SizedBox(height: 20),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () =>
-                        Navigator.pushNamed(context, '/detailNotification'),
-                    child: NotifCard(
-                      margin: EdgeInsets.all(5),
-                      title: "title",
-                      desc: "desc",
-                    ),
-                  );
+              FutureBuilder(
+                future: Future.delayed(Duration(seconds: 1)),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: NotificationList.length,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          //onTap Passing data to detail page with navigator pushnamed
+                          onTap: () => Navigator.pushNamed(
+                              context, '/detailNotification',
+                              arguments: NotificationList[index]),
+                          // onTap: () => Navigator.pushNamed(
+                          //     context, '/detailNotification'),
+                          child: NotifCard(
+                            margin: EdgeInsets.all(5),
+                            title: NotificationList[index].title,
+                            desc: NotificationList[index].description,
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
                 },
-                itemCount: 5,
               ),
+                // ListView.builder(
+                //   shrinkWrap: true,
+                //   physics: NeverScrollableScrollPhysics(),
+                //   itemCount: NotificationList.length,
+                //   itemBuilder: (context, index) {
+                //     return InkWell(
+                //       onTap: () =>
+                //           Navigator.pushNamed(context, '/detailNotification'),
+                //       child: NotifCard(
+                //         margin: EdgeInsets.all(5),
+                //         title: NotificationList[index].title,
+                //         desc: NotificationList[index].description,
+                //       ),
+                //     );
+                //   },
+
+                // ),
+              
             ],
           ),
         ),
