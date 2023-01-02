@@ -1,8 +1,14 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:nunut_application/widgets/nunutTextFormField.dart';
+
+import '../models/muser.dart';
+import '../resources/authApi.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -13,6 +19,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
+
+  late UserModel tmpUser = UserModel(email: "", name: "", nik: "", phone: "");
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +63,15 @@ class _LoginPageState extends State<LoginPage> {
               NunutButton(
                 title: "Masuk",
                 widthButton: 200,
-                onPressed: () {
-                  Navigator.pushNamed(context, '/main');
+                onPressed: () async {
+                  tmpUser = await AuthService.signIn(
+                      email: username.text, password: password.text);
+
+                  log(jsonEncode(tmpUser));
+                  if (tmpUser.email != "") {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, '/main', (route) => false);
+                  }
                 },
               ),
               const SizedBox(height: 16),

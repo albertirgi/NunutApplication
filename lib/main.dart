@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:nunut_application/screens/batalkanTumpangan.dart';
 import 'package:nunut_application/screens/bookingDetail.dart';
@@ -30,7 +31,13 @@ import 'package:nunut_application/screens/tripHistory.dart';
 import 'package:nunut_application/screens/rideDetail.dart';
 import 'package:nunut_application/screens/myVehicle.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -70,7 +77,7 @@ class MyApp extends StatelessWidget {
         '/detailNotification': (context) => const DetailNotificationPage(),
         '/pengaduanKendala': (context) => const PengaduanKendalaPage(),
         '/batalkanTumpangan': (context) => const BatalkanTumpangan(),
-        '/notifikasiSukses' : (context) => const NotifikasiSuksesPage(),
+        '/notifikasiSukses': (context) => const NotifikasiSuksesPage(),
         '/home': (context) => const HomePage(),
       },
     );

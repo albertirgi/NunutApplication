@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "453751060369",
+    "project_id": "nunut-da274",
+    "storage_bucket": "nunut-da274.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:453751060369:android:ac42caa294ea67861b4c30",
+        "android_client_info": {
+          "package_name": "com.example.nunut_application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "453751060369-f57sq40ucrodsa4h89d35t8l9604drd9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALkckblym7uE-p-nn61GhzJ8R9w_6YGOU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "453751060369-f57sq40ucrodsa4h89d35t8l9604drd9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

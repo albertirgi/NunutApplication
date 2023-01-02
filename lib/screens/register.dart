@@ -3,6 +3,7 @@ import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutTextFormField.dart';
 
+import '../resources/authApi.dart';
 import '../widgets/nunutText.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -151,7 +152,33 @@ class _RegisterPageState extends State<RegisterPage> {
                   title: "Daftar",
                   widthButton: 200,
                   onPressed: () {
-                    Navigator.pushNamed(context, '/main');
+                    Future.delayed(
+                      Duration(seconds: 3),
+                      () {
+                        //Panggil Fungsi AuthService SignUp
+                        AuthService.signUp(
+                          email: email.text,
+                          name: fullName.text,
+                          nik: nik.text,
+                          password: password.text,
+                          phone: noTelp.text,
+                        );
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Account Created"),
+                            duration: Duration(seconds: 1),
+                          ),
+                        );
+                        Future.delayed(
+                          Duration(seconds: 2),
+                          () {
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, '/main', (route) => false);
+                          },
+                        );
+                      },
+                    );
                   },
                 ),
               ],
