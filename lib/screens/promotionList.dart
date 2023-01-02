@@ -1,15 +1,45 @@
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
+import 'package:nunut_application/models/mpromotion.dart';
+import 'package:nunut_application/resources/promotionApi.dart';
 import 'package:nunut_application/widgets/couponCard.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 
 import '../theme.dart';
+import 'package:intl/intl.dart';
 
-class PromotionList extends StatelessWidget {
+class PromotionList extends StatefulWidget {
   const PromotionList({super.key});
 
-  Widget promoTerbaru(String heading, int nominalDiskon, String kodePromo) {
+  @override
+  State<PromotionList> createState() => _PromotionListState();
+}
+
+class _PromotionListState extends State<PromotionList> {
+  List<Promotion> promotionList = [];
+  bool? promotionListLoading;
+
+  @override
+  void initState() {
+    super.initState();
+    initPromotionList();
+  }
+
+  initPromotionList() async {
+    setState(() {
+      promotionListLoading = true;
+    });
+
+    promotionList.clear();
+    promotionList = await promotionApi.getPromotionList();
+
+    setState(() {
+      promotionListLoading = false;
+    });
+  }
+
+  Widget promoTerbaru(String heading, String kodePromo) {
     return Container(
       padding: EdgeInsets.only(
         bottom: 8,
@@ -24,8 +54,7 @@ class PromotionList extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          NunutText(title: heading, size: 14),
-          NunutText(title: "Rp. ${nominalDiskon}", size: 14),
+          NunutText(title: heading, size: 14, maxLines: 2),
           SizedBox(height: 8),
           Row(
             children: [
@@ -130,9 +159,9 @@ class PromotionList extends StatelessWidget {
               shrinkWrap: true,
               physics: BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
-              itemCount: 5,
+              itemCount: promotionList.length,
               itemBuilder: (context, index) {
-                return promoTerbaru("Lebih Hemat Diskon", 5000, "NUNUT1");
+                return promoTerbaru(promotionList[index].title!, promotionList[index].code!);
               },
               separatorBuilder: (context, index) {
                 return SizedBox(width: 8);
@@ -162,11 +191,15 @@ class PromotionList extends StatelessWidget {
                 child: CouponCard(
                   imagePath: "https://t3.ftcdn.net/jpg/03/54/26/10/360_F_354261018_RD5YEbufu7Yjck3SNiRC6yfJLZoxIegZ.jpg",
                   date: NunutText(
-                    title: "28 Januari 2022",
+                    title: promotionList[index].expiredAt!,
                     fontWeight: FontWeight.bold,
                   ),
                   minTransaction: NunutText(
-                    title: "Rp. 15.000",
+                    title: NumberFormat.currency(
+                      locale: 'id',
+                      symbol: '',
+                      decimalDigits: 0,
+                    ).format(promotionList[index].minimum!),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -175,7 +208,7 @@ class PromotionList extends StatelessWidget {
             separatorBuilder: (context, index) {
               return SizedBox(height: 8);
             },
-            itemCount: 5,
+            itemCount: promotionList.length,
           )
         ],
       ),

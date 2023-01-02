@@ -1,14 +1,9 @@
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:nunut_application/resources/rideScheduleApi.dart';
-import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
-import 'package:nunut_application/widgets/nunutTextFormField.dart';
 import 'package:nunut_application/widgets/twoColumnView.dart';
-import 'package:intl/intl.dart';
 
 import '../models/mrideschedule.dart';
 import '../theme.dart';
@@ -27,6 +22,7 @@ class _rideShareState extends State<rideShare> {
   TextEditingController dateController = TextEditingController();
   TextEditingController timeController = TextEditingController();
   bool isSearch = false;
+  bool? rideScheduleListLoading;
 
   @override
   void initState() {
@@ -35,8 +31,16 @@ class _rideShareState extends State<rideShare> {
   }
 
   initRideScheduleList() async {
+    setState(() {
+      rideScheduleListLoading = true;
+    });
+
     rideScheduleList.clear();
     rideScheduleList = await rideScheduleApi.getRideScheduleList();
+
+    setState(() {
+      rideScheduleListLoading = false;
+    });
   }
 
   Widget buildCustomPrefixIcon(IconData iconData) {
@@ -117,7 +121,9 @@ class _rideShareState extends State<rideShare> {
                             ),
                             child: IconButton(
                               icon: Icon(Icons.bookmark, color: Colors.black),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/rideBookmark');
+                              },
                             ),
                           ),
                           SizedBox(width: 10),

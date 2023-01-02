@@ -9,6 +9,9 @@ class NunutTextFormField extends StatelessWidget {
   final bool obsecureText;
   final TextEditingController controller;
   final double width;
+  final TextInputType keyboardType;
+  final Widget suffixIcon;
+
   const NunutTextFormField({
     super.key,
     required this.title,
@@ -16,6 +19,8 @@ class NunutTextFormField extends StatelessWidget {
     required this.obsecureText,
     required this.controller,
     this.width = 1.0,
+    this.keyboardType = TextInputType.text,
+    this.suffixIcon = const SizedBox(),
   });
 
   @override
@@ -34,6 +39,7 @@ class NunutTextFormField extends StatelessWidget {
             cursorColor: Colors.black,
             obscureText: obsecureText,
             controller: controller,
+            keyboardType: keyboardType,
             decoration: InputDecoration(
               hintText: hintText,
               border: OutlineInputBorder(
@@ -47,6 +53,7 @@ class NunutTextFormField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide(color: Colors.black, width: width),
               ),
+              suffixIcon: suffixIcon,
             ),
           ),
         ],

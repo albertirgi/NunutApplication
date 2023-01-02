@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:image_stack/image_stack.dart';
 import 'package:nunut_application/theme.dart';
@@ -10,6 +12,7 @@ class TwoColumnView extends StatelessWidget {
   final String name;
   final String destination;
   final String price;
+  final bool isBookmarked;
   const TwoColumnView({
     Key? key,
     required this.imagePath,
@@ -17,6 +20,7 @@ class TwoColumnView extends StatelessWidget {
     required this.name,
     required this.destination,
     required this.price,
+    this.isBookmarked = false,
   });
 
   @override
@@ -32,11 +36,9 @@ class TwoColumnView extends StatelessWidget {
             width: 1,
           ),
         ),
-        //twocolumnview
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            //stack image with shadow and icon
             Stack(
               children: [
                 Container(
@@ -79,6 +81,15 @@ class TwoColumnView extends StatelessWidget {
                       NunutText(title: "Berangkat", color: Colors.white, size: 10),
                       NunutText(title: departureTime, color: Colors.white, size: 26),
                     ],
+                  ),
+                ),
+                //icon bookmark on top right
+                Positioned(
+                  top: 10,
+                  right: 10,
+                  child: InkWell(
+                    onTap: () {},
+                    child: Icon(Icons.bookmark, color: isBookmarked ? nunutPrimaryColor : Colors.white, size: 28),
                   ),
                 ),
               ],

@@ -127,12 +127,6 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             NunutButton(
-              title: "Bookmark",
-              onPressed: () {
-                Navigator.pushNamed(context, '/rideBookmark');
-              },
-            ),
-            NunutButton(
               title: "Offer Menu",
               onPressed: () {
                 Navigator.pushNamed(context, '/offerMenu');
@@ -154,6 +148,12 @@ class _HomePageState extends State<HomePage> {
               title: "My Profile",
               onPressed: () {
                 Navigator.pushNamed(context, '/profile');
+              },
+            ),
+            NunutButton(
+              title: "Nunut Pay",
+              onPressed: () {
+                Navigator.pushNamed(context, '/nunutPay');
               },
             ),
           ],
