@@ -12,6 +12,7 @@ import 'package:nunut_application/screens/login.dart';
 import 'package:nunut_application/screens/mainScreen.dart';
 import 'package:nunut_application/screens/myProfilePage.dart';
 import 'package:nunut_application/screens/notifikasiSukses.dart';
+import 'package:nunut_application/screens/nunutPay.dart';
 import 'package:nunut_application/screens/offerMenu.dart';
 import 'package:nunut_application/screens/orderList.dart';
 import 'package:nunut_application/screens/parkingList.dart';
@@ -27,6 +28,7 @@ import 'package:nunut_application/screens/rideBookmark.dart';
 import 'package:nunut_application/screens/rideShare.dart';
 import 'package:nunut_application/screens/splashscreen.dart';
 import 'package:nunut_application/screens/rideList.dart';
+import 'package:nunut_application/screens/topUp.dart';
 import 'package:nunut_application/screens/tripHistory.dart';
 import 'package:nunut_application/screens/rideDetail.dart';
 import 'package:nunut_application/screens/myVehicle.dart';
@@ -79,6 +81,8 @@ class MyApp extends StatelessWidget {
         '/batalkanTumpangan': (context) => const BatalkanTumpangan(),
         '/notifikasiSukses': (context) => const NotifikasiSuksesPage(),
         '/home': (context) => const HomePage(),
+        '/nunutPay': (context) => const NunutPay(),
+        '/topUp': (context) => const TopUp(),
       },
     );
   }
