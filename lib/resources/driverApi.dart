@@ -6,7 +6,7 @@ import 'package:nunut_application/models/mdriver.dart';
 
 class DriverApi {
   Future<List<Driver>> getDriverList() async {
-    var url = Uri.parse(baseUrl + '/driver');
+    var url = Uri.parse(config.baseUrl + '/driver');
     var response = await http.get(url);
 
     Result result;
@@ -23,7 +23,7 @@ class DriverApi {
   }
 
   Future<Driver> getDriverById(String id) async {
-    var url = Uri.parse(baseUrl + '/driver/' + id);
+    var url = Uri.parse(config.baseUrl + '/driver/' + id);
     var response = await http.get(url);
 
     Result result;
@@ -48,7 +48,7 @@ class DriverApi {
   }
 
   Future<void> addDriver(Driver driver) async {
-    var url = Uri.parse(baseUrl + '/driver');
+    var url = Uri.parse(config.baseUrl + '/driver');
     var request = http.MultipartRequest('POST', url);
     request.fields['name'] = driver.name;
     request.fields['phone'] = driver.phone;
