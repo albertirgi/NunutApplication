@@ -37,34 +37,34 @@ class NotificationModel {
         required this.id,
         required this.description,
         required this.image,
-        required this.isRead,
+        required this.is_read,
         required this.title,
-        required this.userId,
+        required this.user_id,
     });
 
     String id;
     String description;
     String image;
-    bool isRead;
+    bool is_read;
     String title;
-    dynamic userId;
+    dynamic user_id;
 
     factory NotificationModel.fromJson(Map<String, dynamic> json) => NotificationModel(
         id: json["id"],
         description: json["description"],
         image: json["image"],
-        isRead: json["isRead"],
+        is_read: json["is_read"],
         title: json["title"],
-        userId: json["userId"],
+        user_id: json["user_id"],
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
         "description": description,
         "image": image,
-        "isRead": isRead,
+        "is_read": is_read,
         "title": title,
-        "userId": userId,
+        "user_id": user_id,
     };
 }
 

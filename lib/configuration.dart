@@ -1,3 +1,1 @@
-import 'package:flutter/material.dart';
-
-String baseUrl = 'http://ayonunut.com';
+String baseUrl = 'http://ayonunut.com/api/v1';

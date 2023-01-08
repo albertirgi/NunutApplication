@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 
@@ -27,6 +30,7 @@ class _ChatPageState extends State<ChatPage> {
     NotificationList = await notificationApi.getNotificationList();
     setState(() {
       NotificationList = NotificationList;
+      log("isi notif list : " + jsonEncode(NotificationList));
     });
     //log("isi length " + NotificationList.length.toString());
     //log("isi NotificationList " + NotificationList.toString());
@@ -134,24 +138,23 @@ class _ChatPageState extends State<ChatPage> {
                   }
                 },
               ),
-                // ListView.builder(
-                //   shrinkWrap: true,
-                //   physics: NeverScrollableScrollPhysics(),
-                //   itemCount: NotificationList.length,
-                //   itemBuilder: (context, index) {
-                //     return InkWell(
-                //       onTap: () =>
-                //           Navigator.pushNamed(context, '/detailNotification'),
-                //       child: NotifCard(
-                //         margin: EdgeInsets.all(5),
-                //         title: NotificationList[index].title,
-                //         desc: NotificationList[index].description,
-                //       ),
-                //     );
-                //   },
+              // ListView.builder(
+              //   shrinkWrap: true,
+              //   physics: NeverScrollableScrollPhysics(),
+              //   itemCount: NotificationList.length,
+              //   itemBuilder: (context, index) {
+              //     return InkWell(
+              //       onTap: () =>
+              //           Navigator.pushNamed(context, '/detailNotification'),
+              //       child: NotifCard(
+              //         margin: EdgeInsets.all(5),
+              //         title: NotificationList[index].title,
+              //         desc: NotificationList[index].description,
+              //       ),
+              //     );
+              //   },
 
-                // ),
-              
+              // ),
             ],
           ),
         ),
