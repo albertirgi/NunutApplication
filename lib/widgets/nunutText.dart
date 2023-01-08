@@ -8,7 +8,7 @@ class NunutText extends StatelessWidget {
   final int? maxLines;
   final FontWeight? fontWeight;
   final TextDecoration textDecoration;
-  
+  final TextOverflow? overflow;
 
   const NunutText({
     super.key,
@@ -18,6 +18,7 @@ class NunutText extends StatelessWidget {
     this.maxLines = 999,
     this.fontWeight = FontWeight.normal,
     this.textDecoration = TextDecoration.none,
+    this.overflow,
   });
 
   @override

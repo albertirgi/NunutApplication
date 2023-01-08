@@ -136,7 +136,9 @@ class _NunutPayState extends State<NunutPay> {
                         ),
                         NunutButton(
                           title: "Withdraw",
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/withdraw');
+                          },
                           widthButton: 125,
                           iconButton: Icon(
                             Icons.add,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';

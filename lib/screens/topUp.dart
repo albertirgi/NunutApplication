@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nunut_application/widgets/nunutBackground.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
+import 'package:nunut_application/widgets/nunutRadioButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:nunut_application/widgets/nunutTextFormField.dart';
 
@@ -14,6 +15,48 @@ class TopUp extends StatefulWidget {
 class _TopUpState extends State<TopUp> {
   //controller
   TextEditingController topUpController = TextEditingController();
+  String? _isPaymentSelected = "GoPay";
+  bool isExpanded = false;
+  List<Widget> dropdownItems = [
+    Row(
+      children: [
+        InkWell(
+          child: ListTile(
+            title: Text("Gopay"),
+          ),
+          onTap: () {},
+        ),
+        Icon(Icons.arrow_forward_ios, size: 15),
+      ],
+    ),
+    Container(
+      height: 0.3,
+      color: Colors.grey,
+      width: double.infinity,
+    ),
+    InkWell(
+      child: ListTile(
+        title: Text("OVO"),
+      ),
+      onTap: () {},
+    ),
+    Container(
+      height: 0.3,
+      color: Colors.grey,
+      width: double.infinity,
+    ),
+    InkWell(
+      child: ListTile(
+        title: Text("DANA"),
+      ),
+      onTap: () {},
+    ),
+    Container(
+      height: 0.3,
+      color: Colors.grey,
+      width: double.infinity,
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +115,7 @@ class _TopUpState extends State<TopUp> {
           child: Container(
             margin: EdgeInsets.only(left: 20, right: 20, top: 20),
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.75,
+            // height: MediaQuery.of(context).size.height * 0.75,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -85,7 +128,7 @@ class _TopUpState extends State<TopUp> {
                   keyboardType: TextInputType.number,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     NunutButton(
                       title: "Rp. 30.000",
@@ -100,6 +143,7 @@ class _TopUpState extends State<TopUp> {
                       borderColor: Colors.transparent,
                       fontWeight: FontWeight.bold,
                     ),
+                    SizedBox(width: 10),
                     NunutButton(
                       title: "Rp. 50.000",
                       textSize: 12,
@@ -113,6 +157,7 @@ class _TopUpState extends State<TopUp> {
                       borderColor: Colors.transparent,
                       fontWeight: FontWeight.bold,
                     ),
+                    SizedBox(width: 10),
                     NunutButton(
                       title: "Rp. 100.000",
                       textSize: 12,
@@ -131,19 +176,65 @@ class _TopUpState extends State<TopUp> {
                 SizedBox(height: 30),
                 NunutText(title: "Pilih Metode Pembayaran", fontWeight: FontWeight.bold, size: 20),
                 SizedBox(height: 20),
-                NunutButton(
-                  title: "E-Money",
-                  onPressed: () {},
-                  backgroundColor: Colors.white,
-                  widthButton: MediaQuery.of(context).size.width,
-                  borderRadius: 12,
-                  type: 3,
-                  onPressedArrowButton: () {
-                    print("TEST");
-                  },
-                  borderColor: Colors.grey[300],
-                  elevation: 3,
+                Theme(
+                  data: Theme.of(context).copyWith(
+                    dividerColor: Colors.transparent,
+                  ),
+                  child: ExpansionTile(
+                    title: NunutText(
+                      title: "E-Money",
+                      fontWeight: FontWeight.bold,
+                    ),
+                    children: [
+                      NunutRadioButton(
+                        label: "GO-PAY",
+                        groupValue: _isPaymentSelected,
+                        value: "GO-PAY",
+                        onChanged: (value) {
+                          setState(() {
+                            _isPaymentSelected = value;
+                          });
+                        },
+                      ),
+                      NunutRadioButton(
+                        label: "OVO",
+                        groupValue: _isPaymentSelected,
+                        value: "OVO",
+                        onChanged: (value) {
+                          setState(() {
+                            _isPaymentSelected = value;
+                          });
+                        },
+                      ),
+                      NunutRadioButton(
+                        label: "Shopee Pay",
+                        groupValue: _isPaymentSelected,
+                        value: "Shopee Pay",
+                        onChanged: (value) {
+                          setState(() {
+                            _isPaymentSelected = value;
+                          });
+                        },
+                      ),
+                      NunutRadioButton(
+                        label: "LinkAja",
+                        groupValue: _isPaymentSelected,
+                        value: "LinkAja",
+                        onChanged: (value) {
+                          setState(() {
+                            _isPaymentSelected = value;
+                          });
+                        },
+                      ),
+                    ],
+                    onExpansionChanged: (value) {
+                      setState(() {
+                        isExpanded = value;
+                      });
+                    },
+                  ),
                 ),
+                !isExpanded ? Divider(height: 1) : Container(),
                 SizedBox(height: 20),
                 NunutButton(
                   title: "ATM / Bank Transfer",
@@ -172,7 +263,7 @@ class _TopUpState extends State<TopUp> {
                   borderColor: Colors.grey[300],
                   elevation: 3,
                 ),
-                Spacer(),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.2),
                 Container(
                   margin: EdgeInsets.only(bottom: 20),
                   child: NunutButton(
@@ -182,7 +273,7 @@ class _TopUpState extends State<TopUp> {
                     borderColor: Colors.transparent,
                     borderRadius: 12,
                   ),
-                )
+                ),
               ],
             ),
           ),

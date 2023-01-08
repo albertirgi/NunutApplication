@@ -83,13 +83,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   controller: nik,
                   width: 1.5,
                 ),
-                NunutTextFormField(
-                  title: "Kata Sandi",
-                  hintText: "Kata Sandi",
-                  obsecureText: true,
-                  controller: password,
-                  width: 1.5,
-                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -152,33 +145,65 @@ class _RegisterPageState extends State<RegisterPage> {
                   title: "Daftar",
                   widthButton: 200,
                   onPressed: () {
-                    Future.delayed(
-                      Duration(seconds: 3),
-                      () {
-                        //Panggil Fungsi AuthService SignUp
-                        AuthService.signUp(
-                          email: email.text,
-                          name: fullName.text,
-                          nik: nik.text,
-                          password: password.text,
-                          phone: noTelp.text,
-                        );
+                    //all field must be filled
+                    if (email.text.isNotEmpty && fullName.text.isNotEmpty && password.text.isNotEmpty && confirmPassword.text.isNotEmpty && nik.text.isNotEmpty && noTelp.text.isNotEmpty) {
+                      final bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email.text); // check email valid or not
+                      if (emailValid) {
+                        if (password.text.length >= 8) {
+                          if (password.text == confirmPassword.text) {
+                            Future.delayed(
+                              Duration(seconds: 3),
+                              () {
+                                AuthService.signUp(
+                                  email: email.text,
+                                  name: fullName.text,
+                                  nik: nik.text,
+                                  password: password.text,
+                                  phone: noTelp.text,
+                                );
 
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text("Account Created"),
+                                    duration: Duration(seconds: 1),
+                                  ),
+                                );
+                                Future.delayed(
+                                  Duration(seconds: 2),
+                                  () {
+                                    Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
+                                  },
+                                );
+                              },
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text("Password tidak sama"),
+                              ),
+                            );
+                          }
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Password minimal 8 karakter"),
+                            ),
+                          );
+                        }
+                      } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text("Account Created"),
-                            duration: Duration(seconds: 1),
+                            content: Text("Email tidak valid"),
                           ),
                         );
-                        Future.delayed(
-                          Duration(seconds: 2),
-                          () {
-                            Navigator.pushNamedAndRemoveUntil(
-                                context, '/main', (route) => false);
-                          },
-                        );
-                      },
-                    );
+                      }
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Semua Data harus diisi"),
+                        ),
+                      );
+                    }
                   },
                 ),
               ],

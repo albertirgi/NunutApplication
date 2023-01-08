@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/models/muser.dart';
 import 'package:nunut_application/resources/userApi.dart';
 
@@ -13,8 +14,7 @@ class AuthService {
     required String phone,
   }) async {
     try {
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(email: email, password: password);
 
       UserModel user = UserModel(
         email: email,
@@ -23,8 +23,7 @@ class AuthService {
         phone: phone,
       );
 
-      await UserService()
-          .tambahData(user: user, userCredential: userCredential);
+      await UserService().tambahData(user: user, userCredential: userCredential);
     } catch (e) {
       throw e;
     }
@@ -35,22 +34,18 @@ class AuthService {
     required String password,
   }) async {
     try {
-      UserCredential userCredential = await auth.signInWithEmailAndPassword(
-          email: email, password: password);
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(email: email, password: password);
 
-      UserModel user =
-          await UserService().getUserByID(userCredential.user!.uid);
+      UserModel user = await UserService().getUserByID(userCredential.user!.uid);
       return user;
     } catch (e) {
+      Fluttertoast.showToast(msg: "Password atau Email Salah");
       throw e;
     }
   }
 
   static Future<void> signOut() async {
-    await auth
-        .signOut()
-        .whenComplete(() => print("Berhasil Logout"))
-        .catchError((e) => print(e.toString()));
+    await auth.signOut().whenComplete(() => print("Berhasil Logout")).catchError((e) => print(e.toString()));
   }
 
   static Future<UserModel> getCurrentUser() async {
