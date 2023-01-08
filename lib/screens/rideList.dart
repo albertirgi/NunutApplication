@@ -1,10 +1,12 @@
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:nunut_application/widgets/nunutTripCard.dart';
 import 'package:intl/intl.dart';
 
+import '../resources/rideScheduleApi.dart';
 import '../widgets/nunutButton.dart';
 
 class RideList extends StatefulWidget {
@@ -29,7 +31,7 @@ class _RideListState extends State<RideList> {
   TextEditingController _meetingPointController = TextEditingController();
   TextEditingController _destinationController = TextEditingController();
   TextEditingController _vehicleController = TextEditingController();
-  int _capacityValue = 0;
+  int _capacityValue = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -595,7 +597,49 @@ class _RideListState extends State<RideList> {
                       alignment: Alignment.center,
                       child: NunutButton(
                         title: "Buat",
-                        onPressed: () {},
+                        onPressed: () async {
+                          var postRideScheduleStatus =
+                              await RideScheduleApi.PostRideSchedule(
+                            _dateController.text.toString(),
+                            _timeController.text.toString(),
+                            "112.73747806931482",
+                            "-7.338620797269136",
+                            "7.344542569968449",
+                            "112.73747806931482",
+                            "vehicle_id",
+                            _capacityValue.toString(),
+                            "driver_id",
+                          );
+
+                          //log("status :" + postRideScheduleStatus.toString());
+                          if (postRideScheduleStatus == true) {
+                            Fluttertoast.showToast(
+                                msg: "Berhasil membuat jadwal",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.green,
+                                textColor: Colors.white,
+                                fontSize: 16.0);
+                            //empty all textfield
+                            setState(() {
+                              _dateController.text = "";
+                              _timeController.text = "";
+                              _meetingPointController.text = "";
+                              _destinationController.text = "";
+                              _capacityValue = 1;
+                            });
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Gagal membuat jadwal",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.red,
+                                textColor: Colors.white,
+                                fontSize: 16.0);
+                          }
+                        },
                         heightButton: 35,
                         widthButton: 110,
                         fontWeight: FontWeight.w500,

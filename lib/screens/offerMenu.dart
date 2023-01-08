@@ -1,8 +1,13 @@
+import 'dart:developer';
+
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:nunut_application/models/mrideschedule.dart';
+import 'package:nunut_application/resources/rideScheduleApi.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/couponCard.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
@@ -25,7 +30,7 @@ class _OfferMenuState extends State<OfferMenu> {
   TextEditingController _meetingPointController = TextEditingController();
   TextEditingController _destinationController = TextEditingController();
   TextEditingController _vehicleController = TextEditingController();
-  int _capacityValue = 0;
+  int _capacityValue = 1;
 
   void _changeSelectedNavBar(int index) {
     setState(() {
@@ -704,7 +709,50 @@ class _OfferMenuState extends State<OfferMenu> {
                                             alignment: Alignment.center,
                                             child: NunutButton(
                                               title: "Buat",
-                                              onPressed: () {},
+                                              onPressed: () async {
+                                                var postRideScheduleStatus = await  RideScheduleApi.PostRideSchedule(
+                                                  _dateController.text.toString(), 
+                                                  _timeController.text.toString(), 
+                                                  "112.73747806931482", 
+                                                  "-7.338620797269136", 
+                                                  "7.344542569968449", 
+                                                  "112.73747806931482",
+                                                  "vehicle_id",
+                                                  _capacityValue.toString(), 
+                                                  "driver_id",
+                                                  );
+                                                  
+                                                //log("status :" + postRideScheduleStatus.toString());
+                                                if(postRideScheduleStatus == true){
+                                                  Fluttertoast.showToast(
+                                                    msg: "Berhasil membuat jadwal",
+                                                    toastLength: Toast.LENGTH_SHORT,
+                                                    gravity: ToastGravity.BOTTOM,
+                                                    timeInSecForIosWeb: 1,
+                                                    backgroundColor: Colors.green,
+                                                    textColor: Colors.white,
+                                                    fontSize: 16.0
+                                                  );
+                                                  setState(() {
+                                                    _dateController.text = "";
+                                                    _timeController.text = "";
+                                                    _meetingPointController.text = "";
+                                                    _destinationController.text = "";
+                                                    _capacityValue = 1;
+                                                  });
+                                                }
+                                                else{
+                                                  Fluttertoast.showToast(
+                                                    msg: "Gagal membuat jadwal",
+                                                    toastLength: Toast.LENGTH_SHORT,
+                                                    gravity: ToastGravity.BOTTOM,
+                                                    timeInSecForIosWeb: 1,
+                                                    backgroundColor: Colors.red,
+                                                    textColor: Colors.white,
+                                                    fontSize: 16.0
+                                                  );
+                                                }
+                                              },
                                               heightButton: 35,
                                               widthButton: 110,
                                               fontWeight: FontWeight.w500,

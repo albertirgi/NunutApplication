@@ -123,21 +123,29 @@ class _PengaduanKendalaPageState extends State<PengaduanKendalaPage> {
                           ),
                         ),
                         onPressed: () async {
-                          var status_post = await ReportApi.PostReport(title.text.toString(), description.text.toString(), "CONTOH RIDE REQ ID", user_id.toString());
+                          var status_post = await ReportApi.PostReport(
+                              title.text.toString(),
+                              description.text.toString(),
+                              "CONTOH RIDE REQ ID",
+                              user_id.toString());
                           //get status api
                           log("status post: $status_post");
-                          if(status_post == true){
+                          if (status_post == true) {
                             Navigator.pushNamed(context, '/notifikasiSukses',
-                              arguments: {
-                                'title': "Pengaduan Kendala Berhasil Terkirim!",
-                                'description':
-                                    "Mohon menunggu balasan dari Nunut pada email anda!",
-                              });
+                                arguments: {
+                                  'title':
+                                      "Pengaduan Kendala Berhasil Terkirim!",
+                                  'description':
+                                      "Mohon menunggu balasan dari Nunut pada email anda!",
+                                });
+                            setState(() {
+                              title.text = "";
+                              description.text = "";
+                            });
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Laporan Gagal Terkirim");
                           }
-                          else{
-                            Fluttertoast.showToast(msg: "Laporan Gagal Terkirim");
-                          }
-                          
                         },
                         child: Text(
                           "Kirim Pengaduan",
