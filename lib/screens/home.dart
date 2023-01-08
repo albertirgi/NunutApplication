@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 
 class HomePage extends StatefulWidget {

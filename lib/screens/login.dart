@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
@@ -79,11 +81,16 @@ class _LoginPageState extends State<LoginPage> {
                   title: "Masuk",
                   widthButton: 200,
                   onPressed: () async {
-                    tmpUser = await AuthService.signIn(email: username.text, password: password.text);
-
-                    log(jsonEncode(tmpUser));
-                    if (tmpUser.email != "") {
-                      Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
+                    if (username.text == "" || password.text == "") {
+                      Fluttertoast.showToast(msg: "Cek Kembali Email dan Password Anda");
+                    } else {
+                      tmpUser = await AuthService.signIn(email: username.text, password: password.text);
+                      if (tmpUser.email != "") {
+                        config.user = tmpUser;
+                        Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
+                      } else {
+                        Fluttertoast.showToast(msg: "Cek Kembali Email dan Password Anda");
+                      }
                     }
                   },
                 ),
