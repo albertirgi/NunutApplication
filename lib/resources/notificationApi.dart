@@ -19,7 +19,7 @@ class NotificationApi {
     if (result.status == 200) {
       //log("isi result " + result.data.toString());
       result.data.forEach((item) {
-        log("isi item " + item.toString());
+        //log("isi item " + item.toString());
         notificationList.add(NotificationModel.fromJson(item));
         //log("isi notificationList " + notificationList[0].title.toString());
       });

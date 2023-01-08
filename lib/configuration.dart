@@ -6,8 +6,8 @@ class Configuration extends InheritedWidget {
     return context.dependOnInheritedWidgetOfExactType<Configuration>()!;
   }
 
-  // String baseUrl = 'http://ayonunut.com';
-  String baseUrl = "http://104.208.76.39/api/v1";
+  String baseUrl = 'https://ayonunut.com/api/v1';
+  //String baseUrl = "http://104.208.76.39/api/v1";
 
   Configuration({Key? key, Widget? child}) : super(key: key, child: child != null ? child : MaterialApp());
   bool updateShouldNotify(Configuration oldWidget) => true;

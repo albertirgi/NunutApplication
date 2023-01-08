@@ -30,7 +30,7 @@ class _ChatPageState extends State<ChatPage> {
     NotificationList = await notificationApi.getNotificationList();
     setState(() {
       NotificationList = NotificationList;
-      log("isi notif list : " + jsonEncode(NotificationList));
+      //log("isi notif list : " + jsonEncode(NotificationList));
     });
     //log("isi length " + NotificationList.length.toString());
     //log("isi NotificationList " + NotificationList.toString());

@@ -1,5 +1,10 @@
+import 'dart:developer';
+
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nunut_application/configuration.dart';
+import 'package:nunut_application/resources/reportApi.dart';
 import 'package:nunut_application/theme.dart';
 
 import '../widgets/nunutTextFormField.dart';
@@ -14,6 +19,7 @@ class PengaduanKendalaPage extends StatefulWidget {
 class _PengaduanKendalaPageState extends State<PengaduanKendalaPage> {
   TextEditingController title = TextEditingController();
   TextEditingController description = TextEditingController();
+  final user_id = config.user.id;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,13 +122,22 @@ class _PengaduanKendalaPageState extends State<PengaduanKendalaPage> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/notifikasiSukses',
+                        onPressed: () async {
+                          var status_post = await ReportApi.PostReport(title.text.toString(), description.text.toString(), "CONTOH RIDE REQ ID", user_id.toString());
+                          //get status api
+                          log("status post: $status_post");
+                          if(status_post == true){
+                            Navigator.pushNamed(context, '/notifikasiSukses',
                               arguments: {
                                 'title': "Pengaduan Kendala Berhasil Terkirim!",
                                 'description':
                                     "Mohon menunggu balasan dari Nunut pada email anda!",
                               });
+                          }
+                          else{
+                            Fluttertoast.showToast(msg: "Laporan Gagal Terkirim");
+                          }
+                          
                         },
                         child: Text(
                           "Kirim Pengaduan",

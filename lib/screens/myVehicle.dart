@@ -1,13 +1,6 @@
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:bordered_text/bordered_text.dart';
-import 'package:nunut_application/theme.dart';
-import 'package:nunut_application/widgets/nunutBackground.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
-import 'package:nunut_application/widgets/nunutCard.dart';
-import 'package:nunut_application/widgets/nunutTextFormField.dart';
-import 'package:nunut_application/widgets/nunutTripCard.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:roundcheckbox/roundcheckbox.dart';
 
@@ -19,6 +12,7 @@ class MyVehicle extends StatefulWidget {
 }
 
 class _MyVehicleState extends State<MyVehicle> {
+  TextEditingController _carTypeController = TextEditingController();
   TextEditingController _vehicleTypeController = TextEditingController();
   TextEditingController _licensePlateController = TextEditingController();
   TextEditingController _expiredDateController = TextEditingController();
@@ -117,16 +111,16 @@ class _MyVehicleState extends State<MyVehicle> {
                                     },
                                   ),
                                 ),
-                                SizedBox(height: 30),
+                                SizedBox(height: 15),
                                 NunutText(
                                   title: "Tambah Kendaraan Baru",
                                   color: Colors.black,
                                   size: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
-                                SizedBox(height: 30),
+                                SizedBox(height: 15),
                                 NunutText(
-                                  title: "Jenis Kendaraan",
+                                  title: "Jenis Mobil",
                                   fontWeight: FontWeight.bold,
                                   size: 12,
                                 ),
@@ -138,7 +132,7 @@ class _MyVehicleState extends State<MyVehicle> {
                                   ),
                                   cursorColor: Colors.black,
                                   obscureText: false,
-                                  controller: _vehicleTypeController,
+                                  controller: _carTypeController,
                                   decoration: InputDecoration(
                                     contentPadding: EdgeInsets.symmetric(
                                         horizontal: 10, vertical: 10),
@@ -167,7 +161,49 @@ class _MyVehicleState extends State<MyVehicle> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: 30),
+                                SizedBox(height: 15),
+                                NunutText(
+                                  title: "Tipe Kendaraan",
+                                  fontWeight: FontWeight.bold,
+                                  size: 12,
+                                ),
+                                SizedBox(height: 10),
+                                TextFormField(
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 12,
+                                  ),
+                                  cursorColor: Colors.black,
+                                  obscureText: false,
+                                  controller: _vehicleTypeController,
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 10),
+                                    isDense: true,
+                                    hintText: "e.g. SUV, City Car, MPV, etc.",
+                                    hintStyle: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 12,
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.grey[300],
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(50),
+                                      borderSide: const BorderSide(
+                                        width: 0,
+                                        style: BorderStyle.none,
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(50),
+                                      borderSide: const BorderSide(
+                                        width: 0,
+                                        style: BorderStyle.none,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 15),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -280,7 +316,7 @@ class _MyVehicleState extends State<MyVehicle> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 30),
+                                SizedBox(height: 15),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -391,7 +427,7 @@ class _MyVehicleState extends State<MyVehicle> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 30),
+                                SizedBox(height: 15),
                                 Row(
                                   children: [
                                     RoundCheckBox(
@@ -421,7 +457,7 @@ class _MyVehicleState extends State<MyVehicle> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 30),
+                                SizedBox(height: 15),
                                 Align(
                                   alignment: Alignment.center,
                                   child: NunutButton(

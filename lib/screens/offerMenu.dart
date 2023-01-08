@@ -23,6 +23,7 @@ class _OfferMenuState extends State<OfferMenu> {
   TextEditingController _dateController = TextEditingController();
   TextEditingController _timeController = TextEditingController();
   TextEditingController _meetingPointController = TextEditingController();
+  TextEditingController _destinationController = TextEditingController();
   TextEditingController _vehicleController = TextEditingController();
   int _capacityValue = 0;
 
@@ -141,7 +142,7 @@ class _OfferMenuState extends State<OfferMenu> {
                                     child: Container(
                                       constraints: BoxConstraints(
                                         maxHeight:
-                                            MediaQuery.of(context).size.height,
+                                            MediaQuery.of(context).size.height ,
                                         minHeight:
                                             MediaQuery.of(context).size.height *
                                                 0.60,
@@ -180,14 +181,14 @@ class _OfferMenuState extends State<OfferMenu> {
                                               },
                                             ),
                                           ),
-                                          SizedBox(height: 30),
+                                          SizedBox(height: 15),
                                           NunutText(
                                             title: "Buat Tumpangan Baru",
                                             color: Colors.black,
                                             size: 20,
                                             fontWeight: FontWeight.bold,
                                           ),
-                                          SizedBox(height: 30),
+                                          SizedBox(height: 15),
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
@@ -383,7 +384,7 @@ class _OfferMenuState extends State<OfferMenu> {
                                               ),
                                             ],
                                           ),
-                                          SizedBox(height: 30),
+                                          SizedBox(height: 15),
                                           NunutText(
                                             title: "Meeting Point",
                                             fontWeight: FontWeight.bold,
@@ -457,7 +458,68 @@ class _OfferMenuState extends State<OfferMenu> {
                                               ),
                                             ],
                                           ),
-                                          SizedBox(height: 30),
+                                          SizedBox(height: 15),
+                                          NunutText(
+                                            title: "Tujuan Destinasi",
+                                            fontWeight: FontWeight.bold,
+                                            size: 12,
+                                          ),
+                                          SizedBox(height: 10),
+                                          Stack(
+                                            children: [
+                                              TextFormField(
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 12,
+                                                ),
+                                                cursorColor: Colors.black,
+                                                obscureText: false,
+                                                controller: _destinationController,
+                                                decoration: InputDecoration(
+                                                  contentPadding: EdgeInsets.symmetric(
+                                                      horizontal: 10, vertical: 10),
+                                                  isDense: true,
+                                                  hintText: "Pilih tujuan destinasimu...",
+                                                  hintStyle: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 12,
+                                                  ),
+                                                  filled: true,
+                                                  fillColor: Colors.grey[300],
+                                                  border: OutlineInputBorder(
+                                                    borderRadius: BorderRadius.circular(50),
+                                                    borderSide: const BorderSide(
+                                                      width: 0,
+                                                      style: BorderStyle.none,
+                                                    ),
+                                                  ),
+                                                  focusedBorder: OutlineInputBorder(
+                                                    borderRadius: BorderRadius.circular(50),
+                                                    borderSide: const BorderSide(
+                                                      width: 0,
+                                                      style: BorderStyle.none,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                right: 5,
+                                                top: 5,
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(50),
+                                                    color: Colors.grey[300],
+                                                  ),
+                                                  child: Icon(
+                                                    Icons.arrow_drop_down,
+                                                    color: Colors.black,
+                                                    size: 20,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(height: 15),
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
