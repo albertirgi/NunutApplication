@@ -32,6 +32,8 @@ import 'package:nunut_application/screens/topUp.dart';
 import 'package:nunut_application/screens/tripHistory.dart';
 import 'package:nunut_application/screens/rideDetail.dart';
 import 'package:nunut_application/screens/myVehicle.dart';
+import 'package:nunut_application/screens/withdraw.dart';
+import 'package:nunut_application/screens/withdrawConfirmation.dart';
 
 import 'firebase_options.dart';
 
@@ -83,6 +85,8 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomePage(),
         '/nunutPay': (context) => const NunutPay(),
         '/topUp': (context) => const TopUp(),
+        '/withdraw': (context) => const Withdraw(),
+        '/withdrawConfirmation': (context) => const WithdrawConfirmation(),
       },
     );
   }

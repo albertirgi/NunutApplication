@@ -3,12 +3,14 @@ class UserModel {
   final String name;
   final String nik;
   final String phone;
+  String? id;
 
   UserModel({
     required this.email,
     required this.name,
     required this.nik,
     required this.phone,
+    this.id,
   });
 
   Map<String, dynamic> toJson() {
@@ -17,6 +19,7 @@ class UserModel {
       "name": name,
       "nik": nik,
       "phone": phone,
+      "id": id,
     };
   }
 
@@ -26,6 +29,7 @@ class UserModel {
       name: json['name'],
       nik: json['nik'],
       phone: json['phone'],
+      id: json['id'],
     );
   }
 }

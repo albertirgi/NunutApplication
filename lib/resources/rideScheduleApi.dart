@@ -6,11 +6,10 @@ import 'package:nunut_application/models/mresult.dart';
 import 'package:nunut_application/models/mrideschedule.dart';
 
 class RideScheduleApi {
-  Future<List<RideSchedule>> getRideScheduleList() async {
-    var url = Uri.parse(baseUrl + '/ride-schedule');
+  Future<List<RideSchedule>> getRideScheduleList({String parameter = ""}) async {
+    if (parameter.isNotEmpty) parameter = "?$parameter";
+    var url = Uri.parse(config.baseUrl + '/ride-schedule' + parameter);
     var response = await http.get(url);
-
-    
 
     Result result;
     List<RideSchedule> rideScheduleList = [];

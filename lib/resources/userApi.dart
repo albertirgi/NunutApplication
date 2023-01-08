@@ -2,18 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nunut_application/models/muser.dart';
 
-CollectionReference collectionRef =
-    FirebaseFirestore.instance.collection("users");
+CollectionReference collectionRef = FirebaseFirestore.instance.collection("users");
 
 class UserService {
-  Future<void> tambahData(
-      {required UserModel user, required UserCredential userCredential}) async {
+  Future<void> tambahData({required UserModel user, required UserCredential userCredential}) async {
     DocumentReference docRef = collectionRef.doc(userCredential.user!.uid);
 
-    await docRef
-        .set(user.toJson())
-        .whenComplete(() => print("Data Berhasil Ditambahkan"))
-        .catchError((e) => print(e.toString()));
+    await docRef.set(user.toJson()).whenComplete(() => print("Data Berhasil Ditambahkan")).catchError((e) => print(e.toString()));
   }
 
   Future<UserModel> getUserByID(String id) async {
@@ -25,6 +20,7 @@ class UserService {
         name: snapshot['name'],
         nik: snapshot['nik'],
         phone: snapshot['phone'],
+        id: id,
       );
     } catch (e) {
       throw e;

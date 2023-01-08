@@ -1,6 +1,7 @@
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/resources/rideScheduleApi.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:nunut_application/widgets/twoColumnView.dart';
@@ -36,7 +37,7 @@ class _rideShareState extends State<rideShare> {
     });
 
     rideScheduleList.clear();
-    rideScheduleList = await rideScheduleApi.getRideScheduleList();
+    rideScheduleList = await rideScheduleApi.getRideScheduleList(parameter: "${config.user.id}&driver");
 
     setState(() {
       rideScheduleListLoading = false;
@@ -370,6 +371,7 @@ class _rideShareState extends State<rideShare> {
                           departureTime: rideScheduleList[index].time!,
                           name: rideScheduleList[index].userId!,
                           destination: "SPBU Manyar",
+                          isBookmarked: rideScheduleList[index].isBookmarked!,
                           price: NumberFormat.currency(
                             locale: 'id',
                             symbol: '',

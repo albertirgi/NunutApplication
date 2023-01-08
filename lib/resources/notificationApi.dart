@@ -7,7 +7,7 @@ import 'package:nunut_application/models/mnotification.dart';
 
 class NotificationApi {
   Future<List<NotificationModel>> getNotificationList() async {
-    var url = Uri.parse(baseUrl + '/notification');
+    var url = Uri.parse(config.baseUrl + '/notification');
     var response = await http.get(url);
 
     Result result;

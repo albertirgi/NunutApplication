@@ -1,9 +1,49 @@
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
+import 'package:nunut_application/configuration.dart';
+import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/widgets/twoColumnView.dart';
+import 'package:intl/intl.dart';
 
-class RideBookmark extends StatelessWidget {
+import '../resources/rideScheduleApi.dart';
+
+class RideBookmark extends StatefulWidget {
   const RideBookmark({super.key});
+
+  @override
+  State<RideBookmark> createState() => _RideBookmarkState();
+}
+
+class _RideBookmarkState extends State<RideBookmark> {
+  List<RideSchedule> rideScheduleList = [];
+  List<RideSchedule> bookmarkedList = [];
+  bool? rideScheduleListLoading;
+
+  void initState() {
+    super.initState();
+    initRideScheduleList();
+  }
+
+  initRideScheduleList() async {
+    setState(() {
+      rideScheduleListLoading = true;
+    });
+
+    rideScheduleList.clear();
+    rideScheduleList = await rideScheduleApi.getRideScheduleList(parameter: "${config.user.id}&driver");
+
+    //filter bookmark
+    bookmarkedList.clear();
+    rideScheduleList.forEach((element) {
+      if (element.isBookmarked == true) {
+        bookmarkedList.add(element);
+      }
+    });
+
+    setState(() {
+      rideScheduleListLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,33 +85,38 @@ class RideBookmark extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(
-            top: MediaQuery.of(context).size.height * 0.25,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: GridView.builder(
-              physics: ScrollPhysics(),
-              padding: EdgeInsets.all(16),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                childAspectRatio: 0.65,
-              ),
-              shrinkWrap: true,
-              itemCount: 8,
-              itemBuilder: (context, index) {
-                return TwoColumnView(
-                  departureTime: "18.00",
-                  destination: "UKP",
-                  name: "Joko",
-                  price: "5000",
-                  imagePath: "https://images.unsplash.com/photo-1458071103673-6a6e4c4a3413?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-                );
-              },
-            ),
-          )
+          bookmarkedList.isNotEmpty
+              ? Positioned(
+                  top: MediaQuery.of(context).size.height * 0.25,
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    padding: EdgeInsets.only(left: 20, right: 20),
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      physics: ScrollPhysics(),
+                      itemCount: rideScheduleList.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.7, crossAxisSpacing: 15, mainAxisSpacing: 15),
+                      itemBuilder: (context, index) {
+                        return TwoColumnView(
+                          imagePath: "https://images.unsplash.com/photo-1470406852800-b97e5d92e2aa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+                          departureTime: bookmarkedList[index].time!,
+                          name: bookmarkedList[index].userId!,
+                          destination: "SPBU Manyar",
+                          price: NumberFormat.currency(
+                            locale: 'id',
+                            symbol: '',
+                            decimalDigits: 0,
+                          ).format(bookmarkedList[index].price!),
+                        );
+                      },
+                    ),
+                  ),
+                )
+              : Center(
+                  child: Text("No bookmarked ride"),
+                ),
         ],
       ),
     );
