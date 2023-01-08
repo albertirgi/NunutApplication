@@ -52,4 +52,14 @@ class AuthService {
         .whenComplete(() => print("Berhasil Logout"))
         .catchError((e) => print(e.toString()));
   }
+
+  static Future<UserModel> getCurrentUser() async {
+    try {
+      User? user = auth.currentUser;
+      UserModel userModel = await UserService().getUserByID(user!.uid);
+      return userModel;
+    } catch (e) {
+      throw e;
+    }
+  }
 }

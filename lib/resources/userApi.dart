@@ -30,4 +30,20 @@ class UserService {
       throw e;
     }
   }
+
+  Future<void> updateUser({required UserModel user}) async {
+    try {
+      User? userAuth = FirebaseAuth.instance.currentUser;
+      DocumentReference docRef = collectionRef.doc(userAuth!.uid);
+      print(userAuth.uid);
+      print(user.name.toString());
+
+      await docRef
+          .update(user.toJson())
+          .whenComplete(() => print("Data Berhasil Diupdate"))
+          .catchError((e) => print(e.toString()));
+    } catch (e) {
+      throw e;
+    }
+  }
 }

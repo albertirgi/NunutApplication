@@ -1,5 +1,7 @@
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
+import 'package:nunut_application/models/muser.dart';
+import 'package:nunut_application/resources/userApi.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutTextFormField.dart';
 
@@ -18,6 +20,12 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
   TextEditingController noTelp = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    UserModel user = ModalRoute.of(context)!.settings.arguments as UserModel;
+    fullName.text = user.name;
+    nik.text = user.nik;
+    noTelp.text = user.phone;
+    UserService userService = UserService();
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -291,8 +299,18 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                   SizedBox(height: 20),
                   Container(
                       margin: EdgeInsets.only(top: 0, left: 20, right: 20),
-                      child:
-                          NunutButton(title: "Simpan Data", onPressed: () {})),
+                      child: NunutButton(
+                          title: "Simpan Data",
+                          onPressed: () {
+                            userService.updateUser(
+                                user: UserModel(
+                                    email: user.email,
+                                    name: fullName.text,
+                                    nik: nik.text,
+                                    phone: noTelp.text));
+                            Navigator.pop(context);
+                            Navigator.popAndPushNamed(context, '/profile');
+                          })),
                 ],
               ),
             ),

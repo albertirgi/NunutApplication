@@ -1,5 +1,8 @@
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
+import 'package:nunut_application/models/muser.dart';
+import 'package:nunut_application/resources/authApi.dart';
+import 'package:nunut_application/resources/userApi.dart';
 import 'package:nunut_application/theme.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -10,6 +13,21 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  AuthService authService = AuthService();
+  UserModel user = UserModel(name: "", email: "", nik: "", phone: "");
+  @override
+  void initState() {
+    super.initState();
+    getUser();
+  }
+
+  void getUser() async {
+    UserModel user = await AuthService.getCurrentUser();
+    setState(() {
+      this.user = user;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,7 +105,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               children: [
                                 SizedBox(height: 20),
                                 Text(
-                                  "Grace Natasha",
+                                  user.name == "" ? "Loading..." : user.name,
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
@@ -96,7 +114,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  "+6287861907645",
+                                  user.phone == "" ? "Loading..." : user.phone,
                                   style: TextStyle(
                                     color: Color.fromARGB(255, 28, 27, 27),
                                     fontSize: 12,
@@ -104,7 +122,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  "gracenatasha@gmail.com",
+                                  user.email == "" ? "Loading..." : user.email,
                                   style: TextStyle(
                                     color: Color.fromARGB(255, 28, 27, 27),
                                     fontSize: 12,
@@ -115,7 +133,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                   onTap: () {
                                     //to detail Profile page
                                     Navigator.pushNamed(
-                                        context, '/detailprofile');
+                                        context, '/detailprofile',
+                                        arguments: user);
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(

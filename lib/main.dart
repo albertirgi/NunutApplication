@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
         '/pengaduanKendala': (context) => const PengaduanKendalaPage(),
         '/batalkanTumpangan': (context) => const BatalkanTumpangan(),
         '/notifikasiSukses': (context) => const NotifikasiSuksesPage(),
-        '/home': (context) => const HomePage(),
+        '/home': (context) => const Home(),
         '/nunutPay': (context) => const NunutPay(),
         '/topUp': (context) => const TopUp(),
       },
