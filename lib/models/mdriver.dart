@@ -10,6 +10,7 @@ class Driver {
     required this.aggrementLetter,
     required this.drivingLicense,
     required this.name,
+    required this.email,
     required this.image,
     required this.nik,
     required this.phone,
@@ -22,6 +23,7 @@ class Driver {
   String aggrementLetter;
   String drivingLicense;
   String name;
+  String email;
   String image;
   String nik;
   String phone;
@@ -31,15 +33,16 @@ class Driver {
 
   factory Driver.fromJson(Map<String, dynamic> json) => Driver(
         driverId: json["driver_id"],
-        aggrementLetter: json["agreement_letter"],
+        aggrementLetter: json["aggrement_letter"],
         drivingLicense: json["driving_license"],
         name: json["name"],
+        email: json["email"],
         image: json["image"],
         nik: json["nik"],
         phone: json["phone"],
         status: json["status"],
         studentCard: json["student_card"],
-        userId: json["userId"],
+        userId: json["user_id"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -47,11 +50,12 @@ class Driver {
         "agreement_letter": aggrementLetter,
         "driving_license": drivingLicense,
         "name": name,
+        "email": email,
         "image": image,
         "nik": nik,
         "phone": phone,
         "status": status,
         "student_card": studentCard,
-        "userId": userId,
+        "user_id": userId,
       };
 }

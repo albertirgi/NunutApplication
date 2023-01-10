@@ -32,6 +32,7 @@ class DriverApi {
         aggrementLetter: "",
         drivingLicense: "",
         name: "",
+        email: "",
         image: "",
         nik: "",
         phone: "",
@@ -51,6 +52,7 @@ class DriverApi {
     var url = Uri.parse(config.baseUrl + '/driver');
     var request = http.MultipartRequest('POST', url);
     request.fields['name'] = driver.name;
+    request.fields['email'] = driver.email;
     request.fields['phone'] = driver.phone;
     request.fields['nik'] = driver.nik;
     request.fields['status'] = driver.status;
