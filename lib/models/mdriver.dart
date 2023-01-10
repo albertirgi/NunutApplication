@@ -30,28 +30,28 @@ class Driver {
   String userId;
 
   factory Driver.fromJson(Map<String, dynamic> json) => Driver(
-        driverId: json["driverId"],
-        aggrementLetter: json["aggrementLetter"],
-        drivingLicense: json["drivingLicense"],
+        driverId: json["driver_id"],
+        aggrementLetter: json["agreement_letter"],
+        drivingLicense: json["driving_license"],
         name: json["name"],
         image: json["image"],
         nik: json["nik"],
         phone: json["phone"],
         status: json["status"],
-        studentCard: json["studentCard"],
+        studentCard: json["student_card"],
         userId: json["userId"],
       );
 
   Map<String, dynamic> toJson() => {
-        "driverId": driverId,
-        "aggrementLetter": aggrementLetter,
-        "drivingLicense": drivingLicense,
+        "driver_id": driverId,
+        "agreement_letter": aggrementLetter,
+        "driving_license": drivingLicense,
         "name": name,
         "image": image,
         "nik": nik,
         "phone": phone,
         "status": status,
-        "studentCard": studentCard,
+        "student_card": studentCard,
         "userId": userId,
       };
 }
