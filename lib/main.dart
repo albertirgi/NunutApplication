@@ -34,6 +34,7 @@ import 'package:nunut_application/screens/rideDetail.dart';
 import 'package:nunut_application/screens/myVehicle.dart';
 import 'package:nunut_application/screens/withdraw.dart';
 import 'package:nunut_application/screens/withdrawConfirmation.dart';
+import 'package:nunut_application/screens/snap.dart';
 
 import 'firebase_options.dart';
 
@@ -87,6 +88,9 @@ class MyApp extends StatelessWidget {
         '/topUp': (context) => const TopUp(),
         '/withdraw': (context) => const Withdraw(),
         '/withdrawConfirmation': (context) => const WithdrawConfirmation(),
+        '/snap': (context) => SnapScreen(
+              transactionToken: '964dd4a3-d1b3-40e1-9a3e-85aa054b00f0',
+            ),
       },
     );
   }

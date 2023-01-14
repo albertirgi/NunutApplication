@@ -169,6 +169,12 @@ class _HomePageState extends State<HomePage> {
                 Navigator.pushNamed(context, '/home');
               },
             ),
+            NunutButton(
+              title: "Snap",
+              onPressed: () {
+                Navigator.pushNamed(context, '/snap');
+              },
+            ),
           ],
         ),
       ),

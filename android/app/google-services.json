@@ -29,6 +29,13 @@
             {
               "client_id": "453751060369-f57sq40ucrodsa4h89d35t8l9604drd9.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "453751060369-r5uor4jskn7mtpf485kdv1qli425r4bo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.nunutApplication"
+              }
             }
           ]
         }
