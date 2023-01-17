@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
@@ -105,8 +106,7 @@ class BookingDetail extends StatelessWidget {
         elevation: 0,
         toolbarHeight: 100,
         centerTitle: true,
-        title: NunutText(
-            title: "Booking Nunut #1234", fontWeight: FontWeight.bold),
+        title: NunutText(title: "Booking Nunut #1234", fontWeight: FontWeight.bold),
         backgroundColor: nunutPrimaryColor,
       ),
       body: SafeArea(
@@ -148,11 +148,11 @@ class BookingDetail extends StatelessWidget {
                             ),
                           ),
                           QrImage(
-                            data: "Grace Natasha",
-                            embeddedImage: AssetImage("assets/icon.png"),
-                            embeddedImageStyle: QrEmbeddedImageStyle(
-                              size: Size(75, 75),
-                            ),
+                            data: config.user.id!,
+                            // embeddedImage: AssetImage("assets/icon.png"),
+                            // embeddedImageStyle: QrEmbeddedImageStyle(
+                            //   size: Size(75, 75),
+                            // ),
                             size: 150,
                             backgroundColor: Colors.white,
                             padding: EdgeInsets.all(0),

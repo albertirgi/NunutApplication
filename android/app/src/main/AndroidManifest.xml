@@ -2,6 +2,7 @@
     package="com.example.nunut_application">
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <application
         android:label="nunut_application"
         android:name="${applicationName}"
@@ -27,6 +28,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <meta-data android:name="com.google.android.geo.API_KEY"  
+             android:value="AIzaSyCkoZat0Qep754cgH-hWly8mrDi_gniw-o"/>
         <!-- Don't delete the meta-data below.
         This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data

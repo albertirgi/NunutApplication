@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:nunut_application/models/mpromotion.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 
 import '../widgets/couponCard.dart';
 import '../widgets/nunutText.dart';
 
-class PromotionDetail extends StatelessWidget {
-  const PromotionDetail({super.key});
+class PromotionDetail extends StatefulWidget {
+  final Promotion? promotion;
+  const PromotionDetail({super.key, this.promotion});
+
+  @override
+  State<PromotionDetail> createState() => _PromotionDetailState();
+}
+
+class _PromotionDetailState extends State<PromotionDetail> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +42,9 @@ class PromotionDetail extends StatelessWidget {
       body: ListView(
         children: [
           CouponCard(
-            imagePath: "https://t3.ftcdn.net/jpg/03/54/26/10/360_F_354261018_RD5YEbufu7Yjck3SNiRC6yfJLZoxIegZ.jpg",
-            date: NunutText(title: "28 Januari 2022", fontWeight: FontWeight.bold),
-            minTransaction: NunutText(title: "Rp. 15.000", fontWeight: FontWeight.bold),
+            imagePath: widget.promotion!.image!,
+            date: NunutText(title: widget.promotion!.expiredAt!, fontWeight: FontWeight.bold),
+            minTransaction: NunutText(title: "Rp. " + widget.promotion!.minimum!, fontWeight: FontWeight.bold),
             useBorder: false,
           ),
           Container(
@@ -54,7 +64,7 @@ class PromotionDetail extends StatelessWidget {
                     SizedBox(width: index == 0 ? 8 : 4),
                     Expanded(
                       child: NunutText(
-                        title: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
+                        title: widget.promotion!.tnc![index],
                         size: 14,
                         fontWeight: FontWeight.w500,
                       ),
@@ -62,7 +72,7 @@ class PromotionDetail extends StatelessWidget {
                   ],
                 );
               },
-              itemCount: 8,
+              itemCount: widget.promotion!.tnc!.length,
               separatorBuilder: (context, index) {
                 return SizedBox(height: 4);
               },

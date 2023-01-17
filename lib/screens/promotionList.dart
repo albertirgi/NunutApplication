@@ -2,6 +2,7 @@ import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:nunut_application/models/mpromotion.dart';
 import 'package:nunut_application/resources/promotionApi.dart';
+import 'package:nunut_application/screens/promotionDetail.dart';
 import 'package:nunut_application/widgets/couponCard.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
@@ -140,34 +141,34 @@ class _PromotionListState extends State<PromotionList> {
               ],
             ),
           ),
-          SizedBox(height: 40),
-          Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: 24,
-              vertical: 0,
-            ),
-            child: NunutText(title: "Promo Terbaru"),
-          ),
-          SizedBox(height: 24),
-          Container(
-            height: 95,
-            child: ListView.separated(
-              padding: EdgeInsets.symmetric(
-                horizontal: 24,
-                vertical: 0,
-              ),
-              shrinkWrap: true,
-              physics: BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemCount: promotionList.length,
-              itemBuilder: (context, index) {
-                return promoTerbaru(promotionList[index].title!, promotionList[index].code!);
-              },
-              separatorBuilder: (context, index) {
-                return SizedBox(width: 8);
-              },
-            ),
-          ),
+          SizedBox(height: 20),
+          // Container(
+          //   padding: EdgeInsets.symmetric(
+          //     horizontal: 24,
+          //     vertical: 0,
+          //   ),
+          //   child: NunutText(title: "Promo Terbaru"),
+          // ),
+          // SizedBox(height: 24),
+          // Container(
+          //   height: 95,
+          //   child: ListView.separated(
+          //     padding: EdgeInsets.symmetric(
+          //       horizontal: 24,
+          //       vertical: 0,
+          //     ),
+          //     shrinkWrap: true,
+          //     physics: BouncingScrollPhysics(),
+          //     scrollDirection: Axis.horizontal,
+          //     itemCount: promotionList.length,
+          //     itemBuilder: (context, index) {
+          //       return promoTerbaru("", promotionList[index].code!);
+          //     },
+          //     separatorBuilder: (context, index) {
+          //       return SizedBox(width: 8);
+          //     },
+          //   ),
+          // ),
           SizedBox(height: 24),
           Container(
             padding: EdgeInsets.symmetric(
@@ -176,40 +177,52 @@ class _PromotionListState extends State<PromotionList> {
             ),
             child: NunutText(title: "Kuponku"),
           ),
-          ListView.separated(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.symmetric(
-              horizontal: 24,
-              vertical: 16,
-            ),
-            itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, "/promotionDetail");
-                },
-                child: CouponCard(
-                  imagePath: "https://t3.ftcdn.net/jpg/03/54/26/10/360_F_354261018_RD5YEbufu7Yjck3SNiRC6yfJLZoxIegZ.jpg",
-                  date: NunutText(
-                    title: promotionList[index].expiredAt!,
-                    fontWeight: FontWeight.bold,
+          promotionListLoading!
+              ? Container(
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  child: Center(
+                    child: CircularProgressIndicator(),
                   ),
-                  minTransaction: NunutText(
-                    title: NumberFormat.currency(
-                      locale: 'id',
-                      symbol: '',
-                      decimalDigits: 0,
-                    ).format(promotionList[index].minimum!),
-                    fontWeight: FontWeight.bold,
+                )
+              : ListView.separated(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 16,
                   ),
-                ),
-              );
-            },
-            separatorBuilder: (context, index) {
-              return SizedBox(height: 8);
-            },
-            itemCount: promotionList.length,
-          )
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PromotionDetail(promotion: promotionList[index]),
+                          ),
+                        );
+                      },
+                      child: CouponCard(
+                        imagePath: promotionList[index].image!,
+                        date: NunutText(
+                          title: promotionList[index].expiredAt!,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        minTransaction: NunutText(
+                          title: NumberFormat.currency(
+                            locale: 'id',
+                            symbol: '',
+                            decimalDigits: 0,
+                          ).format(int.parse(promotionList[index].minimum!)),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return SizedBox(height: 8);
+                  },
+                  itemCount: promotionList.length,
+                )
         ],
       ),
     );

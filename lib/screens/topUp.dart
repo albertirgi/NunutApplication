@@ -138,7 +138,7 @@ class _TopUpState extends State<TopUp> {
                           topUpController.text = "30000";
                         });
                       },
-                      widthButton: 90,
+                      widthButton: 100,
                       heightButton: 30,
                       borderColor: Colors.transparent,
                       fontWeight: FontWeight.bold,
@@ -152,7 +152,7 @@ class _TopUpState extends State<TopUp> {
                           topUpController.text = "50000";
                         });
                       },
-                      widthButton: 90,
+                      widthButton: 100,
                       heightButton: 30,
                       borderColor: Colors.transparent,
                       fontWeight: FontWeight.bold,

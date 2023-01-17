@@ -13,6 +13,8 @@ class TwoColumnView extends StatelessWidget {
   final String destination;
   final String price;
   final bool isBookmarked;
+  final Function()? IconOnTap;
+
   const TwoColumnView({
     Key? key,
     required this.imagePath,
@@ -21,6 +23,7 @@ class TwoColumnView extends StatelessWidget {
     required this.destination,
     required this.price,
     this.isBookmarked = false,
+    this.IconOnTap,
   });
 
   @override
@@ -88,7 +91,7 @@ class TwoColumnView extends StatelessWidget {
                   top: 10,
                   right: 10,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: IconOnTap,
                     child: Icon(Icons.bookmark, color: isBookmarked ? nunutPrimaryColor : Colors.white, size: 28),
                   ),
                 ),

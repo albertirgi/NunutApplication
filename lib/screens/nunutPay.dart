@@ -139,7 +139,7 @@ class _NunutPayState extends State<NunutPay> {
                           onPressed: () {
                             Navigator.pushNamed(context, '/withdraw');
                           },
-                          widthButton: 125,
+                          widthButton: 130,
                           iconButton: Icon(
                             Icons.add,
                             color: Colors.black,
@@ -184,7 +184,9 @@ class _NunutPayState extends State<NunutPay> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       NunutText(title: "Top Up", fontWeight: FontWeight.bold),
-                                      NunutText(title: "via ShopeePay"),
+                                      NunutText(
+                                        title: "via ShopeePay",
+                                      ),
                                     ],
                                   ),
                                   Spacer(),
@@ -192,7 +194,7 @@ class _NunutPayState extends State<NunutPay> {
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       NunutText(title: "+ 50.000", fontWeight: FontWeight.bold),
-                                      NunutText(title: "20 Desember 2022, 12:50", color: Colors.grey),
+                                      NunutText(title: "20 Desember 2022, 12:50", color: Colors.grey, size: 12),
                                     ],
                                   ),
                                 ],
