@@ -342,7 +342,7 @@ class _HomeState extends State<Home> {
                                     ),
                                     NunutText(title: "Pergi Ke", size: 8),
                                     NunutText(
-                                      title: "Lokasi Jemput",
+                                      title: "Lokasi Tujuan",
                                       size: 12,
                                       fontWeight: FontWeight.bold,
                                     ),

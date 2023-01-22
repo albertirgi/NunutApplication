@@ -1,4 +1,9 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:nunut_application/resources/walletApi.dart';
+import 'package:nunut_application/screens/snap.dart';
 import 'package:nunut_application/widgets/nunutBackground.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutRadioButton.dart';
@@ -119,7 +124,10 @@ class _TopUpState extends State<TopUp> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                NunutText(title: "Nominal Top-Up", fontWeight: FontWeight.bold, size: 20),
+                NunutText(
+                    title: "Nominal Top-Up",
+                    fontWeight: FontWeight.bold,
+                    size: 20),
                 NunutTextFormField(
                   title: "",
                   hintText: "Minimal top-up : 10.000",
@@ -174,7 +182,10 @@ class _TopUpState extends State<TopUp> {
                   ],
                 ),
                 SizedBox(height: 30),
-                NunutText(title: "Pilih Metode Pembayaran", fontWeight: FontWeight.bold, size: 20),
+                NunutText(
+                    title: "Pilih Metode Pembayaran",
+                    fontWeight: FontWeight.bold,
+                    size: 20),
                 SizedBox(height: 20),
                 Theme(
                   data: Theme.of(context).copyWith(
@@ -269,7 +280,19 @@ class _TopUpState extends State<TopUp> {
                   child: NunutButton(
                     title: "Lanjutkan",
                     fontWeight: FontWeight.w500,
-                    onPressed: () {},
+                    onPressed: () async {
+                      var res = await topup();
+                      if (res != null) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SnapScreen(
+                              transactionToken: res.toString(),
+                            ),
+                          ),
+                        );
+                      }
+                    },
                     borderColor: Colors.transparent,
                     borderRadius: 12,
                   ),
@@ -280,5 +303,9 @@ class _TopUpState extends State<TopUp> {
         ),
       ),
     );
+  }
+
+  topup() async {
+    return await WalletApi.topup(int.parse(topUpController.text));
   }
 }
