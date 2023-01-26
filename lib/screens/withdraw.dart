@@ -147,7 +147,7 @@ class _WithdrawState extends State<Withdraw> {
                           WithdrawController.text = "30000";
                         });
                       },
-                      widthButton: 90,
+                      widthButton: 100,
                       heightButton: 30,
                       borderColor: Colors.transparent,
                       fontWeight: FontWeight.bold,
@@ -161,7 +161,7 @@ class _WithdrawState extends State<Withdraw> {
                           WithdrawController.text = "50000";
                         });
                       },
-                      widthButton: 90,
+                      widthButton: 100,
                       heightButton: 30,
                       borderColor: Colors.transparent,
                       fontWeight: FontWeight.bold,
