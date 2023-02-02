@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
@@ -6,6 +8,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:nunut_application/configuration.dart';
+import 'package:nunut_application/models/mmaplocation.dart';
+import 'package:nunut_application/models/mresult.dart';
+import 'package:nunut_application/resources/mapLocationApi.dart';
 import 'package:nunut_application/resources/rideScheduleApi.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:nunut_application/widgets/twoColumnView.dart';
@@ -14,9 +19,7 @@ import 'package:google_maps_webservice/places.dart';
 import '../models/mrideschedule.dart';
 import '../theme.dart';
 
-const kGoogleApiKey = "AIzaSyCkoZat0Qep754cgH-hWly8mrDi_gniw-o";
-
-GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
+GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: config.googleAPiKey);
 
 class rideShare extends StatefulWidget {
   const rideShare({super.key});
@@ -52,7 +55,7 @@ class _rideShareState extends State<rideShare> {
     });
 
     rideScheduleList.clear();
-    rideScheduleList = await rideScheduleApi.getRideScheduleList(parameter: "user=${config.user.id}&driver");
+    rideScheduleList = await rideScheduleApi.getRideScheduleList(parameter: "user=${config.user.id}&driver", checkUrl: true);
 
     setState(() {
       rideScheduleListLoading = false;
@@ -136,6 +139,11 @@ class _rideShareState extends State<rideShare> {
     );
   }
 
+  FutureOr onGoBack(dynamic value) {
+    initRideScheduleList();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -145,6 +153,7 @@ class _rideShareState extends State<rideShare> {
           await initRideScheduleList();
         },
         child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
           child: Stack(
             children: [
               Image(
@@ -212,7 +221,7 @@ class _rideShareState extends State<rideShare> {
                               child: IconButton(
                                 icon: Icon(Icons.bookmark, color: Colors.black),
                                 onPressed: () {
-                                  Navigator.pushNamed(context, '/rideBookmark');
+                                  Navigator.pushNamed(context, '/rideBookmark').then((value) => onGoBack(value));
                                 },
                               ),
                             ),
@@ -334,7 +343,7 @@ class _rideShareState extends State<rideShare> {
                                       onTap: () async {
                                         Prediction? p = await PlacesAutocomplete.show(
                                           context: context,
-                                          apiKey: kGoogleApiKey,
+                                          apiKey: config.googleAPiKey,
                                           mode: Mode.fullscreen,
                                           language: "id",
                                           strictbounds: false,
@@ -506,17 +515,18 @@ class _rideShareState extends State<rideShare> {
                     // ),
                     Visibility(
                       visible: isSearch,
-                      child: GridView.builder(
-                        shrinkWrap: true,
-                        physics: ScrollPhysics(),
-                        itemCount: rideScheduleList.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.7, crossAxisSpacing: 15, mainAxisSpacing: 15),
-                        itemBuilder: (context, index) {
-                          return rideScheduleListLoading!
-                              ? Center(
-                                  child: CircularProgressIndicator(),
-                                )
-                              : TwoColumnView(
+                      child: rideScheduleListLoading!
+                          ? Center(
+                              heightFactor: 5,
+                              child: CircularProgressIndicator(),
+                            )
+                          : GridView.builder(
+                              shrinkWrap: true,
+                              physics: ScrollPhysics(),
+                              itemCount: rideScheduleList.length,
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.7, crossAxisSpacing: 15, mainAxisSpacing: 15),
+                              itemBuilder: (context, index) {
+                                return TwoColumnView(
                                   imagePath: rideScheduleList[index].driver!.image,
                                   departureTime: rideScheduleList[index].time!,
                                   name: rideScheduleList[index].driver!.name,
@@ -527,12 +537,20 @@ class _rideShareState extends State<rideShare> {
                                     symbol: '',
                                     decimalDigits: 0,
                                   ).format(rideScheduleList[index].price),
-                                  IconOnTap: () {
-                                    rideScheduleApi.updateBookmark(rideScheduleId: rideScheduleList[index].id!, userId: config.user.id!);
+                                  IconOnTap: () async {
+                                    bool result;
+                                    rideScheduleList[index].isBookmarked!
+                                        ? result = await rideScheduleApi.deleteBookmarkByRideScheduleId(rideScheduleId: rideScheduleList[index].id!, userId: config.user.id!, checkUrl: true)
+                                        : result = await rideScheduleApi.updateBookmark(rideScheduleId: rideScheduleList[index].id!, userId: config.user.id!);
+                                    if (result) {
+                                      rideScheduleList[index].isBookmarked = !rideScheduleList[index].isBookmarked!;
+                                      print("BERHASIL");
+                                    }
+                                    setState(() {});
                                   },
                                 );
-                        },
-                      ),
+                              },
+                            ),
                     ),
                   ],
                 ),

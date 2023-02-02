@@ -89,8 +89,23 @@ class RideScheduleApi {
     }
   }
 
-  Future<bool> deleteBookmark({required String bookmarkId, bool checkUrl = false}) async {
+  Future<bool> deleteBookmarkByBookmarkId({required String bookmarkId, bool checkUrl = false}) async {
     var url = Uri.parse(config.baseUrl + '/bookmark/$bookmarkId');
+    var response = await http.delete(url);
+    if (checkUrl) print(url);
+
+    Result result;
+    result = Result.fromJson(json.decode(response.body));
+
+    if (result.status == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> deleteBookmarkByRideScheduleId({required String rideScheduleId, required String userId, bool checkUrl = false}) async {
+    var url = Uri.parse(config.baseUrl + '/bookmark?ride_schedule=$rideScheduleId&user=$userId');
     var response = await http.delete(url);
     if (checkUrl) print(url);
 

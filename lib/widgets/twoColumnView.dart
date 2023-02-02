@@ -103,7 +103,7 @@ class TwoColumnView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   NunutText(title: name, fontWeight: FontWeight.bold, size: 14, maxLines: 1),
-                  NunutText(title: destination, size: 10),
+                  NunutText(title: destination, size: 10, maxLines: 1, overflow: TextOverflow.ellipsis),
                   Row(
                     children: [
                       Icon(Icons.person, size: 14),
