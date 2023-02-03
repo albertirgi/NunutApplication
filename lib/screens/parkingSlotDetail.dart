@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:nunut_application/models/mparkingbuilding.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 
@@ -10,8 +14,27 @@ class parkingSpotDetail extends StatefulWidget {
 }
 
 class _parkingSpotDetailState extends State<parkingSpotDetail> {
+  String image = '';
+  String title = '';
+  String subTitle = '';
+  List<String> instruction = [];
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final data = ModalRoute.of(context)!.settings.arguments as ParkingSlot;
+    log("isi data " + jsonEncode(data).toString());
+    image = data.image;
+    title = data.title;
+    subTitle = data.subtitle;
+    instruction = data.instruction;
+  }
+
   @override
   Widget build(BuildContext context) {
+    // final data = ModalRoute.of(context)!.settings.arguments as ParkingSlotModel;
+    // log("isi data " + jsonEncode(data).toString());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey[50],
@@ -35,8 +58,7 @@ class _parkingSpotDetailState extends State<parkingSpotDetail> {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(
-                      "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiO"),
+                  image: NetworkImage(image),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -50,14 +72,14 @@ class _parkingSpotDetailState extends State<parkingSpotDetail> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Gedung Q - Parkir 1",
+                    title,
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    "Universitas Kristen Petra",
+                    subTitle,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w400,
@@ -76,53 +98,26 @@ class _parkingSpotDetailState extends State<parkingSpotDetail> {
                   SizedBox(
                     height: 15,
                   ),
-                  Row(
-                    children: [
-                      //icon bullet
-                      Icon(
-                        Icons.circle,
-                        color: Colors.black,
-                        size: 8,
-                      ),
-                      Text(
-                        " Masuk ke lantai 1 gedung parkir Q",
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      //icon bullet
-                      Icon(
-                        Icons.circle,
-                        color: Colors.black,
-                        size: 8,
-                      ),
-                      Text(
-                        " Belok kiri",
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      //icon bullet
-                      Icon(
-                        Icons.circle,
-                        color: Colors.black,
-                        size: 8,
-                      ),
-                      Text(
-                        " Tempat parkir berada di sisi kiri jalan",
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                    ],
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: instruction.length,
+                    itemBuilder: (context, index) {
+                      return Row(
+                        children: [
+                          //icon bullet
+
+                          Expanded(
+                            child: Text(
+                              "${index + 1}." + instruction[index],
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ],
               ),
