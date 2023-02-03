@@ -1,11 +1,19 @@
+import 'dart:developer';
+
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nunut_application/models/mtransaction.dart';
+import 'package:nunut_application/models/muser.dart';
+import 'package:nunut_application/resources/authApi.dart';
+import 'package:nunut_application/resources/midtransApi.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutBackground.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:intl/intl.dart';
+
+import '../models/mwallet.dart';
 
 class NunutPay extends StatefulWidget {
   const NunutPay({super.key});
@@ -15,6 +23,18 @@ class NunutPay extends StatefulWidget {
 }
 
 class _NunutPayState extends State<NunutPay> {
+  bool isLoading = false;
+  bool userGenerated = false;
+  Wallet wallet = Wallet();
+  int walletBalance = 0;
+  List<Transaction> transactions = [];
+  int transactionLength = 0;
+  @override
+  void initState() {
+    super.initState();
+    getUserInfo();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,7 +119,7 @@ class _NunutPayState extends State<NunutPay> {
                                   locale: 'id',
                                   symbol: '',
                                   decimalDigits: 0,
-                                ).format(350000),
+                                ).format(walletBalance),
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 65,
@@ -171,39 +191,85 @@ class _NunutPayState extends State<NunutPay> {
                     ),
                     child: Column(
                       children: [
-                        NunutText(title: "Transaksi", size: 20, fontWeight: FontWeight.w500),
-                        ListView.separated(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              return Row(
-                                children: [
-                                  Icon(Icons.arrow_upward),
-                                  SizedBox(width: 10),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                        NunutText(
+                            title: "Transaksi",
+                            size: 20,
+                            fontWeight: FontWeight.w500),
+                        transactionLength == 0
+                            ? Container(
+                                padding: EdgeInsets.all(40),
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        nunutPrimaryColor),
+                                  ),
+                                ),
+                              )
+                            : ListView.separated(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return Row(
                                     children: [
-                                      NunutText(title: "Top Up", fontWeight: FontWeight.bold),
-                                      NunutText(
-                                        title: "via ShopeePay",
+                                      Icon(Icons.arrow_upward),
+                                      SizedBox(width: 10),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          NunutText(
+                                              title: transactions[index].type ==
+                                                      "topup"
+                                                  ? "Top Up"
+                                                  : "Withdraw",
+                                              fontWeight: FontWeight.bold),
+                                          NunutText(
+                                            title: "Bank Transfer",
+                                          ),
+                                        ],
+                                      ),
+                                      Spacer(),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          NunutText(
+                                              title: transactions[index].type ==
+                                                      "topup"
+                                                  ? "+ " +
+                                                      NumberFormat.currency(
+                                                        locale: 'id',
+                                                        symbol: 'Rp ',
+                                                        decimalDigits: 0,
+                                                      ).format(
+                                                          transactions[index]
+                                                              .amount)
+                                                  : "- " +
+                                                      NumberFormat.currency(
+                                                        locale: 'id',
+                                                        symbol: 'Rp ',
+                                                        decimalDigits: 0,
+                                                      ).format(
+                                                          transactions[index]
+                                                              .amount),
+                                              fontWeight: FontWeight.bold),
+                                          NunutText(
+                                              title: DateFormat(
+                                                      "d MMMM yyyy, hh:MM",
+                                                      "id_ID")
+                                                  .format(transactions[index]
+                                                      .transaction_time!), //"20 Desember 2022, 12:50",
+                                              color: Colors.grey,
+                                              size: 12),
+                                        ],
                                       ),
                                     ],
-                                  ),
-                                  Spacer(),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      NunutText(title: "+ 50.000", fontWeight: FontWeight.bold),
-                                      NunutText(title: "20 Desember 2022, 12:50", color: Colors.grey, size: 12),
-                                    ],
-                                  ),
-                                ],
-                              );
-                            },
-                            separatorBuilder: (context, index) {
-                              return SizedBox(height: 30);
-                            },
-                            itemCount: 5)
+                                  );
+                                },
+                                separatorBuilder: (context, index) {
+                                  return SizedBox(height: 30);
+                                },
+                                itemCount: transactionLength),
                       ],
                     ),
                   ),
@@ -214,5 +280,33 @@ class _NunutPayState extends State<NunutPay> {
         ),
       ),
     );
+  }
+
+  void getUserInfo() async {
+    UserModel user = await AuthService.getCurrentUser().then((value) {
+      getWallet(value.id!);
+      setState(() {
+        userGenerated = true;
+      });
+      return value;
+    });
+  }
+
+  void getWallet(String user_id) async {
+    MidtransApi.getWallet(user_id).then((value) {
+      walletBalance = value.balance!;
+      getTransaction(value.id);
+      return value;
+    });
+  }
+
+  void getTransaction(String wallet_id) async {
+    transactions = await MidtransApi.getTransactionByWallet(wallet_id);
+    setState(() {
+      isLoading = false;
+      transactionLength = transactions.length;
+      transactions
+          .sort((a, b) => b.transaction_time!.compareTo(a.transaction_time!));
+    });
   }
 }
