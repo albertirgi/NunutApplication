@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:nunut_application/widgets/profileParking.dart';
@@ -37,6 +39,8 @@ class _BookingParkirState extends State<BookingParkir> {
 
   @override
   Widget build(BuildContext context) {
+    final IdRide = ModalRoute.of(context)!.settings.arguments as String;
+    log("isi idRide " + IdRide.toString());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey[50],
@@ -81,7 +85,10 @@ class _BookingParkirState extends State<BookingParkir> {
                         return InkWell(
                           onTap: () => Navigator.pushNamed(
                               context, '/parkingList',
-                              arguments: ParkingPlaceList[index]),
+                              arguments: {
+                                'data': ParkingPlaceList[index],
+                                'idRide': IdRide,
+                              }),
                           child: profileParkingCard(
                             image: ParkingPlaceList[index].image,
                             title: ParkingPlaceList[index].name,

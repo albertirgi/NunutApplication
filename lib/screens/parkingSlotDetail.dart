@@ -1,8 +1,7 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/models/mparkingbuilding.dart';
+import 'package:nunut_application/resources/bookingParkirApi.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 
@@ -18,23 +17,26 @@ class _parkingSpotDetailState extends State<parkingSpotDetail> {
   String title = '';
   String subTitle = '';
   List<String> instruction = [];
+  String parking_slot_id = '';
+  String id_ride = '';
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
-    final data = ModalRoute.of(context)!.settings.arguments as ParkingSlot;
-    log("isi data " + jsonEncode(data).toString());
+    final arg = ModalRoute.of(context)!.settings.arguments as Map;
+    final data = arg['data'] as ParkingSlot;
+    final idRide = arg['idRide'] as String;
+    //log("isi data " + jsonEncode(data).toString());
     image = data.image;
     title = data.title;
     subTitle = data.subtitle;
     instruction = data.instruction;
+    parking_slot_id = data.parkingSlotId;
+    id_ride = idRide;
   }
 
   @override
   Widget build(BuildContext context) {
-    // final data = ModalRoute.of(context)!.settings.arguments as ParkingSlotModel;
-    // log("isi data " + jsonEncode(data).toString());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey[50],
@@ -136,7 +138,21 @@ class _parkingSpotDetailState extends State<parkingSpotDetail> {
                     padding: const EdgeInsets.symmetric(vertical: 18),
                     child: NunutButton(
                       title: "Pesan",
-                      onPressed: () {},
+                      onPressed: () async {
+                        var status_post =
+                            await BookingParkirApi.SendBookingParkir(
+                                parking_slot_id, id_ride);
+                        if (status_post == true) {
+                          Navigator.pushNamed(context, '/notifikasiSukses',
+                              arguments: {
+                                'title': "Booking Parkir Berhasil",
+                                'description':
+                                    "Mohon tunjukan QR Code ini kepada petugas parkir",
+                              });
+                        } else {
+                          Fluttertoast.showToast(msg: "Booking Parkir Gagal");
+                        }
+                      },
                       widthBorder: 0,
                       widthButton: 146,
                       heightButton: 44,

@@ -129,7 +129,7 @@ class _PengaduanKendalaPageState extends State<PengaduanKendalaPage> {
                               "CONTOH RIDE REQ ID",
                               user_id.toString());
                           //get status api
-                          log("status post: $status_post");
+                          //log("status post: $status_post");
                           if (status_post == true) {
                             Navigator.pushNamed(context, '/notifikasiSukses',
                                 arguments: {

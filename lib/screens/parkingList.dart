@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -21,6 +20,7 @@ class _ParkingListState extends State<ParkingList> {
   String Name = '';
   String SubName = '';
   String totalParkingSlot = '';
+  String idRide = '';
 
   List<ParkingBuildingModel> ParkingBuildingList = [];
 
@@ -34,9 +34,10 @@ class _ParkingListState extends State<ParkingList> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
-    final data =
-        ModalRoute.of(context)!.settings.arguments as ParkingPlaceModel;
+    final arg = ModalRoute.of(context)!.settings.arguments as Map;
+    final id_ride = arg['idRide'] as String;
+    idRide = id_ride;
+    final data = arg['data'] as ParkingPlaceModel;
     final image = data.image.toString();
     final name = data.name.toString();
     final subName = data.subName.toString();
@@ -71,6 +72,8 @@ class _ParkingListState extends State<ParkingList> {
 
   @override
   Widget build(BuildContext context) {
+    log("IdRide : " + idRide);
+    // log("data Image :" + Image);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 280,
@@ -236,9 +239,11 @@ class _ParkingListState extends State<ParkingList> {
                                     ? InkWell(
                                         onTap: () => Navigator.pushNamed(
                                             context, "/parkingSlotDetail",
-                                            arguments:
-                                                ParkingBuildingList[index]
-                                                    .parkingSlot[indexChild]),
+                                            arguments: {
+                                              "data": ParkingBuildingList[index]
+                                                  .parkingSlot[indexChild],
+                                              "idRide": idRide,
+                                            }),
                                         child: Padding(
                                           padding: EdgeInsets.symmetric(
                                             vertical: 15,

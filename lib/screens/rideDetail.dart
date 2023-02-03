@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
@@ -23,6 +25,8 @@ class _RideDetailState extends State<RideDetail> {
 
   @override
   Widget build(BuildContext context) {
+    final IdRide = ModalRoute.of(context)!.settings.arguments as String;
+    log("data: $IdRide");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey[50],
@@ -236,7 +240,10 @@ class _RideDetailState extends State<RideDetail> {
                         heightButton: 40,
                         fontWeight: FontWeight.w600,
                         borderColor: Colors.transparent,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/bookingParkir',
+                              arguments: IdRide);
+                        },
                       ),
                     ],
                   ),
@@ -244,6 +251,7 @@ class _RideDetailState extends State<RideDetail> {
                 ],
               ),
             ),
+            SizedBox(height: 60),
             Container(
               color: nunutPrimaryColor,
               padding: EdgeInsets.only(top: 20),
