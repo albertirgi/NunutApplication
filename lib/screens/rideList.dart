@@ -115,7 +115,8 @@ class _RideListState extends State<RideList> {
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () => Navigator.pushNamed(context, '/rideDetail'),
+                      onTap: () => Navigator.pushNamed(context, '/rideDetail',
+                          arguments: "wwjgiojwoigjiwjiogjiowjiog"),
                       child: NunutTripCard(
                         images: images,
                         date: "Senin, 24 Oktober 2022",

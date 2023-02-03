@@ -1,13 +1,13 @@
 import 'package:nunut_application/models/mdriver.dart';
-import 'package:nunut_application/models/mlocation.dart';
+import 'package:nunut_application/models/mmaplocation.dart';
 
 class RideSchedule {
   String? date;
   String? time;
   String? id;
   int? price;
-  Location? meetingPoint;
-  Location? destination;
+  MapLocation? meetingPoint;
+  MapLocation? destination;
   bool? isBookmarked;
   Driver? driver;
 
@@ -28,8 +28,8 @@ class RideSchedule {
       time: parsedJson["time"] as String? ?? "",
       id: parsedJson["ride_schedule_id"] as String? ?? "",
       price: parsedJson["price"] as int? ?? 0,
-      meetingPoint: parsedJson["meeting_point"] != null ? Location.fromJson(parsedJson["meeting_point"]) : null,
-      destination: parsedJson["destination"] != null ? Location.fromJson(parsedJson["destination"]) : null,
+      meetingPoint: parsedJson["meeting_point"] != null ? MapLocation.fromJson(parsedJson["meeting_point"]) : null,
+      destination: parsedJson["destination"] != null ? MapLocation.fromJson(parsedJson["destination"]) : null,
       isBookmarked: parsedJson["is_bookmarked"] as bool? ?? false,
       driver: parsedJson["driver_id"] != null ? Driver.fromJson(parsedJson["driver_id"]) : null,
     );

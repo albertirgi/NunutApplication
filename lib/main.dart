@@ -7,6 +7,7 @@ import 'package:nunut_application/screens/chatInside.dart';
 import 'package:nunut_application/screens/chatPage.dart';
 import 'package:nunut_application/screens/detailNotification.dart';
 import 'package:nunut_application/screens/detailProfilePage.dart';
+import 'package:nunut_application/screens/distance.dart';
 import 'package:nunut_application/screens/home.dart';
 import 'package:nunut_application/screens/login.dart';
 import 'package:nunut_application/screens/mainScreen.dart';
@@ -92,6 +93,7 @@ class MyApp extends StatelessWidget {
         '/topUp': (context) => const TopUp(),
         '/withdraw': (context) => const Withdraw(),
         '/withdrawConfirmation': (context) => const WithdrawConfirmation(),
+        '/distance': (context) => const Distance(),
         '/topUpPayment': (context) => TopUpPayment(
               data: {
                 'id': '1',

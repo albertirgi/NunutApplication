@@ -718,8 +718,9 @@ class _OfferMenuState extends State<OfferMenu> {
                                                   "7.344542569968449", 
                                                   "112.73747806931482",
                                                   "vehicle_id",
-                                                  _capacityValue.toString(), 
-                                                  "driver_id",
+                                                  _capacityValue.toString(),
+                                                  //driver id yang ada
+                                                  "eGI8j0T8jPTg5YNgZlDx",
                                                   );
                                                   
                                                 //log("status :" + postRideScheduleStatus.toString());

@@ -175,6 +175,12 @@ class _HomePageState extends State<HomePage> {
                 Navigator.pushNamed(context, '/snap');
               },
             ),
+            NunutButton(
+              title: "Distance",
+              onPressed: () {
+                Navigator.pushNamed(context, '/distance');
+              },
+            ),
           ],
         ),
       ),
@@ -231,8 +237,7 @@ class _HomeState extends State<Home> {
                         Flexible(
                           child: ElevatedButton(
                             onPressed: () {},
-                            child: Icon(Icons.chat_bubble_outline,
-                                color: Colors.black),
+                            child: Icon(Icons.chat_bubble_outline, color: Colors.black),
                             style: ElevatedButton.styleFrom(
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               shape: CircleBorder(),
@@ -452,8 +457,7 @@ class _HomeState extends State<Home> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                       image: DecorationImage(
-                        colorFilter: ColorFilter.mode(
-                            Colors.black.withOpacity(0.5), BlendMode.srcOver),
+                        colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.srcOver),
                         image: AssetImage('assets/bgcontainer.png'),
                         fit: BoxFit.cover,
                       ),
@@ -545,8 +549,7 @@ class _HomeState extends State<Home> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                       image: DecorationImage(
-                        colorFilter: ColorFilter.mode(
-                            Colors.black.withOpacity(0.5), BlendMode.srcOver),
+                        colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.srcOver),
                         image: AssetImage('assets/bgcontainer2.png'),
                         fit: BoxFit.cover,
                       ),
@@ -599,8 +602,7 @@ class _HomeState extends State<Home> {
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+          borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30)),
           boxShadow: [
             BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
           ],

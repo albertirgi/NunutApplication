@@ -1,11 +1,8 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 
 import 'package:nunut_application/resources/notificationApi.dart';
-import 'package:nunut_application/widgets/chatCard.dart';
+import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/notificationCard.dart';
 import '../models/mnotification.dart';
 
@@ -63,38 +60,38 @@ class _ChatPageState extends State<ChatPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              BorderedText(
-                child: Text(
-                  "Chat Saya",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 32,
-                  ),
-                ),
-                strokeWidth: 3.0,
-                strokeColor: Colors.black,
-              ),
-              SizedBox(height: 20),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () => Navigator.pushNamed(context, '/chatInside'),
-                    child: ChatCard(
-                      margin: EdgeInsets.all(5),
-                      name: "Nunut",
-                      chatSpoil: "Halo, apa kabar?",
-                      time: "12:00",
-                      imagePath:
-                          "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiO",
-                      chatCount: 1,
-                    ),
-                  );
-                },
-                itemCount: 5,
-              ),
-              SizedBox(height: 20),
+              // BorderedText(
+              //   child: Text(
+              //     "Chat Saya",
+              //     style: TextStyle(
+              //       color: Colors.white,
+              //       fontSize: 32,
+              //     ),
+              //   ),
+              //   strokeWidth: 3.0,
+              //   strokeColor: Colors.black,
+              // ),
+              // SizedBox(height: 20),
+              // ListView.builder(
+              //   shrinkWrap: true,
+              //   physics: NeverScrollableScrollPhysics(),
+              //   itemBuilder: (context, index) {
+              //     return InkWell(
+              //       onTap: () => Navigator.pushNamed(context, '/chatInside'),
+              //       child: ChatCard(
+              //         margin: EdgeInsets.all(5),
+              //         name: "Nunut",
+              //         chatSpoil: "Halo, apa kabar?",
+              //         time: "12:00",
+              //         imagePath:
+              //             "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiO",
+              //         chatCount: 1,
+              //       ),
+              //     );
+              //   },
+              //   itemCount: 5,
+              // ),
+              // SizedBox(height: 20),
               BorderedText(
                 child: Text(
                   "Notifikasi",
@@ -133,28 +130,14 @@ class _ChatPageState extends State<ChatPage> {
                     );
                   } else {
                     return Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                        color:nunutPrimaryColor,
+                      ),
                     );
                   }
                 },
               ),
-              // ListView.builder(
-              //   shrinkWrap: true,
-              //   physics: NeverScrollableScrollPhysics(),
-              //   itemCount: NotificationList.length,
-              //   itemBuilder: (context, index) {
-              //     return InkWell(
-              //       onTap: () =>
-              //           Navigator.pushNamed(context, '/detailNotification'),
-              //       child: NotifCard(
-              //         margin: EdgeInsets.all(5),
-              //         title: NotificationList[index].title,
-              //         desc: NotificationList[index].description,
-              //       ),
-              //     );
-              //   },
-
-              // ),
+              
             ],
           ),
         ),

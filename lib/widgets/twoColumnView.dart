@@ -90,9 +90,18 @@ class TwoColumnView extends StatelessWidget {
                 Positioned(
                   top: 10,
                   right: 10,
-                  child: InkWell(
-                    onTap: IconOnTap,
-                    child: Icon(Icons.bookmark, color: isBookmarked ? nunutPrimaryColor : Colors.white, size: 28),
+                  child: AnimatedContainer(
+                    height: 30,
+                    width: 30,
+                    duration: const Duration(seconds: 2),
+                    curve: Curves.easeIn,
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: IconOnTap,
+                        child: Icon(Icons.bookmark, color: isBookmarked ? nunutPrimaryColor : Colors.white, size: 28),
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -103,7 +112,7 @@ class TwoColumnView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   NunutText(title: name, fontWeight: FontWeight.bold, size: 14, maxLines: 1),
-                  NunutText(title: destination, size: 10),
+                  NunutText(title: destination, size: 10, maxLines: 1, overflow: TextOverflow.ellipsis),
                   Row(
                     children: [
                       Icon(Icons.person, size: 14),
