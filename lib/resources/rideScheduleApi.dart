@@ -48,9 +48,11 @@ class RideScheduleApi {
     }
   }
 
-  Future<List<RideSchedule>> getRideScheduleList({String parameter = "", bool checkUrl = false}) async {
-    if (parameter.isNotEmpty) parameter = "?$parameter";
-    var url = Uri.parse(config.baseUrl + '/ride-schedule' + parameter);
+  Future<List<RideSchedule>> getRideScheduleList({String parameter = "", bool checkUrl = false, int page = 0}) async {
+    String _parameter = "";
+    if (page > 0) _parameter = "/list/$page";
+    if (parameter.isNotEmpty) _parameter += "?$parameter";
+    var url = Uri.parse(config.baseUrl + '/ride-schedule' + _parameter);
 
     if (checkUrl) print(url);
 

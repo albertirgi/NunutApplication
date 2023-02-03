@@ -103,12 +103,12 @@ class _RideBookmarkState extends State<RideBookmark> {
                                 imagePath: bookmarkedList[index].driver.image,
                                 departureTime: bookmarkedList[index].rideSchedule.time!,
                                 name: bookmarkedList[index].driver.name,
-                                destination: "SPBU Manyar",
+                                destination: bookmarkedList[index].rideSchedule.destination!.name!,
                                 price: NumberFormat.currency(
                                   locale: 'id',
                                   symbol: '',
                                   decimalDigits: 0,
-                                ).format(10000),
+                                ).format(bookmarkedList[index].rideSchedule.price!),
                                 isBookmarked: true,
                                 IconOnTap: () {
                                   showDialog<String>(

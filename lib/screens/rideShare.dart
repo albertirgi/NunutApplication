@@ -30,36 +30,79 @@ class rideShare extends StatefulWidget {
 
 class _rideShareState extends State<rideShare> {
   List<RideSchedule> rideScheduleList = [];
+  List<RideSchedule> rideSchedulePageList = [];
+  int _page = 0;
   TextEditingController pickUpController = TextEditingController();
   TextEditingController destinationController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController timeController = TextEditingController();
   bool isSearch = false;
   bool? rideScheduleListLoading;
-  String? _currentAddress;
-  Position? _currentPosition;
+  bool isLoading = false;
+  bool done = false;
   Set<Marker> markers = Set();
   LatLng? showLocation;
   GoogleMapController? mapController;
+  ScrollController? _scrollController;
+  Position? _currentPosition;
 
   @override
   void initState() {
     super.initState();
     initRideScheduleList();
-    _getCurrentPosition();
+    // _getCurrentPosition();
+    _scrollController = ScrollController();
+    _scrollController!.addListener(scrollListener);
+  }
+
+  void dispose() {
+    _scrollController!.removeListener(scrollListener);
+    _scrollController!.dispose();
+    super.dispose();
   }
 
   initRideScheduleList() async {
     setState(() {
       rideScheduleListLoading = true;
+      _page = 1;
     });
 
     rideScheduleList.clear();
-    rideScheduleList = await rideScheduleApi.getRideScheduleList(parameter: "user=${config.user.id}&driver", checkUrl: true);
+    rideScheduleList = await rideScheduleApi.getRideScheduleList(parameter: "user=${config.user.id}&driver", page: _page, checkUrl: true);
 
     setState(() {
       rideScheduleListLoading = false;
+      _page++;
     });
+  }
+
+  loadmore() async {
+    if (!isLoading) {
+      setState(() {
+        isLoading = true;
+      });
+
+      rideSchedulePageList.clear();
+      rideSchedulePageList = await rideScheduleApi.getRideScheduleList(parameter: "user=${config.user.id}&driver", page: _page, checkUrl: true);
+      _page++;
+
+      rideScheduleList.addAll(rideSchedulePageList);
+
+      setState(() {
+        isLoading = false;
+        _page = _page;
+      });
+    }
+  }
+
+  scrollListener() {
+    if (_scrollController!.offset >= _scrollController!.position.maxScrollExtent - 100 && !_scrollController!.position.outOfRange && !done) {
+      if (rideSchedulePageList.isEmpty) {
+        loadmore();
+      } else {
+        done = true;
+      }
+    }
   }
 
   Future<Null> displayPrediction(Prediction? p) async {
@@ -140,8 +183,7 @@ class _rideShareState extends State<rideShare> {
   }
 
   FutureOr onGoBack(dynamic value) {
-    initRideScheduleList();
-    setState(() {});
+    onRefresh();
   }
 
   @override
@@ -149,10 +191,10 @@ class _rideShareState extends State<rideShare> {
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: () async {
-          rideScheduleListLoading = true;
-          await initRideScheduleList();
+          onRefresh();
         },
         child: SingleChildScrollView(
+          controller: _scrollController,
           physics: AlwaysScrollableScrollPhysics(),
           child: Stack(
             children: [
@@ -253,7 +295,7 @@ class _rideShareState extends State<rideShare> {
                         ),
                       ],
                     ),
-                    NunutText(title: "Hai, Grace", fontWeight: FontWeight.bold),
+                    NunutText(title: "Hai, " + config.user.name, fontWeight: FontWeight.bold),
                     BorderedText(
                       child: Text(
                         "Butuh\nTumpangan?",
@@ -520,36 +562,46 @@ class _rideShareState extends State<rideShare> {
                               heightFactor: 5,
                               child: CircularProgressIndicator(),
                             )
-                          : GridView.builder(
-                              shrinkWrap: true,
-                              physics: ScrollPhysics(),
-                              itemCount: rideScheduleList.length,
-                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.7, crossAxisSpacing: 15, mainAxisSpacing: 15),
-                              itemBuilder: (context, index) {
-                                return TwoColumnView(
-                                  imagePath: rideScheduleList[index].driver!.image,
-                                  departureTime: rideScheduleList[index].time!,
-                                  name: rideScheduleList[index].driver!.name,
-                                  destination: rideScheduleList[index].destination!.name!,
-                                  isBookmarked: rideScheduleList[index].isBookmarked!,
-                                  price: NumberFormat.currency(
-                                    locale: 'id',
-                                    symbol: '',
-                                    decimalDigits: 0,
-                                  ).format(rideScheduleList[index].price),
-                                  IconOnTap: () async {
-                                    bool result;
-                                    rideScheduleList[index].isBookmarked!
-                                        ? result = await rideScheduleApi.deleteBookmarkByRideScheduleId(rideScheduleId: rideScheduleList[index].id!, userId: config.user.id!, checkUrl: true)
-                                        : result = await rideScheduleApi.updateBookmark(rideScheduleId: rideScheduleList[index].id!, userId: config.user.id!);
-                                    if (result) {
-                                      rideScheduleList[index].isBookmarked = !rideScheduleList[index].isBookmarked!;
-                                      print("BERHASIL");
-                                    }
-                                    setState(() {});
+                          : Column(
+                              children: [
+                                GridView.builder(
+                                  shrinkWrap: true,
+                                  physics: ScrollPhysics(),
+                                  itemCount: rideScheduleList.length,
+                                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.7, crossAxisSpacing: 15, mainAxisSpacing: 15),
+                                  itemBuilder: (context, index) {
+                                    return TwoColumnView(
+                                      imagePath: rideScheduleList[index].driver!.image,
+                                      departureTime: rideScheduleList[index].time!,
+                                      name: rideScheduleList[index].driver!.name,
+                                      destination: rideScheduleList[index].destination!.name!,
+                                      isBookmarked: rideScheduleList[index].isBookmarked!,
+                                      price: NumberFormat.currency(
+                                        locale: 'id',
+                                        symbol: '',
+                                        decimalDigits: 0,
+                                      ).format(rideScheduleList[index].price),
+                                      IconOnTap: () async {
+                                        bool result;
+                                        rideScheduleList[index].isBookmarked!
+                                            ? result = await rideScheduleApi.deleteBookmarkByRideScheduleId(rideScheduleId: rideScheduleList[index].id!, userId: config.user.id!, checkUrl: true)
+                                            : result = await rideScheduleApi.updateBookmark(rideScheduleId: rideScheduleList[index].id!, userId: config.user.id!);
+                                        if (result) {
+                                          rideScheduleList[index].isBookmarked = !rideScheduleList[index].isBookmarked!;
+                                          print("BERHASIL");
+                                        }
+                                        setState(() {});
+                                      },
+                                    );
                                   },
-                                );
-                              },
+                                ),
+                                isLoading
+                                    ? Center(
+                                        child: CircularProgressIndicator(),
+                                      )
+                                    : Container(),
+                                SizedBox(height: 20),
+                              ],
                             ),
                     ),
                   ],
@@ -560,5 +612,14 @@ class _rideShareState extends State<rideShare> {
         ),
       ),
     );
+  }
+
+  onRefresh() async {
+    rideScheduleListLoading = true;
+    done = false;
+    _page = 1;
+    rideSchedulePageList.clear();
+    rideScheduleList.clear();
+    await initRideScheduleList();
   }
 }
