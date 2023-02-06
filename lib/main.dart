@@ -8,6 +8,7 @@ import 'package:nunut_application/screens/chatPage.dart';
 import 'package:nunut_application/screens/detailNotification.dart';
 import 'package:nunut_application/screens/detailProfilePage.dart';
 import 'package:nunut_application/screens/distance.dart';
+import 'package:nunut_application/screens/driverRegistration.dart';
 import 'package:nunut_application/screens/home.dart';
 import 'package:nunut_application/screens/login.dart';
 import 'package:nunut_application/screens/mainScreen.dart';
@@ -84,6 +85,7 @@ class MyApp extends StatelessWidget {
         '/rideShare': (context) => const rideShare(),
         '/profile': (context) => const ProfilePage(),
         '/detailprofile': (context) => const DetailProfilePage(),
+        '/driverRegistration': (context) => const DriverRegistration(),
         '/detailNotification': (context) => const DetailNotificationPage(),
         '/pengaduanKendala': (context) => const PengaduanKendalaPage(),
         '/batalkanTumpangan': (context) => const BatalkanTumpangan(),
