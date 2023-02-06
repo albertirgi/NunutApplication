@@ -351,7 +351,7 @@ class _ParkingListState extends State<ParkingList> {
                                               Expanded(
                                                 flex: 2,
                                                 child: Text(
-                                                  "Penuh",
+                                                  "Terpakai",
                                                   style: TextStyle(
                                                     fontSize: 12,
                                                     fontWeight: FontWeight.bold,
@@ -361,11 +361,7 @@ class _ParkingListState extends State<ParkingList> {
                                               ),
                                               Expanded(
                                                 flex: 1,
-                                                child: Icon(
-                                                  Icons.keyboard_arrow_right,
-                                                  color: Colors.black,
-                                                  size: 30,
-                                                ),
+                                                child: SizedBox(),
                                               ),
                                             ],
                                           ),

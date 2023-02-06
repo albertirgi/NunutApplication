@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/models/mparkingbuilding.dart';
@@ -142,13 +144,17 @@ class _parkingSpotDetailState extends State<parkingSpotDetail> {
                         var status_post =
                             await BookingParkirApi.SendBookingParkir(
                                 parking_slot_id, id_ride);
-                        if (status_post == true) {
-                          Navigator.pushNamed(context, '/notifikasiSukses',
-                              arguments: {
-                                'title': "Booking Parkir Berhasil",
-                                'description':
-                                    "Mohon tunjukan QR Code ini kepada petugas parkir",
-                              });
+                        var status_update_slot =
+                            await BookingParkirApi.UpdateStatusSlotParkir(
+                                parking_slot_id);
+                        log("status post " + status_post.toString());
+                        log("status update slot " +
+                            status_update_slot.toString());
+                        if (status_post == true && status_update_slot == true) {
+                          Fluttertoast.showToast(msg: "Booking Parkir Sukses");
+                          //Navigator.pop(context);
+                          Navigator.popUntil(
+                              context, ModalRoute.withName('/rideList'));
                         } else {
                           Fluttertoast.showToast(msg: "Booking Parkir Gagal");
                         }
