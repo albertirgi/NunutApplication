@@ -5,6 +5,7 @@ import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/models/mresult.dart';
 import 'package:nunut_application/models/mtransaction.dart';
 
+import '../models/muser.dart';
 import '../models/mwallet.dart';
 
 class MidtransApi {
@@ -122,6 +123,52 @@ class MidtransApi {
         }));
     Map<String, dynamic> data = json.decode(response.body.toString());
     Wallet result = Wallet.fromJson(data["data"]);
+    return result;
+  }
+
+  static Future storeBeneficiary(
+      String name, String bank, String account_number) async {
+    var url = Uri.parse(config.baseUrl + '/beneficiary/');
+    UserModel user = await config.user;
+    var response = await http.post(url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'name': name,
+          'bank': bank,
+          'account': account_number,
+          'alias_name': name + user.id.toString(),
+          'email': user.email,
+        }));
+    Map<String, dynamic> data = json.decode(response.body.toString());
+    Result result = Result.fromJson(data);
+    return result;
+  }
+
+  static Future getBeneficiaries() async {
+    var url = Uri.parse(config.baseUrl + '/beneficiary/');
+    var response = await http.get(url, headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    });
+    Map<String, dynamic> data = json.decode(response.body.toString());
+    return data;
+  }
+
+  static Future storePayout(String beneficiary_id, int amount) async {
+    var url = Uri.parse(config.baseUrl + '/payout/');
+    UserModel user = await config.user;
+    var response = await http.post(url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'beneficiary_id': beneficiary_id,
+          'amount': amount,
+          'user_id': user.id,
+        }));
+    Map<String, dynamic> data = json.decode(response.body.toString());
+    Result result = Result.fromJson(data);
     return result;
   }
 }
