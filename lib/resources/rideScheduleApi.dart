@@ -122,7 +122,7 @@ class RideScheduleApi {
   }
 
   Future<List<Bookmark>> getBookmarkList({required String userId, bool checkUrl = false}) async {
-    var url = Uri.parse(config.baseUrl + '/bookmark?user=$userId&ride_schedule&driver');
+    var url = Uri.parse(config.baseUrl + '/bookmark?user=$userId&ride_schedule&driver&vehicle');
     if (checkUrl) print(url);
 
     var response = await http.get(url);

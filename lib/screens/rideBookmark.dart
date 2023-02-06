@@ -1,5 +1,6 @@
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/models/mbookmark.dart';
 import 'package:nunut_application/models/mresult.dart';
@@ -114,8 +115,8 @@ class _RideBookmarkState extends State<RideBookmark> {
                                   showDialog<String>(
                                     context: context,
                                     builder: (BuildContext context) => AlertDialog(
-                                      title: NunutText(title: 'Delete this bookmark?', size: 20, fontWeight: FontWeight.bold),
-                                      content: NunutText(title: "You can add this ride schedule to your bookmark again if it's still available."),
+                                      title: NunutText(title: 'Hapus bookmark ini ?', size: 20, fontWeight: FontWeight.bold),
+                                      content: NunutText(title: "Anda dapat melakukan bookmark pada tumpangan ini lagi nanti jika tumpangan masih tersedia."),
                                       actions: <Widget>[
                                         TextButton(
                                           onPressed: () => Navigator.pop(context),
@@ -125,6 +126,7 @@ class _RideBookmarkState extends State<RideBookmark> {
                                           onPressed: () {
                                             Navigator.pop(context);
                                             rideScheduleApi.deleteBookmarkByBookmarkId(bookmarkId: bookmarkedList[index].id, checkUrl: true);
+                                            Fluttertoast.showToast(msg: "Bookmark berhasil dihapus");
                                             setState(() {
                                               bookmarkedList.removeAt(index);
                                             });
