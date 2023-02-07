@@ -7,6 +7,8 @@ import 'package:nunut_application/screens/chatInside.dart';
 import 'package:nunut_application/screens/chatPage.dart';
 import 'package:nunut_application/screens/detailNotification.dart';
 import 'package:nunut_application/screens/detailProfilePage.dart';
+import 'package:nunut_application/screens/distance.dart';
+import 'package:nunut_application/screens/driverRegistration.dart';
 import 'package:nunut_application/screens/home.dart';
 import 'package:nunut_application/screens/login.dart';
 import 'package:nunut_application/screens/mainScreen.dart';
@@ -29,12 +31,15 @@ import 'package:nunut_application/screens/rideShare.dart';
 import 'package:nunut_application/screens/splashscreen.dart';
 import 'package:nunut_application/screens/rideList.dart';
 import 'package:nunut_application/screens/topUp.dart';
+import 'package:nunut_application/screens/topUpPayment.dart';
 import 'package:nunut_application/screens/tripHistory.dart';
 import 'package:nunut_application/screens/rideDetail.dart';
 import 'package:nunut_application/screens/myVehicle.dart';
 import 'package:nunut_application/screens/withdraw.dart';
 import 'package:nunut_application/screens/withdrawConfirmation.dart';
 import 'package:nunut_application/screens/snap.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import 'firebase_options.dart';
 
@@ -43,7 +48,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  await initializeDateFormatting('id_ID', null)
+      .then((_) => runApp(const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -79,6 +85,7 @@ class MyApp extends StatelessWidget {
         '/rideShare': (context) => const rideShare(),
         '/profile': (context) => const ProfilePage(),
         '/detailprofile': (context) => const DetailProfilePage(),
+        '/driverRegistration': (context) => const DriverRegistration(),
         '/detailNotification': (context) => const DetailNotificationPage(),
         '/pengaduanKendala': (context) => const PengaduanKendalaPage(),
         '/batalkanTumpangan': (context) => const BatalkanTumpangan(),
@@ -88,8 +95,14 @@ class MyApp extends StatelessWidget {
         '/topUp': (context) => const TopUp(),
         '/withdraw': (context) => const Withdraw(),
         '/withdrawConfirmation': (context) => const WithdrawConfirmation(),
-        '/snap': (context) => SnapScreen(
-              transactionToken: '964dd4a3-d1b3-40e1-9a3e-85aa054b00f0',
+        '/distance': (context) => const Distance(),
+        '/topUpPayment': (context) => TopUpPayment(
+              data: {
+                'id': '1',
+                'name': 'Top Up',
+                'price': '100000',
+                'image': 'assets/images/topup.png',
+              },
             ),
       },
     );

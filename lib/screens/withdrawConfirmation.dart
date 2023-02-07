@@ -75,19 +75,28 @@ class _WithdrawConfirmationState extends State<WithdrawConfirmation> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                NunutText(title: "Nominal Withdraw", fontWeight: FontWeight.bold, size: 20),
+                NunutText(
+                    title: "Nominal Withdraw",
+                    fontWeight: FontWeight.bold,
+                    size: 20),
                 Row(
                   children: [
-                    NunutText(title: "Rp. ", fontWeight: FontWeight.bold, size: 20),
-                    NunutText(title: "30.000", fontWeight: FontWeight.bold, size: 32),
+                    NunutText(
+                        title: "Rp. ", fontWeight: FontWeight.bold, size: 20),
+                    NunutText(
+                        title: "30.000", fontWeight: FontWeight.bold, size: 32),
                   ],
                 ),
                 SizedBox(height: 30),
-                NunutText(title: "Rekening Tujuan", fontWeight: FontWeight.bold, size: 20),
+                NunutText(
+                    title: "Rekening Tujuan",
+                    fontWeight: FontWeight.bold,
+                    size: 20),
                 SizedBox(height: 20),
                 Container(
                   height: 50,
-                  padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+                  padding:
+                      EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -103,45 +112,78 @@ class _WithdrawConfirmationState extends State<WithdrawConfirmation> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      NunutText(title: "BCA", fontWeight: FontWeight.bold, size: 20),
-                      NunutText(title: "  1234567890", fontWeight: FontWeight.bold, size: 14),
+                      NunutText(
+                          title: "BCA", fontWeight: FontWeight.bold, size: 20),
+                      NunutText(
+                          title: "  1234567890",
+                          fontWeight: FontWeight.bold,
+                          size: 14),
                     ],
                   ),
                 ),
                 SizedBox(height: 30),
-                NunutText(title: "Jumlah", fontWeight: FontWeight.bold, size: 20),
+                NunutText(
+                    title: "Jumlah", fontWeight: FontWeight.bold, size: 20),
                 SizedBox(height: 20),
                 Row(
                   children: [
-                    NunutText(title: "Withdraw", fontWeight: FontWeight.bold, size: 14),
+                    NunutText(
+                        title: "Withdraw",
+                        fontWeight: FontWeight.bold,
+                        size: 14),
                     Spacer(),
-                    NunutText(title: "30.000", fontWeight: FontWeight.bold, size: 14),
+                    NunutText(
+                        title: "30.000", fontWeight: FontWeight.bold, size: 14),
                   ],
                 ),
                 SizedBox(height: 5),
                 Row(
                   children: [
-                    NunutText(title: "Potongan Biaya Admin", fontWeight: FontWeight.bold, size: 14, color: nunutPrimaryColor),
+                    NunutText(
+                        title: "Potongan Biaya Admin",
+                        fontWeight: FontWeight.bold,
+                        size: 14,
+                        color: nunutPrimaryColor),
                     Spacer(),
-                    NunutText(title: "1000", fontWeight: FontWeight.bold, size: 14, color: nunutPrimaryColor),
+                    NunutText(
+                        title: "1000",
+                        fontWeight: FontWeight.bold,
+                        size: 14,
+                        color: nunutPrimaryColor),
                   ],
                 ),
                 SizedBox(height: 5),
                 Row(
                   children: [
-                    NunutText(title: "Total Saldo Terpotong", fontWeight: FontWeight.bold, size: 14),
+                    NunutText(
+                        title: "Total Saldo Terpotong",
+                        fontWeight: FontWeight.bold,
+                        size: 14),
                     Spacer(),
-                    NunutText(title: "Rp. ", fontWeight: FontWeight.bold, size: 14),
-                    NunutText(title: "29.000", fontWeight: FontWeight.bold, size: 18),
+                    NunutText(
+                        title: "Rp. ", fontWeight: FontWeight.bold, size: 14),
+                    NunutText(
+                        title: "29.000", fontWeight: FontWeight.bold, size: 18),
                   ],
                 ),
                 // SizedBox(height: isExpanded ? MediaQuery.of(context).size.height * 0.1 : MediaQuery.of(context).size.height * 0.35),
                 Container(
-                  margin: EdgeInsets.only(bottom: 20, top: MediaQuery.of(context).size.height * 0.3),
+                  margin: EdgeInsets.only(
+                      bottom: 20,
+                      top: MediaQuery.of(context).size.height * 0.3),
                   child: NunutButton(
                     title: "Ajukan Withdraw",
                     fontWeight: FontWeight.w500,
-                    onPressed: () {},
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Pengajuan withdraw sedang diproses'),
+                          duration: Duration(seconds: 1),
+                        ),
+                      );
+                      Navigator.popUntil(
+                          context, ModalRoute.withName('/nunutPay'));
+                    },
                     borderColor: Colors.transparent,
                     borderRadius: 12,
                   ),

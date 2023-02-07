@@ -1,6 +1,11 @@
+import 'dart:developer';
+
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:nunut_application/widgets/profileParking.dart';
+import 'package:nunut_application/resources/parkingPlaceApi.dart';
+import '../models/mparkingplace.dart';
+import '../theme.dart';
 
 class BookingParkir extends StatefulWidget {
   const BookingParkir({super.key});
@@ -10,8 +15,32 @@ class BookingParkir extends StatefulWidget {
 }
 
 class _BookingParkirState extends State<BookingParkir> {
+  List<ParkingPlaceModel> ParkingPlaceList = [];
+  @override
+  void initState() {
+    super.initState();
+    initParkingPlace();
+  }
+
+  initParkingPlace() async {
+    ParkingPlaceList.clear();
+    ParkingPlaceList = await parkingPlaceApi.getParkingPlace();
+    setState(() {
+      ParkingPlaceList = ParkingPlaceList;
+      //log("isi notif list : " + jsonEncode(NotificationList));
+    });
+    //log("isi length " + NotificationList.length.toString());
+    //log("isi NotificationList " + NotificationList.toString());
+    //log("isi NotificationList " + NotificationList[0].title.toString());
+    // for(int i = 0; i < NotificationList.length; i++){
+    //   log("isi NotificationList " + NotificationList[i].title.toString());
+    // }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final IdRide = ModalRoute.of(context)!.settings.arguments as String;
+    log("isi idRide " + IdRide.toString());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey[50],
@@ -45,23 +74,45 @@ class _BookingParkirState extends State<BookingParkir> {
                 strokeColor: Colors.black,
               ),
               SizedBox(height: 20),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () => Navigator.pushNamed(context, '/parkingList'),
-                    child:profileParkingCard(
-                    image:
-                        "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiO",
-                    title: "Universitas Kristen Petra",
-                    subtitle: "Surabaya, Indonesia",
-                    count: "5",
-                    maxCapacity: "16",
-                    ),
-                  );
+              FutureBuilder(
+                future: Future.delayed(Duration(seconds: 1)),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () => Navigator.pushNamed(
+                              context, '/parkingList',
+                              arguments: {
+                                'data': ParkingPlaceList[index],
+                                'idRide': IdRide,
+                              }),
+                          child: profileParkingCard(
+                            image: ParkingPlaceList[index].image,
+                            title: ParkingPlaceList[index].name,
+                            subtitle: ParkingPlaceList[index].subName,
+                            count: "5",
+                            maxCapacity: "16",
+                          ),
+                        );
+                      },
+                      itemCount: ParkingPlaceList.length,
+                    );
+                  } else {
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                        top: 100,
+                      ),
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: nunutPrimaryColor,
+                        ),
+                      ),
+                    );
+                  }
                 },
-                itemCount: 5,
               ),
             ],
           ),

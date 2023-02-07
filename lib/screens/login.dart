@@ -82,14 +82,14 @@ class _LoginPageState extends State<LoginPage> {
                   widthButton: 200,
                   onPressed: () async {
                     if (username.text == "" || password.text == "") {
-                      Fluttertoast.showToast(msg: "Cek Kembali Email dan Password Anda");
+                      Fluttertoast.showToast(msg: "Cek Kembali Email dan Password Anda", textColor: Colors.white);
                     } else {
                       tmpUser = await AuthService.signIn(email: username.text, password: password.text);
                       if (tmpUser.email != "") {
                         config.user = tmpUser;
                         Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
                       } else {
-                        Fluttertoast.showToast(msg: "Cek Kembali Email dan Password Anda");
+                        Fluttertoast.showToast(msg: "Cek Kembali Email dan Password Anda", textColor: Colors.white);
                       }
                     }
                   },

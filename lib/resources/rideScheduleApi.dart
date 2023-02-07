@@ -48,9 +48,11 @@ class RideScheduleApi {
     }
   }
 
-  Future<List<RideSchedule>> getRideScheduleList({String parameter = "", bool checkUrl = false}) async {
-    if (parameter.isNotEmpty) parameter = "?$parameter";
-    var url = Uri.parse(config.baseUrl + '/ride-schedule' + parameter);
+  Future<List<RideSchedule>> getRideScheduleList({String parameter = "", bool checkUrl = false, int page = 0}) async {
+    String _parameter = "";
+    if (page > 0) _parameter = "/list/$page";
+    if (parameter.isNotEmpty) _parameter += "?$parameter";
+    var url = Uri.parse(config.baseUrl + '/ride-schedule' + _parameter);
 
     if (checkUrl) print(url);
 
@@ -89,7 +91,7 @@ class RideScheduleApi {
     }
   }
 
-  Future<bool> deleteBookmark({required String bookmarkId, bool checkUrl = false}) async {
+  Future<bool> deleteBookmarkByBookmarkId({required String bookmarkId, bool checkUrl = false}) async {
     var url = Uri.parse(config.baseUrl + '/bookmark/$bookmarkId');
     var response = await http.delete(url);
     if (checkUrl) print(url);
@@ -104,8 +106,23 @@ class RideScheduleApi {
     }
   }
 
+  Future<bool> deleteBookmarkByRideScheduleId({required String rideScheduleId, required String userId, bool checkUrl = false}) async {
+    var url = Uri.parse(config.baseUrl + '/bookmark?ride_schedule=$rideScheduleId&user=$userId');
+    var response = await http.delete(url);
+    if (checkUrl) print(url);
+
+    Result result;
+    result = Result.fromJson(json.decode(response.body));
+
+    if (result.status == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   Future<List<Bookmark>> getBookmarkList({required String userId, bool checkUrl = false}) async {
-    var url = Uri.parse(config.baseUrl + '/bookmark?user=$userId&ride_schedule&driver');
+    var url = Uri.parse(config.baseUrl + '/bookmark?user=$userId&ride_schedule&driver&vehicle');
     if (checkUrl) print(url);
 
     var response = await http.get(url);

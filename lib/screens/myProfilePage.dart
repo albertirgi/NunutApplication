@@ -2,8 +2,9 @@ import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:nunut_application/models/muser.dart';
 import 'package:nunut_application/resources/authApi.dart';
-import 'package:nunut_application/resources/userApi.dart';
 import 'package:nunut_application/theme.dart';
+
+import '../widgets/nunutButton.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -245,6 +246,15 @@ class _ProfilePageState extends State<ProfilePage> {
                       itemCount: 5,
                     ),
                   ),
+                  SizedBox(height: 20),
+                  NunutButton(
+                    title: "Logout",
+                    onPressed: () {
+                      AuthService.signOut();
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/login', (route) => false);
+                    },
+                  )
                 ],
               ),
             ),

@@ -29,16 +29,7 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            //nunutTripCard(images: images),
-            // CouponCard(),
-            // NunutCard(
-            //   margin: EdgeInsets.all(16),
-            //   borderRadius: 16,
-            //   content: Column(
-            //     children: [],
-            //   ),
-            // ),
-            //SizedBox(height: 50),
+          
             NunutButton(
               title: "Promo Berhasil Digunakan",
               onPressed: () {
@@ -103,12 +94,12 @@ class _HomePageState extends State<HomePage> {
                 Navigator.pushNamed(context, '/payment');
               },
             ),
-            NunutButton(
-              title: "Booking Parkir",
-              onPressed: () {
-                Navigator.pushNamed(context, '/bookingParkir');
-              },
-            ),
+            // NunutButton(
+            //   title: "Booking Parkir",
+            //   onPressed: () {
+            //     Navigator.pushNamed(context, '/bookingParkir');
+            //   },
+            // ),
             NunutButton(
               title: "My Ride",
               onPressed: () {
@@ -172,7 +163,13 @@ class _HomePageState extends State<HomePage> {
             NunutButton(
               title: "Snap",
               onPressed: () {
-                Navigator.pushNamed(context, '/snap');
+                Navigator.pushNamed(context, '/driverRegistration');
+              },
+            ),
+            NunutButton(
+              title: "Distance",
+              onPressed: () {
+                Navigator.pushNamed(context, '/distance');
               },
             ),
           ],
@@ -342,7 +339,7 @@ class _HomeState extends State<Home> {
                                     ),
                                     NunutText(title: "Pergi Ke", size: 8),
                                     NunutText(
-                                      title: "Lokasi Jemput",
+                                      title: "Lokasi Tujuan",
                                       size: 12,
                                       fontWeight: FontWeight.bold,
                                     ),

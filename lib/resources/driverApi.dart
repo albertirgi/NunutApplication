@@ -1,8 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/models/mresult.dart';
 import 'package:nunut_application/models/mdriver.dart';
+import 'package:nunut_application/models/muser.dart';
+import 'package:nunut_application/resources/authApi.dart';
 
 class DriverApi {
   Future<List<Driver>> getDriverList() async {
@@ -72,6 +76,68 @@ class DriverApi {
       await http.MultipartFile.fromPath('image', driver.image),
     );
     var response = await request.send();
-    print(response.statusCode);
+    print(response.stream.first.toString());
+  }
+
+  static Future<http.StreamedResponse> registerDriver(
+      String fullname,
+      String nik,
+      String phone,
+      File? ktmImage,
+      File? drivingLicense,
+      File? aggrementLetter,
+      File? profilePicture) async {
+    // Validate the form
+    if (fullname.isEmpty ||
+        nik.isEmpty ||
+        phone.isEmpty ||
+        ktmImage == null ||
+        drivingLicense == null ||
+        aggrementLetter == null ||
+        profilePicture == null) {
+      print("Please fill all the field");
+      return http.StreamedResponse(Stream.empty(), 400);
+    }
+    var url = Uri.parse(config.baseUrl + '/driver');
+    var request = http.MultipartRequest('POST', url);
+    UserModel user = await AuthService.getCurrentUser();
+    request.fields['name'] = fullname;
+    request.fields['phone'] = phone;
+    request.fields['nik'] = nik;
+    request.fields['user_id'] = user.id!;
+    request.files.add(
+      http.MultipartFile(
+        'aggrement_letter',
+        aggrementLetter.readAsBytes().asStream(),
+        aggrementLetter.lengthSync(),
+        filename: aggrementLetter.path.split('/').last,
+      ),
+    );
+    request.files.add(
+      await http.MultipartFile(
+        'driving_license',
+        drivingLicense.readAsBytes().asStream(),
+        drivingLicense.lengthSync(),
+        filename: drivingLicense.path.split('/').last,
+      ),
+    );
+    request.files.add(
+      await http.MultipartFile(
+        'student_card',
+        ktmImage.readAsBytes().asStream(),
+        ktmImage.lengthSync(),
+        filename: ktmImage.path.split('/').last,
+      ),
+    );
+    request.files.add(
+      await http.MultipartFile(
+        'image',
+        profilePicture.readAsBytes().asStream(),
+        profilePicture.lengthSync(),
+        filename: profilePicture.path.split('/').last,
+      ),
+    );
+    var response = await request.send();
+    return response;
   }
 }

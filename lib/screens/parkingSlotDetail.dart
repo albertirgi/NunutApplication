@@ -1,4 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nunut_application/models/mparkingbuilding.dart';
+import 'package:nunut_application/resources/bookingParkirApi.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 
@@ -10,6 +15,28 @@ class parkingSpotDetail extends StatefulWidget {
 }
 
 class _parkingSpotDetailState extends State<parkingSpotDetail> {
+  String image = '';
+  String title = '';
+  String subTitle = '';
+  List<String> instruction = [];
+  String parking_slot_id = '';
+  String id_ride = '';
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final arg = ModalRoute.of(context)!.settings.arguments as Map;
+    final data = arg['data'] as ParkingSlot;
+    final idRide = arg['idRide'] as String;
+    //log("isi data " + jsonEncode(data).toString());
+    image = data.image;
+    title = data.title;
+    subTitle = data.subtitle;
+    instruction = data.instruction;
+    parking_slot_id = data.parkingSlotId;
+    id_ride = idRide;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,8 +62,7 @@ class _parkingSpotDetailState extends State<parkingSpotDetail> {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(
-                      "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiO"),
+                  image: NetworkImage(image),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -50,14 +76,14 @@ class _parkingSpotDetailState extends State<parkingSpotDetail> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Gedung Q - Parkir 1",
+                    title,
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    "Universitas Kristen Petra",
+                    subTitle,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w400,
@@ -76,53 +102,26 @@ class _parkingSpotDetailState extends State<parkingSpotDetail> {
                   SizedBox(
                     height: 15,
                   ),
-                  Row(
-                    children: [
-                      //icon bullet
-                      Icon(
-                        Icons.circle,
-                        color: Colors.black,
-                        size: 8,
-                      ),
-                      Text(
-                        " Masuk ke lantai 1 gedung parkir Q",
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      //icon bullet
-                      Icon(
-                        Icons.circle,
-                        color: Colors.black,
-                        size: 8,
-                      ),
-                      Text(
-                        " Belok kiri",
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      //icon bullet
-                      Icon(
-                        Icons.circle,
-                        color: Colors.black,
-                        size: 8,
-                      ),
-                      Text(
-                        " Tempat parkir berada di sisi kiri jalan",
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                    ],
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: instruction.length,
+                    itemBuilder: (context, index) {
+                      return Row(
+                        children: [
+                          //icon bullet
+
+                          Expanded(
+                            child: Text(
+                              "${index + 1}." + instruction[index],
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ],
               ),
@@ -141,7 +140,25 @@ class _parkingSpotDetailState extends State<parkingSpotDetail> {
                     padding: const EdgeInsets.symmetric(vertical: 18),
                     child: NunutButton(
                       title: "Pesan",
-                      onPressed: () {},
+                      onPressed: () async {
+                        var status_post =
+                            await BookingParkirApi.SendBookingParkir(
+                                parking_slot_id, id_ride);
+                        var status_update_slot =
+                            await BookingParkirApi.UpdateStatusSlotParkir(
+                                parking_slot_id);
+                        log("status post " + status_post.toString());
+                        log("status update slot " +
+                            status_update_slot.toString());
+                        if (status_post == true && status_update_slot == true) {
+                          Fluttertoast.showToast(msg: "Booking Parkir Sukses");
+                          //Navigator.pop(context);
+                          Navigator.popUntil(
+                              context, ModalRoute.withName('/rideList'));
+                        } else {
+                          Fluttertoast.showToast(msg: "Booking Parkir Gagal");
+                        }
+                      },
                       widthBorder: 0,
                       widthButton: 146,
                       heightButton: 44,
