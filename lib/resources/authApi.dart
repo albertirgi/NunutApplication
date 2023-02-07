@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/models/muser.dart';
 import 'package:nunut_application/resources/userApi.dart';
+import 'package:nunut_application/theme.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -39,7 +41,7 @@ class AuthService {
       UserModel user = await UserService().getUserByID(userCredential.user!.uid);
       return user;
     } catch (e) {
-      Fluttertoast.showToast(msg: "Password atau Email Salah");
+      Fluttertoast.showToast(msg: "Password atau Email Salah", backgroundColor: nunutPrimaryColor, textColor: Colors.white);
       throw e;
     }
   }
