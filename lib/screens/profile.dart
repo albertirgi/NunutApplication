@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:bordered_text/bordered_text.dart';
+import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/models/muser.dart';
 import 'package:nunut_application/resources/authApi.dart';
 import 'package:nunut_application/theme.dart';
+import 'package:nunut_application/widgets/nunutText.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -15,8 +17,7 @@ class ProfilePageMenu {
   String title;
   String icon;
   String identifier;
-  ProfilePageMenu(
-      {required this.title, required this.icon, required this.identifier});
+  ProfilePageMenu({required this.title, required this.icon, required this.identifier});
 }
 
 class _ProfilePageState extends State<ProfilePage> {
@@ -71,8 +72,7 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Stack(
           children: [
             Image(
-              image:
-                  AssetImage('assets/backgroundCircle/backgroundCircle1.png'),
+              image: AssetImage('assets/backgroundCircle/backgroundCircle1.png'),
               fit: BoxFit.cover,
             ),
             Container(
@@ -131,8 +131,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               backgroundColor: Colors.black,
                               radius: 30,
                               backgroundImage: NetworkImage(
-                                  //image profile
-                                  "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiO"),
+                                //image profile
+                                "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiO",
+                              ),
                             ),
                           ),
                           Container(
@@ -141,7 +142,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               children: [
                                 SizedBox(height: 20),
                                 Text(
-                                  user.name == "" ? "Loading..." : user.name,
+                                  // user.name == "" ? "Loading..." : user.name,
+                                  config.user.name,
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
@@ -150,7 +152,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  user.phone == "" ? "Loading..." : user.phone,
+                                  // user.phone == "" ? "Loading..." : user.phone,
+                                  config.user.phone,
                                   style: TextStyle(
                                     color: Color.fromARGB(255, 28, 27, 27),
                                     fontSize: 12,
@@ -158,7 +161,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  user.email == "" ? "Loading..." : user.email,
+                                  // user.email == "" ? "Loading..." : user.email,
+                                  config.user.email,
                                   style: TextStyle(
                                     color: Color.fromARGB(255, 28, 27, 27),
                                     fontSize: 12,
@@ -168,9 +172,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 InkWell(
                                   onTap: () {
                                     //to detail Profile page
-                                    Navigator.pushNamed(
-                                        context, '/detailprofile',
-                                        arguments: user);
+                                    Navigator.pushNamed(context, '/detailprofile', arguments: user);
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -183,8 +185,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                     width: 110,
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 3, vertical: 4),
+                                      padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
                                       child: Row(
                                         children: [
                                           //icons
@@ -192,10 +193,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                           SizedBox(width: 5),
                                           Text(
                                             "Edit Profile",
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold),
+                                            style: TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.bold),
                                           ),
                                         ],
                                       ),
@@ -231,17 +229,35 @@ class _ProfilePageState extends State<ProfilePage> {
                         return InkWell(
                           onTap: () {
                             if (profilePageMenu[index].identifier == "keluar") {
-                              AuthService.signOut();
-                              Navigator.pushNamedAndRemoveUntil(
-                                  context, '/login', (route) => false);
-                            } else if (profilePageMenu[index].identifier ==
-                                "promo") {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("Keluar"),
+                                    content: Text("Apakah anda yakin ingin keluar?"),
+                                    actions: [
+                                      TextButton(
+                                        child: NunutText(title: "Tidak", color: Colors.red),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                      TextButton(
+                                        child: NunutText(title: "Ya", color: Colors.green),
+                                        onPressed: () {
+                                          AuthService.signOut();
+                                          Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            } else if (profilePageMenu[index].identifier == "promo") {
                               Navigator.pushNamed(context, '/promotionList');
-                            } else if (profilePageMenu[index].identifier ==
-                                "bookmark") {
+                            } else if (profilePageMenu[index].identifier == "bookmark") {
                               Navigator.pushNamed(context, '/rideBookmark');
-                            } else if (profilePageMenu[index].identifier ==
-                                "kendaraanku") {
+                            } else if (profilePageMenu[index].identifier == "kendaraanku") {
                               Navigator.pushNamed(context, '/myVehicle');
                             }
                             // else if(profilePageMenu[index].identifier == "profileDriver"){
@@ -255,8 +271,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 flex: 1,
                                 // child: Icon(Icons.account_circle,
                                 //     color: Colors.black)),
-                                child: Image.asset(profilePageMenu[index].icon,
-                                    width: 20, height: 20),
+                                child: Image.asset(profilePageMenu[index].icon, width: 20, height: 20),
                               ),
                               Expanded(
                                 flex: 9,
@@ -271,8 +286,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                   ),
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     children: [
                                       Expanded(
                                         flex: 9,
@@ -288,8 +302,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
                                       Expanded(
                                         flex: 1,
-                                        child: Icon(Icons.keyboard_arrow_right,
-                                            color: Colors.black),
+                                        child: Icon(Icons.keyboard_arrow_right, color: Colors.black),
                                       ),
                                     ],
                                   ),

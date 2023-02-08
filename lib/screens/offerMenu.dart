@@ -1,19 +1,11 @@
-import 'dart:developer';
-
 import 'package:bordered_text/bordered_text.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/resources/rideScheduleApi.dart';
 import 'package:nunut_application/theme.dart';
-import 'package:nunut_application/widgets/couponCard.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
-import 'package:nunut_application/widgets/nunutCard.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
-import 'package:nunut_application/widgets/nunutTripCard.dart';
 
 class OfferMenu extends StatefulWidget {
   const OfferMenu({super.key});
@@ -41,19 +33,6 @@ class _OfferMenuState extends State<OfferMenu> {
 
   @override
   Widget build(BuildContext context) {
-    // Widget buildContent(int currentIndex) {
-    //   switch (currentIndex) {
-    //     case 0:
-    //       return const HomePage();
-    //     case 1:
-    //       return const TransactionPage();
-    //     case 2:
-    //       return const ProfilePage();
-    //     default:
-    //       return const HomePage();
-    //   }
-    // }
-
     return Scaffold(
       body: Stack(
         children: [
@@ -125,8 +104,7 @@ class _OfferMenuState extends State<OfferMenu> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.of(context)
-                              .pushNamed('/rideList', arguments: true);
+                          Navigator.of(context).pushNamed('/rideList', arguments: true);
                           showModalBottomSheet(
                             isScrollControlled: true,
                             context: context,
@@ -140,25 +118,16 @@ class _OfferMenuState extends State<OfferMenu> {
                               return StatefulBuilder(
                                 builder: (context, setState) {
                                   return Padding(
-                                    padding: EdgeInsets.only(
-                                        bottom: MediaQuery.of(context)
-                                            .viewInsets
-                                            .bottom),
+                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                                     child: Container(
                                       constraints: BoxConstraints(
-                                        maxHeight:
-                                            MediaQuery.of(context).size.height ,
-                                        minHeight:
-                                            MediaQuery.of(context).size.height *
-                                                0.60,
+                                        maxHeight: MediaQuery.of(context).size.height,
+                                        minHeight: MediaQuery.of(context).size.height * 0.60,
                                       ),
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.60,
+                                      height: MediaQuery.of(context).size.height * 0.60,
                                       padding: EdgeInsets.all(24),
                                       child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Align(
                                             alignment: Alignment.topCenter,
@@ -168,19 +137,15 @@ class _OfferMenuState extends State<OfferMenu> {
                                                 height: 5,
                                                 decoration: BoxDecoration(
                                                   color: Colors.grey[300],
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
+                                                  borderRadius: BorderRadius.circular(10),
                                                 ),
                                               ),
-                                              onTap: () =>
-                                                  Navigator.pop(context),
+                                              onTap: () => Navigator.pop(context),
                                               onVerticalDragUpdate: (details) {
                                                 int sensitivity = 8;
-                                                if (details.delta.dy >
-                                                    sensitivity) {
+                                                if (details.delta.dy > sensitivity) {
                                                   // Down Swipe
-                                                } else if (details.delta.dy <
-                                                    -sensitivity) {
+                                                } else if (details.delta.dy < -sensitivity) {
                                                   // Up Swipe
                                                 }
                                               },
@@ -195,19 +160,15 @@ class _OfferMenuState extends State<OfferMenu> {
                                           ),
                                           SizedBox(height: 15),
                                           Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
                                               Flexible(
                                                 child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     NunutText(
-                                                      title:
-                                                          "Tanggal Berangkat",
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      title: "Tanggal Berangkat",
+                                                      fontWeight: FontWeight.bold,
                                                       size: 12,
                                                     ),
                                                     SizedBox(height: 10),
@@ -218,49 +179,20 @@ class _OfferMenuState extends State<OfferMenu> {
                                                       ),
                                                       cursorColor: Colors.black,
                                                       obscureText: false,
-                                                      controller:
-                                                          _dateController,
+                                                      controller: _dateController,
                                                       onTap: () async {
-                                                        FocusScope.of(context)
-                                                            .requestFocus(
-                                                                new FocusNode());
-                                                        DateTime? pickedDate =
-                                                            await showDatePicker(
-                                                                context:
-                                                                    context,
-                                                                initialDate:
-                                                                    DateTime
-                                                                        .now(),
-                                                                firstDate:
-                                                                    DateTime(
-                                                                        2000),
-                                                                lastDate:
-                                                                    DateTime(
-                                                                        2101));
+                                                        FocusScope.of(context).requestFocus(new FocusNode());
+                                                        DateTime? pickedDate = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(2000), lastDate: DateTime(2101));
 
-                                                        if (pickedDate !=
-                                                            null) {
-                                                          String formattedDate =
-                                                              DateFormat(
-                                                                      'dd-MM-yyyy')
-                                                                  .format(
-                                                                      pickedDate);
+                                                        if (pickedDate != null) {
+                                                          String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
                                                           setState(() {
-                                                            _dateController
-                                                                    .text =
-                                                                formattedDate; //set output date to TextField value.
+                                                            _dateController.text = formattedDate; //set output date to TextField value.
                                                           });
                                                         }
                                                       },
-                                                      decoration:
-                                                          InputDecoration(
-                                                        contentPadding:
-                                                            EdgeInsets
-                                                                .symmetric(
-                                                                    horizontal:
-                                                                        10,
-                                                                    vertical:
-                                                                        10),
+                                                      decoration: InputDecoration(
+                                                        contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                                                         isDense: true,
                                                         hintText: "dd/mm/yyyy",
                                                         hintStyle: TextStyle(
@@ -268,30 +200,19 @@ class _OfferMenuState extends State<OfferMenu> {
                                                           fontSize: 12,
                                                         ),
                                                         filled: true,
-                                                        fillColor:
-                                                            Colors.grey[300],
-                                                        border:
-                                                            OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(50),
-                                                          borderSide:
-                                                              const BorderSide(
+                                                        fillColor: Colors.grey[300],
+                                                        border: OutlineInputBorder(
+                                                          borderRadius: BorderRadius.circular(50),
+                                                          borderSide: const BorderSide(
                                                             width: 0,
-                                                            style: BorderStyle
-                                                                .none,
+                                                            style: BorderStyle.none,
                                                           ),
                                                         ),
-                                                        focusedBorder:
-                                                            OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(50),
-                                                          borderSide:
-                                                              const BorderSide(
+                                                        focusedBorder: OutlineInputBorder(
+                                                          borderRadius: BorderRadius.circular(50),
+                                                          borderSide: const BorderSide(
                                                             width: 0,
-                                                            style: BorderStyle
-                                                                .none,
+                                                            style: BorderStyle.none,
                                                           ),
                                                         ),
                                                       ),
@@ -302,13 +223,11 @@ class _OfferMenuState extends State<OfferMenu> {
                                               SizedBox(width: 20),
                                               Flexible(
                                                 child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     NunutText(
                                                       title: "Jam Berangkat",
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      fontWeight: FontWeight.bold,
                                                       size: 12,
                                                     ),
                                                     SizedBox(height: 10),
@@ -319,36 +238,21 @@ class _OfferMenuState extends State<OfferMenu> {
                                                       ),
                                                       cursorColor: Colors.black,
                                                       obscureText: false,
-                                                      controller:
-                                                          _timeController,
+                                                      controller: _timeController,
                                                       onTap: () async {
-                                                        FocusScope.of(context)
-                                                            .requestFocus(
-                                                                new FocusNode());
-                                                        TimeOfDay? picked =
-                                                            await showTimePicker(
+                                                        FocusScope.of(context).requestFocus(new FocusNode());
+                                                        TimeOfDay? picked = await showTimePicker(
                                                           context: context,
-                                                          initialTime:
-                                                              TimeOfDay.now(),
+                                                          initialTime: TimeOfDay.now(),
                                                         );
                                                         if (picked != null) {
                                                           setState(() {
-                                                            _timeController
-                                                                    .text =
-                                                                picked.format(
-                                                                    context);
+                                                            _timeController.text = picked.format(context);
                                                           });
                                                         }
                                                       },
-                                                      decoration:
-                                                          InputDecoration(
-                                                        contentPadding:
-                                                            EdgeInsets
-                                                                .symmetric(
-                                                                    horizontal:
-                                                                        10,
-                                                                    vertical:
-                                                                        10),
+                                                      decoration: InputDecoration(
+                                                        contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                                                         isDense: true,
                                                         hintText: "00:00",
                                                         hintStyle: TextStyle(
@@ -356,30 +260,19 @@ class _OfferMenuState extends State<OfferMenu> {
                                                           fontSize: 12,
                                                         ),
                                                         filled: true,
-                                                        fillColor:
-                                                            Colors.grey[300],
-                                                        border:
-                                                            OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(50),
-                                                          borderSide:
-                                                              const BorderSide(
+                                                        fillColor: Colors.grey[300],
+                                                        border: OutlineInputBorder(
+                                                          borderRadius: BorderRadius.circular(50),
+                                                          borderSide: const BorderSide(
                                                             width: 0,
-                                                            style: BorderStyle
-                                                                .none,
+                                                            style: BorderStyle.none,
                                                           ),
                                                         ),
-                                                        focusedBorder:
-                                                            OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(50),
-                                                          borderSide:
-                                                              const BorderSide(
+                                                        focusedBorder: OutlineInputBorder(
+                                                          borderRadius: BorderRadius.circular(50),
+                                                          borderSide: const BorderSide(
                                                             width: 0,
-                                                            style: BorderStyle
-                                                                .none,
+                                                            style: BorderStyle.none,
                                                           ),
                                                         ),
                                                       ),
@@ -405,16 +298,11 @@ class _OfferMenuState extends State<OfferMenu> {
                                                 ),
                                                 cursorColor: Colors.black,
                                                 obscureText: false,
-                                                controller:
-                                                    _meetingPointController,
+                                                controller: _meetingPointController,
                                                 decoration: InputDecoration(
-                                                  contentPadding:
-                                                      EdgeInsets.symmetric(
-                                                          horizontal: 10,
-                                                          vertical: 10),
+                                                  contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                                                   isDense: true,
-                                                  hintText:
-                                                      "Pilih meeting pointmu...",
+                                                  hintText: "Pilih meeting pointmu...",
                                                   hintStyle: TextStyle(
                                                     color: Colors.grey,
                                                     fontSize: 12,
@@ -422,22 +310,15 @@ class _OfferMenuState extends State<OfferMenu> {
                                                   filled: true,
                                                   fillColor: Colors.grey[300],
                                                   border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50),
-                                                    borderSide:
-                                                        const BorderSide(
+                                                    borderRadius: BorderRadius.circular(50),
+                                                    borderSide: const BorderSide(
                                                       width: 0,
                                                       style: BorderStyle.none,
                                                     ),
                                                   ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50),
-                                                    borderSide:
-                                                        const BorderSide(
+                                                  focusedBorder: OutlineInputBorder(
+                                                    borderRadius: BorderRadius.circular(50),
+                                                    borderSide: const BorderSide(
                                                       width: 0,
                                                       style: BorderStyle.none,
                                                     ),
@@ -449,9 +330,7 @@ class _OfferMenuState extends State<OfferMenu> {
                                                 top: 5,
                                                 child: Container(
                                                   decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50),
+                                                    borderRadius: BorderRadius.circular(50),
                                                     color: Colors.grey[300],
                                                   ),
                                                   child: Icon(
@@ -481,8 +360,7 @@ class _OfferMenuState extends State<OfferMenu> {
                                                 obscureText: false,
                                                 controller: _destinationController,
                                                 decoration: InputDecoration(
-                                                  contentPadding: EdgeInsets.symmetric(
-                                                      horizontal: 10, vertical: 10),
+                                                  contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                                                   isDense: true,
                                                   hintText: "Pilih tujuan destinasimu...",
                                                   hintStyle: TextStyle(
@@ -526,36 +404,26 @@ class _OfferMenuState extends State<OfferMenu> {
                                           ),
                                           SizedBox(height: 15),
                                           Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
                                               Flexible(
                                                 child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     NunutText(
                                                       title: "Kendaraan",
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      fontWeight: FontWeight.bold,
                                                       size: 12,
                                                     ),
                                                     SizedBox(height: 10),
                                                     Container(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: 5,
-                                                              vertical: 10),
+                                                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                                                       decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
+                                                        borderRadius: BorderRadius.circular(10),
                                                         color: Colors.grey[300],
                                                       ),
                                                       child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
+                                                        mainAxisAlignment: MainAxisAlignment.start,
                                                         children: [
                                                           Image.asset(
                                                             "assets/toyota.png",
@@ -564,55 +432,34 @@ class _OfferMenuState extends State<OfferMenu> {
                                                           ),
                                                           SizedBox(width: 5),
                                                           Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: [
                                                               NunutText(
-                                                                title:
-                                                                    "Toyota Innova",
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
+                                                                title: "Toyota Innova",
+                                                                fontWeight: FontWeight.bold,
                                                                 size: 10,
                                                               ),
                                                               Row(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
+                                                                mainAxisSize: MainAxisSize.max,
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                 children: [
                                                                   NunutText(
-                                                                    title:
-                                                                        "L 8080 AZ",
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
+                                                                    title: "L 8080 AZ",
+                                                                    fontWeight: FontWeight.w600,
                                                                     size: 10,
                                                                   ),
                                                                   SizedBox(
                                                                     width: 10,
                                                                   ),
                                                                   NunutButton(
-                                                                    widthButton:
-                                                                        55,
-                                                                    widthBorder:
-                                                                        0.0,
-                                                                    borderColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    heightButton:
-                                                                        15,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    title:
-                                                                        "Ubah",
+                                                                    widthButton: 55,
+                                                                    widthBorder: 0.0,
+                                                                    borderColor: Colors.transparent,
+                                                                    heightButton: 15,
+                                                                    fontWeight: FontWeight.bold,
+                                                                    title: "Ubah",
                                                                     textSize: 8,
-                                                                    onPressed:
-                                                                        () {},
+                                                                    onPressed: () {},
                                                                   ),
                                                                 ],
                                                               )
@@ -627,74 +474,44 @@ class _OfferMenuState extends State<OfferMenu> {
                                               SizedBox(width: 20),
                                               Flexible(
                                                 child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     NunutText(
                                                       title: "Kapasitas",
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      fontWeight: FontWeight.bold,
                                                       size: 12,
                                                     ),
                                                     SizedBox(height: 10),
                                                     Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
+                                                      mainAxisAlignment: MainAxisAlignment.start,
                                                       children: [
                                                         ElevatedButton(
                                                           onPressed: () {
                                                             setState(() {
-                                                              if (_capacityValue >
-                                                                  1) {
-                                                                _capacityValue =
-                                                                    _capacityValue -
-                                                                        1;
+                                                              if (_capacityValue > 1) {
+                                                                _capacityValue = _capacityValue - 1;
                                                               }
                                                             });
                                                           },
-                                                          child: Icon(
-                                                              Icons.remove,
-                                                              color:
-                                                                  Colors.black),
-                                                          style: ElevatedButton
-                                                              .styleFrom(
-                                                            tapTargetSize:
-                                                                MaterialTapTargetSize
-                                                                    .shrinkWrap,
-                                                            backgroundColor:
-                                                                nunutPrimaryColor,
-                                                            shape:
-                                                                CircleBorder(),
+                                                          child: Icon(Icons.remove, color: Colors.black),
+                                                          style: ElevatedButton.styleFrom(
+                                                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                                            backgroundColor: nunutPrimaryColor,
+                                                            shape: CircleBorder(),
                                                           ),
                                                         ),
-                                                        NunutText(
-                                                            title:
-                                                                _capacityValue
-                                                                    .toString(),
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            size: 14),
+                                                        NunutText(title: _capacityValue.toString(), fontWeight: FontWeight.bold, size: 14),
                                                         ElevatedButton(
                                                           onPressed: () {
                                                             setState(() {
-                                                              _capacityValue =
-                                                                  _capacityValue +
-                                                                      1;
+                                                              _capacityValue = _capacityValue + 1;
                                                             });
                                                           },
-                                                          child: Icon(Icons.add,
-                                                              color:
-                                                                  Colors.black),
-                                                          style: ElevatedButton
-                                                              .styleFrom(
-                                                            tapTargetSize:
-                                                                MaterialTapTargetSize
-                                                                    .shrinkWrap,
-                                                            backgroundColor:
-                                                                nunutPrimaryColor,
-                                                            shape:
-                                                                CircleBorder(),
+                                                          child: Icon(Icons.add, color: Colors.black),
+                                                          style: ElevatedButton.styleFrom(
+                                                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                                            backgroundColor: nunutPrimaryColor,
+                                                            shape: CircleBorder(),
                                                           ),
                                                         ),
                                                       ],
@@ -710,30 +527,29 @@ class _OfferMenuState extends State<OfferMenu> {
                                             child: NunutButton(
                                               title: "Buat",
                                               onPressed: () async {
-                                                var postRideScheduleStatus = await  RideScheduleApi.PostRideSchedule(
-                                                  _dateController.text.toString(), 
-                                                  _timeController.text.toString(), 
-                                                  "112.73747806931482", 
-                                                  "-7.338620797269136", 
-                                                  "7.344542569968449", 
+                                                var postRideScheduleStatus = await RideScheduleApi.PostRideSchedule(
+                                                  _dateController.text.toString(),
+                                                  _timeController.text.toString(),
+                                                  "112.73747806931482",
+                                                  "-7.338620797269136",
+                                                  "7.344542569968449",
                                                   "112.73747806931482",
                                                   "vehicle_id",
                                                   _capacityValue.toString(),
                                                   //driver id yang ada
                                                   "eGI8j0T8jPTg5YNgZlDx",
-                                                  );
-                                                  
+                                                );
+
                                                 //log("status :" + postRideScheduleStatus.toString());
-                                                if(postRideScheduleStatus == true){
+                                                if (postRideScheduleStatus == true) {
                                                   Fluttertoast.showToast(
-                                                    msg: "Berhasil membuat jadwal",
-                                                    toastLength: Toast.LENGTH_SHORT,
-                                                    gravity: ToastGravity.BOTTOM,
-                                                    timeInSecForIosWeb: 1,
-                                                    backgroundColor: Colors.green,
-                                                    textColor: Colors.white,
-                                                    fontSize: 16.0
-                                                  );
+                                                      msg: "Berhasil membuat jadwal",
+                                                      toastLength: Toast.LENGTH_SHORT,
+                                                      gravity: ToastGravity.BOTTOM,
+                                                      timeInSecForIosWeb: 1,
+                                                      backgroundColor: Colors.green,
+                                                      textColor: Colors.white,
+                                                      fontSize: 16.0);
                                                   setState(() {
                                                     _dateController.text = "";
                                                     _timeController.text = "";
@@ -741,17 +557,15 @@ class _OfferMenuState extends State<OfferMenu> {
                                                     _destinationController.text = "";
                                                     _capacityValue = 1;
                                                   });
-                                                }
-                                                else{
+                                                } else {
                                                   Fluttertoast.showToast(
-                                                    msg: "Gagal membuat jadwal",
-                                                    toastLength: Toast.LENGTH_SHORT,
-                                                    gravity: ToastGravity.BOTTOM,
-                                                    timeInSecForIosWeb: 1,
-                                                    backgroundColor: Colors.red,
-                                                    textColor: Colors.white,
-                                                    fontSize: 16.0
-                                                  );
+                                                      msg: "Gagal membuat jadwal",
+                                                      toastLength: Toast.LENGTH_SHORT,
+                                                      gravity: ToastGravity.BOTTOM,
+                                                      timeInSecForIosWeb: 1,
+                                                      backgroundColor: Colors.red,
+                                                      textColor: Colors.white,
+                                                      fontSize: 16.0);
                                                 }
                                               },
                                               heightButton: 35,
@@ -795,29 +609,34 @@ class _OfferMenuState extends State<OfferMenu> {
                           ],
                         ),
                       ),
-                      Column(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(40),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: nunutPrimaryColor,
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, "/rideList");
+                        },
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(40),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: nunutPrimaryColor,
+                              ),
+                              child: Icon(
+                                Icons.people_sharp,
+                                size: 50,
+                                color: Colors.black,
+                              ),
                             ),
-                            child: Icon(
-                              Icons.people_sharp,
-                              size: 50,
-                              color: Colors.black,
+                            SizedBox(
+                              height: 10,
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          NunutText(
-                            title: "Tumpanganku",
-                            fontWeight: FontWeight.bold,
-                            size: 18,
-                          ),
-                        ],
+                            NunutText(
+                              title: "Tumpanganku",
+                              fontWeight: FontWeight.bold,
+                              size: 18,
+                            ),
+                          ],
+                        ),
                       ),
                       Column(
                         children: [
@@ -843,29 +662,34 @@ class _OfferMenuState extends State<OfferMenu> {
                           ),
                         ],
                       ),
-                      Column(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(40),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: nunutPrimaryColor,
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, "/myVehicle");
+                        },
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(40),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: nunutPrimaryColor,
+                              ),
+                              child: Icon(
+                                Icons.car_crash,
+                                size: 50,
+                                color: Colors.black,
+                              ),
                             ),
-                            child: Icon(
-                              Icons.car_crash,
-                              size: 50,
-                              color: Colors.black,
+                            SizedBox(
+                              height: 10,
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          NunutText(
-                            title: "Kendaraanku",
-                            fontWeight: FontWeight.bold,
-                            size: 18,
-                          ),
-                        ],
+                            NunutText(
+                              title: "Kendaraanku",
+                              fontWeight: FontWeight.bold,
+                              size: 18,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -875,43 +699,42 @@ class _OfferMenuState extends State<OfferMenu> {
           ),
         ],
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30), topLeft: Radius.circular(30)),
-          boxShadow: [
-            BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20.0),
-            topRight: Radius.circular(20.0),
-          ),
-          child: BottomNavigationBar(
-            backgroundColor: Colors.black,
-            items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.car_crash),
-                label: "Home",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.route),
-                label: "Transaction",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: "Profile",
-              ),
-            ],
-            currentIndex: _selectedNavbar,
-            selectedItemColor: Colors.yellowAccent,
-            unselectedItemColor: Colors.grey,
-            showUnselectedLabels: true,
-            onTap: _changeSelectedNavBar,
-          ),
-        ),
-      ),
+      // bottomNavigationBar: Container(
+      //   decoration: BoxDecoration(
+      //     borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+      //     boxShadow: [
+      //       BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
+      //     ],
+      //   ),
+      //   child: ClipRRect(
+      //     borderRadius: BorderRadius.only(
+      //       topLeft: Radius.circular(20.0),
+      //       topRight: Radius.circular(20.0),
+      //     ),
+      //     child: BottomNavigationBar(
+      //       backgroundColor: Colors.black,
+      //       items: <BottomNavigationBarItem>[
+      //         BottomNavigationBarItem(
+      //           icon: Icon(Icons.car_crash),
+      //           label: "Home",
+      //         ),
+      //         BottomNavigationBarItem(
+      //           icon: Icon(Icons.route),
+      //           label: "Transaction",
+      //         ),
+      //         BottomNavigationBarItem(
+      //           icon: Icon(Icons.person),
+      //           label: "Profile",
+      //         ),
+      //       ],
+      //       currentIndex: _selectedNavbar,
+      //       selectedItemColor: Colors.yellowAccent,
+      //       unselectedItemColor: Colors.grey,
+      //       showUnselectedLabels: true,
+      //       onTap: _changeSelectedNavBar,
+      //     ),
+      //   ),
+      // ),
     );
   }
 }

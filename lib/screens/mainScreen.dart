@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/screens/home.dart';
+import 'package:nunut_application/screens/offerMenu.dart';
 import 'package:nunut_application/screens/profile.dart';
 import 'package:nunut_application/screens/transaction.dart';
 
@@ -11,38 +13,35 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int _selectedNavbar = 0;
-
-  void _changeSelectedNavBar(int index) {
-    setState(() {
-      _selectedNavbar = index;
-      print("Selected index : {$_selectedNavbar}");
-    });
+  @override
+  void initState() {
+    // TODO: implement initState
+    config.selectedNavbar = 1;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget buildContent(int currentIndex) {
-      switch (currentIndex) {
+    Widget buildContent() {
+      switch (config.selectedNavbar) {
         case 0:
-          return const HomePage();
+          return const OfferMenu();
         case 1:
-          return const TransactionPage();
+          return const Home();
         case 2:
           return const ProfilePage();
         default:
-          return const HomePage();
+          return const Home();
       }
     }
 
     return Scaffold(
       body: Stack(
-        children: [buildContent(_selectedNavbar)],
+        children: [buildContent()],
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+          borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30)),
           boxShadow: [
             BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
           ],
@@ -56,23 +55,36 @@ class _MainPageState extends State<MainPage> {
             backgroundColor: Colors.black,
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: Icon(Icons.car_crash),
-                label: "Home",
+                icon: Container(
+                  margin: const EdgeInsets.only(top: 10),
+                  child: Icon(Icons.car_crash, size: 30),
+                ),
+                label: "",
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.route),
-                label: "Transaction",
+                icon: Container(
+                  margin: const EdgeInsets.only(top: 10),
+                  child: Icon(Icons.route, size: 30),
+                ),
+                label: "",
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: "Profile",
+                icon: Container(
+                  margin: const EdgeInsets.only(top: 10),
+                  child: Icon(Icons.person, size: 30),
+                ),
+                label: "",
               ),
             ],
-            currentIndex: _selectedNavbar,
+            currentIndex: config.selectedNavbar,
             selectedItemColor: Colors.yellowAccent,
             unselectedItemColor: Colors.grey,
             showUnselectedLabels: true,
-            onTap: _changeSelectedNavBar,
+            onTap: (value) {
+              setState(() {
+                config.selectedNavbar = value;
+              });
+            },
           ),
         ),
       ),

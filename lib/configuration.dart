@@ -14,6 +14,7 @@ class Configuration extends InheritedWidget {
   bool updateShouldNotify(Configuration oldWidget) => true;
 
   late UserModel user;
+  int selectedNavbar = 1;
 }
 
 Configuration config = Configuration();
