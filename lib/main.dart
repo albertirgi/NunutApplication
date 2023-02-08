@@ -48,8 +48,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await initializeDateFormatting('id_ID', null)
-      .then((_) => runApp(const MyApp()));
+  await initializeDateFormatting('id_ID', null).then((_) => runApp(const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -82,7 +81,7 @@ class MyApp extends StatelessWidget {
         '/rideBookmark': (context) => const RideBookmark(),
         '/offerMenu': (context) => const OfferMenu(),
         '/myVehicle': (context) => const MyVehicle(),
-        '/rideShare': (context) => const rideShare(),
+        // '/rideShare': (context) => rideShare(),
         '/profile': (context) => const ProfilePage(),
         '/detailprofile': (context) => const DetailProfilePage(),
         '/driverRegistration': (context) => const DriverRegistration(),

@@ -34,6 +34,7 @@ class AuthService {
   static Future<UserModel> signIn({
     required String email,
     required String password,
+    required BuildContext context,
   }) async {
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(email: email, password: password);
@@ -41,6 +42,7 @@ class AuthService {
       UserModel user = await UserService().getUserByID(userCredential.user!.uid);
       return user;
     } catch (e) {
+      Navigator.pop(context);
       Fluttertoast.showToast(msg: "Password atau Email Salah", backgroundColor: nunutPrimaryColor, textColor: Colors.white);
       throw e;
     }

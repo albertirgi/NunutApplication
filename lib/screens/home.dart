@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nunut_application/configuration.dart';
+import 'package:nunut_application/screens/rideShare.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:flutter_dash/flutter_dash.dart';
 import 'package:nunut_application/theme.dart';
@@ -334,7 +335,14 @@ class _HomeState extends State<Home> {
                                     NunutText(title: "UK Petra", size: 12, fontWeight: FontWeight.bold),
                                   ],
                                 ),
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => RideShare(fromUKP: false),
+                                    ),
+                                  );
+                                },
                               ),
                               Container(
                                 width: 20,
@@ -355,7 +363,14 @@ class _HomeState extends State<Home> {
                                     NunutText(title: "Lokasi Tujuan", size: 12, fontWeight: FontWeight.bold),
                                   ],
                                 ),
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => RideShare(fromUKP: true),
+                                    ),
+                                  );
+                                },
                               ),
                             ],
                           ),

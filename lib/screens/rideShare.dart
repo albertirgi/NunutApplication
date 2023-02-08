@@ -22,14 +22,15 @@ import '../theme.dart';
 
 GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: config.googleAPiKey);
 
-class rideShare extends StatefulWidget {
-  const rideShare({super.key});
+class RideShare extends StatefulWidget {
+  bool fromUKP;
+  RideShare({super.key, required this.fromUKP});
 
   @override
-  State<rideShare> createState() => _rideShareState();
+  State<RideShare> createState() => _RideShareState();
 }
 
-class _rideShareState extends State<rideShare> {
+class _RideShareState extends State<RideShare> {
   List<RideSchedule> rideScheduleList = [];
   List<RideSchedule> rideSchedulePageList = [];
   int _page = 0;
@@ -54,6 +55,7 @@ class _rideShareState extends State<rideShare> {
     // _getCurrentPosition();
     _scrollController = ScrollController();
     _scrollController!.addListener(scrollListener);
+    widget.fromUKP ? pickUpController.text = "Universitas Kristen Petra" : destinationController.text = "Universitas Kristen Petra";
   }
 
   void dispose() {
@@ -373,27 +375,30 @@ class _rideShareState extends State<rideShare> {
                                     width: 290,
                                     height: 40,
                                     child: TextFormField(
+                                      enabled: !widget.fromUKP,
                                       controller: pickUpController,
                                       decoration: InputDecoration(
                                         contentPadding: EdgeInsets.only(left: 20),
                                         filled: true,
                                         fillColor: Colors.grey[200],
+                                        hintText: 'Pilih Lokasi Jemput',
+                                        hintStyle: TextStyle(color: Colors.grey),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(24),
                                           borderSide: BorderSide.none,
                                         ),
                                       ),
                                       onTap: () async {
-                                        Prediction? p = await PlacesAutocomplete.show(
-                                          context: context,
-                                          apiKey: config.googleAPiKey,
-                                          mode: Mode.fullscreen,
-                                          language: "id",
-                                          strictbounds: false,
-                                          types: ["(address)"],
-                                          components: [Component(Component.country, "id")],
-                                        );
-                                        displayPrediction(p);
+                                        // Prediction? p = await PlacesAutocomplete.show(
+                                        //   context: context,
+                                        //   apiKey: config.googleAPiKey,
+                                        //   mode: Mode.fullscreen,
+                                        //   language: "id",
+                                        //   strictbounds: false,
+                                        //   types: ["(address)"],
+                                        //   components: [Component(Component.country, "id")],
+                                        // );
+                                        // displayPrediction(p);
                                       },
                                     ),
                                   ),
@@ -411,11 +416,14 @@ class _rideShareState extends State<rideShare> {
                                     width: 290,
                                     height: 40,
                                     child: TextFormField(
+                                      enabled: widget.fromUKP,
                                       controller: destinationController,
                                       decoration: InputDecoration(
                                         contentPadding: EdgeInsets.only(left: 20),
                                         filled: true,
                                         fillColor: Colors.grey[200],
+                                        hintText: 'Pilih Lokasi Tujuan',
+                                        hintStyle: TextStyle(color: Colors.grey),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(24),
                                           borderSide: BorderSide.none,

@@ -82,14 +82,59 @@ class _LoginPageState extends State<LoginPage> {
                   widthButton: 200,
                   onPressed: () async {
                     if (username.text == "" || password.text == "") {
-                      Fluttertoast.showToast(msg: "Cek Kembali Email dan Password Anda", textColor: Colors.white);
+                      Fluttertoast.showToast(msg: "Email dan password harus diisi", textColor: Colors.white);
                     } else {
-                      tmpUser = await AuthService.signIn(email: username.text, password: password.text);
+                      showDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (BuildContext context) {
+                          return Dialog(
+                            backgroundColor: Colors.transparent,
+                            child: Container(
+                              height: 150,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                color: nunutPrimaryColor,
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Center(
+                                    child: Container(
+                                      margin: EdgeInsets.only(top: 25.0),
+                                      child: CircularProgressIndicator(
+                                        value: null,
+                                        strokeWidth: 5.0,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(top: 25.0),
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          NunutText(title: "Login...", color: Colors.white, size: 20, fontWeight: FontWeight.w500),
+                                          NunutText(title: "Mohon Tunggu", color: Colors.white, size: 20, fontWeight: FontWeight.w500),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                      tmpUser = await AuthService.signIn(email: username.text, password: password.text, context: context);
+
                       if (tmpUser.email != "") {
                         config.user = tmpUser;
                         Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
                       } else {
-                        Fluttertoast.showToast(msg: "Cek Kembali Email dan Password Anda", textColor: Colors.white);
+                        Fluttertoast.showToast(msg: "Email atau password salah", textColor: Colors.white);
                       }
                     }
                   },
