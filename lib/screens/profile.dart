@@ -17,7 +17,8 @@ class ProfilePageMenu {
   String title;
   String icon;
   String identifier;
-  ProfilePageMenu({required this.title, required this.icon, required this.identifier});
+  ProfilePageMenu(
+      {required this.title, required this.icon, required this.identifier});
 }
 
 class _ProfilePageState extends State<ProfilePage> {
@@ -72,7 +73,8 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Stack(
           children: [
             Image(
-              image: AssetImage('assets/backgroundCircle/backgroundCircle1.png'),
+              image:
+                  AssetImage('assets/backgroundCircle/backgroundCircle1.png'),
               fit: BoxFit.cover,
             ),
             Container(
@@ -80,19 +82,19 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        padding: EdgeInsets.zero,
-                        icon: Icon(Icons.arrow_back, color: Colors.black),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      //icon chat
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     IconButton(
+                  //       padding: EdgeInsets.zero,
+                  //       icon: Icon(Icons.arrow_back, color: Colors.black),
+                  //       onPressed: () {
+                  //         Navigator.pop(context);
+                  //       },
+                  //     ),
+                  //     //icon chat
+                  //   ],
+                  // ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 24, 0, 7),
                     child: BorderedText(
@@ -172,7 +174,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                 InkWell(
                                   onTap: () {
                                     //to detail Profile page
-                                    Navigator.pushNamed(context, '/detailprofile', arguments: user);
+                                    Navigator.pushNamed(
+                                        context, '/detailprofile',
+                                        arguments: user);
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -185,7 +189,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                     width: 110,
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 3, vertical: 4),
                                       child: Row(
                                         children: [
                                           //icons
@@ -193,7 +198,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                           SizedBox(width: 5),
                                           Text(
                                             "Edit Profile",
-                                            style: TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.bold),
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold),
                                           ),
                                         ],
                                       ),
@@ -223,6 +231,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   Container(
                     margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: ListView.builder(
+                      padding: EdgeInsets.zero,
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
@@ -234,30 +243,39 @@ class _ProfilePageState extends State<ProfilePage> {
                                 builder: (BuildContext context) {
                                   return AlertDialog(
                                     title: Text("Keluar"),
-                                    content: Text("Apakah anda yakin ingin keluar?"),
+                                    content:
+                                        Text("Apakah anda yakin ingin keluar?"),
                                     actions: [
                                       TextButton(
-                                        child: NunutText(title: "Tidak", color: Colors.red),
+                                        child: NunutText(
+                                            title: "Tidak", color: Colors.red),
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                         },
                                       ),
                                       TextButton(
-                                        child: NunutText(title: "Ya", color: Colors.green),
+                                        child: NunutText(
+                                            title: "Ya", color: Colors.green),
                                         onPressed: () {
                                           AuthService.signOut();
-                                          Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+                                          Navigator.pushNamedAndRemoveUntil(
+                                              context,
+                                              '/login',
+                                              (route) => false);
                                         },
                                       ),
                                     ],
                                   );
                                 },
                               );
-                            } else if (profilePageMenu[index].identifier == "promo") {
+                            } else if (profilePageMenu[index].identifier ==
+                                "promo") {
                               Navigator.pushNamed(context, '/promotionList');
-                            } else if (profilePageMenu[index].identifier == "bookmark") {
+                            } else if (profilePageMenu[index].identifier ==
+                                "bookmark") {
                               Navigator.pushNamed(context, '/rideBookmark');
-                            } else if (profilePageMenu[index].identifier == "kendaraanku") {
+                            } else if (profilePageMenu[index].identifier ==
+                                "kendaraanku") {
                               Navigator.pushNamed(context, '/myVehicle');
                             }
                             // else if(profilePageMenu[index].identifier == "profileDriver"){
@@ -271,7 +289,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                 flex: 1,
                                 // child: Icon(Icons.account_circle,
                                 //     color: Colors.black)),
-                                child: Image.asset(profilePageMenu[index].icon, width: 20, height: 20),
+                                child: Image.asset(profilePageMenu[index].icon,
+                                    width: 20, height: 20),
                               ),
                               Expanded(
                                 flex: 9,
@@ -286,7 +305,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                   ),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
                                     children: [
                                       Expanded(
                                         flex: 9,
@@ -302,7 +322,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
                                       Expanded(
                                         flex: 1,
-                                        child: Icon(Icons.keyboard_arrow_right, color: Colors.black),
+                                        child: Icon(Icons.keyboard_arrow_right,
+                                            color: Colors.black),
                                       ),
                                     ],
                                   ),
