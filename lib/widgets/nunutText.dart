@@ -9,6 +9,8 @@ class NunutText extends StatelessWidget {
   final FontWeight? fontWeight;
   final TextDecoration textDecoration;
   final TextOverflow? overflow;
+  final bool isShadow;
+  final double? height;
 
   const NunutText({
     super.key,
@@ -18,11 +20,26 @@ class NunutText extends StatelessWidget {
     this.maxLines = 999,
     this.fontWeight = FontWeight.normal,
     this.textDecoration = TextDecoration.none,
-    this.overflow,
+    this.overflow = TextOverflow.ellipsis,
+    this.isShadow = false,
+    this.height,
   });
 
   @override
   Widget build(BuildContext context) {
+    List<Shadow> shadows = this.isShadow == true
+        ? [
+            Shadow(
+              blurRadius: 0.0,
+              color: Colors.black,
+              offset: Offset(2.5, 2.5),
+            ),
+            Shadow(offset: Offset(-1.0, -1.0), color: Colors.black),
+            Shadow(offset: Offset(1.0, -1.0), color: Colors.black),
+            Shadow(offset: Offset(1.0, 1.0), color: Colors.black),
+            Shadow(offset: Offset(-1.0, 1.0), color: Colors.black),
+          ]
+        : [];
     return Text(
       title,
       style: GoogleFonts.poppins(
@@ -31,8 +48,11 @@ class NunutText extends StatelessWidget {
           fontSize: size,
           fontWeight: fontWeight,
           decoration: textDecoration,
+          shadows: shadows,
+          height: isShadow ? 1 : 1.5,
         ),
       ),
+      overflow: overflow,
       maxLines: maxLines,
     );
   }
