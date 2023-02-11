@@ -72,7 +72,7 @@ class _ParkingListState extends State<ParkingList> {
 
   @override
   Widget build(BuildContext context) {
-    log("IdRide : " + idRide);
+    //log("IdRide : " + idRide);
     // log("data Image :" + Image);
     return Scaffold(
       appBar: AppBar(

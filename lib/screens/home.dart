@@ -4,7 +4,6 @@ import 'package:nunut_application/screens/rideShare.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:flutter_dash/flutter_dash.dart';
 import 'package:nunut_application/theme.dart';
-import 'package:bordered_text/bordered_text.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 
 // class HomePage extends StatefulWidget {
@@ -297,16 +296,22 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   NunutText(title: "Hai, Grace", fontWeight: FontWeight.bold),
-                  BorderedText(
-                    child: Text(
-                      "Mau NUNUT\nkemana hari ini?",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 32,
-                      ),
-                    ),
-                    strokeWidth: 3.0,
-                    strokeColor: Colors.black,
+                  // BorderedText(
+                  //   child: Text(
+                  //     "Mau NUNUT\nkemana hari ini?",
+                  //     style: TextStyle(
+                  //       color: Colors.white,
+                  //       fontSize: 32,
+                  //     ),
+                  //   ),
+                  //   strokeWidth: 3.0,
+                  //   strokeColor: Colors.black,
+                  // ),
+                  NunutText(
+                    title: "Mau NUNUT\nkemana hari ini?",
+                    size: 32,
+                    color: Colors.white,
+                    isShadow: true,
                   ),
                   SizedBox(height: 10),
                   Container(

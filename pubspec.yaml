@@ -57,6 +57,7 @@ dependencies:
   geocoder: ^0.2.1
   flutter_polyline_points: ^1.0.0
   file_picker: ^4.2.0
+  text_scroll: ^0.1.2
 
 dev_dependencies:
   flutter_launcher_icons: "^0.9.2"
