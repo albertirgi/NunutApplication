@@ -15,6 +15,7 @@ class Configuration extends InheritedWidget {
 
   late UserModel user;
   int selectedNavbar = 1;
+  String? selectedBuilding;
 }
 
 Configuration config = Configuration();
