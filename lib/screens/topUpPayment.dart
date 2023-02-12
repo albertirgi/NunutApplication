@@ -150,62 +150,110 @@ class _TopUpPaymentState extends State<TopUpPayment> {
             Expanded(
               child: Align(
                 alignment: Alignment.bottomCenter,
-                child: _isLoading
-                    ? CircularProgressIndicator(
-                        color: nunutPrimaryColor,
-                        strokeWidth: 2,
-                      )
-                    : NunutButton(
-                        title: "Done",
-                        onPressed: () async {
-                          setState(() {
-                            _isLoading = true;
-                          });
-                          var res = await MidtransApi.getTransaction(
-                              widget.data["data"]["order_id"]);
+                child: NunutButton(
+                  title: "Done",
+                  onPressed: () async {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: true,
+                      builder: (BuildContext context) {
+                        return Dialog(
+                          backgroundColor: Colors.transparent,
+                          child: Container(
+                            height: 150,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              color: nunutPrimaryColor,
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Center(
+                                  child: Container(
+                                    margin: EdgeInsets.only(top: 25.0),
+                                    child: CircularProgressIndicator(
+                                      value: null,
+                                      strokeWidth: 5.0,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(top: 25.0),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        NunutText(
+                                            title: "Loading...",
+                                            color: Colors.white,
+                                            size: 20,
+                                            fontWeight: FontWeight.w500),
+                                        NunutText(
+                                            title: "Mohon Tunggu",
+                                            color: Colors.white,
+                                            size: 20,
+                                            fontWeight: FontWeight.w500),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                    setState(() {
+                      _isLoading = true;
+                    });
+                    var res = await MidtransApi.getTransaction(
+                        widget.data["data"]["order_id"]);
 
-                          if (res != null) {
-                            setState(() {
-                              _isLoading = false;
-                            });
-                            if (res["status"] == 500 || res["status"] == 400) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                      "Error fetch transaction. Please try again later"),
-                                  backgroundColor: Colors.red,
-                                ),
-                              );
-                              return;
-                            }
-                            if (res["data"]["status"] == "settlement") {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                      "Transaction success. Please wait for a moment"),
-                                  backgroundColor: Colors.green,
-                                ),
-                              );
-                              Navigator.popUntil(
-                                  context, ModalRoute.withName('/nunutPay'));
-                              Navigator.pop(context);
-                              Navigator.pushNamed(context, '/nunutPay');
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                      "Transaction failed. Please try again later"),
-                                  backgroundColor: Colors.red,
-                                ),
-                              );
-                              Navigator.popUntil(
-                                  context, ModalRoute.withName('/nunutPay'));
-                              Navigator.pop(context);
-                              Navigator.pushNamed(context, '/nunutPay');
-                            }
-                          }
-                        },
-                      ),
+                    if (res != null) {
+                      setState(() {
+                        _isLoading = false;
+                      });
+                      if (res["status"] == 500 || res["status"] == 400) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                                "Error fetch transaction. Please try again later"),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                        return;
+                      }
+                      if (res["data"]["status"] == "settlement") {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                                "Transaction success. Please wait for a moment"),
+                            backgroundColor: Colors.green,
+                          ),
+                        );
+                        Navigator.popUntil(
+                            context, ModalRoute.withName('/nunutPay'));
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, '/nunutPay');
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                                "Transaction failed. Please try again later"),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                        Navigator.popUntil(
+                            context, ModalRoute.withName('/nunutPay'));
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, '/nunutPay');
+                      }
+                    }
+                  },
+                ),
               ),
             )
           ],

@@ -384,47 +384,92 @@ class _TopUpState extends State<TopUp> {
                 SizedBox(height: MediaQuery.of(context).size.height * 0.2),
                 Container(
                   margin: EdgeInsets.only(bottom: 20),
-                  child: isLoading
-                      ? Center(
-                          child: CircularProgressIndicator(
-                            color: nunutPrimaryColor,
-                            strokeWidth: 2,
-                          ),
-                        )
-                      : NunutButton(
-                          title: "Lanjutkan",
-                          fontWeight: FontWeight.w500,
-                          onPressed: () async {
-                            setState(() {
-                              isLoading = true;
-                            });
-                            var res = await topup();
-                            if (res != null) {
-                              setState(() {
-                                isLoading = false;
-                              });
-                              if (res["status"] == 500 ||
-                                  res["status"] == 400) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                        "Transaction failed. Please try again later"),
-                                    backgroundColor: Colors.red,
+                  child: NunutButton(
+                    title: "Lanjutkan",
+                    fontWeight: FontWeight.w500,
+                    onPressed: () async {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (BuildContext context) {
+                          return Dialog(
+                            backgroundColor: Colors.transparent,
+                            child: Container(
+                              height: 150,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                color: nunutPrimaryColor,
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Center(
+                                    child: Container(
+                                      margin: EdgeInsets.only(top: 25.0),
+                                      child: CircularProgressIndicator(
+                                        value: null,
+                                        strokeWidth: 5.0,
+                                      ),
+                                    ),
                                   ),
-                                );
-                                return;
-                              }
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => TopUpPayment(data: res),
-                                ),
-                              );
-                            }
-                          },
-                          borderColor: Colors.transparent,
-                          borderRadius: 12,
-                        ),
+                                  Container(
+                                    margin: EdgeInsets.only(top: 25.0),
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          NunutText(
+                                              title: "Loading...",
+                                              color: Colors.white,
+                                              size: 20,
+                                              fontWeight: FontWeight.w500),
+                                          NunutText(
+                                              title: "Mohon Tunggu",
+                                              color: Colors.white,
+                                              size: 20,
+                                              fontWeight: FontWeight.w500),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                      setState(() {
+                        isLoading = true;
+                      });
+                      var res = await topup();
+                      if (res != null) {
+                        setState(() {
+                          isLoading = false;
+                        });
+                        if (res["status"] == 500 || res["status"] == 400) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                  "Transaction failed. Please try again later"),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                          return;
+                        }
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TopUpPayment(data: res),
+                          ),
+                        );
+                      }
+                    },
+                    borderColor: Colors.transparent,
+                    borderRadius: 12,
+                  ),
                 ),
               ],
             ),
