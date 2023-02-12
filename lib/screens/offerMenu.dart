@@ -68,35 +68,35 @@ class _OfferMenuState extends State<OfferMenu> {
                   strokeWidth: 3.0,
                   strokeColor: Colors.black,
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  width: 190,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(Icons.money_outlined),
-                      NunutText(
-                        title: "IDR 50.000",
-                        fontWeight: FontWeight.bold,
-                        size: 18,
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
+                // SizedBox(
+                //   height: 20,
+                // ),
+                // Container(
+                //   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                //   width: 190,
+                //   decoration: BoxDecoration(
+                //     color: Colors.white,
+                //     border: Border.all(
+                //       color: Colors.black,
+                //       width: 2,
+                //     ),
+                //     borderRadius: BorderRadius.circular(50),
+                //   ),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Icon(Icons.money_outlined),
+                //       NunutText(
+                //         title: "IDR 50.000",
+                //         fontWeight: FontWeight.bold,
+                //         size: 18,
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: 20,
+                // ),
                 Expanded(
                   child: GridView.count(
                     crossAxisCount: 2,
