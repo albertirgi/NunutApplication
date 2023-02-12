@@ -318,9 +318,11 @@ class _RideShareState extends State<RideShare> {
                         ),
                       ],
                     ),
+                    SizedBox(height: 10),
                     NunutText(
                         title: "Hai, " + config.user.name,
                         fontWeight: FontWeight.bold),
+                    SizedBox(height: 20),
                     NunutText(title: "Butuh \nTumpangan?", isTitle: true),
                     Container(
                       margin: EdgeInsets.only(top: 20),
