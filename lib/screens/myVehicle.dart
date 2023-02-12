@@ -1,8 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:bordered_text/bordered_text.dart';
+import 'package:nunut_application/models/mvehicle.dart';
+import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:roundcheckbox/roundcheckbox.dart';
+
+import '../resources/vehicleApi.dart';
 
 class MyVehicle extends StatefulWidget {
   const MyVehicle({super.key});
@@ -12,16 +18,37 @@ class MyVehicle extends StatefulWidget {
 }
 
 class _MyVehicleState extends State<MyVehicle> {
-  TextEditingController _carTypeController = TextEditingController();
-  TextEditingController _vehicleTypeController = TextEditingController();
-  TextEditingController _licensePlateController = TextEditingController();
-  TextEditingController _expiredDateController = TextEditingController();
-  TextEditingController _vehicleColorController = TextEditingController();
-  TextEditingController _vehicleNoteController = TextEditingController();
-  bool _isMainVehicle = false;
+  List<Vehicle2> vehicles = <Vehicle2>[];
+  bool isDataLoaded = false;
   List<AssetImage> images = <AssetImage>[
     AssetImage("assets/toyota.png"),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    VehicleApi.getVehicles().then((value) {
+      setState(() {
+        vehicles = value;
+        isDataLoaded = true;
+      });
+    });
+  }
+
+  FutureOr onGoBack(dynamic value) {
+    onRefresh();
+  }
+
+  onRefresh() {
+    isDataLoaded = false;
+    vehicles.clear();
+    VehicleApi.getVehicles().then((value) {
+      setState(() {
+        vehicles = value;
+        isDataLoaded = true;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,418 +91,7 @@ class _MyVehicleState extends State<MyVehicle> {
                 margin: EdgeInsets.zero,
                 child: ElevatedButton(
                   onPressed: () {
-                    showModalBottomSheet(
-                      isScrollControlled: true,
-                      context: context,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(24),
-                          topRight: Radius.circular(24),
-                        ),
-                      ),
-                      builder: (context) {
-                        return Padding(
-                          padding: EdgeInsets.only(
-                              bottom: MediaQuery.of(context).viewInsets.bottom),
-                          child: Container(
-                            constraints: BoxConstraints(
-                              maxHeight: MediaQuery.of(context).size.height,
-                              minHeight:
-                                  MediaQuery.of(context).size.height * 0.65,
-                            ),
-                            height: MediaQuery.of(context).size.height * 0.65,
-                            padding: EdgeInsets.all(24),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Align(
-                                  alignment: Alignment.topCenter,
-                                  child: GestureDetector(
-                                    child: Container(
-                                      width: 50,
-                                      height: 5,
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey[300],
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                    onTap: () => Navigator.pop(context),
-                                    onVerticalDragUpdate: (details) {
-                                      int sensitivity = 8;
-                                      if (details.delta.dy > sensitivity) {
-                                        // Down Swipe
-                                      } else if (details.delta.dy <
-                                          -sensitivity) {
-                                        // Up Swipe
-                                      }
-                                    },
-                                  ),
-                                ),
-                                SizedBox(height: 15),
-                                NunutText(
-                                  title: "Tambah Kendaraan Baru",
-                                  color: Colors.black,
-                                  size: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                SizedBox(height: 15),
-                                NunutText(
-                                  title: "Jenis Mobil",
-                                  fontWeight: FontWeight.bold,
-                                  size: 12,
-                                ),
-                                SizedBox(height: 10),
-                                TextFormField(
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12,
-                                  ),
-                                  cursorColor: Colors.black,
-                                  obscureText: false,
-                                  controller: _carTypeController,
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 10),
-                                    isDense: true,
-                                    hintText:
-                                        "e.g. Honda Jazz, Toyota Avanza, etc.",
-                                    hintStyle: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 12,
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.grey[300],
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(50),
-                                      borderSide: const BorderSide(
-                                        width: 0,
-                                        style: BorderStyle.none,
-                                      ),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(50),
-                                      borderSide: const BorderSide(
-                                        width: 0,
-                                        style: BorderStyle.none,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 15),
-                                NunutText(
-                                  title: "Tipe Kendaraan",
-                                  fontWeight: FontWeight.bold,
-                                  size: 12,
-                                ),
-                                SizedBox(height: 10),
-                                TextFormField(
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12,
-                                  ),
-                                  cursorColor: Colors.black,
-                                  obscureText: false,
-                                  controller: _vehicleTypeController,
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 10),
-                                    isDense: true,
-                                    hintText: "e.g. SUV, City Car, MPV, etc.",
-                                    hintStyle: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 12,
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.grey[300],
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(50),
-                                      borderSide: const BorderSide(
-                                        width: 0,
-                                        style: BorderStyle.none,
-                                      ),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(50),
-                                      borderSide: const BorderSide(
-                                        width: 0,
-                                        style: BorderStyle.none,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 15),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Flexible(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          NunutText(
-                                            title: "Nomor Plat",
-                                            fontWeight: FontWeight.bold,
-                                            size: 12,
-                                          ),
-                                          SizedBox(height: 10),
-                                          TextFormField(
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 12,
-                                            ),
-                                            cursorColor: Colors.black,
-                                            obscureText: false,
-                                            controller: _licensePlateController,
-                                            decoration: InputDecoration(
-                                              contentPadding:
-                                                  EdgeInsets.symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 10),
-                                              isDense: true,
-                                              hintText: "e.g. L 1234 XX",
-                                              hintStyle: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 12,
-                                              ),
-                                              filled: true,
-                                              fillColor: Colors.grey[300],
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(50),
-                                                borderSide: const BorderSide(
-                                                  width: 0,
-                                                  style: BorderStyle.none,
-                                                ),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(50),
-                                                borderSide: const BorderSide(
-                                                  width: 0,
-                                                  style: BorderStyle.none,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(width: 20),
-                                    Flexible(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          NunutText(
-                                            title: "Berlaku Hingga",
-                                            fontWeight: FontWeight.bold,
-                                            size: 12,
-                                          ),
-                                          SizedBox(height: 10),
-                                          TextFormField(
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 12,
-                                            ),
-                                            cursorColor: Colors.black,
-                                            obscureText: false,
-                                            controller: _licensePlateController,
-                                            decoration: InputDecoration(
-                                              contentPadding:
-                                                  EdgeInsets.symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 10),
-                                              isDense: true,
-                                              hintText: "e.g. 11/2024",
-                                              hintStyle: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 12,
-                                              ),
-                                              filled: true,
-                                              fillColor: Colors.grey[300],
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(50),
-                                                borderSide: const BorderSide(
-                                                  width: 0,
-                                                  style: BorderStyle.none,
-                                                ),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(50),
-                                                borderSide: const BorderSide(
-                                                  width: 0,
-                                                  style: BorderStyle.none,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 15),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Flexible(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          NunutText(
-                                            title: "Warna",
-                                            fontWeight: FontWeight.bold,
-                                            size: 12,
-                                          ),
-                                          SizedBox(height: 10),
-                                          TextFormField(
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 12,
-                                            ),
-                                            cursorColor: Colors.black,
-                                            obscureText: false,
-                                            controller: _licensePlateController,
-                                            decoration: InputDecoration(
-                                              contentPadding:
-                                                  EdgeInsets.symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 10),
-                                              isDense: true,
-                                              hintStyle: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 12,
-                                              ),
-                                              filled: true,
-                                              fillColor: Colors.grey[300],
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(50),
-                                                borderSide: const BorderSide(
-                                                  width: 0,
-                                                  style: BorderStyle.none,
-                                                ),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(50),
-                                                borderSide: const BorderSide(
-                                                  width: 0,
-                                                  style: BorderStyle.none,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(width: 20),
-                                    Flexible(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          NunutText(
-                                            title: "Catatan",
-                                            fontWeight: FontWeight.bold,
-                                            size: 12,
-                                          ),
-                                          SizedBox(height: 10),
-                                          TextFormField(
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 12,
-                                            ),
-                                            cursorColor: Colors.black,
-                                            obscureText: false,
-                                            controller: _licensePlateController,
-                                            decoration: InputDecoration(
-                                              contentPadding:
-                                                  EdgeInsets.symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 10),
-                                              isDense: true,
-                                              hintStyle: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 12,
-                                              ),
-                                              filled: true,
-                                              fillColor: Colors.grey[300],
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(50),
-                                                borderSide: const BorderSide(
-                                                  width: 0,
-                                                  style: BorderStyle.none,
-                                                ),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(50),
-                                                borderSide: const BorderSide(
-                                                  width: 0,
-                                                  style: BorderStyle.none,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 15),
-                                Row(
-                                  children: [
-                                    RoundCheckBox(
-                                      checkedColor: Colors.black,
-                                      checkedWidget: Container(
-                                        child: Icon(
-                                          Icons.check,
-                                          color: Colors.transparent,
-                                        ),
-                                      ),
-                                      size: 20,
-                                      isChecked: _isMainVehicle,
-                                      onTap: (value) {
-                                        setState(
-                                          () {
-                                            _isMainVehicle = !_isMainVehicle;
-                                          },
-                                        );
-                                      },
-                                    ),
-                                    SizedBox(width: 10),
-                                    NunutText(
-                                      title: "Jadikan Kendaraan Utama",
-                                      color: Colors.black,
-                                      size: 12,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 15),
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: NunutButton(
-                                    title: "Tambah",
-                                    onPressed: () {},
-                                    heightButton: 35,
-                                    widthButton: 110,
-                                    fontWeight: FontWeight.w500,
-                                    widthBorder: 0.0,
-                                    borderColor: Colors.transparent,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    );
+                    Navigator.of(context).pushNamed('/addVehicle');
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -508,103 +124,141 @@ class _MyVehicleState extends State<MyVehicle> {
                 ),
               ),
               SizedBox(height: 30),
-              ListView.separated(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(
-                                top: 20, bottom: 0, left: 20, right: 20),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Image.asset(
-                                      "assets/toyota.png",
-                                      width: 70,
-                                      height: 70,
-                                    ),
-                                    Column(
-                                      children: [
-                                        NunutText(
-                                          title: "Toyota Avanza",
-                                          color: Colors.black,
-                                          size: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        NunutText(
-                                          title: "L 8080 AZ",
-                                          color: Colors.black,
-                                          size: 16,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                                SizedBox(height: 20),
-                              ],
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20),
-                              ),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 1.0,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.symmetric(vertical: 10),
-                            alignment: Alignment.center,
-                            width: double.infinity,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                NunutText(
-                                  title: "KENDARAAN UTAMA",
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                                SizedBox(width: 10),
-                                Icon(
-                                  Icons.check_circle,
-                                  color: Colors.white,
-                                ),
-                              ],
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(20),
-                                bottomRight: Radius.circular(20),
-                              ),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 1.0,
-                              ),
-                            ),
-                          )
-                        ],
+              isDataLoaded
+                  ? vehicleList(vehicles)
+                  : Center(
+                      child: CircularProgressIndicator(
+                        color: nunutPrimaryColor,
+                        strokeWidth: 2,
                       ),
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return SizedBox(height: 12);
-                  },
-                  itemCount: 1),
+                    ),
               SizedBox(height: 20),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Widget vehicleList(List<Vehicle2> vehicles) {
+    return ListView.separated(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            child: Column(
+              children: [
+                Container(
+                  padding:
+                      EdgeInsets.only(top: 20, bottom: 0, left: 20, right: 20),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Image.asset(
+                            "assets/toyota.png",
+                            width: 70,
+                            height: 70,
+                          ),
+                          Column(
+                            children: [
+                              NunutText(
+                                title: vehicles[index].transportationType ?? "",
+                                color: Colors.black,
+                                size: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              NunutText(
+                                title: vehicles[index].licensePlate ?? "",
+                                color: Colors.black,
+                                size: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 20),
+                    ],
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 1.0,
+                    ),
+                  ),
+                ),
+                vehicles[index].isMain!
+                    ? Container(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        alignment: Alignment.center,
+                        width: double.infinity,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            NunutText(
+                              title: "KENDARAAN UTAMA",
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 10),
+                            Icon(
+                              Icons.check_circle,
+                              color: Colors.white,
+                            ),
+                          ],
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
+                          ),
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 1.0,
+                          ),
+                        ),
+                      )
+                    : Container(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        alignment: Alignment.center,
+                        width: double.infinity,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            NunutText(
+                              title: "",
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 10),
+                          ],
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
+                          ),
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
+              ],
+            ),
+          );
+        },
+        separatorBuilder: (context, index) {
+          return SizedBox(height: 12);
+        },
+        itemCount: vehicles.length);
   }
 }

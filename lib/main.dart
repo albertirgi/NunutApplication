@@ -38,8 +38,11 @@ import 'package:nunut_application/screens/myVehicle.dart';
 import 'package:nunut_application/screens/withdraw.dart';
 import 'package:nunut_application/screens/withdrawConfirmation.dart';
 import 'package:nunut_application/screens/snap.dart';
+import 'package:nunut_application/screens/addVehicle.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:month_year_picker/month_year_picker.dart';
 
 import 'firebase_options.dart';
 
@@ -48,7 +51,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await initializeDateFormatting('id_ID', null).then((_) => runApp(const MyApp()));
+  // await initializeDateFormatting('id_ID', null)
+  //     .then((_) => runApp(const MyApp()));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -57,6 +62,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalWidgetsLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        MonthYearPickerLocalizations.delegate,
+      ],
       debugShowCheckedModeBanner: false,
       routes: {
         '/': (context) => const SplashScreen(),
@@ -81,6 +91,7 @@ class MyApp extends StatelessWidget {
         '/rideBookmark': (context) => const RideBookmark(),
         '/offerMenu': (context) => const OfferMenu(),
         '/myVehicle': (context) => const MyVehicle(),
+        '/addVehicle': (context) => const AddVehicle(),
         // '/rideShare': (context) => rideShare(),
         '/profile': (context) => const ProfilePage(),
         '/detailprofile': (context) => const DetailProfilePage(),

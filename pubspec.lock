@@ -244,6 +244,11 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.3"
+  flutter_localizations:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -513,6 +518,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  month_year_picker:
+    dependency: "direct main"
+    description:
+      path: "month_year_picker-0.2.0+3-hijack"
+      relative: true
+    source: path
+    version: "0.2.0+3"
   node_preamble:
     dependency: transitive
     description:

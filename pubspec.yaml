@@ -35,28 +35,30 @@ dependencies:
   cupertino_icons: ^1.0.2
   custom_pointed_popup: ^0.0.2
   dropdown_button2: ^1.9.2
+  file_picker: ^4.2.0
   firebase_auth: ^4.2.4
   firebase_core: ^2.4.1
   flutter:
     sdk: flutter
   flutter_dash: ^1.0.0
+  flutter_google_places: ^0.3.0
+  flutter_polyline_points: ^1.0.0
   fluttertoast: ^8.1.2
+  geocoder: ^0.2.1
+  geocoding: ^2.0.5
+  geolocator: ^9.0.2
   google_fonts: ^2.3.1
+  google_maps_flutter: ^2.0.4
   image_stack: ^2.1.1
   modal_bottom_sheet: ^2.1.2
   modal_progress_hud_alt: ^1.0.0
+  month_year_picker: 
+    path: ./month_year_picker-0.2.0+3-hijack/
   qr_code_scanner: ^1.0.1
   qr_flutter: ^4.0.0
   roundcheckbox: ^2.0.5
   string_extensions: ^0.6.6
   webview_flutter: ^4.0.1
-  google_maps_flutter: ^2.0.4
-  geolocator: ^9.0.2
-  geocoding: ^2.0.5
-  flutter_google_places: ^0.3.0
-  geocoder: ^0.2.1
-  flutter_polyline_points: ^1.0.0
-  file_picker: ^4.2.0
 
 dev_dependencies:
   flutter_launcher_icons: "^0.9.2"
