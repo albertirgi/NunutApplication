@@ -149,7 +149,7 @@ class _RideBookDetailState extends State<RideBookDetail> {
                 Expanded(
                   flex: 1,
                   child: NunutText(
-                    title: widget.rideSchedule.destination!.name!,
+                    title: widget.rideSchedule.meetingPoint!.name!,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
