@@ -139,23 +139,23 @@ class _LoginPageState extends State<LoginPage> {
                     }
                   },
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 Row(
                   children: [
                     Expanded(
                       flex: 1,
                       child: Container(
-                        margin: const EdgeInsets.only(right: 10),
+                        margin: EdgeInsets.only(right: 10),
                         height: 1.5,
                         width: MediaQuery.of(context).size.width,
                         color: Colors.black,
                       ),
                     ),
-                    const NunutText(title: "Atau"),
+                    NunutText(title: "Atau"),
                     Expanded(
                       flex: 1,
                       child: Container(
-                        margin: const EdgeInsets.only(left: 10),
+                        margin: EdgeInsets.only(left: 10),
                         height: 1.5,
                         width: MediaQuery.of(context).size.width,
                         color: Colors.black,
@@ -163,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                     )
                   ],
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 NunutButton(
                   title: "Masuk GOOGLE",
                   widthButton: 200,
@@ -171,7 +171,7 @@ class _LoginPageState extends State<LoginPage> {
                     Navigator.pushNamed(context, '/register');
                   },
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: 24),
                 InkWell(
                   child: NunutText(
                     title: "Belum punya akun? daftar sekarang",

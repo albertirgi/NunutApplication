@@ -13,6 +13,7 @@ import 'package:nunut_application/models/mmaplocation.dart';
 import 'package:nunut_application/models/mresult.dart';
 import 'package:nunut_application/resources/mapLocationApi.dart';
 import 'package:nunut_application/resources/rideScheduleApi.dart';
+import 'package:nunut_application/screens/mapList.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:nunut_application/widgets/twoColumnView.dart';
 import 'package:google_maps_webservice/places.dart';
@@ -46,16 +47,18 @@ class _RideShareState extends State<RideShare> {
   LatLng? showLocation;
   GoogleMapController? mapController;
   ScrollController? _scrollController;
-  Position? _currentPosition;
+  String buildingName = "";
+  // Position? _currentPosition;
 
   @override
   void initState() {
     super.initState();
+    buildingName = config.selectedBuilding!.replaceAll(" ", "");
     initRideScheduleList();
     // _getCurrentPosition();
     _scrollController = ScrollController();
     _scrollController!.addListener(scrollListener);
-    widget.fromUKP ? pickUpController.text = "Universitas Kristen Petra" : destinationController.text = "Universitas Kristen Petra";
+    widget.fromUKP ? pickUpController.text = config.selectedBuilding! : destinationController.text = config.selectedBuilding!;
   }
 
   void dispose() {
@@ -71,7 +74,11 @@ class _RideShareState extends State<RideShare> {
     });
 
     rideScheduleList.clear();
-    rideScheduleList = await rideScheduleApi.getRideScheduleList(parameter: "user=${config.user.id}&driver&vehicle", page: _page, checkUrl: true);
+    rideScheduleList = await rideScheduleApi.getRideScheduleList(
+      parameter: widget.fromUKP ? "user=${config.user.id}&driver&vehicle&meeting_point=${buildingName}" : "user=${config.user.id}&driver&vehicle&destination=${buildingName}",
+      page: _page,
+      checkUrl: true,
+    );
 
     setState(() {
       rideScheduleListLoading = false;
@@ -86,10 +93,17 @@ class _RideShareState extends State<RideShare> {
       });
 
       rideSchedulePageList.clear();
-      rideSchedulePageList = await rideScheduleApi.getRideScheduleList(parameter: "user=${config.user.id}&driver&vehicle", page: _page, checkUrl: true);
+      rideSchedulePageList = await rideScheduleApi.getRideScheduleList(
+        parameter: widget.fromUKP ? "user=${config.user.id}&driver&vehicle&meeting_point=${buildingName}" : "user=${config.user.id}&driver&vehicle&destination=${buildingName}",
+        page: _page,
+        checkUrl: true,
+      );
       _page++;
 
       rideScheduleList.addAll(rideSchedulePageList);
+      if (rideSchedulePageList.length < 10 || rideSchedulePageList.isEmpty) {
+        done = true;
+      }
 
       setState(() {
         isLoading = false;
@@ -100,66 +114,62 @@ class _RideShareState extends State<RideShare> {
 
   scrollListener() {
     if (_scrollController!.offset >= _scrollController!.position.maxScrollExtent - 100 && !_scrollController!.position.outOfRange && !done) {
-      if (rideSchedulePageList.isEmpty) {
-        loadmore();
-      } else {
-        done = true;
-      }
+      loadmore();
     }
   }
 
-  Future<Null> displayPrediction(Prediction? p) async {
-    if (p != null) {
-      PlacesDetailsResponse detail = await _places.getDetailsByPlaceId(p.placeId!);
+  // Future<Null> displayPrediction(Prediction? p) async {
+  //   if (p != null) {
+  //     PlacesDetailsResponse detail = await _places.getDetailsByPlaceId(p.placeId!);
 
-      var placeId = p.placeId;
-      double lat = detail.result.geometry!.location.lat;
-      double lng = detail.result.geometry!.location.lng;
+  //     var placeId = p.placeId;
+  //     double lat = detail.result.geometry!.location.lat;
+  //     double lng = detail.result.geometry!.location.lng;
 
-      var address = await Geocoder.local.findAddressesFromQuery(p.description);
+  //     var address = await Geocoder.local.findAddressesFromQuery(p.description);
 
-      print("HALO" + lat.toString());
-      print("HALO" + lng.toString());
-    }
-  }
+  //     print("HALO" + lat.toString());
+  //     print("HALO" + lng.toString());
+  //   }
+  // }
 
-  Future<bool> _handleLocationPermission() async {
-    bool serviceEnabled;
-    LocationPermission permission;
+  // Future<bool> _handleLocationPermission() async {
+  //   bool serviceEnabled;
+  //   LocationPermission permission;
 
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Location services are disabled. Please enable the services')));
-      return false;
-    }
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Location permissions are denied')));
-        return false;
-      }
-    }
-    if (permission == LocationPermission.deniedForever) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Location permissions are permanently denied, we cannot request permissions.')));
-      return false;
-    }
-    return true;
-  }
+  //   serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  //   if (!serviceEnabled) {
+  //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Location services are disabled. Please enable the services')));
+  //     return false;
+  //   }
+  //   permission = await Geolocator.checkPermission();
+  //   if (permission == LocationPermission.denied) {
+  //     permission = await Geolocator.requestPermission();
+  //     if (permission == LocationPermission.denied) {
+  //       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Location permissions are denied')));
+  //       return false;
+  //     }
+  //   }
+  //   if (permission == LocationPermission.deniedForever) {
+  //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Location permissions are permanently denied, we cannot request permissions.')));
+  //     return false;
+  //   }
+  //   return true;
+  // }
 
-  Future<void> _getCurrentPosition() async {
-    final hasPermission = await _handleLocationPermission();
-    if (!hasPermission) return;
-    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high).then((Position position) {
-      setState(() {
-        _currentPosition = position;
-        showLocation = LatLng(position.latitude, position.longitude);
-      });
-    }).catchError((e) {
-      debugPrint(e);
-    });
-    MakeMarker();
-  }
+  // Future<void> _getCurrentPosition() async {
+  //   final hasPermission = await _handleLocationPermission();
+  //   if (!hasPermission) return;
+  //   await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high).then((Position position) {
+  //     setState(() {
+  //       _currentPosition = position;
+  //       showLocation = LatLng(position.latitude, position.longitude);
+  //     });
+  //   }).catchError((e) {
+  //     debugPrint(e);
+  //   });
+  //   MakeMarker();
+  // }
 
   void MakeMarker() {
     markers.add(
@@ -299,17 +309,7 @@ class _RideShareState extends State<RideShare> {
                       ],
                     ),
                     NunutText(title: "Hai, " + config.user.name, fontWeight: FontWeight.bold),
-                    BorderedText(
-                      child: Text(
-                        "Butuh\nTumpangan?",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 38,
-                        ),
-                      ),
-                      strokeWidth: 3.0,
-                      strokeColor: Colors.black,
-                    ),
+                    NunutText(title: "Butuh \nTumpangan?", isTitle: true),
                     Container(
                       margin: EdgeInsets.only(top: 20),
                       decoration: BoxDecoration(
@@ -376,6 +376,7 @@ class _RideShareState extends State<RideShare> {
                                     height: 40,
                                     child: TextFormField(
                                       enabled: !widget.fromUKP,
+                                      readOnly: true,
                                       controller: pickUpController,
                                       decoration: InputDecoration(
                                         contentPadding: EdgeInsets.only(left: 20),
@@ -389,16 +390,26 @@ class _RideShareState extends State<RideShare> {
                                         ),
                                       ),
                                       onTap: () async {
-                                        // Prediction? p = await PlacesAutocomplete.show(
-                                        //   context: context,
-                                        //   apiKey: config.googleAPiKey,
-                                        //   mode: Mode.fullscreen,
-                                        //   language: "id",
-                                        //   strictbounds: false,
-                                        //   types: ["(address)"],
-                                        //   components: [Component(Component.country, "id")],
+                                        final result = await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => MapList(
+                                              fromUKP: widget.fromUKP,
+                                            ),
+                                          ),
+                                        );
+                                        setState(() {
+                                          pickUpController.text = result;
+                                          print("Result: " + result);
+                                        });
+                                        // Navigator.push(
+                                        //   context,
+                                        //   MaterialPageRoute(
+                                        //     builder: (context) => MapList(
+                                        //       fromUKP: widget.fromUKP,
+                                        //     ),
+                                        //   ),
                                         // );
-                                        // displayPrediction(p);
                                       },
                                     ),
                                   ),
@@ -417,6 +428,7 @@ class _RideShareState extends State<RideShare> {
                                     height: 40,
                                     child: TextFormField(
                                       enabled: widget.fromUKP,
+                                      readOnly: true,
                                       controller: destinationController,
                                       decoration: InputDecoration(
                                         contentPadding: EdgeInsets.only(left: 20),
@@ -429,6 +441,27 @@ class _RideShareState extends State<RideShare> {
                                           borderSide: BorderSide.none,
                                         ),
                                       ),
+                                      onTap: () async {
+                                        final result = await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => MapList(
+                                              fromUKP: widget.fromUKP,
+                                            ),
+                                          ),
+                                        );
+                                        setState(() {
+                                          destinationController.text = result;
+                                        });
+                                        // Navigator.push(
+                                        //   context,
+                                        //   MaterialPageRoute(
+                                        //     builder: (context) => MapList(
+                                        //       fromUKP: widget.fromUKP,
+                                        //     ),
+                                        //   ),
+                                        // );
+                                      },
                                     ),
                                   ),
                                   SizedBox(height: 14),
@@ -461,6 +494,7 @@ class _RideShareState extends State<RideShare> {
                                                 dateController.text = formattedDate; //set output date to TextField value.
                                               });
                                             }
+                                            // print("Date: " + dateController.text);
                                           },
                                         ),
                                       ),
@@ -492,6 +526,7 @@ class _RideShareState extends State<RideShare> {
                                                 timeController.text = picked.format(context);
                                               });
                                             }
+                                            // print("Time: " + timeController.text);
                                           },
                                         ),
                                       ),
@@ -506,6 +541,10 @@ class _RideShareState extends State<RideShare> {
                                             setState(() {
                                               isSearch = true;
                                             });
+                                            final tempDateTime = dateController.text + " " + timeController.text;
+                                            DateTime dateTime = DateFormat("dd-MM-yyyy HH:mm").parse(tempDateTime);
+                                            final tempMillisecondsSinceEpoch = dateTime.millisecondsSinceEpoch;
+                                            print("Milliseconds Since Epoch :  " + tempMillisecondsSinceEpoch.toString());
                                           },
                                           icon: Icon(Icons.arrow_right_alt_rounded),
                                         ),

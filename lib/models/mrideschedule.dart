@@ -10,7 +10,7 @@ class RideSchedule {
   MapLocation? meetingPoint;
   MapLocation? destination;
   bool? isBookmarked;
-  Driver? driver;
+  dynamic driver;
   dynamic vehicle;
   int? capacity;
   bool? isActive;
@@ -38,7 +38,11 @@ class RideSchedule {
       meetingPoint: parsedJson["meeting_point"] != null ? MapLocation.fromJson(parsedJson["meeting_point"]) : null,
       destination: parsedJson["destination"] != null ? MapLocation.fromJson(parsedJson["destination"]) : null,
       isBookmarked: parsedJson["is_bookmarked"] as bool? ?? false,
-      driver: parsedJson["driver_id"] != null ? Driver.fromJson(parsedJson["driver_id"]) : null,
+      driver: parsedJson["driver_id"] != null
+          ? parsedJson["driver_id"].runtimeType == String
+              ? parsedJson["driver_id"] as String? ?? ""
+              : Driver.fromJson(parsedJson["driver_id"])
+          : null,
       vehicle: parsedJson["vehicle_id"] != null
           ? parsedJson["vehicle_id"].runtimeType == String
               ? parsedJson["vehicle_id"] as String? ?? ""

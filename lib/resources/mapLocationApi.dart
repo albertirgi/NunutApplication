@@ -6,9 +6,11 @@ import 'package:http/http.dart' as http;
 import 'package:nunut_application/models/mresult.dart';
 
 class MapLocationApi {
-  Future<List<MapLocation>> getMapList({String parameter = "", bool checkUrl = false}) async {
-    if (parameter.isNotEmpty) parameter = "?$parameter";
-    var url = Uri.parse(config.baseUrl + '/map' + parameter);
+  Future<List<MapLocation>> getMapList({String parameter = "", bool checkUrl = false, int page = 0}) async {
+    String _parameter = "";
+    if (page > 0) _parameter = "/list/$page";
+    if (parameter.isNotEmpty) _parameter += "?$parameter";
+    var url = Uri.parse(config.baseUrl + '/map' + _parameter);
 
     if (checkUrl) print(url);
 

@@ -1,4 +1,3 @@
-import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/models/mrideschedule.dart';
@@ -124,16 +123,9 @@ class _RideListState extends State<RideList> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              BorderedText(
-                child: Text(
-                  "Tumpanganku",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 32,
-                  ),
-                ),
-                strokeWidth: 3.0,
-                strokeColor: Colors.black,
+              NunutText(
+                title: "Tumpanganku",
+                isTitle: true,
               ),
               SizedBox(height: 50),
               Container(
@@ -179,19 +171,16 @@ class _RideListState extends State<RideList> {
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () => Navigator.pushNamed(context, '/rideDetail', arguments: "wwjgiojwoigjiwjiogjiowjiog"),
-                              child: NunutTripCard(
-                                images: images,
-                                date: rideScheduleList[index].date!,
-                                totalPerson: rideScheduleList[index].capacity!.toString(),
-                                time: rideScheduleList[index].time!,
-                                carName: rideScheduleList[index].vehicle!.transportationType!,
-                                plateNumber: rideScheduleList[index].vehicle!.licensePlate!,
-                                pickupLocation: rideScheduleList[index].meetingPoint!.name!,
-                                destination: rideScheduleList[index].destination!.name!,
-                                isActive: rideScheduleList[index].isActive!,
-                              ),
+                            return NunutTripCard(
+                              images: images,
+                              date: rideScheduleList[index].date!,
+                              totalPerson: rideScheduleList[index].capacity!.toString(),
+                              time: rideScheduleList[index].time!,
+                              carName: rideScheduleList[index].vehicle!.transportationType!,
+                              plateNumber: rideScheduleList[index].vehicle!.licensePlate!,
+                              pickupLocation: rideScheduleList[index].meetingPoint!.name!,
+                              destination: rideScheduleList[index].destination!.name!,
+                              isActive: rideScheduleList[index].isActive!,
                             );
                           },
                           separatorBuilder: (context, index) {

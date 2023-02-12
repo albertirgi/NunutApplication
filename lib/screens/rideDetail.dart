@@ -1,10 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:flutter_dash/flutter_dash.dart';
+import 'package:text_scroll/text_scroll.dart';
 
 class RideDetail extends StatefulWidget {
   const RideDetail({super.key});
@@ -16,6 +15,15 @@ class RideDetail extends StatefulWidget {
 class _RideDetailState extends State<RideDetail> {
   TextEditingController searchController = TextEditingController();
   bool isActiveClicked = false;
+  String image_detail = '';
+  String date_detail = '';
+  String totalPerson_detail = '';
+  String time_detail = '';
+  String carName_detail = '';
+  String plateNumber_detail = '';
+  String pickupLocation_detail = '';
+  String destination_detail = '';
+  String IdRide = '';
   List<String> images = <String>[
     "https://images.unsplash.com/photo-1458071103673-6a6e4c4a3413?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
     "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=80",
@@ -24,9 +32,25 @@ class _RideDetailState extends State<RideDetail> {
   ];
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final arg = ModalRoute.of(context)!.settings.arguments as Map;
+    //final stringFW = arg['testing'] as String;
+    image_detail = arg['image'];
+    date_detail = arg['date'] as String;
+    totalPerson_detail = arg['totalPerson'] as String;
+    time_detail = arg['time'] as String;
+    carName_detail = arg['carName'] as String;
+    plateNumber_detail = arg['plateNumber'] as String;
+    pickupLocation_detail = arg['pickupLocation'] as String;
+    destination_detail = arg['destination'] as String;
+    IdRide = arg['IdRide'] as String;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final IdRide = ModalRoute.of(context)!.settings.arguments as String;
-    log("data: $IdRide");
+    // final IdRide = ModalRoute.of(context)!.settings.arguments as String;
+    //log("data: $IdRide");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey[50],
@@ -57,12 +81,14 @@ class _RideDetailState extends State<RideDetail> {
                   ),
                   SizedBox(height: 10),
                   NunutText(
-                    title: "Senin, 24 Oktober 2022",
+                    title: date_detail,
+                    //title: "Senin, 12 April 2021",
                     fontWeight: FontWeight.bold,
                     size: 22,
                   ),
                   NunutText(
-                    title: "08.00 WIB",
+                    title: "Pukul ${time_detail} WIB",
+                    //title: "Pukul 08.00",
                     fontWeight: FontWeight.bold,
                     size: 22,
                   ),
@@ -87,12 +113,29 @@ class _RideDetailState extends State<RideDetail> {
                                     shape: BoxShape.circle,
                                   ),
                                 ),
+                                // NunutText(
+                                //   title: pickupLocation_detail,
+                                //   //title: "Galaxy Mall",
+                                //   size: 16,
+                                // ),
+
                                 Container(
                                   margin: EdgeInsets.only(left: 10),
-                                  child: NunutText(
-                                    title: "Galaxy Mall 3",
-                                    size: 16,
+                                  child: SizedBox(
+                                    child: NunutText(
+                                      title: pickupLocation_detail,
+                                      //title: "Galaxy Mall",
+                                      size: 16,
+                                    ),
                                   ),
+                                  // child: TextScroll(
+                                  //   pickupLocation_detail,
+                                  //   style: TextStyle(
+                                  //     fontSize: 16,
+                                  //     color: Colors.black,
+                                  //   ),
+
+                                  // ),
                                 ),
                               ],
                             ),
@@ -117,29 +160,43 @@ class _RideDetailState extends State<RideDetail> {
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(left: 10),
-                                  child: NunutText(
-                                    title: "Universitas Kristen Petra",
-                                    size: 16,
+                                  // child: NunutText(
+                                  //   title: destination_detail,
+                                  //   //title: "Universitas Kristen Petra",
+                                  //   size: 16,
+                                  // ),
+                                  child: TextScroll(
+                                    destination_detail,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
                           ],
                         ),
-                        NunutButton(
-                          title: "Peta",
-                          widthButton: 90,
-                          heightButton: 35,
-                          textSize: 14,
-                          borderColor: Colors.transparent,
-                          iconButton: Icon(
-                            Icons.map_outlined,
-                            color: Colors.black,
-                          ),
-                          onPressed: () {},
-                        )
                       ],
                     ),
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  NunutButton(
+                    title: "Peta",
+                    widthButton: 90,
+                    heightButton: 35,
+                    textSize: 14,
+                    borderColor: Colors.transparent,
+                    iconButton: Icon(
+                      Icons.map_outlined,
+                      color: Colors.black,
+                    ),
+                    onPressed: () {},
+                  ),
+                  SizedBox(
+                    height: 16,
                   ),
                   Divider(
                     color: Colors.grey,
@@ -164,7 +221,9 @@ class _RideDetailState extends State<RideDetail> {
                           Icons.qr_code_scanner_outlined,
                           color: Colors.black,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/qrCode');
+                        },
                       ),
                     ],
                   ),
