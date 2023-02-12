@@ -56,11 +56,7 @@ class _RideListState extends State<RideList> {
     });
 
     rideScheduleList.clear();
-    rideScheduleList = await rideScheduleApi.getRideScheduleList(
-        parameter:
-            "driver=${config.user.driverId}&user=${config.user.id}&vehicle",
-        page: _page,
-        checkUrl: true);
+    rideScheduleList = await rideScheduleApi.getRideScheduleList(parameter: "driver=${config.user.driverId}&user=${config.user.id}&vehicle", page: _page, checkUrl: true);
 
     setState(() {
       rideScheduleListLoading = false;
@@ -75,11 +71,7 @@ class _RideListState extends State<RideList> {
       });
 
       rideSchedulePageList.clear();
-      rideSchedulePageList = await rideScheduleApi.getRideScheduleList(
-          parameter:
-              "driver=${config.user.driverId}&user=${config.user.id}&vehicle",
-          page: _page,
-          checkUrl: true);
+      rideSchedulePageList = await rideScheduleApi.getRideScheduleList(parameter: "driver=${config.user.driverId}&user=${config.user.id}&vehicle", page: _page, checkUrl: true);
       _page++;
 
       rideScheduleList.addAll(rideSchedulePageList);
@@ -92,10 +84,7 @@ class _RideListState extends State<RideList> {
   }
 
   scrollListener() {
-    if (_scrollController!.offset >=
-            _scrollController!.position.maxScrollExtent - 100 &&
-        !_scrollController!.position.outOfRange &&
-        !done) {
+    if (_scrollController!.offset >= _scrollController!.position.maxScrollExtent - 100 && !_scrollController!.position.outOfRange && !done) {
       if (rideSchedulePageList.isEmpty) {
         loadmore();
       } else {
@@ -136,10 +125,7 @@ class _RideListState extends State<RideList> {
             children: [
               NunutText(
                 title: "Tumpanganku",
-                size: 32,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                isShadow: true,
+                isTitle: true,
               ),
               SizedBox(height: 50),
               Container(
@@ -152,12 +138,7 @@ class _RideListState extends State<RideList> {
                           isActiveClicked = true;
                         });
                       },
-                      child: NunutText(
-                          title: "Sedang Aktif",
-                          size: 18,
-                          fontWeight: isActiveClicked
-                              ? FontWeight.bold
-                              : FontWeight.normal),
+                      child: NunutText(title: "Sedang Aktif", size: 18, fontWeight: isActiveClicked ? FontWeight.bold : FontWeight.normal),
                     ),
                     Container(
                       margin: EdgeInsets.symmetric(horizontal: 8),
@@ -171,12 +152,7 @@ class _RideListState extends State<RideList> {
                           isActiveClicked = false;
                         });
                       },
-                      child: NunutText(
-                          title: "Selesai",
-                          size: 18,
-                          fontWeight: isActiveClicked
-                              ? FontWeight.normal
-                              : FontWeight.bold),
+                      child: NunutText(title: "Selesai", size: 18, fontWeight: isActiveClicked ? FontWeight.normal : FontWeight.bold),
                     ),
                   ],
                 ),
@@ -196,24 +172,16 @@ class _RideListState extends State<RideList> {
                           physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
                             return NunutTripCard(
-                                images: images,
-                                date: rideScheduleList[index].date!,
-                                totalPerson: rideScheduleList[index]
-                                    .capacity!
-                                    .toString(),
-                                time: rideScheduleList[index].time!,
-                                carName: rideScheduleList[index]
-                                    .vehicle!
-                                    .transportationType!,
-                                plateNumber: rideScheduleList[index]
-                                    .vehicle!
-                                    .licensePlate!,
-                                pickupLocation:
-                                    rideScheduleList[index].meetingPoint!.name!,
-                                destination:
-                                    rideScheduleList[index].destination!.name!,
-                                isActive: rideScheduleList[index].isActive!,
-                              );
+                              images: images,
+                              date: rideScheduleList[index].date!,
+                              totalPerson: rideScheduleList[index].capacity!.toString(),
+                              time: rideScheduleList[index].time!,
+                              carName: rideScheduleList[index].vehicle!.transportationType!,
+                              plateNumber: rideScheduleList[index].vehicle!.licensePlate!,
+                              pickupLocation: rideScheduleList[index].meetingPoint!.name!,
+                              destination: rideScheduleList[index].destination!.name!,
+                              isActive: rideScheduleList[index].isActive!,
+                            );
                           },
                           separatorBuilder: (context, index) {
                             return SizedBox(height: 12);
@@ -259,8 +227,7 @@ class _RideListState extends State<RideList> {
         return StatefulBuilder(
           builder: (context, setState) {
             return Padding(
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
               child: Container(
                 constraints: BoxConstraints(
                   maxHeight: MediaQuery.of(context).size.height,
@@ -323,27 +290,18 @@ class _RideListState extends State<RideList> {
                                 obscureText: false,
                                 controller: _dateController,
                                 onTap: () async {
-                                  FocusScope.of(context)
-                                      .requestFocus(new FocusNode());
-                                  DateTime? pickedDate = await showDatePicker(
-                                      context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime(2000),
-                                      lastDate: DateTime(2101));
+                                  FocusScope.of(context).requestFocus(new FocusNode());
+                                  DateTime? pickedDate = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(2000), lastDate: DateTime(2101));
 
                                   if (pickedDate != null) {
-                                    String formattedDate =
-                                        DateFormat('dd-MM-yyyy')
-                                            .format(pickedDate);
+                                    String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
                                     setState(() {
-                                      _dateController.text =
-                                          formattedDate; //set output date to TextField value.
+                                      _dateController.text = formattedDate; //set output date to TextField value.
                                     });
                                   }
                                 },
                                 decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 10),
+                                  contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                                   isDense: true,
                                   hintText: "dd/mm/yyyy",
                                   hintStyle: TextStyle(
@@ -391,22 +349,19 @@ class _RideListState extends State<RideList> {
                                 obscureText: false,
                                 controller: _timeController,
                                 onTap: () async {
-                                  FocusScope.of(context)
-                                      .requestFocus(new FocusNode());
+                                  FocusScope.of(context).requestFocus(new FocusNode());
                                   TimeOfDay? picked = await showTimePicker(
                                     context: context,
                                     initialTime: TimeOfDay.now(),
                                   );
                                   if (picked != null) {
                                     setState(() {
-                                      _timeController.text =
-                                          picked.format(context);
+                                      _timeController.text = picked.format(context);
                                     });
                                   }
                                 },
                                 decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 10),
+                                  contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                                   isDense: true,
                                   hintText: "00:00",
                                   hintStyle: TextStyle(
@@ -454,8 +409,7 @@ class _RideListState extends State<RideList> {
                           obscureText: false,
                           controller: _meetingPointController,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                             isDense: true,
                             hintText: "Pilih meeting pointmu...",
                             hintStyle: TextStyle(
@@ -515,8 +469,7 @@ class _RideListState extends State<RideList> {
                           obscureText: false,
                           controller: _destinationController,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                             isDense: true,
                             hintText: "Pilih tujuan destinasimu...",
                             hintStyle: TextStyle(
@@ -573,8 +526,7 @@ class _RideListState extends State<RideList> {
                               ),
                               SizedBox(height: 10),
                               Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 5, vertical: 10),
+                                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: Colors.grey[300],
@@ -589,8 +541,7 @@ class _RideListState extends State<RideList> {
                                     ),
                                     SizedBox(width: 5),
                                     Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         NunutText(
                                           title: "Toyota Innova",
@@ -599,8 +550,7 @@ class _RideListState extends State<RideList> {
                                         ),
                                         Row(
                                           mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             NunutText(
                                               title: "L 8080 AZ",
@@ -652,19 +602,14 @@ class _RideListState extends State<RideList> {
                                         }
                                       });
                                     },
-                                    child:
-                                        Icon(Icons.remove, color: Colors.black),
+                                    child: Icon(Icons.remove, color: Colors.black),
                                     style: ElevatedButton.styleFrom(
-                                      tapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
+                                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                       backgroundColor: nunutPrimaryColor,
                                       shape: CircleBorder(),
                                     ),
                                   ),
-                                  NunutText(
-                                      title: _capacityValue.toString(),
-                                      fontWeight: FontWeight.bold,
-                                      size: 14),
+                                  NunutText(title: _capacityValue.toString(), fontWeight: FontWeight.bold, size: 14),
                                   ElevatedButton(
                                     onPressed: () {
                                       setState(() {
@@ -673,8 +618,7 @@ class _RideListState extends State<RideList> {
                                     },
                                     child: Icon(Icons.add, color: Colors.black),
                                     style: ElevatedButton.styleFrom(
-                                      tapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
+                                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                       backgroundColor: nunutPrimaryColor,
                                       shape: CircleBorder(),
                                     ),
@@ -692,8 +636,7 @@ class _RideListState extends State<RideList> {
                       child: NunutButton(
                         title: "Buat",
                         onPressed: () async {
-                          var postRideScheduleStatus =
-                              await RideScheduleApi.PostRideSchedule(
+                          var postRideScheduleStatus = await RideScheduleApi.PostRideSchedule(
                             _dateController.text.toString(),
                             _timeController.text.toString(),
                             "112.73747806931482",
