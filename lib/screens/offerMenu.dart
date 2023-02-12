@@ -1,4 +1,3 @@
-import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -6,6 +5,7 @@ import 'package:nunut_application/resources/rideScheduleApi.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
+import 'package:nunut_application/configuration.dart';
 
 class OfferMenu extends StatefulWidget {
   const OfferMenu({super.key});
@@ -54,20 +54,24 @@ class _OfferMenuState extends State<OfferMenu> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 NunutText(
-                  title: "Hai, Grace",
+                  title: "Hai, ${config.user.name}",
                   fontWeight: FontWeight.bold,
                 ),
-                BorderedText(
-                  child: Text(
-                    "Yuk tawarkan tumpangan!",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 32,
-                    ),
-                  ),
-                  strokeWidth: 3.0,
-                  strokeColor: Colors.black,
+                SizedBox(
+                  height: 20,
                 ),
+                NunutText(title: "Yuk tawarkan tumpangan!", isTitle: true),
+                // BorderedText(
+                //   child: Text(
+                //     "Yuk tawarkan tumpangan!",
+                //     style: TextStyle(
+                //       color: Colors.white,
+                //       fontSize: 32,
+                //     ),
+                //   ),
+                //   strokeWidth: 3.0,
+                //   strokeColor: Colors.black,
+                // ),
                 // SizedBox(
                 //   height: 20,
                 // ),
@@ -94,9 +98,9 @@ class _OfferMenuState extends State<OfferMenu> {
                 //     ],
                 //   ),
                 // ),
-                // SizedBox(
-                //   height: 20,
-                // ),
+                SizedBox(
+                  height: 20,
+                ),
                 Expanded(
                   child: GridView.count(
                     crossAxisCount: 2,

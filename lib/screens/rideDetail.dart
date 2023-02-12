@@ -46,6 +46,12 @@ class _RideDetailState extends State<RideDetail> {
     destination_detail = arg['destination'] as String;
     IdRide = arg['IdRide'] as String;
   }
+  // FutureOr onGoBack(dynamic value) {
+  //   onRefresh();
+  // }
+  // onRefresh() async {
+
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -223,6 +229,7 @@ class _RideDetailState extends State<RideDetail> {
                         ),
                         onPressed: () {
                           Navigator.pushNamed(context, '/qrCode');
+                          //Navigator.pushNamed(context, '/qrCode').then((value) => onGoBack(value));
                         },
                       ),
                     ],
