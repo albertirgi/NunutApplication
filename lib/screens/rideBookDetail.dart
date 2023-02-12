@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 
-class RideBookDetail extends StatelessWidget {
-  const RideBookDetail({super.key});
+class RideBookDetail extends StatefulWidget {
+  RideSchedule rideSchedule;
+  RideBookDetail({super.key, required this.rideSchedule});
+
+  @override
+  State<RideBookDetail> createState() => _RideBookDetailState();
+}
+
+class _RideBookDetailState extends State<RideBookDetail> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +27,11 @@ class RideBookDetail extends StatelessWidget {
           SizedBox(height: 24),
           NunutText(title: "NUNUT SAMA"),
           NunutText(
-            title: "Albert Wijaya",
+            title: widget.rideSchedule.driver.name,
             fontWeight: FontWeight.bold,
             size: 35,
           ),
-          NunutText(title: "Suzuki Ertiga | L 1234 EQ"),
+          NunutText(title: "${widget.rideSchedule.vehicle.transportationType} | ${widget.rideSchedule.vehicle.licensePlate}"),
           SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -86,14 +99,14 @@ class RideBookDetail extends StatelessWidget {
                 Expanded(
                   flex: 2,
                   child: NunutText(
-                    title: "Sabtu, 17-09-2022",
+                    title: widget.rideSchedule.date.toString(),
                     maxLines: 2,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Expanded(
                   flex: 1,
-                  child: NunutText(title: "10.00", fontWeight: FontWeight.bold),
+                  child: NunutText(title: widget.rideSchedule.time.toString(), fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -106,7 +119,7 @@ class RideBookDetail extends StatelessWidget {
                 Expanded(
                   flex: 2,
                   child: NunutText(
-                    title: "HARGA",
+                    title: "KAPASITAS TERSISA",
                     size: 12,
                   ),
                 ),
@@ -128,7 +141,7 @@ class RideBookDetail extends StatelessWidget {
                 Expanded(
                   flex: 2,
                   child: NunutText(
-                    title: "IDR 15.000",
+                    title: widget.rideSchedule.capacity.toString(),
                     maxLines: 2,
                     fontWeight: FontWeight.bold,
                   ),
@@ -136,7 +149,7 @@ class RideBookDetail extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: NunutText(
-                    title: "Galaxy Mall 3",
+                    title: widget.rideSchedule.destination!.name!,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -160,7 +173,7 @@ class RideBookDetail extends StatelessWidget {
                     ),
                     content: Material(
                       child: Container(
-                        height: 325,
+                        height: 275,
                         decoration: BoxDecoration(
                           color: Colors.white,
                         ),
@@ -184,7 +197,7 @@ class RideBookDetail extends StatelessWidget {
                               children: [
                                 Icon(Icons.date_range_outlined),
                                 SizedBox(width: 8),
-                                NunutText(title: "Sabtu, 17 September 2022")
+                                NunutText(title: widget.rideSchedule.date.toString()),
                               ],
                             ),
                             SizedBox(height: 12),
@@ -192,7 +205,7 @@ class RideBookDetail extends StatelessWidget {
                               children: [
                                 Icon(Icons.timeline),
                                 SizedBox(width: 8),
-                                NunutText(title: "10.00 WIB")
+                                NunutText(title: widget.rideSchedule.time.toString()),
                               ],
                             ),
                             SizedBox(height: 12),
@@ -200,7 +213,9 @@ class RideBookDetail extends StatelessWidget {
                               children: [
                                 Icon(Icons.location_city_outlined),
                                 SizedBox(width: 8),
-                                NunutText(title: "Galaxy Mall 3 - UKP")
+                                Expanded(
+                                  child: NunutText(title: "${widget.rideSchedule.meetingPoint!.name} - ${widget.rideSchedule.destination!.name}"),
+                                )
                               ],
                             ),
                             SizedBox(height: 12),
@@ -208,17 +223,13 @@ class RideBookDetail extends StatelessWidget {
                               children: [
                                 Icon(Icons.people),
                                 SizedBox(width: 8),
-                                NunutText(title: "Albert Wijaya")
+                                NunutText(title: widget.rideSchedule.driver.name),
                               ],
                             ),
-                            SizedBox(height: 12),
-                            Row(
-                              children: [
-                                Icon(Icons.money),
-                                SizedBox(width: 8),
-                                NunutText(title: "IDR 15.000")
-                              ],
-                            ),
+                            // SizedBox(height: 12),
+                            // Row(
+                            //   children: [Icon(Icons.money), SizedBox(width: 8), NunutText(title: "IDR 15.000")],
+                            // ),
                             SizedBox(height: 16),
                             NunutButton(
                               title: "Konfirmasi",
@@ -266,8 +277,7 @@ class RideBookDetail extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.1),
+                  margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     boxShadow: [

@@ -14,6 +14,7 @@ import 'package:nunut_application/models/mresult.dart';
 import 'package:nunut_application/resources/mapLocationApi.dart';
 import 'package:nunut_application/resources/rideScheduleApi.dart';
 import 'package:nunut_application/screens/mapList.dart';
+import 'package:nunut_application/screens/rideBookDetail.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:nunut_application/widgets/twoColumnView.dart';
 import 'package:google_maps_webservice/places.dart';
@@ -53,12 +54,12 @@ class _RideShareState extends State<RideShare> {
   @override
   void initState() {
     super.initState();
-    buildingName = config.selectedBuilding!.replaceAll(" ", "");
+    // buildingName = config.selectedBuilding!.replaceAll(" ", "");
     initRideScheduleList();
     // _getCurrentPosition();
     _scrollController = ScrollController();
     _scrollController!.addListener(scrollListener);
-    widget.fromUKP ? pickUpController.text = config.selectedBuilding! : destinationController.text = config.selectedBuilding!;
+    widget.fromUKP ? pickUpController.text = "Universitas Kristen Petra" : destinationController.text = "Universitas Kristen Petra";
   }
 
   void dispose() {
@@ -67,16 +68,21 @@ class _RideShareState extends State<RideShare> {
     super.dispose();
   }
 
-  initRideScheduleList() async {
+  initRideScheduleList({String tempParameter = ""}) async {
     setState(() {
       rideScheduleListLoading = true;
       _page = 1;
     });
 
+    // tempParameter.isNotEmpty ? tempParameter += "&" : tempParameter += "";
+    String initialParameter =
+        widget.fromUKP ? "user=${config.user.id}&driver&vehicle&meeting_point=UniversitasKristenPetra" : "user=${config.user.id}&driver&vehicle&destination=UniversitasKristenPetra";
+    tempParameter = initialParameter + tempParameter;
+
     rideScheduleList.clear();
     rideScheduleList = await rideScheduleApi.getRideScheduleList(
-      parameter: widget.fromUKP ? "user=${config.user.id}&driver&vehicle&meeting_point=${buildingName}" : "user=${config.user.id}&driver&vehicle&destination=${buildingName}",
-      page: _page,
+      parameter: tempParameter,
+      // page: _page,
       checkUrl: true,
     );
 
@@ -94,8 +100,8 @@ class _RideShareState extends State<RideShare> {
 
       rideSchedulePageList.clear();
       rideSchedulePageList = await rideScheduleApi.getRideScheduleList(
-        parameter: widget.fromUKP ? "user=${config.user.id}&driver&vehicle&meeting_point=${buildingName}" : "user=${config.user.id}&driver&vehicle&destination=${buildingName}",
-        page: _page,
+        parameter: widget.fromUKP ? "user=${config.user.id}&driver&vehicle&meeting_point=UniversitasKristenPetra" : "user=${config.user.id}&driver&vehicle&destination=UniversitasKristenPetra",
+        // page: _page,
         checkUrl: true,
       );
       _page++;
@@ -114,7 +120,7 @@ class _RideShareState extends State<RideShare> {
 
   scrollListener() {
     if (_scrollController!.offset >= _scrollController!.position.maxScrollExtent - 100 && !_scrollController!.position.outOfRange && !done) {
-      loadmore();
+      // loadmore();
     }
   }
 
@@ -469,7 +475,7 @@ class _RideShareState extends State<RideShare> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Container(
-                                        width: 115,
+                                        width: 230,
                                         height: 40,
                                         child: TextFormField(
                                           style: TextStyle(fontSize: 12),
@@ -489,9 +495,9 @@ class _RideShareState extends State<RideShare> {
                                             DateTime? pickedDate = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(2000), lastDate: DateTime(2101));
 
                                             if (pickedDate != null) {
-                                              String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
+                                              String formattedDate = DateFormat.yMMMd().format(pickedDate);
                                               setState(() {
-                                                dateController.text = formattedDate; //set output date to TextField value.
+                                                dateController.text = formattedDate;
                                               });
                                             }
                                             // print("Date: " + dateController.text);
@@ -499,37 +505,37 @@ class _RideShareState extends State<RideShare> {
                                         ),
                                       ),
                                       SizedBox(width: 5),
-                                      Container(
-                                        width: 110,
-                                        height: 40,
-                                        child: TextFormField(
-                                          style: TextStyle(fontSize: 12),
-                                          controller: timeController,
-                                          decoration: InputDecoration(
-                                            prefixIcon: Icon(Icons.timer, color: Colors.black, size: 14),
-                                            contentPadding: EdgeInsets.only(left: 10),
-                                            filled: true,
-                                            fillColor: Colors.grey[200],
-                                            border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.circular(24),
-                                              borderSide: BorderSide.none,
-                                            ),
-                                          ),
-                                          onTap: () async {
-                                            FocusScope.of(context).requestFocus(new FocusNode());
-                                            TimeOfDay? picked = await showTimePicker(
-                                              context: context,
-                                              initialTime: TimeOfDay.now(),
-                                            );
-                                            if (picked != null) {
-                                              setState(() {
-                                                timeController.text = picked.format(context);
-                                              });
-                                            }
-                                            // print("Time: " + timeController.text);
-                                          },
-                                        ),
-                                      ),
+                                      // Container(
+                                      //   width: 110,
+                                      //   height: 40,
+                                      //   child: TextFormField(
+                                      //     style: TextStyle(fontSize: 12),
+                                      //     controller: timeController,
+                                      //     decoration: InputDecoration(
+                                      //       prefixIcon: Icon(Icons.timer, color: Colors.black, size: 14),
+                                      //       contentPadding: EdgeInsets.only(left: 10),
+                                      //       filled: true,
+                                      //       fillColor: Colors.grey[200],
+                                      //       border: OutlineInputBorder(
+                                      //         borderRadius: BorderRadius.circular(24),
+                                      //         borderSide: BorderSide.none,
+                                      //       ),
+                                      //     ),
+                                      //     onTap: () async {
+                                      //       FocusScope.of(context).requestFocus(new FocusNode());
+                                      //       TimeOfDay? picked = await showTimePicker(
+                                      //         context: context,
+                                      //         initialTime: TimeOfDay.now(),
+                                      //       );
+                                      //       if (picked != null) {
+                                      //         setState(() {
+                                      //           timeController.text = picked.format(context);
+                                      //         });
+                                      //       }
+                                      //       // print("Time: " + timeController.text);
+                                      //     },
+                                      //   ),
+                                      // ),
                                       SizedBox(width: 10),
                                       Container(
                                         decoration: BoxDecoration(
@@ -537,14 +543,12 @@ class _RideShareState extends State<RideShare> {
                                           color: nunutPrimaryColor,
                                         ),
                                         child: IconButton(
-                                          onPressed: () {
+                                          onPressed: () async {
                                             setState(() {
                                               isSearch = true;
                                             });
-                                            final tempDateTime = dateController.text + " " + timeController.text;
-                                            DateTime dateTime = DateFormat("dd-MM-yyyy HH:mm").parse(tempDateTime);
-                                            final tempMillisecondsSinceEpoch = dateTime.millisecondsSinceEpoch;
-                                            print("Milliseconds Since Epoch :  " + tempMillisecondsSinceEpoch.toString());
+                                            String _parameter = await parameterController();
+                                            initRideScheduleList(tempParameter: _parameter);
                                           },
                                           icon: Icon(Icons.arrow_right_alt_rounded),
                                         ),
@@ -608,51 +612,73 @@ class _RideShareState extends State<RideShare> {
                             heightFactor: 5,
                             child: CircularProgressIndicator(),
                           )
-                        : Column(
-                            children: [
-                              GridView.builder(
-                                shrinkWrap: true,
-                                physics: ScrollPhysics(),
-                                itemCount: rideScheduleList.length,
-                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.7, crossAxisSpacing: 15, mainAxisSpacing: 15),
-                                itemBuilder: (context, index) {
-                                  return TwoColumnView(
-                                    imagePath: rideScheduleList[index].driver!.image,
-                                    departureTime: rideScheduleList[index].time!,
-                                    name: rideScheduleList[index].driver!.name,
-                                    destination: rideScheduleList[index].destination!.name!,
-                                    isBookmarked: rideScheduleList[index].isBookmarked!,
-                                    price: NumberFormat.currency(
-                                      locale: 'id',
-                                      symbol: '',
-                                      decimalDigits: 0,
-                                    ).format(rideScheduleList[index].price),
-                                    IconOnTap: () async {
-                                      bool result;
-                                      rideScheduleList[index].isBookmarked!
-                                          ? result = await rideScheduleApi.deleteBookmarkByRideScheduleId(rideScheduleId: rideScheduleList[index].id!, userId: config.user.id!, checkUrl: true)
-                                          : result = await rideScheduleApi.updateBookmark(rideScheduleId: rideScheduleList[index].id!, userId: config.user.id!);
-                                      if (result) {
-                                        rideScheduleList[index].isBookmarked = !rideScheduleList[index].isBookmarked!;
-                                        if (rideScheduleList[index].isBookmarked!) {
-                                          Fluttertoast.showToast(msg: 'Berhasil menambahkan ke bookmark');
-                                        } else {
-                                          Fluttertoast.showToast(msg: 'Berhasil menghapus dari bookmark');
-                                        }
-                                      }
-                                      setState(() {});
+                        : rideScheduleList.isNotEmpty
+                            ? Column(
+                                children: [
+                                  GridView.builder(
+                                    shrinkWrap: true,
+                                    physics: ScrollPhysics(),
+                                    itemCount: rideScheduleList.length,
+                                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.7, crossAxisSpacing: 15, mainAxisSpacing: 15),
+                                    itemBuilder: (context, index) {
+                                      return InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => RideBookDetail(
+                                                rideSchedule: rideScheduleList[index],
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        child: TwoColumnView(
+                                          imagePath: rideScheduleList[index].driver!.image,
+                                          departureTime: rideScheduleList[index].time!,
+                                          name: rideScheduleList[index].driver!.name,
+                                          destination: rideScheduleList[index].destination!.name!,
+                                          isBookmarked: rideScheduleList[index].isBookmarked!,
+                                          price: NumberFormat.currency(
+                                            locale: 'id',
+                                            symbol: '',
+                                            decimalDigits: 0,
+                                          ).format(rideScheduleList[index].price),
+                                          IconOnTap: () async {
+                                            bool result;
+                                            rideScheduleList[index].isBookmarked!
+                                                ? result = await rideScheduleApi.deleteBookmarkByRideScheduleId(rideScheduleId: rideScheduleList[index].id!, userId: config.user.id!, checkUrl: true)
+                                                : result = await rideScheduleApi.updateBookmark(rideScheduleId: rideScheduleList[index].id!, userId: config.user.id!);
+                                            if (result) {
+                                              rideScheduleList[index].isBookmarked = !rideScheduleList[index].isBookmarked!;
+                                              if (rideScheduleList[index].isBookmarked!) {
+                                                Fluttertoast.showToast(msg: 'Berhasil menambahkan ke bookmark');
+                                              } else {
+                                                Fluttertoast.showToast(msg: 'Berhasil menghapus dari bookmark');
+                                              }
+                                            }
+                                            setState(() {});
+                                          },
+                                        ),
+                                      );
                                     },
-                                  );
-                                },
-                              ),
-                              isLoading
-                                  ? Center(
-                                      child: CircularProgressIndicator(),
-                                    )
-                                  : Container(),
-                              SizedBox(height: 20),
-                            ],
-                          ),
+                                  ),
+                                  isLoading
+                                      ? Center(
+                                          child: CircularProgressIndicator(),
+                                        )
+                                      : Container(),
+                                  SizedBox(height: 20),
+                                ],
+                              )
+                            : Center(
+                                heightFactor: 5,
+                                child: Column(
+                                  children: [
+                                    NunutText(title: "Tumpangan tidak tersedia", color: Colors.grey, size: 16, fontWeight: FontWeight.w500),
+                                    NunutText(title: "Mohon ubah kolom pencarian", color: Colors.grey, size: 16, fontWeight: FontWeight.w500),
+                                  ],
+                                ),
+                              )
                   ],
                 ),
               ),
@@ -661,6 +687,30 @@ class _RideShareState extends State<RideShare> {
         ),
       ),
     );
+  }
+
+  String parameterController() {
+    String _parameter = "";
+    DateTime dateTime;
+
+    if (dateController.text.isNotEmpty) {
+      dateTime = DateFormat.yMMMd().parse(dateController.text);
+      final tempMillisecondsSinceEpoch = dateTime.millisecondsSinceEpoch;
+      _parameter += "&time=${tempMillisecondsSinceEpoch.toString()}";
+    }
+
+    widget.fromUKP
+        ? destinationController.text.isNotEmpty
+            ? _parameter += "&destination=${destinationController.text.replaceAll(" ", "")}"
+            // ? print("destination: ${destinationController.text.replaceAll(" ", "")}")
+            : _parameter += ""
+        : pickUpController.text.isNotEmpty
+            ? _parameter += "&meeting_point=${pickUpController.text.replaceAll(" ", "")}"
+            : _parameter += "";
+
+    print("parameter: $_parameter");
+
+    return _parameter;
   }
 
   onRefresh() async {

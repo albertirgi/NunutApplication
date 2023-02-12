@@ -87,7 +87,7 @@ class MyApp extends StatelessWidget {
         '/rideDetail': (context) => const RideDetail(),
         '/tripHistory': (context) => const TripHistory(),
         '/qrCode': (context) => const QRCode(),
-        '/rideBookDetail': (context) => const RideBookDetail(),
+        // '/rideBookDetail': (context) => const RideBookDetail(),
         '/rideBookmark': (context) => const RideBookmark(),
         '/offerMenu': (context) => const OfferMenu(),
         '/myVehicle': (context) => const MyVehicle(),
