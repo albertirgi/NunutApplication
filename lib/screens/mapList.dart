@@ -194,7 +194,7 @@ class _MapListState extends State<MapList> {
                 Icon(Icons.circle, color: nunutPrimaryColor, size: 18),
                 SizedBox(width: 12),
                 Expanded(
-                  child: NunutText(title: mapLocation.name!, fontWeight: FontWeight.w500, size: 16, maxLines: 1),
+                  child: NunutText(title: mapLocation.name!, fontWeight: FontWeight.w500, size: 16, maxLines: 2),
                 ),
               ],
             ),
