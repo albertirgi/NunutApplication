@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:bordered_text/bordered_text.dart';
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/models/muser.dart';
 import 'package:nunut_application/resources/authApi.dart';
@@ -97,16 +96,23 @@ class _ProfilePageState extends State<ProfilePage> {
                   // ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 24, 0, 7),
-                    child: BorderedText(
-                      child: Text(
-                        "Profilku",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 38,
-                        ),
-                      ),
-                      strokeWidth: 3.0,
-                      strokeColor: Colors.black,
+                    //   child: BorderedText(
+                    //     child: Text(
+                    //       "Profilku",
+                    //       style: TextStyle(
+                    //         color: Colors.white,
+                    //         fontSize: 38,
+                    //       ),
+                    //     ),
+                    //     strokeWidth: 3.0,
+                    //     strokeColor: Colors.black,
+                    //   ),
+                    // ),
+                    child: NunutText(
+                      title: "Profilku",
+                      size: 38,
+                      color: Colors.white,
+                      isShadow: true,
                     ),
                   ),
                   Padding(

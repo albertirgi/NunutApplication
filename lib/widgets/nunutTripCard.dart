@@ -1,10 +1,10 @@
 import 'package:custom_pointed_popup/custom_pointed_popup.dart';
 import 'package:custom_pointed_popup/utils/triangle_painter.dart';
 import 'package:flutter/material.dart';
-import 'package:image_stack/image_stack.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
+import 'package:text_scroll/text_scroll.dart';
 
 class NunutTripCard extends StatelessWidget {
   final List<String> images;
@@ -87,15 +87,22 @@ class NunutTripCard extends StatelessWidget {
                   SizedBox(height: 8),
                   Row(
                     children: [
-                      NunutText(title: time, size: 28, fontWeight: FontWeight.bold),
+                      NunutText(
+                          title: time, size: 28, fontWeight: FontWeight.bold),
                       SizedBox(width: 3),
                       NunutText(title: "WIB", fontWeight: FontWeight.bold),
                       Spacer(),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          NunutText(title: carName, fontWeight: FontWeight.w500, size: 14),
-                          NunutText(title: plateNumber, fontWeight: FontWeight.w500, size: 14),
+                          NunutText(
+                              title: carName,
+                              fontWeight: FontWeight.w500,
+                              size: 14),
+                          NunutText(
+                              title: plateNumber,
+                              fontWeight: FontWeight.w500,
+                              size: 14),
                         ],
                       )
                     ],
@@ -107,14 +114,19 @@ class NunutTripCard extends StatelessWidget {
                         children: [
                           Padding(
                             padding: EdgeInsets.only(bottom: 2.0),
-                            child: Icon(Icons.circle, color: nunutPrimaryColor, size: 18),
+                            child: Icon(Icons.circle,
+                                color: nunutPrimaryColor, size: 18),
                           ),
-                          Icon(Icons.fiber_manual_record, color: Colors.grey, size: 8),
-                          Icon(Icons.fiber_manual_record, color: Colors.grey, size: 8),
-                          Icon(Icons.fiber_manual_record, color: Colors.grey, size: 8),
+                          Icon(Icons.fiber_manual_record,
+                              color: Colors.grey, size: 8),
+                          Icon(Icons.fiber_manual_record,
+                              color: Colors.grey, size: 8),
+                          Icon(Icons.fiber_manual_record,
+                              color: Colors.grey, size: 8),
                           Padding(
                             padding: EdgeInsets.only(top: 2.0),
-                            child: Icon(Icons.circle, color: nunutBlueColor, size: 18),
+                            child: Icon(Icons.circle,
+                                color: nunutBlueColor, size: 18),
                           ),
                         ],
                       ),
@@ -126,7 +138,14 @@ class NunutTripCard extends StatelessWidget {
                           Container(
                             height: 40.0,
                             child: Center(
-                              child: NunutText(title: pickupLocation),
+                              // child: NunutText(title: pickupLocation),
+                              child: TextScroll(
+                                pickupLocation,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
                             ),
                           ),
                           SizedBox(height: 2),
@@ -135,7 +154,14 @@ class NunutTripCard extends StatelessWidget {
                             margin: EdgeInsets.only(top: 4.0),
                             child: Row(
                               children: [
-                                NunutText(title: destination),
+                                // NunutText(title: destination),
+                                TextScroll(
+                                  destination,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -155,7 +181,23 @@ class NunutTripCard extends StatelessWidget {
                   backgroundColor: Colors.black,
                   textColor: Colors.white,
                   textSize: 14,
-                  onPressed: () {},
+                  onPressed: () {
+                    isActive
+                        ? Navigator.pushNamed(context, '/rideDetail',
+                            arguments: {
+                                'images': images,
+                                'date': date,
+                                'totalPerson': totalPerson,
+                                'time': time,
+                                'carName': carName,
+                                'plateNumber': plateNumber,
+                                'pickupLocation': pickupLocation,
+                                'destination': destination,
+                                'IdRide':"awfawawfawf",
+                                //'testing': "testingggjo",
+                              })
+                        : null;
+                  },
                   iconButton: Icon(Icons.verified, size: 16),
                   widthButton: 130,
                   heightButton: 30,
@@ -175,33 +217,37 @@ class NunutTripCard extends StatelessWidget {
                 padding: EdgeInsets.only(left: 16, right: 16),
                 child: Row(
                   children: [
-                    ImageStack(
-                      imageList: images,
-                      totalCount: 2,
-                      imageCount: 2,
-                      imageBorderWidth: 0.0,
-                    ),
-                    SizedBox(width: 8),
-                    Text("+3 more"),
-                    SizedBox(width: 8),
-                    InkWell(
-                        key: widgetKey,
-                        onTap: () {
-                          getCustomPointedPopup(context)
-                            ..show(
-                              widgetKey: widgetKey,
-                            );
-                        },
-                        child: Icon(Icons.keyboard_arrow_down, size: 18)),
+                    // ImageStack(
+                    //   imageList: images,
+                    //   totalCount: 2,
+                    //   imageCount: 2,
+                    //   imageBorderWidth: 0.0,
+                    // ),
+                    // SizedBox(width: 8),
+                    // Text("+3 more"),
+                    // SizedBox(width: 8),
+                    // InkWell(
+                    //     key: widgetKey,
+                    //     onTap: () {
+                    //       getCustomPointedPopup(context)
+                    //         ..show(
+                    //           widgetKey: widgetKey,
+                    //         );
+                    //     },
+                    //     child: Icon(Icons.keyboard_arrow_down, size: 18)),
                     Spacer(),
                     isActive
                         ? Container(
                             margin: EdgeInsets.only(top: 5),
                             child: InkWell(
                                 onTap: () {
-                                  Navigator.pushNamed(context, '/batalkanTumpangan');
+                                  Navigator.pushNamed(
+                                      context, '/batalkanTumpangan');
                                 },
-                                child: NunutText(title: "ingin membatalkan?", size: 10, textDecoration: TextDecoration.underline)),
+                                child: NunutText(
+                                    title: "ingin membatalkan?",
+                                    size: 10,
+                                    textDecoration: TextDecoration.underline)),
                           )
                         : Container(),
                   ],

@@ -5,7 +5,6 @@ import 'package:nunut_application/widgets/customDialog.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:flutter_dash/flutter_dash.dart';
 import 'package:nunut_application/theme.dart';
-import 'package:bordered_text/bordered_text.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 
 // class HomePage extends StatefulWidget {
