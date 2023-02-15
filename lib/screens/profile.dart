@@ -21,19 +21,18 @@ class ProfilePageMenu {
 
 class _ProfilePageState extends State<ProfilePage> {
   AuthService authService = AuthService();
-  UserModel user = UserModel(name: "", email: "", nik: "", phone: "");
+  // UserModel user = UserModel(name: "", email: "", nik: "", phone: "");
   @override
   void initState() {
     super.initState();
-    getUser();
   }
 
-  void getUser() async {
-    UserModel user = await AuthService.getCurrentUser();
-    setState(() {
-      this.user = user;
-    });
-  }
+  // void getUser() async {
+  //   UserModel user = await AuthService.getCurrentUser();
+  //   setState(() {
+  //     this.user = user;
+  //   });
+  // }
 
   //data dictionary for profile page menu
   List<ProfilePageMenu> profilePageMenu = [
@@ -176,7 +175,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 InkWell(
                                   onTap: () {
                                     //to detail Profile page
-                                    Navigator.pushNamed(context, '/detailprofile', arguments: user);
+                                    Navigator.pushNamed(context, '/detailprofile', arguments: config.user);
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
