@@ -19,6 +19,7 @@ class _MapListState extends State<MapList> {
   int _page = 1;
   bool isLoading = false;
   ScrollController? _scrollController;
+  TextEditingController searchController = TextEditingController();
   bool done = false;
 
   @override
@@ -33,17 +34,19 @@ class _MapListState extends State<MapList> {
   void dispose() {
     _scrollController!.removeListener(scrollListener);
     _scrollController!.dispose();
+    searchController.dispose();
     super.dispose();
   }
 
-  initMapLocationList() async {
+  initMapLocationList({String searchText = ""}) async {
     setState(() {
       mapLocationListLoading = true;
       _page = 1;
     });
 
     mapLocationList.clear();
-    mapLocationList = await mapLocationApi.getMapList(checkUrl: true, page: _page);
+    searchText = searchText.isNotEmpty ? searchText.replaceAll(" ", "%20") : "";
+    mapLocationList = await mapLocationApi.getMapList(page: searchText.isNotEmpty ? 0 : _page, checkUrl: true, parameter: searchText.isNotEmpty ? "name=$searchText" : "");
 
     setState(() {
       mapLocationListLoading = false;
@@ -112,7 +115,18 @@ class _MapListState extends State<MapList> {
                 NunutText(title: widget.fromUKP ? "Pilih Lokasi \nDestinasi" : "Pilih Lokasi \nMeeting Point", isTitle: true),
                 SizedBox(height: 40),
                 TextFormField(
+                  controller: searchController,
+                  onChanged: (value) {
+                    initMapLocationList(searchText: value);
+                  },
                   decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.close, color: Colors.grey, size: 18),
+                      onPressed: () {
+                        searchController.clear();
+                        initMapLocationList();
+                      },
+                    ),
                     hintText: "Cari Lokasi",
                     hintStyle: TextStyle(
                       color: Colors.grey,
