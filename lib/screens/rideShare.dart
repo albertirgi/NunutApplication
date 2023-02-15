@@ -52,9 +52,7 @@ class _RideShareState extends State<RideShare> {
     // _getCurrentPosition();
     _scrollController = ScrollController();
     _scrollController!.addListener(scrollListener);
-    widget.fromUKP
-        ? pickUpController.text = "Universitas Kristen Petra"
-        : destinationController.text = "Universitas Kristen Petra";
+    widget.fromUKP ? pickUpController.text = "Universitas Kristen Petra" : destinationController.text = "Universitas Kristen Petra";
   }
 
   void dispose() {
@@ -70,9 +68,8 @@ class _RideShareState extends State<RideShare> {
     });
 
     // tempParameter.isNotEmpty ? tempParameter += "&" : tempParameter += "";
-    String initialParameter = widget.fromUKP
-        ? "user=${config.user.id}&driver&vehicle&meeting_point=UniversitasKristenPetra"
-        : "user=${config.user.id}&driver&vehicle&destination=UniversitasKristenPetra";
+    String initialParameter =
+        widget.fromUKP ? "user=${config.user.id}&driver&vehicle&meeting_point=UniversitasKristenPetra" : "user=${config.user.id}&driver&vehicle&destination=UniversitasKristenPetra";
     tempParameter = initialParameter + tempParameter;
 
     rideScheduleList.clear();
@@ -96,9 +93,7 @@ class _RideShareState extends State<RideShare> {
 
       rideSchedulePageList.clear();
       rideSchedulePageList = await rideScheduleApi.getRideScheduleList(
-        parameter: widget.fromUKP
-            ? "user=${config.user.id}&driver&vehicle&meeting_point=UniversitasKristenPetra"
-            : "user=${config.user.id}&driver&vehicle&destination=UniversitasKristenPetra",
+        parameter: widget.fromUKP ? "user=${config.user.id}&driver&vehicle&meeting_point=UniversitasKristenPetra" : "user=${config.user.id}&driver&vehicle&destination=UniversitasKristenPetra",
         // page: _page,
         checkUrl: true,
       );
@@ -117,10 +112,7 @@ class _RideShareState extends State<RideShare> {
   }
 
   scrollListener() {
-    if (_scrollController!.offset >=
-            _scrollController!.position.maxScrollExtent - 100 &&
-        !_scrollController!.position.outOfRange &&
-        !done) {
+    if (_scrollController!.offset >= _scrollController!.position.maxScrollExtent - 100 && !_scrollController!.position.outOfRange && !done) {
       // loadmore();
     }
   }
@@ -213,563 +205,484 @@ class _RideShareState extends State<RideShare> {
         onRefresh: () async {
           onRefresh();
         },
-        child: SingleChildScrollView(
-          controller: _scrollController,
-          physics: AlwaysScrollableScrollPhysics(),
-          child: Stack(
-            children: [
-              Image(
-                image:
-                    AssetImage('assets/backgroundCircle/backgroundCircle1.png'),
-                fit: BoxFit.cover,
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 40, left: 20, right: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                          padding: EdgeInsets.zero,
-                          icon: Icon(Icons.arrow_back, color: Colors.black),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                        //icon chat
-                        Row(
-                          children: [
-                            // Container(
-                            //   width: 40,
-                            //   height: 40,
-                            //   // margin:
-                            //   //     EdgeInsets.only(top: 62, bottom: 10, right: 10),
-                            //   decoration: BoxDecoration(
-                            //     borderRadius: BorderRadius.circular(24),
-                            //     color: Colors.white,
-                            //     boxShadow: [
-                            //       BoxShadow(
-                            //         color: Colors.grey.withOpacity(0.5),
-                            //         spreadRadius: 2,
-                            //         blurRadius: 5,
-                            //         offset: Offset(0, 0), // changes position of shadow
-                            //       ),
-                            //     ],
-                            //   ),
-                            //   child: IconButton(
-                            //     icon: Icon(Icons.chat, color: Colors.black, size: 18),
-                            //     onPressed: () {},
-                            //   ),
-                            // ),
-                            // SizedBox(width: 10),
-                            Container(
-                              width: 40,
-                              height: 40,
-                              // margin:
-                              //     EdgeInsets.only(top: 62, bottom: 10, right: 10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(24),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 2,
-                                    blurRadius: 5,
-                                    offset: Offset(
-                                        0, 0), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              child: IconButton(
-                                icon: Icon(Icons.bookmark, color: Colors.black),
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/rideBookmark')
-                                      .then((value) => onGoBack(value));
-                                },
-                              ),
+        child: Stack(
+          children: [
+            Image(
+              image: AssetImage('assets/backgroundCircle/backgroundCircle1.png'),
+              fit: BoxFit.cover,
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 40, left: 20, right: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        padding: EdgeInsets.zero,
+                        icon: Icon(Icons.arrow_back, color: Colors.black),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      //icon chat
+                      Row(
+                        children: [
+                          // Container(
+                          //   width: 40,
+                          //   height: 40,
+                          //   // margin:
+                          //   //     EdgeInsets.only(top: 62, bottom: 10, right: 10),
+                          //   decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(24),
+                          //     color: Colors.white,
+                          //     boxShadow: [
+                          //       BoxShadow(
+                          //         color: Colors.grey.withOpacity(0.5),
+                          //         spreadRadius: 2,
+                          //         blurRadius: 5,
+                          //         offset: Offset(0, 0), // changes position of shadow
+                          //       ),
+                          //     ],
+                          //   ),
+                          //   child: IconButton(
+                          //     icon: Icon(Icons.chat, color: Colors.black, size: 18),
+                          //     onPressed: () {},
+                          //   ),
+                          // ),
+                          // SizedBox(width: 10),
+                          Container(
+                            width: 40,
+                            height: 40,
+                            // margin:
+                            //     EdgeInsets.only(top: 62, bottom: 10, right: 10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(24),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 0), // changes position of shadow
+                                ),
+                              ],
                             ),
-                            SizedBox(width: 10),
-                            //icon task
-                            // Container(
-                            //   width: 40,
-                            //   height: 40,
-                            //   // margin:
-                            //   //     EdgeInsets.only(top: 62, bottom: 10, right: 20),
-                            //   decoration: BoxDecoration(
-                            //     borderRadius: BorderRadius.circular(24),
-                            //     color: Colors.white,
-                            //     boxShadow: [
-                            //       BoxShadow(
-                            //         color: Colors.grey.withOpacity(0.5),
-                            //         spreadRadius: 2,
-                            //         blurRadius: 5,
-                            //         offset: Offset(0, 0), // changes position of shadow
-                            //       ),
-                            //     ],
-                            //   ),
-                            //   child: IconButton(
-                            //     icon: Icon(Icons.task, color: Colors.black),
-                            //     onPressed: () {},
-                            //   ),
-                            // ),
-                          ],
+                            child: IconButton(
+                              icon: Icon(Icons.bookmark, color: Colors.black),
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/rideBookmark').then((value) => onGoBack(value));
+                              },
+                            ),
+                          ),
+                          // SizedBox(width: 10),
+                          //icon task
+                          // Container(
+                          //   width: 40,
+                          //   height: 40,
+                          //   // margin:
+                          //   //     EdgeInsets.only(top: 62, bottom: 10, right: 20),
+                          //   decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(24),
+                          //     color: Colors.white,
+                          //     boxShadow: [
+                          //       BoxShadow(
+                          //         color: Colors.grey.withOpacity(0.5),
+                          //         spreadRadius: 2,
+                          //         blurRadius: 5,
+                          //         offset: Offset(0, 0), // changes position of shadow
+                          //       ),
+                          //     ],
+                          //   ),
+                          //   child: IconButton(
+                          //     icon: Icon(Icons.task, color: Colors.black),
+                          //     onPressed: () {},
+                          //   ),
+                          // ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  NunutText(title: "Hai, " + config.user.name, fontWeight: FontWeight.bold),
+                  NunutText(title: "Butuh \nTumpangan?", isTitle: true),
+                  Container(
+                    margin: EdgeInsets.only(top: 20),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(24),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 0), // changes position of shadow
                         ),
                       ],
                     ),
-                    NunutText(
-                        title: "Hai, " + config.user.name,
-                        fontWeight: FontWeight.bold),
-                    NunutText(title: "Butuh \nTumpangan?", isTitle: true),
-                    Container(
-                      margin: EdgeInsets.only(top: 20),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: Offset(0, 0), // changes position of shadow
+                    child: Container(
+                      margin: EdgeInsets.only(top: 15, bottom: 15),
+                      child: Row(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(left: 20, bottom: 40),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(bottom: 2.0),
+                                  child: Icon(Icons.circle, color: nunutPrimaryColor, size: 18),
+                                ),
+                                Icon(Icons.fiber_manual_record, color: Colors.grey, size: 8),
+                                Icon(Icons.fiber_manual_record, color: Colors.grey, size: 8),
+                                Icon(Icons.fiber_manual_record, color: Colors.grey, size: 8),
+                                Icon(Icons.fiber_manual_record, color: Colors.grey, size: 8),
+                                Icon(Icons.fiber_manual_record, color: Colors.grey, size: 8),
+                                Icon(Icons.fiber_manual_record, color: Colors.grey, size: 8),
+                                Icon(Icons.fiber_manual_record, color: Colors.grey, size: 8),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 2.0),
+                                  child: Icon(
+                                    Icons.circle,
+                                    color: Colors.blueAccent[100],
+                                    size: 18,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Container(
+                            // margin: EdgeInsets.only(left: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(left: 10),
+                                  child: NunutText(
+                                    title: "Lokasi Jemput",
+                                    size: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 4),
+                                Container(
+                                  width: 290,
+                                  height: 40,
+                                  child: TextFormField(
+                                    enabled: !widget.fromUKP,
+                                    readOnly: true,
+                                    controller: pickUpController,
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.only(left: 20),
+                                      filled: true,
+                                      fillColor: Colors.grey[200],
+                                      hintText: 'Pilih Lokasi Jemput',
+                                      hintStyle: TextStyle(color: Colors.grey),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(24),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                    ),
+                                    onTap: () async {
+                                      final result = await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => MapList(
+                                            fromUKP: widget.fromUKP,
+                                          ),
+                                        ),
+                                      );
+                                      setState(() {
+                                        pickUpController.text = result;
+                                        print("Result: " + result);
+                                      });
+                                      // Navigator.push(
+                                      //   context,
+                                      //   MaterialPageRoute(
+                                      //     builder: (context) => MapList(
+                                      //       fromUKP: widget.fromUKP,
+                                      //     ),
+                                      //   ),
+                                      // );
+                                    },
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Container(
+                                  margin: EdgeInsets.only(left: 10),
+                                  child: NunutText(
+                                    title: "Lokasi Tujuan",
+                                    size: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 4),
+                                Container(
+                                  width: 290,
+                                  height: 40,
+                                  child: TextFormField(
+                                    enabled: widget.fromUKP,
+                                    readOnly: true,
+                                    controller: destinationController,
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.only(left: 20),
+                                      filled: true,
+                                      fillColor: Colors.grey[200],
+                                      hintText: 'Pilih Lokasi Tujuan',
+                                      hintStyle: TextStyle(color: Colors.grey),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(24),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                    ),
+                                    onTap: () async {
+                                      final result = await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => MapList(
+                                            fromUKP: widget.fromUKP,
+                                          ),
+                                        ),
+                                      );
+                                      setState(() {
+                                        destinationController.text = result;
+                                      });
+                                      // Navigator.push(
+                                      //   context,
+                                      //   MaterialPageRoute(
+                                      //     builder: (context) => MapList(
+                                      //       fromUKP: widget.fromUKP,
+                                      //     ),
+                                      //   ),
+                                      // );
+                                    },
+                                  ),
+                                ),
+                                SizedBox(height: 14),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      width: 230,
+                                      height: 40,
+                                      child: TextFormField(
+                                        style: TextStyle(fontSize: 12),
+                                        controller: dateController,
+                                        decoration: InputDecoration(
+                                          prefixIcon: Icon(Icons.calendar_today, color: Colors.black, size: 14),
+                                          contentPadding: EdgeInsets.only(left: 10),
+                                          filled: true,
+                                          fillColor: Colors.grey[200],
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(24),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                        ),
+                                        onTap: () async {
+                                          FocusScope.of(context).requestFocus(new FocusNode());
+                                          DateTime? pickedDate = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(2000), lastDate: DateTime(2101));
+
+                                          if (pickedDate != null) {
+                                            String formattedDate = DateFormat.yMMMd().format(pickedDate);
+                                            setState(() {
+                                              dateController.text = formattedDate;
+                                            });
+                                          }
+                                          // print("Date: " + dateController.text);
+                                        },
+                                      ),
+                                    ),
+                                    SizedBox(width: 5),
+                                    // Container(
+                                    //   width: 110,
+                                    //   height: 40,
+                                    //   child: TextFormField(
+                                    //     style: TextStyle(fontSize: 12),
+                                    //     controller: timeController,
+                                    //     decoration: InputDecoration(
+                                    //       prefixIcon: Icon(Icons.timer, color: Colors.black, size: 14),
+                                    //       contentPadding: EdgeInsets.only(left: 10),
+                                    //       filled: true,
+                                    //       fillColor: Colors.grey[200],
+                                    //       border: OutlineInputBorder(
+                                    //         borderRadius: BorderRadius.circular(24),
+                                    //         borderSide: BorderSide.none,
+                                    //       ),
+                                    //     ),
+                                    //     onTap: () async {
+                                    //       FocusScope.of(context).requestFocus(new FocusNode());
+                                    //       TimeOfDay? picked = await showTimePicker(
+                                    //         context: context,
+                                    //         initialTime: TimeOfDay.now(),
+                                    //       );
+                                    //       if (picked != null) {
+                                    //         setState(() {
+                                    //           timeController.text = picked.format(context);
+                                    //         });
+                                    //       }
+                                    //       // print("Time: " + timeController.text);
+                                    //     },
+                                    //   ),
+                                    // ),
+                                    SizedBox(width: 10),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(18),
+                                        color: nunutPrimaryColor,
+                                      ),
+                                      child: IconButton(
+                                        onPressed: () async {
+                                          setState(() {
+                                            isSearch = true;
+                                          });
+                                          String _parameter = await parameterController();
+                                          initRideScheduleList(tempParameter: _parameter);
+                                        },
+                                        icon: Icon(Icons.arrow_right_alt_rounded),
+                                      ),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
                         ],
                       ),
-                      child: Container(
-                        margin: EdgeInsets.only(top: 15, bottom: 15),
-                        child: Row(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(left: 20, bottom: 40),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(bottom: 2.0),
-                                    child: Icon(Icons.circle,
-                                        color: nunutPrimaryColor, size: 18),
-                                  ),
-                                  Icon(Icons.fiber_manual_record,
-                                      color: Colors.grey, size: 8),
-                                  Icon(Icons.fiber_manual_record,
-                                      color: Colors.grey, size: 8),
-                                  Icon(Icons.fiber_manual_record,
-                                      color: Colors.grey, size: 8),
-                                  Icon(Icons.fiber_manual_record,
-                                      color: Colors.grey, size: 8),
-                                  Icon(Icons.fiber_manual_record,
-                                      color: Colors.grey, size: 8),
-                                  Icon(Icons.fiber_manual_record,
-                                      color: Colors.grey, size: 8),
-                                  Icon(Icons.fiber_manual_record,
-                                      color: Colors.grey, size: 8),
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 2.0),
-                                    child: Icon(
-                                      Icons.circle,
-                                      color: Colors.blueAccent[100],
-                                      size: 18,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(width: 10),
-                            Container(
-                              // margin: EdgeInsets.only(left: 10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(left: 10),
-                                    child: NunutText(
-                                      title: "Lokasi Jemput",
-                                      size: 14,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(height: 4),
-                                  Container(
-                                    width: 290,
-                                    height: 40,
-                                    child: TextFormField(
-                                      enabled: !widget.fromUKP,
-                                      readOnly: true,
-                                      controller: pickUpController,
-                                      decoration: InputDecoration(
-                                        contentPadding:
-                                            EdgeInsets.only(left: 20),
-                                        filled: true,
-                                        fillColor: Colors.grey[200],
-                                        hintText: 'Pilih Lokasi Jemput',
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(24),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                      ),
-                                      onTap: () async {
-                                        final result = await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => MapList(
-                                              fromUKP: widget.fromUKP,
-                                            ),
-                                          ),
-                                        );
-                                        setState(() {
-                                          pickUpController.text = result;
-                                          print("Result: " + result);
-                                        });
-                                        // Navigator.push(
-                                        //   context,
-                                        //   MaterialPageRoute(
-                                        //     builder: (context) => MapList(
-                                        //       fromUKP: widget.fromUKP,
-                                        //     ),
-                                        //   ),
-                                        // );
-                                      },
-                                    ),
-                                  ),
-                                  SizedBox(height: 10),
-                                  Container(
-                                    margin: EdgeInsets.only(left: 10),
-                                    child: NunutText(
-                                      title: "Lokasi Tujuan",
-                                      size: 14,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(height: 4),
-                                  Container(
-                                    width: 290,
-                                    height: 40,
-                                    child: TextFormField(
-                                      enabled: widget.fromUKP,
-                                      readOnly: true,
-                                      controller: destinationController,
-                                      decoration: InputDecoration(
-                                        contentPadding:
-                                            EdgeInsets.only(left: 20),
-                                        filled: true,
-                                        fillColor: Colors.grey[200],
-                                        hintText: 'Pilih Lokasi Tujuan',
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(24),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                      ),
-                                      onTap: () async {
-                                        final result = await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => MapList(
-                                              fromUKP: widget.fromUKP,
-                                            ),
-                                          ),
-                                        );
-                                        setState(() {
-                                          destinationController.text = result;
-                                        });
-                                        // Navigator.push(
-                                        //   context,
-                                        //   MaterialPageRoute(
-                                        //     builder: (context) => MapList(
-                                        //       fromUKP: widget.fromUKP,
-                                        //     ),
-                                        //   ),
-                                        // );
-                                      },
-                                    ),
-                                  ),
-                                  SizedBox(height: 14),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        width: 230,
-                                        height: 40,
-                                        child: TextFormField(
-                                          style: TextStyle(fontSize: 12),
-                                          controller: dateController,
-                                          decoration: InputDecoration(
-                                            prefixIcon: Icon(
-                                                Icons.calendar_today,
-                                                color: Colors.black,
-                                                size: 14),
-                                            contentPadding:
-                                                EdgeInsets.only(left: 10),
-                                            filled: true,
-                                            fillColor: Colors.grey[200],
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(24),
-                                              borderSide: BorderSide.none,
-                                            ),
-                                          ),
-                                          onTap: () async {
-                                            FocusScope.of(context)
-                                                .requestFocus(new FocusNode());
-                                            DateTime? pickedDate =
-                                                await showDatePicker(
-                                                    context: context,
-                                                    initialDate: DateTime.now(),
-                                                    firstDate: DateTime(2000),
-                                                    lastDate: DateTime(2101));
-
-                                            if (pickedDate != null) {
-                                              String formattedDate =
-                                                  DateFormat.yMMMd()
-                                                      .format(pickedDate);
-                                              setState(() {
-                                                dateController.text =
-                                                    formattedDate;
-                                              });
-                                            }
-                                            // print("Date: " + dateController.text);
-                                          },
-                                        ),
-                                      ),
-                                      SizedBox(width: 5),
-                                      // Container(
-                                      //   width: 110,
-                                      //   height: 40,
-                                      //   child: TextFormField(
-                                      //     style: TextStyle(fontSize: 12),
-                                      //     controller: timeController,
-                                      //     decoration: InputDecoration(
-                                      //       prefixIcon: Icon(Icons.timer, color: Colors.black, size: 14),
-                                      //       contentPadding: EdgeInsets.only(left: 10),
-                                      //       filled: true,
-                                      //       fillColor: Colors.grey[200],
-                                      //       border: OutlineInputBorder(
-                                      //         borderRadius: BorderRadius.circular(24),
-                                      //         borderSide: BorderSide.none,
-                                      //       ),
-                                      //     ),
-                                      //     onTap: () async {
-                                      //       FocusScope.of(context).requestFocus(new FocusNode());
-                                      //       TimeOfDay? picked = await showTimePicker(
-                                      //         context: context,
-                                      //         initialTime: TimeOfDay.now(),
-                                      //       );
-                                      //       if (picked != null) {
-                                      //         setState(() {
-                                      //           timeController.text = picked.format(context);
-                                      //         });
-                                      //       }
-                                      //       // print("Time: " + timeController.text);
-                                      //     },
-                                      //   ),
-                                      // ),
-                                      SizedBox(width: 10),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(18),
-                                          color: nunutPrimaryColor,
-                                        ),
-                                        child: IconButton(
-                                          onPressed: () async {
-                                            setState(() {
-                                              isSearch = true;
-                                            });
-                                            String _parameter =
-                                                await parameterController();
-                                            initRideScheduleList(
-                                                tempParameter: _parameter);
-                                          },
-                                          icon: Icon(
-                                              Icons.arrow_right_alt_rounded),
-                                        ),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
                     ),
-                    // SizedBox(height: 20),
-                    // showLocation != null
-                    //     ? Container(
-                    //         height: 300,
-                    //         width: double.infinity,
-                    //         child: GoogleMap(
-                    //           //Map widget from google_maps_flutter package
-                    //           zoomGesturesEnabled: true, //enable Zoom in, out on map
-                    //           initialCameraPosition: CameraPosition(
-                    //             //innital position in map
-                    //             target: showLocation!, //initial position
-                    //             zoom: 10.0, //initial zoom level
-                    //           ),
-                    //           markers: markers, //markers to show on map
-                    //           mapType: MapType.normal, //map type
-                    //           onMapCreated: (controller) {
-                    //             //method called when map is created
-                    //             setState(() {
-                    //               mapController = controller;
-                    //             });
-                    //           },
-                    //         ),
-                    //       )
-                    //     :
-                    // Container(
-                    //   height: 300,
-                    //   width: double.infinity,
-                    //   child: GoogleMap(
-                    //     //Map widget from google_maps_flutter package
-                    //     zoomGesturesEnabled: true, //enable Zoom in, out on map
-                    //     initialCameraPosition: CameraPosition(
-                    //       //innital position in map
-                    //       target: LatLng(-7.294105697050977, 112.73620614655268), //initial position
-                    //       zoom: 10.0, //initial zoom level
-                    //     ),
-                    //     // markers: markers, //markers to show on map
-                    //     mapType: MapType.normal, //map type
-                    //     onMapCreated: (controller) {
-                    //       //method called when map is created
-                    //       setState(() {
-                    //         mapController = controller;
-                    //       });
-                    //     },
-                    //   ),
-                    // ),
-                    rideScheduleListLoading!
-                        ? Center(
-                            heightFactor: 5,
-                            child: CircularProgressIndicator(),
-                          )
-                        : rideScheduleList.isNotEmpty
-                            ? Column(
-                                children: [
-                                  GridView.builder(
-                                    shrinkWrap: true,
-                                    physics: ScrollPhysics(),
-                                    itemCount: rideScheduleList.length,
-                                    gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 2,
-                                            childAspectRatio: 0.7,
-                                            crossAxisSpacing: 15,
-                                            mainAxisSpacing: 15),
-                                    itemBuilder: (context, index) {
-                                      return InkWell(
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  RideBookDetail(
-                                                rideSchedule:
-                                                    rideScheduleList[index],
-                                              ),
+                  ),
+                  // SizedBox(height: 20),
+                  // showLocation != null
+                  //     ? Container(
+                  //         height: 300,
+                  //         width: double.infinity,
+                  //         child: GoogleMap(
+                  //           //Map widget from google_maps_flutter package
+                  //           zoomGesturesEnabled: true, //enable Zoom in, out on map
+                  //           initialCameraPosition: CameraPosition(
+                  //             //innital position in map
+                  //             target: showLocation!, //initial position
+                  //             zoom: 10.0, //initial zoom level
+                  //           ),
+                  //           markers: markers, //markers to show on map
+                  //           mapType: MapType.normal, //map type
+                  //           onMapCreated: (controller) {
+                  //             //method called when map is created
+                  //             setState(() {
+                  //               mapController = controller;
+                  //             });
+                  //           },
+                  //         ),
+                  //       )
+                  //     :
+                  // Container(
+                  //   height: 300,
+                  //   width: double.infinity,
+                  //   child: GoogleMap(
+                  //     //Map widget from google_maps_flutter package
+                  //     zoomGesturesEnabled: true, //enable Zoom in, out on map
+                  //     initialCameraPosition: CameraPosition(
+                  //       //innital position in map
+                  //       target: LatLng(-7.294105697050977, 112.73620614655268), //initial position
+                  //       zoom: 10.0, //initial zoom level
+                  //     ),
+                  //     // markers: markers, //markers to show on map
+                  //     mapType: MapType.normal, //map type
+                  //     onMapCreated: (controller) {
+                  //       //method called when map is created
+                  //       setState(() {
+                  //         mapController = controller;
+                  //       });
+                  //     },
+                  //   ),
+                  // ),
+                  rideScheduleListLoading!
+                      ? Center(
+                          heightFactor: 5,
+                          child: CircularProgressIndicator(),
+                        )
+                      : rideScheduleList.isNotEmpty
+                          ? Expanded(
+                              child: Container(
+                                margin: EdgeInsets.only(top: 10),
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      child: GridView.builder(
+                                        padding: EdgeInsets.only(top: 10),
+                                        controller: _scrollController,
+                                        physics: BouncingScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: rideScheduleList.length,
+                                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.7, crossAxisSpacing: 15, mainAxisSpacing: 15),
+                                        itemBuilder: (context, index) {
+                                          return InkWell(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => RideBookDetail(
+                                                    rideSchedule: rideScheduleList[index],
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: TwoColumnView(
+                                              imagePath: rideScheduleList[index].driver!.image,
+                                              departureTime: rideScheduleList[index].time!,
+                                              name: rideScheduleList[index].driver!.name,
+                                              destination: rideScheduleList[index].destination!.name!,
+                                              isBookmarked: rideScheduleList[index].isBookmarked!,
+                                              price: NumberFormat.currency(
+                                                locale: 'id',
+                                                symbol: '',
+                                                decimalDigits: 0,
+                                              ).format(rideScheduleList[index].price),
+                                              IconOnTap: () async {
+                                                bool result;
+                                                rideScheduleList[index].isBookmarked!
+                                                    ? result =
+                                                        await rideScheduleApi.deleteBookmarkByRideScheduleId(rideScheduleId: rideScheduleList[index].id!, userId: config.user.id!, checkUrl: true)
+                                                    : result = await rideScheduleApi.updateBookmark(rideScheduleId: rideScheduleList[index].id!, userId: config.user.id!);
+                                                if (result) {
+                                                  rideScheduleList[index].isBookmarked = !rideScheduleList[index].isBookmarked!;
+                                                  if (rideScheduleList[index].isBookmarked!) {
+                                                    Fluttertoast.showToast(msg: 'Berhasil menambahkan ke bookmark');
+                                                  } else {
+                                                    Fluttertoast.showToast(msg: 'Berhasil menghapus dari bookmark');
+                                                  }
+                                                }
+                                                setState(() {});
+                                              },
                                             ),
                                           );
                                         },
-                                        child: TwoColumnView(
-                                          imagePath: rideScheduleList[index]
-                                              .driver!
-                                              .image,
-                                          departureTime:
-                                              rideScheduleList[index].time!,
-                                          name: rideScheduleList[index]
-                                              .driver!
-                                              .name,
-                                          destination: rideScheduleList[index]
-                                              .destination!
-                                              .name!,
-                                          isBookmarked: rideScheduleList[index]
-                                              .isBookmarked!,
-                                          price: NumberFormat.currency(
-                                            locale: 'id',
-                                            symbol: '',
-                                            decimalDigits: 0,
-                                          ).format(
-                                              rideScheduleList[index].price),
-                                          IconOnTap: () async {
-                                            bool result;
-                                            rideScheduleList[index]
-                                                    .isBookmarked!
-                                                ? result = await rideScheduleApi
-                                                    .deleteBookmarkByRideScheduleId(
-                                                        rideScheduleId:
-                                                            rideScheduleList[
-                                                                    index]
-                                                                .id!,
-                                                        userId: config.user.id!,
-                                                        checkUrl: true)
-                                                : result = await rideScheduleApi
-                                                    .updateBookmark(
-                                                        rideScheduleId:
-                                                            rideScheduleList[
-                                                                    index]
-                                                                .id!,
-                                                        userId:
-                                                            config.user.id!);
-                                            if (result) {
-                                              rideScheduleList[index]
-                                                      .isBookmarked =
-                                                  !rideScheduleList[index]
-                                                      .isBookmarked!;
-                                              if (rideScheduleList[index]
-                                                  .isBookmarked!) {
-                                                Fluttertoast.showToast(
-                                                    msg:
-                                                        'Berhasil menambahkan ke bookmark');
-                                              } else {
-                                                Fluttertoast.showToast(
-                                                    msg:
-                                                        'Berhasil menghapus dari bookmark');
-                                              }
-                                            }
-                                            setState(() {});
-                                          },
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                  isLoading
-                                      ? Center(
-                                          child: CircularProgressIndicator(),
-                                        )
-                                      : Container(),
-                                  SizedBox(height: 20),
-                                ],
-                              )
-                            : Center(
-                                heightFactor: 5,
-                                child: Column(
-                                  children: [
-                                    NunutText(
-                                        title: "Tumpangan tidak tersedia",
-                                        color: Colors.grey,
-                                        size: 16,
-                                        fontWeight: FontWeight.w500),
-                                    NunutText(
-                                        title: "Mohon ubah kolom pencarian",
-                                        color: Colors.grey,
-                                        size: 16,
-                                        fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                    isLoading
+                                        ? Center(
+                                            child: CircularProgressIndicator(),
+                                          )
+                                        : Container(),
+                                    SizedBox(height: 20),
                                   ],
                                 ),
-                              )
-                  ],
-                ),
+                              ),
+                            )
+                          : Center(
+                              heightFactor: 5,
+                              child: Column(
+                                children: [
+                                  NunutText(title: "Tumpangan tidak tersedia", color: Colors.grey, size: 16, fontWeight: FontWeight.w500),
+                                  NunutText(title: "Mohon ubah kolom pencarian", color: Colors.grey, size: 16, fontWeight: FontWeight.w500),
+                                ],
+                              ),
+                            )
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -787,13 +700,11 @@ class _RideShareState extends State<RideShare> {
 
     widget.fromUKP
         ? destinationController.text.isNotEmpty
-            ? _parameter +=
-                "&destination=${destinationController.text.replaceAll(" ", "")}"
+            ? _parameter += "&destination=${destinationController.text.replaceAll(" ", "")}"
             // ? print("destination: ${destinationController.text.replaceAll(" ", "")}")
             : _parameter += ""
         : pickUpController.text.isNotEmpty
-            ? _parameter +=
-                "&meeting_point=${pickUpController.text.replaceAll(" ", "")}"
+            ? _parameter += "&meeting_point=${pickUpController.text.replaceAll(" ", "")}"
             : _parameter += "";
 
     print("parameter: $_parameter");

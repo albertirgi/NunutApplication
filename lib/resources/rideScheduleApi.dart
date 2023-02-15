@@ -71,6 +71,26 @@ class RideScheduleApi {
     return rideScheduleList;
   }
 
+  Future<RideSchedule> getRideScheduleById({String parameter = "", bool checkUrl = false, String id = ""}) async {
+    String _parameter = "";
+    if (parameter.isNotEmpty) _parameter += "?$parameter";
+    var url = Uri.parse(config.baseUrl + '/ride-schedule/$id' + _parameter);
+
+    if (checkUrl) print(url);
+
+    var response = await http.get(url);
+
+    Result result;
+    RideSchedule rideSchedule = RideSchedule();
+
+    result = Result.fromJson(json.decode(response.body));
+
+    if (result.status == 200) {
+      rideSchedule = RideSchedule.fromJson(result.data);
+    }
+    return rideSchedule;
+  }
+
   Future<bool> updateBookmark({required String rideScheduleId, required String userId}) async {
     var url = Uri.parse(config.baseUrl + '/bookmark/');
     var response = await http.post(

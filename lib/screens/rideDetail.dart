@@ -1,112 +1,144 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:nunut_application/models/mriderequest.dart';
+import 'package:nunut_application/models/mrideschedule.dart';
+import 'package:nunut_application/resources/rideRequestApi.dart';
+import 'package:nunut_application/resources/rideScheduleApi.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:flutter_dash/flutter_dash.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:text_scroll/text_scroll.dart';
 
 class RideDetail extends StatefulWidget {
-  const RideDetail({super.key});
+  final String rideScheduleId;
+  RideDetail({super.key, required this.rideScheduleId});
 
   @override
   State<RideDetail> createState() => _RideDetailState();
 }
 
 class _RideDetailState extends State<RideDetail> {
+  RideSchedule rideSchedule = RideSchedule();
+  List<RideRequest> rideRequestList = [];
   TextEditingController searchController = TextEditingController();
-  bool isActiveClicked = false;
-  String image_detail = '';
-  String date_detail = '';
-  String totalPerson_detail = '';
-  String time_detail = '';
-  String carName_detail = '';
-  String plateNumber_detail = '';
-  String pickupLocation_detail = '';
-  String destination_detail = '';
-  String IdRide = '';
-  List<String> images = <String>[
-    "https://images.unsplash.com/photo-1458071103673-6a6e4c4a3413?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-    "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=80",
-    "https://images.unsplash.com/photo-1470406852800-b97e5d92e2aa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-    "https://images.unsplash.com/photo-1473700216830-7e08d47f858e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
-  ];
+  bool rideScheduleLoading = true;
+  // bool rideRequestListLoading = true;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final arg = ModalRoute.of(context)!.settings.arguments as Map;
-    //final stringFW = arg['testing'] as String;
-    image_detail = arg['image'];
-    date_detail = arg['date'] as String;
-    totalPerson_detail = arg['totalPerson'] as String;
-    time_detail = arg['time'] as String;
-    carName_detail = arg['carName'] as String;
-    plateNumber_detail = arg['plateNumber'] as String;
-    pickupLocation_detail = arg['pickupLocation'] as String;
-    destination_detail = arg['destination'] as String;
-    IdRide = arg['IdRide'] as String;
+  void initState() {
+    super.initState();
+    initRideScheduleDetail();
   }
-  // FutureOr onGoBack(dynamic value) {
-  //   onRefresh();
-  // }
-  // onRefresh() async {
 
-  // }
+  initRideScheduleDetail() async {
+    setState(() {
+      rideScheduleLoading = true;
+    });
+
+    rideSchedule = RideSchedule();
+    rideSchedule = await rideScheduleApi.getRideScheduleById(id: widget.rideScheduleId, parameter: "driver&vehicle", checkUrl: true);
+    await initRideRequestList();
+
+    setState(() {
+      rideScheduleLoading = false;
+    });
+  }
+
+  initRideRequestList() async {
+    // setState(() {
+    //   rideRequestListLoading = true;
+    // });
+
+    rideRequestList.clear();
+    rideRequestList = await rideRequestApi.getRideRequestList(rideScheduleId: widget.rideScheduleId, parameter: "user", checkUrl: true);
+
+    // setState(() {
+    //   rideRequestListLoading = false;
+    // });
+  }
 
   @override
   Widget build(BuildContext context) {
-    // final IdRide = ModalRoute.of(context)!.settings.arguments as String;
-    //log("data: $IdRide");
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.grey[50],
-        elevation: 0,
-        toolbarHeight: 100,
-        leading: Container(
-          margin: EdgeInsets.only(top: 52),
-          child: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () {
-              Navigator.pop(context);
-            },
+      // appBar: AppBar(
+      //   backgroundColor: Colors.grey[50],
+      //   elevation: 0,
+      //   toolbarHeight: 100,
+      //   leading: Container(
+      //     margin: EdgeInsets.only(top: 52),
+      //     child: IconButton(
+      //       icon: Icon(Icons.arrow_back, color: Colors.black),
+      //       onPressed: () {
+      //         Navigator.pop(context);
+      //       },
+      //     ),
+      //   ),
+      // ),
+      body: Stack(
+        children: [
+          Align(
+            alignment: Alignment.topCenter,
+            child: Image(
+              image: AssetImage('assets/backgroundCircle/backgroundCircle2.png'),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.only(top: 12, left: 28, right: 28),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 10),
-                  NunutText(
-                    title: "Tumpangan NUNUT #XYD139",
-                    fontWeight: FontWeight.w500,
+          SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: 100, left: 12),
+                  child: IconButton(
+                    padding: EdgeInsets.zero,
+                    icon: Icon(Icons.arrow_back, color: Colors.black),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
-                  SizedBox(height: 10),
-                  NunutText(
-                    title: date_detail,
-                    //title: "Senin, 12 April 2021",
-                    fontWeight: FontWeight.bold,
-                    size: 22,
-                  ),
-                  NunutText(
-                    title: "Pukul ${time_detail} WIB",
-                    //title: "Pukul 08.00",
-                    fontWeight: FontWeight.bold,
-                    size: 22,
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 12, left: 28, right: 28),
+                  child: rideScheduleLoading
+                      ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey[200]!,
+                              highlightColor: Colors.grey[350]!,
+                              period: Duration(milliseconds: 800),
+                              child: Container(
+                                height: 20,
+                                width: Random().nextInt(60) + 150,
+                                color: Colors.grey[200],
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey[200]!,
+                              highlightColor: Colors.grey[350]!,
+                              period: Duration(milliseconds: 800),
+                              child: Container(
+                                height: 25,
+                                width: Random().nextInt(60) + 150,
+                                color: Colors.grey[200],
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey[200]!,
+                              highlightColor: Colors.grey[350]!,
+                              period: Duration(milliseconds: 800),
+                              child: Container(
+                                height: 25,
+                                width: Random().nextInt(50) + 100,
+                                color: Colors.grey[200],
+                              ),
+                            ),
+                            SizedBox(height: 25),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -119,29 +151,16 @@ class _RideDetailState extends State<RideDetail> {
                                     shape: BoxShape.circle,
                                   ),
                                 ),
-                                // NunutText(
-                                //   title: pickupLocation_detail,
-                                //   //title: "Galaxy Mall",
-                                //   size: 16,
-                                // ),
-
-                                Container(
-                                  margin: EdgeInsets.only(left: 10),
-                                  child: SizedBox(
-                                    child: NunutText(
-                                      title: pickupLocation_detail,
-                                      //title: "Galaxy Mall",
-                                      size: 16,
-                                    ),
+                                SizedBox(width: 10),
+                                Shimmer.fromColors(
+                                  baseColor: Colors.grey[200]!,
+                                  highlightColor: Colors.grey[350]!,
+                                  period: Duration(milliseconds: 800),
+                                  child: Container(
+                                    height: 20,
+                                    width: Random().nextInt(100) + 150,
+                                    color: Colors.grey[200],
                                   ),
-                                  // child: TextScroll(
-                                  //   pickupLocation_detail,
-                                  //   style: TextStyle(
-                                  //     fontSize: 16,
-                                  //     color: Colors.black,
-                                  //   ),
-
-                                  // ),
                                 ),
                               ],
                             ),
@@ -149,7 +168,7 @@ class _RideDetailState extends State<RideDetail> {
                               width: 10,
                               child: Dash(
                                 direction: Axis.vertical,
-                                length: 10,
+                                length: 15,
                                 dashLength: 2,
                                 dashColor: Colors.black,
                               ),
@@ -160,226 +179,316 @@ class _RideDetailState extends State<RideDetail> {
                                   width: 10,
                                   height: 10,
                                   decoration: BoxDecoration(
-                                    color: nunutPrimaryColor,
+                                    color: nunutBlueColor,
                                     shape: BoxShape.circle,
                                   ),
                                 ),
-                                Container(
-                                  margin: EdgeInsets.only(left: 10),
-                                  // child: NunutText(
-                                  //   title: destination_detail,
-                                  //   //title: "Universitas Kristen Petra",
-                                  //   size: 16,
-                                  // ),
-                                  child: TextScroll(
-                                    destination_detail,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.black,
-                                    ),
+                                SizedBox(width: 10),
+                                Shimmer.fromColors(
+                                  baseColor: Colors.grey[200]!,
+                                  highlightColor: Colors.grey[350]!,
+                                  period: Duration(milliseconds: 800),
+                                  child: Container(
+                                    height: 20,
+                                    width: Random().nextInt(100) + 150,
+                                    color: Colors.grey[200],
                                   ),
                                 ),
                               ],
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  NunutButton(
-                    title: "Peta",
-                    widthButton: 90,
-                    heightButton: 35,
-                    textSize: 14,
-                    borderColor: Colors.transparent,
-                    iconButton: Icon(
-                      Icons.map_outlined,
-                      color: Colors.black,
-                    ),
-                    onPressed: () {},
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  Divider(
-                    color: Colors.grey,
-                    thickness: 0.5,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      NunutText(
-                        title: "Daftar Penumpang",
-                        fontWeight: FontWeight.bold,
-                        size: 16,
-                      ),
-                      NunutButton(
-                        title: "Scan QR",
-                        textSize: 14,
-                        widthButton: 120,
-                        heightButton: 40,
-                        borderColor: Colors.transparent,
-                        iconButton: Icon(
-                          Icons.qr_code_scanner_outlined,
-                          color: Colors.black,
-                        ),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/qrCode');
-                          //Navigator.pushNamed(context, '/qrCode').then((value) => onGoBack(value));
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  ListView.separated(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          CircleAvatar(
-                            radius: 20,
-                            backgroundImage: NetworkImage(
-                              "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=80",
+                            SizedBox(height: 50),
+                            Divider(color: Colors.grey, thickness: 0.5),
+                            SizedBox(height: 20),
+                            NunutText(title: "Daftar Penumpang", fontWeight: FontWeight.bold, size: 16),
+                            SizedBox(height: 20),
+                            Container(
+                              height: 150,
+                              child: Center(
+                                child: CircularProgressIndicator(),
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 10),
-                          NunutText(
-                            title: "Rachel Tanuwidjaja",
-                            fontWeight: FontWeight.w500,
-                            size: 14,
-                          ),
-                          Flexible(
-                            child: Row(
+                            Divider(color: Colors.grey, thickness: 0.5),
+                            SizedBox(height: 10),
+                            NunutText(title: "Tempat Parkir", fontWeight: FontWeight.bold, size: 16),
+                            SizedBox(height: 5),
+                            NunutText(title: "Yuk pesan tempat parkir sekarang!", fontWeight: FontWeight.w500, size: 14),
+                            SizedBox(height: 20),
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Icon(
-                                  index % 2 == 1
-                                      ? Icons.check_circle_outline
-                                      : Icons.cancel_outlined,
-                                  size: 35,
-                                  color: index % 2 == 1
-                                      ? Colors.green
-                                      : Colors.red,
-                                )
+                                NunutButton(
+                                  title: "Pesan",
+                                  textSize: 14,
+                                  widthButton: 120,
+                                  heightButton: 40,
+                                  fontWeight: FontWeight.w600,
+                                  borderColor: Colors.transparent,
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, '/bookingParkir', arguments: widget.rideScheduleId);
+                                  },
+                                ),
                               ],
                             ),
-                          ),
-                        ],
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return SizedBox(height: 10);
-                    },
-                    itemCount: 3,
-                  ),
-                  SizedBox(height: 10),
-                  Divider(
-                    color: Colors.grey,
-                    thickness: 0.5,
-                  ),
-                  SizedBox(height: 10),
-                  NunutText(
-                    title: "Tempat Parkir",
-                    fontWeight: FontWeight.bold,
-                    size: 16,
-                  ),
-                  SizedBox(height: 5),
-                  NunutText(
-                    title: "Yuk pesan tempat parkir sekarang!",
-                    fontWeight: FontWeight.w500,
-                    size: 14,
-                  ),
-                  SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                            SizedBox(height: 20),
+                          ],
+                        )
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 10),
+                            NunutText(
+                              title: "Tumpangan NUNUT #XYD139",
+                              fontWeight: FontWeight.w500,
+                            ),
+                            SizedBox(height: 10),
+                            NunutText(
+                              title: rideSchedule.date.toString(),
+                              fontWeight: FontWeight.bold,
+                              size: 22,
+                            ),
+                            NunutText(
+                              title: "Pukul ${rideSchedule.time.toString()}",
+                              fontWeight: FontWeight.bold,
+                              size: 22,
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            width: 10,
+                                            height: 10,
+                                            decoration: BoxDecoration(
+                                              color: nunutPrimaryColor,
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.only(left: 10),
+                                            child: SizedBox(
+                                              child: NunutText(
+                                                title: rideSchedule.meetingPoint!.name.toString(),
+                                                size: 16,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Container(
+                                        width: 10,
+                                        child: Dash(
+                                          direction: Axis.vertical,
+                                          length: 10,
+                                          dashLength: 2,
+                                          dashColor: Colors.black,
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          Container(
+                                            width: 10,
+                                            height: 10,
+                                            decoration: BoxDecoration(
+                                              color: nunutBlueColor,
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.only(left: 10),
+                                            child: TextScroll(
+                                              rideSchedule.destination!.name.toString(),
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 16),
+                            NunutButton(
+                              title: "Peta",
+                              widthButton: 90,
+                              heightButton: 35,
+                              textSize: 14,
+                              borderColor: Colors.transparent,
+                              iconButton: Icon(Icons.map_outlined, color: Colors.black),
+                              onPressed: () {},
+                            ),
+                            SizedBox(height: 16),
+                            Divider(color: Colors.grey, thickness: 0.5),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                NunutText(title: "Daftar Penumpang", fontWeight: FontWeight.bold, size: 16),
+                                NunutButton(
+                                  title: "Scan QR",
+                                  textSize: 14,
+                                  widthButton: 120,
+                                  heightButton: 40,
+                                  borderColor: Colors.transparent,
+                                  iconButton: Icon(
+                                    Icons.qr_code_scanner_outlined,
+                                    color: Colors.black,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, '/qrCode');
+                                    //Navigator.pushNamed(context, '/qrCode').then((value) => onGoBack(value));
+                                  },
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 20),
+                            rideRequestList.isEmpty
+                                ? Container(
+                                    height: 100,
+                                    child: Center(
+                                      child: NunutText(title: "Belum ada penumpang", fontWeight: FontWeight.w500, size: 14, color: Colors.grey),
+                                    ),
+                                  )
+                                : ListView.separated(
+                                    padding: EdgeInsets.zero,
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemBuilder: (context, index) {
+                                      return Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          // CircleAvatar(
+                                          //   radius: 20,
+                                          //   backgroundImage: NetworkImage(
+                                          //     "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=80",
+                                          //   ),
+                                          // ),
+                                          // SizedBox(width: 10),
+                                          NunutText(title: rideRequestList[index].user!.name, fontWeight: FontWeight.w500, size: 14),
+                                          Flexible(
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              children: [
+                                                Icon(
+                                                  index % 2 == 1 ? Icons.check_circle_outline : Icons.cancel_outlined,
+                                                  size: 30,
+                                                  color: index % 2 == 1 ? Colors.green : Colors.red,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                    separatorBuilder: (context, index) {
+                                      return SizedBox(height: 10);
+                                    },
+                                    itemCount: rideRequestList.length,
+                                  ),
+                            SizedBox(height: 10),
+                            Divider(color: Colors.grey, thickness: 0.5),
+                            SizedBox(height: 10),
+                            NunutText(title: "Tempat Parkir", fontWeight: FontWeight.bold, size: 16),
+                            SizedBox(height: 5),
+                            NunutText(title: "Yuk pesan tempat parkir sekarang!", fontWeight: FontWeight.w500, size: 14),
+                            SizedBox(height: 20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                NunutButton(
+                                  title: "Pesan",
+                                  textSize: 14,
+                                  widthButton: 120,
+                                  heightButton: 40,
+                                  fontWeight: FontWeight.w600,
+                                  borderColor: Colors.transparent,
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, '/bookingParkir', arguments: widget.rideScheduleId);
+                                  },
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 20),
+                          ],
+                        ),
+                ),
+                SizedBox(height: 60),
+                Container(
+                  color: nunutPrimaryColor,
+                  padding: EdgeInsets.only(top: 20),
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      NunutButton(
-                        title: "Pesan",
-                        textSize: 14,
-                        widthButton: 120,
-                        heightButton: 40,
-                        fontWeight: FontWeight.w600,
-                        borderColor: Colors.transparent,
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/bookingParkir',
-                              arguments: IdRide);
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                ],
-              ),
-            ),
-            SizedBox(height: 60),
-            Container(
-              color: nunutPrimaryColor,
-              padding: EdgeInsets.only(top: 20),
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 300,
-                    height: 40,
-                    margin: EdgeInsets.zero,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          NunutText(
-                            title: "Perjalanan Selesai",
-                            color: Colors.white,
-                            size: 14,
-                            fontWeight: FontWeight.normal,
+                      Container(
+                        width: 300,
+                        height: 40,
+                        margin: EdgeInsets.zero,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              NunutText(
+                                title: "Perjalanan Selesai",
+                                color: Colors.white,
+                                size: 14,
+                                fontWeight: FontWeight.normal,
+                              ),
+                              SizedBox(width: 10),
+                              Icon(
+                                Icons.check_circle,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                            ],
                           ),
-                          SizedBox(width: 10),
-                          Icon(
-                            Icons.check_circle,
-                            color: Colors.white,
-                            size: 20,
-                          ),
-                        ],
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24),
-                          side: BorderSide(
-                            color: Colors.black,
-                            width: 1.0,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(24),
+                              side: BorderSide(
+                                color: Colors.black,
+                                width: 1.0,
+                              ),
+                            ),
+                            elevation: 0.0,
                           ),
                         ),
-                        elevation: 0.0,
                       ),
-                    ),
+                      SizedBox(height: 10),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/pengaduanKendala');
+                        },
+                        child: NunutText(
+                          title: "Ada masalah dengan perjalanan?",
+                          fontWeight: FontWeight.w500,
+                          size: 12,
+                          color: Colors.black,
+                          textDecoration: TextDecoration.underline,
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                    ],
                   ),
-                  SizedBox(height: 10),
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/pengaduanKendala');
-                    },
-                    child: NunutText(
-                      title: "Ada masalah dengan perjalanan?",
-                      fontWeight: FontWeight.w500,
-                      size: 12,
-                      color: Colors.black,
-                      textDecoration: TextDecoration.underline,
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                ],
-              ),
-            )
-          ],
-        ),
+                )
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

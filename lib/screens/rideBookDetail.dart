@@ -292,7 +292,7 @@ class _RideBookDetailState extends State<RideBookDetail> {
                     backgroundColor: Colors.white,
                     radius: 110,
                     child: CircleAvatar(
-                      backgroundImage: AssetImage("assets/driver.png"),
+                      backgroundImage: AssetImage(widget.rideSchedule.driver.image!),
                       radius: 100,
                     ), //CircleAvatar
                   ),

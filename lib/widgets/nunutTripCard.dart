@@ -17,6 +17,7 @@ class NunutTripCard extends StatelessWidget {
   final String pickupLocation;
   final String destination;
   final bool isActive;
+  final Function()? onPressed;
 
   NunutTripCard({
     Key? key,
@@ -29,6 +30,7 @@ class NunutTripCard extends StatelessWidget {
     required this.plateNumber,
     required this.pickupLocation,
     required this.destination,
+    this.onPressed,
     this.isActive = false,
   }) : super(key: key);
 
@@ -87,22 +89,15 @@ class NunutTripCard extends StatelessWidget {
                   SizedBox(height: 8),
                   Row(
                     children: [
-                      NunutText(
-                          title: time, size: 28, fontWeight: FontWeight.bold),
+                      NunutText(title: time, size: 28, fontWeight: FontWeight.bold),
                       SizedBox(width: 3),
                       NunutText(title: "WIB", fontWeight: FontWeight.bold),
                       Spacer(),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          NunutText(
-                              title: carName,
-                              fontWeight: FontWeight.w500,
-                              size: 14),
-                          NunutText(
-                              title: plateNumber,
-                              fontWeight: FontWeight.w500,
-                              size: 14),
+                          NunutText(title: carName, fontWeight: FontWeight.w500, size: 14),
+                          NunutText(title: plateNumber, fontWeight: FontWeight.w500, size: 14),
                         ],
                       )
                     ],
@@ -114,19 +109,14 @@ class NunutTripCard extends StatelessWidget {
                         children: [
                           Padding(
                             padding: EdgeInsets.only(bottom: 2.0),
-                            child: Icon(Icons.circle,
-                                color: nunutPrimaryColor, size: 18),
+                            child: Icon(Icons.circle, color: nunutPrimaryColor, size: 18),
                           ),
-                          Icon(Icons.fiber_manual_record,
-                              color: Colors.grey, size: 8),
-                          Icon(Icons.fiber_manual_record,
-                              color: Colors.grey, size: 8),
-                          Icon(Icons.fiber_manual_record,
-                              color: Colors.grey, size: 8),
+                          Icon(Icons.fiber_manual_record, color: Colors.grey, size: 8),
+                          Icon(Icons.fiber_manual_record, color: Colors.grey, size: 8),
+                          Icon(Icons.fiber_manual_record, color: Colors.grey, size: 8),
                           Padding(
                             padding: EdgeInsets.only(top: 2.0),
-                            child: Icon(Icons.circle,
-                                color: nunutBlueColor, size: 18),
+                            child: Icon(Icons.circle, color: nunutBlueColor, size: 18),
                           ),
                         ],
                       ),
@@ -181,23 +171,7 @@ class NunutTripCard extends StatelessWidget {
                   backgroundColor: Colors.black,
                   textColor: Colors.white,
                   textSize: 14,
-                  onPressed: () {
-                    isActive
-                        ? Navigator.pushNamed(context, '/rideDetail',
-                            arguments: {
-                                'images': images,
-                                'date': date,
-                                'totalPerson': totalPerson,
-                                'time': time,
-                                'carName': carName,
-                                'plateNumber': plateNumber,
-                                'pickupLocation': pickupLocation,
-                                'destination': destination,
-                                'IdRide':"awfawawfawf",
-                                //'testing': "testingggjo",
-                              })
-                        : null;
-                  },
+                  onPressed: isActive ? onPressed! : () {},
                   iconButton: Icon(Icons.verified, size: 16),
                   widthButton: 130,
                   heightButton: 30,
@@ -241,13 +215,9 @@ class NunutTripCard extends StatelessWidget {
                             margin: EdgeInsets.only(top: 5),
                             child: InkWell(
                                 onTap: () {
-                                  Navigator.pushNamed(
-                                      context, '/batalkanTumpangan');
+                                  Navigator.pushNamed(context, '/batalkanTumpangan');
                                 },
-                                child: NunutText(
-                                    title: "ingin membatalkan?",
-                                    size: 10,
-                                    textDecoration: TextDecoration.underline)),
+                                child: NunutText(title: "ingin membatalkan?", size: 10, textDecoration: TextDecoration.underline)),
                           )
                         : Container(),
                   ],

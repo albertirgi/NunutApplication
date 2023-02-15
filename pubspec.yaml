@@ -62,6 +62,7 @@ dependencies:
   flutter_datetime_picker: ^1.5.1
   text_scroll: ^0.1.2
   url_launcher: ^6.1.9
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_launcher_icons: "^0.9.2"

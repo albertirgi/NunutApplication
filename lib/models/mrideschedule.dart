@@ -37,7 +37,7 @@ class RideSchedule {
       price: parsedJson["price"] as int? ?? 0,
       meetingPoint: parsedJson["meeting_point"] != null ? MapLocation.fromJson(parsedJson["meeting_point"]) : null,
       destination: parsedJson["destination"] != null ? MapLocation.fromJson(parsedJson["destination"]) : null,
-      isBookmarked: parsedJson["is_bookmarked"] as bool? ?? false,
+      isBookmarked: parsedJson.containsKey("is_bookmarked") ? parsedJson["is_bookmarked"] as bool? ?? false : false,
       driver: parsedJson["driver_id"] != null
           ? parsedJson["driver_id"].runtimeType == String
               ? parsedJson["driver_id"] as String? ?? ""

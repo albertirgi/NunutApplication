@@ -84,7 +84,7 @@ class MyApp extends StatelessWidget {
         '/parkingList': (context) => const ParkingList(),
         '/parkingSlotDetail': (context) => const parkingSpotDetail(),
         '/rideList': (context) => const RideList(),
-        '/rideDetail': (context) => const RideDetail(),
+        // '/rideDetail': (context) => RideDetail(),
         '/tripHistory': (context) => const TripHistory(),
         '/qrCode': (context) => const QRCode(),
         // '/rideBookDetail': (context) => const RideBookDetail(),
