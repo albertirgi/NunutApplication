@@ -204,8 +204,7 @@ class _HomeState extends State<Home> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: NunutText(
-              title: "Pilih Gedung", size: 20, fontWeight: FontWeight.bold),
+          title: NunutText(title: "Pilih Gedung", size: 20, fontWeight: FontWeight.bold),
           content: CustomDialog(tempFromUKP: fromUKP),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
@@ -261,8 +260,7 @@ class _HomeState extends State<Home> {
     MidtransApi.getWallet(config.user.id!).then((value) {
       setState(() {
         double numValue = double.parse(value.saldo.toString());
-        NumberFormat currencyFormatter = NumberFormat.simpleCurrency(
-            locale: "id", decimalDigits: 0, name: "");
+        NumberFormat currencyFormatter = NumberFormat.simpleCurrency(locale: "id", decimalDigits: 0, name: "");
         balance = currencyFormatter.format(numValue);
         log(balance);
       });
@@ -330,8 +328,7 @@ class _HomeState extends State<Home> {
                                 color: Colors.grey.withOpacity(0.5),
                                 spreadRadius: 2,
                                 blurRadius: 5,
-                                offset:
-                                    Offset(0, 0), // changes position of shadow
+                                offset: Offset(0, 0), // changes position of shadow
                               ),
                             ],
                           ),
@@ -370,11 +367,9 @@ class _HomeState extends State<Home> {
                       ],
                     ),
                   ),
-                  NunutText(
-                      title: "Hai, ${config.user.name}",
-                      fontWeight: FontWeight.bold),
-                  NunutText(
-                      title: "Mau Nunut\nKemana Hari Ini?", isTitle: true),
+                  NunutText(title: "Hai, ${config.user.name}", fontWeight: FontWeight.bold),
+                  SizedBox(height: 10),
+                  NunutText(title: "Mau Nunut\nKemana Hari Ini?", isTitle: true),
                   SizedBox(height: 10),
                   Container(
                     width: double.infinity,
@@ -399,15 +394,9 @@ class _HomeState extends State<Home> {
                                   children: [
                                     Image.asset('assets/destination.png'),
                                     NunutText(title: "Dari", size: 8),
-                                    NunutText(
-                                        title: "Lokasi Jemput",
-                                        size: 12,
-                                        fontWeight: FontWeight.bold),
+                                    NunutText(title: "Lokasi Jemput", size: 12, fontWeight: FontWeight.bold),
                                     NunutText(title: "Pergi Ke", size: 8),
-                                    NunutText(
-                                        title: "UK Petra",
-                                        size: 12,
-                                        fontWeight: FontWeight.bold),
+                                    NunutText(title: "UK Petra", size: 12, fontWeight: FontWeight.bold),
                                   ],
                                 ),
                                 onTap: () {
@@ -415,8 +404,7 @@ class _HomeState extends State<Home> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          RideShare(fromUKP: false),
+                                      builder: (context) => RideShare(fromUKP: false),
                                     ),
                                   );
                                 },
@@ -435,15 +423,9 @@ class _HomeState extends State<Home> {
                                   children: [
                                     Image.asset('assets/graduation.png'),
                                     NunutText(title: "Dari", size: 8),
-                                    NunutText(
-                                        title: "UK Petra",
-                                        size: 12,
-                                        fontWeight: FontWeight.bold),
+                                    NunutText(title: "UK Petra", size: 12, fontWeight: FontWeight.bold),
                                     NunutText(title: "Pergi Ke", size: 8),
-                                    NunutText(
-                                        title: "Lokasi Tujuan",
-                                        size: 12,
-                                        fontWeight: FontWeight.bold),
+                                    NunutText(title: "Lokasi Tujuan", size: 12, fontWeight: FontWeight.bold),
                                   ],
                                 ),
                                 onTap: () {
@@ -451,8 +433,7 @@ class _HomeState extends State<Home> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          RideShare(fromUKP: true),
+                                      builder: (context) => RideShare(fromUKP: true),
                                     ),
                                   );
                                 },
@@ -466,8 +447,7 @@ class _HomeState extends State<Home> {
                             bottomRight: Radius.circular(10),
                           ),
                           child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 30, vertical: 10),
+                            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                             width: double.infinity,
                             decoration: BoxDecoration(
                               shape: BoxShape.rectangle,
@@ -482,42 +462,29 @@ class _HomeState extends State<Home> {
                                 Container(
                                   child: Row(
                                     children: [
-                                      Image.asset('assets/icon.png',
-                                          width: 30, height: 30),
+                                      Image.asset('assets/icon.png', width: 30, height: 30),
                                       SizedBox(width: 10),
-                                      NunutText(
-                                          title: "Saldo anda",
-                                          fontWeight: FontWeight.bold,
-                                          size: 12),
+                                      NunutText(title: "Saldo anda", fontWeight: FontWeight.bold, size: 12),
                                     ],
                                   ),
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    Navigator.of(context)
-                                        .pushNamed('/nunutPay');
+                                    Navigator.of(context).pushNamed('/nunutPay');
                                   },
                                   child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 5),
+                                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                     decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Row(
                                       children: [
-                                        NunutText(
-                                            title: "Rp",
-                                            fontWeight: FontWeight.bold,
-                                            size: 8),
+                                        NunutText(title: "Rp", fontWeight: FontWeight.bold, size: 8),
                                         SizedBox(width: 5),
-                                        NunutText(
-                                            title: balance.toString(),
-                                            fontWeight: FontWeight.bold,
-                                            size: 12),
+                                        NunutText(title: balance.toString(), fontWeight: FontWeight.bold, size: 12),
                                         SizedBox(width: 10),
-                                        Icon(Icons.add,
-                                            color: Colors.black, size: 12),
+                                        Icon(Icons.add, color: Colors.black, size: 12),
                                       ],
                                     ),
                                   ),
@@ -538,8 +505,7 @@ class _HomeState extends State<Home> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                       image: DecorationImage(
-                        colorFilter: ColorFilter.mode(
-                            Colors.black.withOpacity(0.5), BlendMode.srcOver),
+                        colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.srcOver),
                         image: AssetImage('assets/bgcontainer.png'),
                         fit: BoxFit.cover,
                       ),
@@ -551,14 +517,10 @@ class _HomeState extends State<Home> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             InkWell(
-                              child: NunutText(
-                                  title: "Pelajari syaratnya",
-                                  size: 12,
-                                  color: Colors.white),
+                              child: NunutText(title: "Pelajari syaratnya", size: 12, color: Colors.white),
                               onTap: () {},
                             ),
-                            Icon(Icons.arrow_forward_ios,
-                                size: 15, color: Colors.white)
+                            Icon(Icons.arrow_forward_ios, size: 15, color: Colors.white)
                           ],
                         ),
                         Container(
@@ -566,25 +528,10 @@ class _HomeState extends State<Home> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              NunutText(
-                                  title: "Punya",
-                                  color: Colors.white,
-                                  size: 24,
-                                  fontWeight: FontWeight.bold),
-                              NunutText(
-                                  title: "kendaraan",
-                                  color: Colors.white,
-                                  size: 24,
-                                  fontWeight: FontWeight.bold),
-                              NunutText(
-                                  title: "Pribadi",
-                                  color: Colors.white,
-                                  size: 24,
-                                  fontWeight: FontWeight.bold),
-                              NunutText(
-                                  title: "Mau dapat pemasukkan tambahan?",
-                                  color: Colors.white,
-                                  size: 12),
+                              NunutText(title: "Punya", color: Colors.white, size: 24, fontWeight: FontWeight.bold),
+                              NunutText(title: "kendaraan", color: Colors.white, size: 24, fontWeight: FontWeight.bold),
+                              NunutText(title: "Pribadi", color: Colors.white, size: 24, fontWeight: FontWeight.bold),
+                              NunutText(title: "Mau dapat pemasukkan tambahan?", color: Colors.white, size: 12),
                               SizedBox(height: 20),
                               NunutButton(
                                 title: "Tawarkan Tumpangan",
@@ -616,8 +563,7 @@ class _HomeState extends State<Home> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                       image: DecorationImage(
-                        colorFilter: ColorFilter.mode(
-                            Colors.black.withOpacity(0.5), BlendMode.srcOver),
+                        colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.srcOver),
                         image: AssetImage('assets/bgcontainer2.png'),
                         fit: BoxFit.cover,
                       ),
@@ -630,21 +576,9 @@ class _HomeState extends State<Home> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              NunutText(
-                                  title: "Rame-rame",
-                                  color: Colors.white,
-                                  size: 24,
-                                  fontWeight: FontWeight.bold),
-                              NunutText(
-                                  title: "kendaraan",
-                                  color: Colors.white,
-                                  size: 24,
-                                  fontWeight: FontWeight.bold),
-                              NunutText(
-                                  title: "Pribadi",
-                                  color: Colors.white,
-                                  size: 24,
-                                  fontWeight: FontWeight.bold),
+                              NunutText(title: "Rame-rame", color: Colors.white, size: 24, fontWeight: FontWeight.bold),
+                              NunutText(title: "kendaraan", color: Colors.white, size: 24, fontWeight: FontWeight.bold),
+                              NunutText(title: "Pribadi", color: Colors.white, size: 24, fontWeight: FontWeight.bold),
                             ],
                           ),
                         ),

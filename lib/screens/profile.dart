@@ -74,7 +74,7 @@ class _ProfilePageState extends State<ProfilePage> {
               fit: BoxFit.cover,
             ),
             Container(
-              margin: EdgeInsets.only(top: 40, left: 10, right: 10),
+              margin: EdgeInsets.only(top: 80, left: 10, right: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
