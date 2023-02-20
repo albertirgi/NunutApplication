@@ -91,14 +91,14 @@ class _LoginPageState extends State<LoginPage> {
                           return PopUpLoginLoading();
                         },
                       );
-                      // tmpUser = await AuthService.signIn(email: username.text, password: password.text, context: context);
+                      tmpUser = await AuthService.signIn(email: username.text, password: password.text, context: context);
 
-                      // if (tmpUser.email != "") {
-                      //   config.user = tmpUser;
-                      //   Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
-                      // } else {
-                      //   Fluttertoast.showToast(msg: "Email atau password salah", textColor: Colors.white);
-                      // }
+                      if (tmpUser.email != "") {
+                        config.user = tmpUser;
+                        Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
+                      } else {
+                        Fluttertoast.showToast(msg: "Email atau password salah", textColor: Colors.white);
+                      }
                     }
                   },
                 ),
