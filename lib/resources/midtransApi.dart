@@ -138,7 +138,7 @@ class MidtransApi {
           'name': name,
           'bank': bank,
           'account': account_number,
-          'alias_name': name + user.id.toString(),
+          'alias_name': user.id.toString(),
           'email': user.email,
         }));
     Map<String, dynamic> data = json.decode(response.body.toString());
@@ -146,11 +146,13 @@ class MidtransApi {
     return result;
   }
 
-  static Future getBeneficiaries() async {
-    var url = Uri.parse(config.baseUrl + '/beneficiary/');
+  static Future getBeneficiaries({String param = ""}) async {
+    var url = Uri.parse(config.baseUrl + '/beneficiary?' + param);
     var response = await http.get(url, headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     });
+    if (response.statusCode != 200)
+      return {"status": "500", "message": "Something went wrong"};
     Map<String, dynamic> data = json.decode(response.body.toString());
     return data;
   }

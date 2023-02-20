@@ -1,5 +1,8 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:nunut_application/configuration.dart';
+import 'package:nunut_application/models/mresult.dart';
+import 'package:nunut_application/models/muser.dart';
 import 'package:nunut_application/resources/midtransApi.dart';
 import 'package:nunut_application/widgets/nunutBackground.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
@@ -21,7 +24,7 @@ class _WithdrawState extends State<Withdraw> {
   TextEditingController _accountTextEditingController = TextEditingController();
   TextEditingController _accountHolderNameTextEditingController =
       TextEditingController();
-  String? _isPaymentSelected = "GoPay";
+  String? _isPaymentSelected = "vdwLOfizVdU1dzaMbhy9";
   bool isExpanded = false;
   final List<String> items = [
     'BCA',
@@ -31,6 +34,8 @@ class _WithdrawState extends State<Withdraw> {
     'Permata',
   ];
   String selectedValue = 'BCA';
+  List<Map<String, dynamic>> beneficiaries = [];
+  Map<String, dynamic> selectedBeneficiary = {};
   List<Widget> dropdownItems = [
     Row(
       children: [
@@ -71,6 +76,12 @@ class _WithdrawState extends State<Withdraw> {
       width: double.infinity,
     ),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    generateAccountList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -143,6 +154,7 @@ class _WithdrawState extends State<Withdraw> {
                   obsecureText: false,
                   controller: WithdrawController,
                   keyboardType: TextInputType.number,
+                  is_currency: true,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -206,44 +218,27 @@ class _WithdrawState extends State<Withdraw> {
                       fontWeight: FontWeight.bold,
                     ),
                     children: [
-                      NunutRadioButton(
-                        label: "John Doe - BCA 1234567890",
-                        groupValue: _isPaymentSelected,
-                        value: "doebca",
-                        onChanged: (value) {
-                          setState(() {
-                            _isPaymentSelected = value;
-                          });
-                        },
-                      ),
-                      NunutRadioButton(
-                        label: "Jane - BNI 1234567890",
-                        groupValue: _isPaymentSelected,
-                        value: "janebni",
-                        onChanged: (value) {
-                          setState(() {
-                            _isPaymentSelected = value;
-                          });
-                        },
-                      ),
-                      NunutRadioButton(
-                        label: "Patrick - Mandiri 1234567890",
-                        groupValue: _isPaymentSelected,
-                        value: "patmandiri",
-                        onChanged: (value) {
-                          setState(() {
-                            _isPaymentSelected = value;
-                          });
-                        },
-                      ),
-                      NunutRadioButton(
-                        label: "Budi - BRI 1234567890",
-                        groupValue: _isPaymentSelected,
-                        value: "bribudi",
-                        onChanged: (value) {
-                          setState(() {
-                            _isPaymentSelected = value;
-                          });
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        itemCount: beneficiaries.length,
+                        itemBuilder: (context, index) {
+                          return NunutRadioButton(
+                            label: beneficiaries[index]['name'] +
+                                " - " +
+                                beneficiaries[index]['bank'] +
+                                " " +
+                                beneficiaries[index]['account'],
+                            groupValue: _isPaymentSelected,
+                            value: beneficiaries[index]['beneficiary_id'],
+                            onChanged: (radioValue) {
+                              setState(() {
+                                _isPaymentSelected = radioValue;
+                                selectedBeneficiary = beneficiaries[index];
+                              });
+                            },
+                          );
                         },
                       ),
                     ],
@@ -267,18 +262,18 @@ class _WithdrawState extends State<Withdraw> {
                         ),
                       ),
                       builder: (context) {
-                        return StatefulBuilder(builder: (context, setState) {
+                        return StatefulBuilder(
+                            builder: (context, setStateModal) {
                           return Padding(
                             padding: EdgeInsets.only(
                                 bottom:
                                     MediaQuery.of(context).viewInsets.bottom),
                             child: Container(
                               constraints: BoxConstraints(
-                                maxHeight: MediaQuery.of(context).size.height,
                                 minHeight:
-                                    MediaQuery.of(context).size.height * 0.55,
+                                    MediaQuery.of(context).size.height * 0.65,
                               ),
-                              height: MediaQuery.of(context).size.height * 0.55,
+                              height: MediaQuery.of(context).size.height * 0.65,
                               padding: EdgeInsets.all(24),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -307,91 +302,17 @@ class _WithdrawState extends State<Withdraw> {
                                       },
                                     ),
                                   ),
-                                  SizedBox(height: 30),
+                                  SizedBox(height: 20),
                                   NunutText(
                                     title: "Tambah Rekening",
                                     color: Colors.black,
                                     size: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
-                                  SizedBox(height: 30),
+                                  SizedBox(height: 20),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      // Flexible(
-                                      //   child: Column(
-                                      //     crossAxisAlignment:
-                                      //         CrossAxisAlignment.start,
-                                      //     children: [
-                                      //       NunutText(
-                                      //         title: "Tipe Rekening",
-                                      //         fontWeight: FontWeight.bold,
-                                      //         size: 12,
-                                      //       ),
-                                      //       SizedBox(height: 10),
-                                      //       DropdownButtonHideUnderline(
-                                      //         child: DropdownButton2(
-                                      //           isExpanded: true,
-                                      //           items: items
-                                      //               .map((item) =>
-                                      //                   DropdownMenuItem<String>(
-                                      //                     value: item,
-                                      //                     child: NunutText(
-                                      //                         title: item,
-                                      //                         size: 14,
-                                      //                         overflow:
-                                      //                             TextOverflow
-                                      //                                 .ellipsis),
-                                      //                   ))
-                                      //               .toList(),
-                                      //           value: selectedValue,
-                                      //           onChanged: (value) {
-                                      //             setState(() {
-                                      //               selectedValue =
-                                      //                   value as String;
-                                      //             });
-                                      //           },
-                                      //           icon: const Icon(
-                                      //             Icons
-                                      //                 .arrow_forward_ios_outlined,
-                                      //           ),
-                                      //           iconSize: 14,
-                                      //           iconEnabledColor: Colors.black,
-                                      //           iconDisabledColor: Colors.grey,
-                                      //           buttonHeight: 35,
-                                      //           buttonWidth: 170,
-                                      //           buttonPadding:
-                                      //               const EdgeInsets.only(
-                                      //                   left: 14, right: 14),
-                                      //           buttonDecoration: BoxDecoration(
-                                      //             borderRadius:
-                                      //                 BorderRadius.circular(24),
-                                      //             color: Colors.grey[300],
-                                      //           ),
-                                      //           itemHeight: 40,
-                                      //           itemPadding:
-                                      //               const EdgeInsets.only(
-                                      //                   left: 14, right: 14),
-                                      //           dropdownMaxHeight: 200,
-                                      //           dropdownWidth: 200,
-                                      //           dropdownPadding: null,
-                                      //           dropdownDecoration: BoxDecoration(
-                                      //             borderRadius:
-                                      //                 BorderRadius.circular(24),
-                                      //             color: Colors.grey[300],
-                                      //           ),
-                                      //           dropdownElevation: 8,
-                                      //           scrollbarRadius:
-                                      //               const Radius.circular(40),
-                                      //           scrollbarThickness: 6,
-                                      //           scrollbarAlwaysShow: true,
-                                      //           offset: const Offset(-20, 0),
-                                      //         ),
-                                      //       ),
-                                      //     ],
-                                      //   ),
-                                      // ),
-                                      // SizedBox(width: 20),
                                       Flexible(
                                         child: Column(
                                           crossAxisAlignment:
@@ -421,8 +342,8 @@ class _WithdrawState extends State<Withdraw> {
                                                     .toList(),
                                                 value: selectedValue,
                                                 onChanged: (value) {
-                                                  setState(() {
-                                                    setState(() {
+                                                  setStateModal(() {
+                                                    setStateModal(() {
                                                       selectedValue =
                                                           value as String;
                                                     });
@@ -435,7 +356,7 @@ class _WithdrawState extends State<Withdraw> {
                                                 iconSize: 14,
                                                 iconEnabledColor: Colors.black,
                                                 iconDisabledColor: Colors.grey,
-                                                buttonHeight: 35,
+                                                buttonHeight: 25,
                                                 buttonPadding:
                                                     const EdgeInsets.only(
                                                         left: 14, right: 14),
@@ -580,40 +501,34 @@ class _WithdrawState extends State<Withdraw> {
                                     child: NunutButton(
                                       title: "Tambah",
                                       onPressed: () async {
-                                        // var res = await MidtransApi.addAccount(
-                                        //   accountNumber:
-                                        //       _accountTextEditingController
-                                        //           .text,
-                                        //   accountHolderName:
-                                        //       _accountHolderNameTextEditingController
-                                        //           .text,
-                                        //   bankName: selectedValue,
-                                        // );
-                                        // if (res['status'] == 'success') {
-                                        //   ScaffoldMessenger.of(context)
-                                        //       .showSnackBar(
-                                        //     SnackBar(
-                                        //       content: Text(
-                                        //           "Account added successfully"),
-                                        //     ),
-                                        //   );
-                                        // } else {
-                                        //   ScaffoldMessenger.of(context)
-                                        //       .showSnackBar(
-                                        //     SnackBar(
-                                        //       content: Text(
-                                        //           "Error adding account. Please try again later"),
-                                        //     ),
-                                        //   );
-                                        // }
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                                "Account added successfully"),
-                                          ),
-                                        );
+                                        Result res =
+                                            await MidtransApi.storeBeneficiary(
+                                                _accountHolderNameTextEditingController
+                                                    .text,
+                                                selectedValue,
+                                                _accountTextEditingController
+                                                    .text);
+                                        if (res.status == 200) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                  "Account added successfully"),
+                                            ),
+                                          );
+                                        } else {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                  "Error adding account. Please try again later"),
+                                            ),
+                                          );
+                                        }
                                         Navigator.pop(context);
+                                        setState(() {
+                                          generateAccountList();
+                                        });
                                       },
                                       heightButton: 35,
                                       widthButton: 110,
@@ -645,7 +560,15 @@ class _WithdrawState extends State<Withdraw> {
                     title: "Lanjutkan",
                     fontWeight: FontWeight.w500,
                     onPressed: () {
-                      Navigator.pushNamed(context, '/withdrawConfirmation');
+                      String amount =
+                          WithdrawController.text.replaceAll('Rp. ', '');
+                      Navigator.pushNamed(context, '/withdrawConfirmation',
+                          arguments: {
+                            'amount': amount,
+                            'beneficiary': _isPaymentSelected,
+                            'bank': selectedBeneficiary['bank'],
+                            'account_number': selectedBeneficiary['account'],
+                          });
                     },
                     borderColor: Colors.transparent,
                     borderRadius: 12,
@@ -657,5 +580,22 @@ class _WithdrawState extends State<Withdraw> {
         ),
       ),
     );
+  }
+
+  void generateAccountList() {
+    beneficiaries.clear();
+    UserModel user = config.user;
+    String param = "user=" + user.id.toString();
+    MidtransApi.getBeneficiaries(param: param).then((value) {
+      List<Widget> list = [];
+      if (value['status'] != 200) {
+        return list;
+      } else {
+        List<dynamic> data = value['data'];
+        for (var element in data) {
+          beneficiaries.add(element);
+        }
+      }
+    });
   }
 }

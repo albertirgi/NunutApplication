@@ -1,10 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:nunut_application/resources/midtransApi.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutBackground.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutRadioButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:nunut_application/widgets/nunutTextFormField.dart';
+import 'package:intl/intl.dart';
 
 class WithdrawConfirmation extends StatefulWidget {
   const WithdrawConfirmation({super.key});
@@ -16,6 +20,12 @@ class WithdrawConfirmation extends StatefulWidget {
 class _WithdrawConfirmationState extends State<WithdrawConfirmation> {
   @override
   Widget build(BuildContext context) {
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    double _total = double.parse(args['amount'].replaceAll('.', '')) - 1000;
+    NumberFormat currencyFormatter =
+        NumberFormat.simpleCurrency(locale: "id", decimalDigits: 0, name: "");
+    String _totalText = currencyFormatter.format(_total);
     return Scaffold(
       body: SingleChildScrollView(
         child: NunutBackground(
@@ -84,7 +94,9 @@ class _WithdrawConfirmationState extends State<WithdrawConfirmation> {
                     NunutText(
                         title: "Rp. ", fontWeight: FontWeight.bold, size: 20),
                     NunutText(
-                        title: "30.000", fontWeight: FontWeight.bold, size: 32),
+                        title: args['amount'],
+                        fontWeight: FontWeight.bold,
+                        size: 32),
                   ],
                 ),
                 SizedBox(height: 30),
@@ -113,11 +125,9 @@ class _WithdrawConfirmationState extends State<WithdrawConfirmation> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       NunutText(
-                          title: "BCA", fontWeight: FontWeight.bold, size: 20),
-                      NunutText(
-                          title: "  1234567890",
+                          title: args['bank'] + " - " + args['account_number'],
                           fontWeight: FontWeight.bold,
-                          size: 14),
+                          size: 20),
                     ],
                   ),
                 ),
@@ -133,7 +143,9 @@ class _WithdrawConfirmationState extends State<WithdrawConfirmation> {
                         size: 14),
                     Spacer(),
                     NunutText(
-                        title: "30.000", fontWeight: FontWeight.bold, size: 14),
+                        title: args['amount'],
+                        fontWeight: FontWeight.bold,
+                        size: 14),
                   ],
                 ),
                 SizedBox(height: 5),
@@ -163,7 +175,9 @@ class _WithdrawConfirmationState extends State<WithdrawConfirmation> {
                     NunutText(
                         title: "Rp. ", fontWeight: FontWeight.bold, size: 14),
                     NunutText(
-                        title: "29.000", fontWeight: FontWeight.bold, size: 18),
+                        title: _totalText,
+                        fontWeight: FontWeight.bold,
+                        size: 18),
                   ],
                 ),
                 // SizedBox(height: isExpanded ? MediaQuery.of(context).size.height * 0.1 : MediaQuery.of(context).size.height * 0.35),
@@ -175,14 +189,28 @@ class _WithdrawConfirmationState extends State<WithdrawConfirmation> {
                     title: "Ajukan Withdraw",
                     fontWeight: FontWeight.w500,
                     onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Pengajuan withdraw sedang diproses'),
-                          duration: Duration(seconds: 1),
-                        ),
-                      );
-                      Navigator.popUntil(
-                          context, ModalRoute.withName('/nunutPay'));
+                      MidtransApi.storePayout(
+                              args["beneficiary"], _total.toInt())
+                          .then((value) {
+                        if (value.status == 200) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content:
+                                  Text('Pengajuan withdraw sedang diproses'),
+                              duration: Duration(seconds: 1),
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Pengajuan withdraw gagal'),
+                              duration: Duration(seconds: 1),
+                            ),
+                          );
+                        }
+                        Navigator.popUntil(
+                            context, ModalRoute.withName('/nunutPay'));
+                      });
                     },
                     borderColor: Colors.transparent,
                     borderRadius: 12,
