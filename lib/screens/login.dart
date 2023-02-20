@@ -88,54 +88,17 @@ class _LoginPageState extends State<LoginPage> {
                         context: context,
                         barrierDismissible: true,
                         builder: (BuildContext context) {
-                          return Dialog(
-                            backgroundColor: Colors.transparent,
-                            child: Container(
-                              height: 150,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                color: nunutPrimaryColor,
-                                borderRadius: BorderRadius.circular(18),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Center(
-                                    child: Container(
-                                      margin: EdgeInsets.only(top: 25.0),
-                                      child: CircularProgressIndicator(
-                                        value: null,
-                                        strokeWidth: 5.0,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 25.0),
-                                    child: Center(
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          NunutText(title: "Login...", color: Colors.white, size: 20, fontWeight: FontWeight.w500),
-                                          NunutText(title: "Mohon Tunggu", color: Colors.white, size: 20, fontWeight: FontWeight.w500),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
+                          return PopUpLoginLoading();
                         },
                       );
-                      tmpUser = await AuthService.signIn(email: username.text, password: password.text, context: context);
+                      // tmpUser = await AuthService.signIn(email: username.text, password: password.text, context: context);
 
-                      if (tmpUser.email != "") {
-                        config.user = tmpUser;
-                        Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
-                      } else {
-                        Fluttertoast.showToast(msg: "Email atau password salah", textColor: Colors.white);
-                      }
+                      // if (tmpUser.email != "") {
+                      //   config.user = tmpUser;
+                      //   Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
+                      // } else {
+                      //   Fluttertoast.showToast(msg: "Email atau password salah", textColor: Colors.white);
+                      // }
                     }
                   },
                 ),
@@ -189,4 +152,109 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+  Widget PopUpLoginLoading() {
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 20),
+        height: 200,
+        width: 120,
+        decoration: BoxDecoration(
+          color: nunutPrimaryColor,
+          borderRadius: BorderRadius.circular(18),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(
+              child: Container(
+                padding: EdgeInsets.all(18),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(38),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: CircularProgressIndicator(
+                  value: null,
+                  strokeWidth: 3.0,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 20.0),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    NunutText(title: "Sedang Login...", size: 20, fontWeight: FontWeight.bold),
+                    NunutText(title: "Harap Menunggu...", size: 14, fontWeight: FontWeight.w500),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
+
+
+
+// class PopUpLoginLoading extends StatelessWidget {
+//   const PopUpLoginLoading({
+//     Key? key,
+//   }) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Dialog(
+//       backgroundColor: Colors.transparent,
+//       child: Container(
+//         height: 150,
+//         width: 100,
+//         decoration: BoxDecoration(
+//           color: nunutPrimaryColor,
+//           borderRadius: BorderRadius.circular(18),
+//         ),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.center,
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: [
+//             Center(
+//               child: Container(
+//                 margin: EdgeInsets.only(top: 25.0),
+//                 child: CircularProgressIndicator(
+//                   value: null,
+//                   strokeWidth: 5.0,
+//                 ),
+//               ),
+//             ),
+//             Container(
+//               margin: EdgeInsets.only(top: 25.0),
+//               child: Center(
+//                 child: Column(
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   children: [
+//                     NunutText(title: "Login...", color: Colors.white, size: 20, fontWeight: FontWeight.w500),
+//                     NunutText(title: "Mohon Tunggu", color: Colors.white, size: 20, fontWeight: FontWeight.w500),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
