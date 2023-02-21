@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/screens/home.dart';
 import 'package:nunut_application/screens/offerMenu.dart';
 import 'package:nunut_application/screens/profile.dart';
-import 'package:nunut_application/screens/transaction.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -13,6 +13,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  var currentBackPressTime;
   @override
   void initState() {
     // TODO: implement initState
@@ -21,11 +22,67 @@ class _MainPageState extends State<MainPage> {
   }
 
   @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
+
+  Future<bool> _onWillPop() async {
+    // return (await showDialog(
+    //       context: context,
+    //       builder: (context) => AlertDialog(
+    //         title: NunutText(title: 'Keluar dari aplikasi', color: Colors.black, size: 18, fontWeight: FontWeight.bold),
+    //         content: NunutText(title: 'Apakah anda yakin ingin keluar dari aplikasi?', color: Colors.black, size: 16),
+    //         actions: <Widget>[
+    //           TextButton(
+    //             onPressed: () => Navigator.of(context).pop(false),
+    //             child: NunutText(title: 'Tidak', color: Colors.black, size: 16),
+    //           ),
+    //           TextButton(
+    //             onPressed: () => Navigator.of(context).pop(true),
+    //             child: NunutText(title: 'Ya', color: Colors.black, size: 16),
+    //           ),
+    //         ],
+    //       ),
+    //     )) ??
+    //     false;
+
+    DateTime now = DateTime.now();
+    if (currentBackPressTime == null || now.difference(currentBackPressTime) > Duration(seconds: 2)) {
+      currentBackPressTime = now;
+      Fluttertoast.showToast(
+        msg: "Tekan sekali lagi untuk keluar dari aplikasi",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      return Future.value(false);
+    }
+    return Future.value(true);
+  }
+
+  @override
   Widget build(BuildContext context) {
     Widget buildContent() {
       switch (config.selectedNavbar) {
         case 0:
-          return const OfferMenu();
+          if (config.user.driverId == "empty") {
+            config.selectedNavbar = 1;
+            Fluttertoast.showToast(
+              msg: "Mohon mendaftar sebagai driver sebelum mengakses halaman ini",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 2,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0,
+            );
+            return const Home();
+          } else
+            return const OfferMenu();
         case 1:
           return const Home();
         case 2:
@@ -36,8 +93,13 @@ class _MainPageState extends State<MainPage> {
     }
 
     return Scaffold(
-      body: Stack(
-        children: [buildContent()],
+      body: WillPopScope(
+        onWillPop: _onWillPop,
+        child: Stack(
+          children: [
+            buildContent(),
+          ],
+        ),
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(

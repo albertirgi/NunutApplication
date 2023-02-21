@@ -20,18 +20,17 @@ class UserService {
       DocumentSnapshot snapshot = await collectionRef.doc(id).get();
 
       //get driver id by user id with https://ayonunut.com/api/v1/driver?user=BlL5wZXp8wMkbSKpIGXlAnZYKMJ3
-      var url = Uri.parse("https://ayonunut.com/api/v1/driver?user=$id");
+      var url = Uri.parse("https://ayonunut.com/api/v1/driver-user/$id");
       var response = await http.get(url);
 
       Result result = Result.fromJson(json.decode(response.body));
-
       return UserModel(
         email: snapshot['email'],
         name: snapshot['name'],
         nik: snapshot['nik'],
         phone: snapshot['phone'],
         id: id,
-        driverId: result.data[0]["driver_id"],
+        driverId: result.status == 200 ? result.data["driver_id"] : "empty",
       );
     } catch (e) {
       throw e;

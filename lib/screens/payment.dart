@@ -1,19 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutBackground.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
+import 'package:intl/intl.dart';
 
 class Payment extends StatefulWidget {
-  const Payment({super.key});
+  RideSchedule rideSchedule;
+  Payment({super.key, required this.rideSchedule});
 
   @override
   State<Payment> createState() => _PaymentState();
 }
 
 class _PaymentState extends State<Payment> {
+  double biayaAdmin = 0;
+  double pajak = 0;
+  double total = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // biayaAdmin = widget.rideSchedule.biayaAdmin.toString();
+    pajak = (10 / 100 * widget.rideSchedule.price!);
+    total = widget.rideSchedule.price! + pajak;
+  }
+
   @override
   Widget build(BuildContext context) {
+    bool useVoucher = false;
     return Scaffold(
       body: SingleChildScrollView(
         child: NunutBackground(
@@ -143,7 +159,7 @@ class _PaymentState extends State<Payment> {
                 //     ],
                 //   ),
                 // ),
-                SizedBox(height: 20),
+                // SizedBox(height: 20),
                 NunutText(title: "Perjalanan Anda", fontWeight: FontWeight.bold, size: 22),
                 SizedBox(height: 10),
                 Row(
@@ -160,7 +176,7 @@ class _PaymentState extends State<Payment> {
                         Icon(Icons.fiber_manual_record, color: Colors.grey, size: 8),
                         Padding(
                           padding: EdgeInsets.only(top: 2.0),
-                          child: Icon(Icons.circle, color: nunutPrimaryColor, size: 18),
+                          child: Icon(Icons.circle, color: nunutBlueColor, size: 18),
                         ),
                       ],
                     ),
@@ -172,7 +188,7 @@ class _PaymentState extends State<Payment> {
                         Container(
                           height: 40.0,
                           child: Center(
-                            child: NunutText(title: "Galaxy Mall 3"),
+                            child: NunutText(title: widget.rideSchedule.meetingPoint!.name!),
                           ),
                         ),
                         SizedBox(height: 2),
@@ -181,7 +197,7 @@ class _PaymentState extends State<Payment> {
                           margin: EdgeInsets.only(top: 4.0),
                           child: Row(
                             children: [
-                              NunutText(title: "Universitas Kristen Petra"),
+                              NunutText(title: widget.rideSchedule.destination!.name!),
                             ],
                           ),
                         ),
@@ -189,10 +205,10 @@ class _PaymentState extends State<Payment> {
                     ),
                   ],
                 ),
-                Container(
-                  margin: EdgeInsets.only(left: 24),
-                  child: NunutText(title: "12.4km", fontWeight: FontWeight.bold, size: 18, color: Colors.grey[400]),
-                ),
+                // Container(
+                //   margin: EdgeInsets.only(left: 24),
+                //   child: NunutText(title: "12.4km", fontWeight: FontWeight.bold, size: 18, color: Colors.grey[400]),
+                // ),
                 SizedBox(height: 50),
                 Container(
                   height: 1,
@@ -206,14 +222,22 @@ class _PaymentState extends State<Payment> {
                   children: [
                     NunutText(title: "Biaya Nunut", size: 14),
                     Spacer(),
-                    NunutText(title: "15.000", size: 14, fontWeight: FontWeight.bold),
+                    NunutText(
+                      title: NumberFormat.currency(locale: 'id', symbol: '', decimalDigits: 0).format(widget.rideSchedule.price!),
+                      size: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ],
                 ),
                 Row(
                   children: [
                     NunutText(title: "Pajak (10%)", size: 14),
                     Spacer(),
-                    NunutText(title: "1.500", size: 14, fontWeight: FontWeight.bold),
+                    NunutText(
+                      title: NumberFormat.currency(locale: 'id', symbol: '', decimalDigits: 0).format(pajak),
+                      size: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ],
                 ),
                 Row(
@@ -223,13 +247,15 @@ class _PaymentState extends State<Payment> {
                     NunutText(title: "1.000", size: 14, fontWeight: FontWeight.bold),
                   ],
                 ),
-                Row(
-                  children: [
-                    NunutText(title: "Diskon", size: 14, color: nunutPrimaryColor4),
-                    Spacer(),
-                    NunutText(title: "-2.500", size: 14, fontWeight: FontWeight.bold, color: nunutPrimaryColor4),
-                  ],
-                ),
+                useVoucher
+                    ? Row(
+                        children: [
+                          NunutText(title: "Diskon", size: 14, color: nunutPrimaryColor4),
+                          Spacer(),
+                          NunutText(title: "-2.500", size: 14, fontWeight: FontWeight.bold, color: nunutPrimaryColor4),
+                        ],
+                      )
+                    : Container(),
                 SizedBox(height: 20),
                 NunutButton(
                   title: "Promo Berhasil Digunakan",
@@ -253,7 +279,11 @@ class _PaymentState extends State<Payment> {
                   children: [
                     NunutText(title: "Total Harga", fontWeight: FontWeight.bold, size: 14),
                     Spacer(),
-                    NunutText(title: "IDR " + "17.500", fontWeight: FontWeight.bold, size: 22),
+                    NunutText(
+                      title: NumberFormat.currency(locale: 'id', symbol: '', decimalDigits: 0).format(total),
+                      fontWeight: FontWeight.bold,
+                      size: 22,
+                    ),
                   ],
                 ),
                 SizedBox(height: 20),
@@ -298,7 +328,9 @@ class _PaymentState extends State<Payment> {
                   borderRadius: 10,
                   borderColor: Colors.transparent,
                   fontWeight: FontWeight.bold,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/nunutPay');
+                  },
                 ),
                 SizedBox(height: 20),
               ],

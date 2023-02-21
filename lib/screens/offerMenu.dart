@@ -15,21 +15,12 @@ class OfferMenu extends StatefulWidget {
 }
 
 class _OfferMenuState extends State<OfferMenu> {
-  // int _selectedNavbar = 0;
-
   TextEditingController _dateController = TextEditingController();
   TextEditingController _timeController = TextEditingController();
   TextEditingController _meetingPointController = TextEditingController();
   TextEditingController _destinationController = TextEditingController();
   TextEditingController _vehicleController = TextEditingController();
   int _capacityValue = 1;
-
-  // void _changeSelectedNavBar(int index) {
-  //   setState(() {
-  //     _selectedNavbar = index;
-  //     print("Selected index : {$_selectedNavbar}");
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +49,7 @@ class _OfferMenuState extends State<OfferMenu> {
                   fontWeight: FontWeight.bold,
                 ),
                 SizedBox(height: 10),
-                NunutText(title: "Yuk tawarkan tumpangan!", isTitle: true),
+                NunutText(title: "Yuk tawarkan tumpangan!", isTitle: true, size: 32),
                 // BorderedText(
                 //   child: Text(
                 //     "Yuk tawarkan tumpangan!",
@@ -96,9 +87,7 @@ class _OfferMenuState extends State<OfferMenu> {
                 //     ],
                 //   ),
                 // ),
-                SizedBox(
-                  height: 20,
-                ),
+                SizedBox(height: 20),
                 Expanded(
                   child: GridView.count(
                     crossAxisCount: 2,
@@ -154,12 +143,7 @@ class _OfferMenuState extends State<OfferMenu> {
                                             ),
                                           ),
                                           SizedBox(height: 15),
-                                          NunutText(
-                                            title: "Buat Tumpangan Baru",
-                                            color: Colors.black,
-                                            size: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                          NunutText(title: "Buat Tumpangan Baru", color: Colors.black, size: 20, fontWeight: FontWeight.bold),
                                           SizedBox(height: 15),
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment.center,
@@ -168,11 +152,7 @@ class _OfferMenuState extends State<OfferMenu> {
                                                 child: Column(
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-                                                    NunutText(
-                                                      title: "Tanggal Berangkat",
-                                                      fontWeight: FontWeight.bold,
-                                                      size: 12,
-                                                    ),
+                                                    NunutText(title: "Tanggal Berangkat", fontWeight: FontWeight.bold, size: 12),
                                                     SizedBox(height: 10),
                                                     TextFormField(
                                                       style: TextStyle(
@@ -227,11 +207,7 @@ class _OfferMenuState extends State<OfferMenu> {
                                                 child: Column(
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-                                                    NunutText(
-                                                      title: "Jam Berangkat",
-                                                      fontWeight: FontWeight.bold,
-                                                      size: 12,
-                                                    ),
+                                                    NunutText(title: "Jam Berangkat", fontWeight: FontWeight.bold, size: 12),
                                                     SizedBox(height: 10),
                                                     TextFormField(
                                                       style: TextStyle(
@@ -285,11 +261,7 @@ class _OfferMenuState extends State<OfferMenu> {
                                             ],
                                           ),
                                           SizedBox(height: 15),
-                                          NunutText(
-                                            title: "Meeting Point",
-                                            fontWeight: FontWeight.bold,
-                                            size: 12,
-                                          ),
+                                          NunutText(title: "Meeting Point", fontWeight: FontWeight.bold, size: 12),
                                           SizedBox(height: 10),
                                           Stack(
                                             children: [
@@ -335,21 +307,13 @@ class _OfferMenuState extends State<OfferMenu> {
                                                     borderRadius: BorderRadius.circular(50),
                                                     color: Colors.grey[300],
                                                   ),
-                                                  child: Icon(
-                                                    Icons.arrow_drop_down,
-                                                    color: Colors.black,
-                                                    size: 20,
-                                                  ),
+                                                  child: Icon(Icons.arrow_drop_down, color: Colors.black, size: 20),
                                                 ),
                                               ),
                                             ],
                                           ),
                                           SizedBox(height: 15),
-                                          NunutText(
-                                            title: "Tujuan Destinasi",
-                                            fontWeight: FontWeight.bold,
-                                            size: 12,
-                                          ),
+                                          NunutText(title: "Tujuan Destinasi", fontWeight: FontWeight.bold, size: 12),
                                           SizedBox(height: 10),
                                           Stack(
                                             children: [
@@ -395,11 +359,7 @@ class _OfferMenuState extends State<OfferMenu> {
                                                     borderRadius: BorderRadius.circular(50),
                                                     color: Colors.grey[300],
                                                   ),
-                                                  child: Icon(
-                                                    Icons.arrow_drop_down,
-                                                    color: Colors.black,
-                                                    size: 20,
-                                                  ),
+                                                  child: Icon(Icons.arrow_drop_down, color: Colors.black, size: 20),
                                                 ),
                                               ),
                                             ],
@@ -412,11 +372,7 @@ class _OfferMenuState extends State<OfferMenu> {
                                                 child: Column(
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-                                                    NunutText(
-                                                      title: "Kendaraan",
-                                                      fontWeight: FontWeight.bold,
-                                                      size: 12,
-                                                    ),
+                                                    NunutText(title: "Kendaraan", fontWeight: FontWeight.bold, size: 12),
                                                     SizedBox(height: 10),
                                                     Container(
                                                       padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
@@ -427,32 +383,18 @@ class _OfferMenuState extends State<OfferMenu> {
                                                       child: Row(
                                                         mainAxisAlignment: MainAxisAlignment.start,
                                                         children: [
-                                                          Image.asset(
-                                                            "assets/toyota.png",
-                                                            width: 30,
-                                                            height: 30,
-                                                          ),
+                                                          Image.asset("assets/toyota.png", width: 30, height: 30),
                                                           SizedBox(width: 5),
                                                           Column(
                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: [
-                                                              NunutText(
-                                                                title: "Toyota Innova",
-                                                                fontWeight: FontWeight.bold,
-                                                                size: 10,
-                                                              ),
+                                                              NunutText(title: "Toyota Innova", fontWeight: FontWeight.bold, size: 10),
                                                               Row(
                                                                 mainAxisSize: MainAxisSize.max,
                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                 children: [
-                                                                  NunutText(
-                                                                    title: "L 8080 AZ",
-                                                                    fontWeight: FontWeight.w600,
-                                                                    size: 10,
-                                                                  ),
-                                                                  SizedBox(
-                                                                    width: 10,
-                                                                  ),
+                                                                  NunutText(title: "L 8080 AZ", fontWeight: FontWeight.w600, size: 10),
+                                                                  SizedBox(width: 10),
                                                                   NunutButton(
                                                                     widthButton: 55,
                                                                     widthBorder: 0.0,
@@ -701,42 +643,6 @@ class _OfferMenuState extends State<OfferMenu> {
           ),
         ],
       ),
-      // bottomNavigationBar: Container(
-      //   decoration: BoxDecoration(
-      //     borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30)),
-      //     boxShadow: [
-      //       BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
-      //     ],
-      //   ),
-      //   child: ClipRRect(
-      //     borderRadius: BorderRadius.only(
-      //       topLeft: Radius.circular(20.0),
-      //       topRight: Radius.circular(20.0),
-      //     ),
-      //     child: BottomNavigationBar(
-      //       backgroundColor: Colors.black,
-      //       items: <BottomNavigationBarItem>[
-      //         BottomNavigationBarItem(
-      //           icon: Icon(Icons.car_crash),
-      //           label: "Home",
-      //         ),
-      //         BottomNavigationBarItem(
-      //           icon: Icon(Icons.route),
-      //           label: "Transaction",
-      //         ),
-      //         BottomNavigationBarItem(
-      //           icon: Icon(Icons.person),
-      //           label: "Profile",
-      //         ),
-      //       ],
-      //       currentIndex: _selectedNavbar,
-      //       selectedItemColor: Colors.yellowAccent,
-      //       unselectedItemColor: Colors.grey,
-      //       showUnselectedLabels: true,
-      //       onTap: _changeSelectedNavBar,
-      //     ),
-      //   ),
-      // ),
     );
   }
 }

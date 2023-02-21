@@ -79,7 +79,7 @@ class MyApp extends StatelessWidget {
         '/register': (context) => const RegisterPage(),
         '/chat': (context) => const ChatPage(),
         '/chatInside': (context) => const ChatInsidePage(),
-        '/payment': (context) => const Payment(),
+        // '/payment': (context) => const Payment(),
         '/bookingParkir': (context) => const BookingParkir(),
         '/parkingList': (context) => const ParkingList(),
         '/parkingSlotDetail': (context) => const parkingSpotDetail(),

@@ -95,39 +95,49 @@ class _NunutPayState extends State<NunutPay> {
                       children: [
                         SizedBox(height: 20),
                         NunutText(title: "TOTAL SALDO ANDA SAAT INI"),
-                        SizedBox(height: 5),
+                        SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           textBaseline: TextBaseline.alphabetic,
                           crossAxisAlignment: CrossAxisAlignment.baseline,
                           children: [
-                            BorderedText(
-                              child: Text(
-                                "Rp",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 28,
-                                ),
-                              ),
-                              strokeWidth: 3.0,
-                              strokeColor: Colors.black,
-                            ),
+                            NunutText(title: "Rp", isTitle: true, size: 24),
+                            // BorderedText(
+                            //   child: Text(
+                            //     "Rp",
+                            //     style: TextStyle(
+                            //       color: Colors.white,
+                            //       fontSize: 28,
+                            //     ),
+                            //   ),
+                            //   strokeWidth: 3.0,
+                            //   strokeColor: Colors.black,
+                            // ),
                             SizedBox(width: 5),
-                            BorderedText(
-                              child: Text(
-                                NumberFormat.currency(
-                                  locale: 'id',
-                                  symbol: '',
-                                  decimalDigits: 0,
-                                ).format(walletBalance),
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 65,
-                                ),
-                              ),
-                              strokeWidth: 3.0,
-                              strokeColor: Colors.black,
-                            ),
+                            NunutText(
+                              title: NumberFormat.currency(
+                                locale: 'id',
+                                symbol: '',
+                                decimalDigits: 0,
+                              ).format(walletBalance),
+                              isTitle: true,
+                              size: 65,
+                            )
+                            // BorderedText(
+                            //   child: Text(
+                            //     NumberFormat.currency(
+                            //       locale: 'id',
+                            //       symbol: '',
+                            //       decimalDigits: 0,
+                            //     ).format(walletBalance),
+                            //     style: TextStyle(
+                            //       color: Colors.white,
+                            //       fontSize: 65,
+                            //     ),
+                            //   ),
+                            //   strokeWidth: 3.0,
+                            //   strokeColor: Colors.black,
+                            // ),
                           ],
                         ),
                       ],
@@ -191,17 +201,13 @@ class _NunutPayState extends State<NunutPay> {
                     ),
                     child: Column(
                       children: [
-                        NunutText(
-                            title: "Transaksi",
-                            size: 20,
-                            fontWeight: FontWeight.w500),
+                        NunutText(title: "Transaksi", size: 20, fontWeight: FontWeight.w500),
                         transactionLength == 0
                             ? Container(
                                 padding: EdgeInsets.all(40),
                                 child: Center(
                                   child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                        nunutPrimaryColor),
+                                    valueColor: AlwaysStoppedAnimation<Color>(nunutPrimaryColor),
                                   ),
                                 ),
                               )
@@ -214,15 +220,9 @@ class _NunutPayState extends State<NunutPay> {
                                       Icon(Icons.arrow_upward),
                                       SizedBox(width: 10),
                                       Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          NunutText(
-                                              title: transactions[index].type ==
-                                                      "topup"
-                                                  ? "Top Up"
-                                                  : "Withdraw",
-                                              fontWeight: FontWeight.bold),
+                                          NunutText(title: transactions[index].type == "topup" ? "Top Up" : "Withdraw", fontWeight: FontWeight.bold),
                                           NunutText(
                                             title: "Bank Transfer",
                                           ),
@@ -230,35 +230,25 @@ class _NunutPayState extends State<NunutPay> {
                                       ),
                                       Spacer(),
                                       Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
+                                        crossAxisAlignment: CrossAxisAlignment.end,
                                         children: [
                                           NunutText(
-                                              title: transactions[index].type ==
-                                                      "topup"
+                                              title: transactions[index].type == "topup"
                                                   ? "+ " +
                                                       NumberFormat.currency(
                                                         locale: 'id',
                                                         symbol: 'Rp ',
                                                         decimalDigits: 0,
-                                                      ).format(
-                                                          transactions[index]
-                                                              .amount)
+                                                      ).format(transactions[index].amount)
                                                   : "- " +
                                                       NumberFormat.currency(
                                                         locale: 'id',
                                                         symbol: 'Rp ',
                                                         decimalDigits: 0,
-                                                      ).format(
-                                                          transactions[index]
-                                                              .amount),
+                                                      ).format(transactions[index].amount),
                                               fontWeight: FontWeight.bold),
                                           NunutText(
-                                              title: DateFormat(
-                                                      "d MMMM yyyy, hh:MM",
-                                                      "id_ID")
-                                                  .format(transactions[index]
-                                                      .transaction_time!), //"20 Desember 2022, 12:50",
+                                              title: DateFormat("d MMMM yyyy, hh:MM", "id_ID").format(transactions[index].transaction_time!), //"20 Desember 2022, 12:50",
                                               color: Colors.grey,
                                               size: 12),
                                         ],
@@ -305,8 +295,7 @@ class _NunutPayState extends State<NunutPay> {
     setState(() {
       isLoading = false;
       transactionLength = transactions.length;
-      transactions
-          .sort((a, b) => b.transaction_time!.compareTo(a.transaction_time!));
+      transactions.sort((a, b) => b.transaction_time!.compareTo(a.transaction_time!));
     });
   }
 }
