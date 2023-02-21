@@ -112,7 +112,7 @@ class _MapListState extends State<MapList> {
                   },
                 ),
                 SizedBox(height: 20),
-                NunutText(title: widget.fromUKP ? "Pilih Lokasi \nDestinasi" : "Pilih Lokasi \nMeeting Point", isTitle: true),
+                NunutText(title: widget.fromUKP ? "Pilih Lokasi \nDestinasi" : "Pilih Lokasi \nMeeting Point", isTitle: true, size: 32),
                 SizedBox(height: 40),
                 TextFormField(
                   controller: searchController,

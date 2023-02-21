@@ -45,7 +45,7 @@ class NunutText extends StatelessWidget {
       style: GoogleFonts.poppins(
         textStyle: TextStyle(
           color: isTitle ? Colors.white : color,
-          fontSize: isTitle ? 32 : size,
+          fontSize: size,
           fontWeight: isTitle ? FontWeight.bold : fontWeight,
           decoration: textDecoration,
           shadows: shadows,

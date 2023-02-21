@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nunut_application/configuration.dart';
-import 'package:nunut_application/models/muser.dart';
 import 'package:nunut_application/resources/authApi.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
@@ -105,10 +104,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     //     strokeColor: Colors.black,
                     //   ),
                     // ),
-                    child: NunutText(
-                      title: "Profilku",
-                      isTitle: true,
-                    ),
+                    child: NunutText(title: "Profilku", isTitle: true, size: 32),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 21),
@@ -237,8 +233,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                    title: Text("Keluar"),
-                                    content: Text("Apakah anda yakin ingin keluar?"),
+                                    title: NunutText(title: "Keluar", fontWeight: FontWeight.bold, size: 18),
+                                    content: NunutText(title: "Apakah anda yakin ingin keluar?", color: Colors.black),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
                                     actions: [
                                       TextButton(
                                         child: NunutText(title: "Tidak", color: Colors.red),

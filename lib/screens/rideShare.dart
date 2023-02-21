@@ -305,7 +305,7 @@ class _RideShareState extends State<RideShare> {
                     ],
                   ),
                   NunutText(title: "Hai, " + config.user.name, fontWeight: FontWeight.bold),
-                  NunutText(title: "Butuh \nTumpangan?", isTitle: true),
+                  NunutText(title: "Butuh \nTumpangan?", isTitle: true, size: 32),
                   Container(
                     margin: EdgeInsets.only(top: 20),
                     decoration: BoxDecoration(

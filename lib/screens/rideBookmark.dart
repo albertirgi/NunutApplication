@@ -30,8 +30,7 @@ class _RideBookmarkState extends State<RideBookmark> {
       bookmarkedListLoading = true;
     });
 
-    bookmarkedList = await rideScheduleApi.getBookmarkList(
-        userId: config.user.id!, checkUrl: true);
+    bookmarkedList = await rideScheduleApi.getBookmarkList(userId: config.user.id!, checkUrl: true);
 
     setState(() {
       bookmarkedListLoading = false;
@@ -61,16 +60,11 @@ class _RideBookmarkState extends State<RideBookmark> {
                   },
                   icon: Icon(Icons.arrow_back),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: 10),
                 Container(
-                    margin: EdgeInsets.only(left: 18),
-                    child: NunutText(
-                      title: "Bookmark",
-                      size: 30,
-                      isTitle: true,
-                    )),
+                  margin: EdgeInsets.only(left: 18),
+                  child: NunutText(title: "Bookmark", size: 32, isTitle: true),
+                ),
               ],
             ),
           ),
@@ -92,67 +86,40 @@ class _RideBookmarkState extends State<RideBookmark> {
                             shrinkWrap: true,
                             physics: AlwaysScrollableScrollPhysics(),
                             itemCount: bookmarkedList.length,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    childAspectRatio: 0.7,
-                                    crossAxisSpacing: 15,
-                                    mainAxisSpacing: 15),
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.7, crossAxisSpacing: 15, mainAxisSpacing: 15),
                             itemBuilder: (context, index) {
                               return TwoColumnView(
                                 imagePath: bookmarkedList[index].driver.image,
-                                departureTime:
-                                    bookmarkedList[index].rideSchedule.time!,
+                                departureTime: bookmarkedList[index].rideSchedule.time!,
                                 name: bookmarkedList[index].driver.name,
-                                destination: bookmarkedList[index]
-                                    .rideSchedule
-                                    .destination!
-                                    .name!,
+                                destination: bookmarkedList[index].rideSchedule.destination!.name!,
                                 price: NumberFormat.currency(
                                   locale: 'id',
                                   symbol: '',
                                   decimalDigits: 0,
-                                ).format(
-                                    bookmarkedList[index].rideSchedule.price!),
+                                ).format(bookmarkedList[index].rideSchedule.price!),
                                 isBookmarked: true,
                                 IconOnTap: () {
                                   showDialog<String>(
                                     context: context,
-                                    builder: (BuildContext context) =>
-                                        AlertDialog(
-                                      title: NunutText(
-                                          title: 'Hapus bookmark ini ?',
-                                          size: 20,
-                                          fontWeight: FontWeight.bold),
-                                      content: NunutText(
-                                          title:
-                                              "Anda dapat melakukan bookmark pada tumpangan ini lagi nanti jika tumpangan masih tersedia."),
+                                    builder: (BuildContext context) => AlertDialog(
+                                      title: NunutText(title: 'Hapus bookmark ini ?', size: 20, fontWeight: FontWeight.bold),
+                                      content: NunutText(title: "Anda dapat melakukan bookmark pada tumpangan ini lagi nanti jika tumpangan masih tersedia."),
                                       actions: <Widget>[
                                         TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(context),
-                                          child: NunutText(
-                                              title: "Cancel",
-                                              color: Colors.red),
+                                          onPressed: () => Navigator.pop(context),
+                                          child: NunutText(title: "Cancel", color: Colors.red),
                                         ),
                                         TextButton(
                                           onPressed: () {
                                             Navigator.pop(context);
-                                            rideScheduleApi
-                                                .deleteBookmarkByBookmarkId(
-                                                    bookmarkId:
-                                                        bookmarkedList[index]
-                                                            .id,
-                                                    checkUrl: true);
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    "Bookmark berhasil dihapus");
+                                            rideScheduleApi.deleteBookmarkByBookmarkId(bookmarkId: bookmarkedList[index].id, checkUrl: true);
+                                            Fluttertoast.showToast(msg: "Bookmark berhasil dihapus");
                                             setState(() {
                                               bookmarkedList.removeAt(index);
                                             });
                                           },
-                                          child: NunutText(
-                                              title: "OK", color: Colors.green),
+                                          child: NunutText(title: "OK", color: Colors.green),
                                         ),
                                       ],
                                     ),
