@@ -21,6 +21,8 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController confirmPassword = TextEditingController();
   TextEditingController nik = TextEditingController();
   TextEditingController noTelp = TextEditingController();
+  bool passwordVisible = false;
+  bool confirmationPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -65,16 +67,38 @@ class _RegisterPageState extends State<RegisterPage> {
                 NunutTextFormField(
                   title: "Kata Sandi",
                   hintText: "Kata Sandi ",
-                  obsecureText: false,
+                  obsecureText: !passwordVisible,
                   controller: password,
                   width: 1.5,
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      passwordVisible ? Icons.visibility : Icons.visibility_off,
+                      color: Colors.black,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        passwordVisible = !passwordVisible;
+                      });
+                    },
+                  ),
                 ),
                 NunutTextFormField(
                   title: "Konfirmasi Kata Sandi",
                   hintText: "Konfirmasi Kata Sandi ",
-                  obsecureText: false,
+                  obsecureText: !confirmationPasswordVisible,
                   controller: confirmPassword,
                   width: 1.5,
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      confirmationPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                      color: Colors.black,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        confirmationPasswordVisible = !confirmationPasswordVisible;
+                      });
+                    },
+                  ),
                 ),
                 NunutTextFormField(
                   title: "NIK",
