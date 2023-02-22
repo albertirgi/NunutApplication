@@ -1,11 +1,11 @@
-import 'package:bordered_text/bordered_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:nunut_application/models/mrideschedule.dart';
+import 'package:nunut_application/resources/rideRequestApi.dart';
+import 'package:nunut_application/screens/orderDetail.dart';
+import 'package:nunut_application/screens/rideDetail.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
-import 'package:nunut_application/widgets/nunutTextFormField.dart';
 import 'package:nunut_application/widgets/nunutTripCard.dart';
+import 'package:nunut_application/configuration.dart';
 
 class OrderList extends StatefulWidget {
   const OrderList({super.key});
@@ -24,191 +24,227 @@ class _OrderListState extends State<OrderList> {
     "https://images.unsplash.com/photo-1473700216830-7e08d47f858e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
   ];
 
-  Widget popupWidget() {
-    return ListView.separated(
-      padding: EdgeInsets.zero,
-      shrinkWrap: true,
-      physics: ScrollPhysics(),
-      itemCount: 3,
-      itemBuilder: (context, index) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                CircleAvatar(radius: 20, backgroundImage: NetworkImage(images[0])),
-                SizedBox(width: 10),
-                NunutText(title: "Rachel Tanuwidjaja", size: 18, color: Colors.black),
-              ],
-            ),
-            Row(
-              children: [
-                Icon(Icons.chat_bubble, color: Colors.black, size: 18),
-                SizedBox(width: 5),
-                Icon(Icons.call, color: Colors.black, size: 18),
-              ],
-            ),
-          ],
-        );
-      },
-      separatorBuilder: (context, index) {
-        return SizedBox(height: 10);
-      },
-    );
+  bool rideScheduleListLoading = false;
+  bool isLoading = false;
+  bool done = false;
+  List<RideSchedule> rideScheduleList = [];
+  List<RideSchedule> rideSchedulePageList = [];
+  ScrollController? _scrollController;
+  int _page = 1;
+
+  void initState() {
+    super.initState();
+    initRideScheduleList();
+    _scrollController = ScrollController();
+    _scrollController!.addListener(scrollListener);
+  }
+
+  initRideScheduleList() async {
+    setState(() {
+      rideScheduleListLoading = true;
+      _page = 1;
+    });
+
+    rideScheduleList.clear();
+
+    rideScheduleList = await rideRequestApi.getOrderList(
+        parameter:
+            "ride_schedule_only=${config.user.id}&status_ride=${isActiveClicked ? "active" : "inactive"}&driver&vehicle",
+        page: _page,
+        checkUrl: true);
+
+    setState(() {
+      rideScheduleListLoading = false;
+      _page++;
+    });
+  }
+
+  loadmore() async {
+    if (!isLoading) {
+      setState(() {
+        isLoading = true;
+      });
+
+      rideSchedulePageList.clear();
+      rideSchedulePageList = await rideRequestApi.getOrderList(
+          parameter:
+              "ride_schedule_only=${config.user.id}&status_ride=${isActiveClicked ? "active" : "inactive"}&driver&vehicle",
+          page: _page,
+          checkUrl: true);
+      _page++;
+
+      rideScheduleList.addAll(rideSchedulePageList);
+
+      setState(() {
+        isLoading = false;
+        _page = _page;
+      });
+    }
+  }
+
+  scrollListener() {
+    if (_scrollController!.offset >=
+            _scrollController!.position.maxScrollExtent - 100 &&
+        !_scrollController!.position.outOfRange &&
+        !done) {
+      if (rideSchedulePageList.isEmpty) {
+        loadmore();
+      } else {
+        done = true;
+      }
+    }
+  }
+
+  void dispose() {
+    _scrollController!.removeListener(scrollListener);
+    _scrollController!.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.topCenter,
-              child: Image(
-                image: AssetImage('assets/backgroundCircle/backgroundCircle2.png'),
-                fit: BoxFit.cover,
-              ),
+      body: Stack(
+        children: [
+          Positioned(
+            //topright
+            top: 0,
+            right: 0,
+            child: Image(
+              image:
+                  AssetImage('assets/backgroundCircle/backgroundCircle3.png'),
+              fit: BoxFit.cover,
             ),
-            Container(
-              margin: EdgeInsets.only(top: 40, left: 28, right: 28),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    icon: Icon(Icons.arrow_back, color: Colors.black, size: 18),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  BorderedText(
-                    child: Text(
-                      "Pesanan",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 32,
-                      ),
-                    ),
-                    strokeWidth: 3.0,
-                    strokeColor: Colors.black,
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 12, left: 8),
-                    width: MediaQuery.of(context).size.width,
-                    child: Row(
-                      children: [
-                        //searchbar
-                        Expanded(
-                          child: TextFormField(
-                            controller: searchController,
-                            decoration: InputDecoration(
-                              hintText: "Cari Pesanan",
-                              hintStyle: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 14,
-                              ),
-                              contentPadding: EdgeInsets.only(top: 16, bottom: 16, left: 16),
-                              filled: true,
-                              fillColor: Colors.white,
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(14),
-                                  bottomLeft: Radius.circular(14),
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(14),
-                                  bottomLeft: Radius.circular(14),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 1),
-                        Container(
-                          height: 50,
-                          width: 60,
-                          child: IconButton(
-                            icon: Icon(Icons.search, color: Colors.white, size: 28),
-                            onPressed: () {},
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(14),
-                              bottomRight: Radius.circular(14),
-                            ),
-                            color: Colors.black,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Container(
-                    margin: EdgeInsets.only(top: 12, left: 8, right: 24),
-                    child: Row(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              isActiveClicked = true;
-                            });
-                          },
-                          child: NunutText(
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 40, left: 20, right: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                IconButton(
+                  padding: EdgeInsets.zero,
+                  icon: Icon(Icons.arrow_back, color: Colors.black),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                SizedBox(height: 20),
+                NunutText(title: "Daftar Tumpangan", isTitle: true, size: 32),
+                Container(
+                  margin:
+                      EdgeInsets.only(top: 40, left: 8, right: 24, bottom: 10),
+                  child: Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            isActiveClicked = true;
+                            initRideScheduleList();
+                          });
+                        },
+                        child: NunutText(
                             title: "Sedang Aktif",
                             size: 18,
-                            fontWeight: isActiveClicked ? FontWeight.bold : FontWeight.normal,
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: 8),
-                          height: 20,
-                          width: 1,
-                          color: Colors.black,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              isActiveClicked = false;
-                            });
-                          },
-                          child: NunutText(
+                            fontWeight: isActiveClicked
+                                ? FontWeight.bold
+                                : FontWeight.normal),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 8),
+                        height: 20,
+                        width: 1,
+                        color: Colors.black,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            isActiveClicked = false;
+                            initRideScheduleList();
+                          });
+                        },
+                        child: NunutText(
                             title: "Selesai",
                             size: 18,
-                            fontWeight: isActiveClicked ? FontWeight.normal : FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
+                            fontWeight: isActiveClicked
+                                ? FontWeight.normal
+                                : FontWeight.bold),
+                      ),
+                    ],
                   ),
-                  ListView.separated(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return NunutTripCard(
-                        images: images,
-                        date: "Senin, 24 Oktober 2022",
-                        totalPerson: "3",
-                        time: "08.00",
-                        carName: "Toyota Avanza",
-                        plateNumber: "H 0000 GG",
-                        pickupLocation: "Galaxy Mall 3",
-                        destination: "Bakmi GM",
-                        popupWidget: popupWidget(),
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return SizedBox(height: 12);
-                    },
-                    itemCount: 5,
-                  )
-                ],
-              ),
+                ),
+                rideScheduleListLoading
+                    ? Container(
+                        margin: EdgeInsets.only(top: 50),
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                    : Expanded(
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: ListView.separated(
+                                padding: EdgeInsets.only(top: 0),
+                                shrinkWrap: true,
+                                physics: BouncingScrollPhysics(),
+                                controller: _scrollController,
+                                itemBuilder: (context, index) {
+                                  return NunutTripCard(
+                                    isUser: true,
+                                    images: images,
+                                    date: rideScheduleList[index].date!,
+                                    totalPerson: rideScheduleList[index]
+                                        .capacity!
+                                        .toString(),
+                                    time: rideScheduleList[index].time!,
+                                    carName: rideScheduleList[index]
+                                        .vehicle!
+                                        .transportationType!,
+                                    plateNumber: rideScheduleList[index]
+                                        .vehicle!
+                                        .licensePlate!,
+                                    pickupLocation: rideScheduleList[index]
+                                        .meetingPoint!
+                                        .name!,
+                                    destination: rideScheduleList[index]
+                                        .destination!
+                                        .name!,
+                                    isActive: isActiveClicked,
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => OrderDetail(
+                                            rideScheduleId:
+                                                rideScheduleList[index].id!,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                                separatorBuilder: (context, index) {
+                                  return SizedBox(height: 12);
+                                },
+                                itemCount: rideScheduleList.length,
+                              ),
+                            ),
+                            isLoading
+                                ? Container(
+                                    margin:
+                                        EdgeInsets.only(top: 20, bottom: 20),
+                                    child: Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  )
+                                : Container(),
+                          ],
+                        ),
+                      ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

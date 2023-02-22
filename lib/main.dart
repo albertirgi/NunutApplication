@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:nunut_application/screens/addRideSchedule.dart';
 import 'package:nunut_application/screens/batalkanTumpangan.dart';
 import 'package:nunut_application/screens/bookingDetail.dart';
 import 'package:nunut_application/screens/bookingParkir.dart';
@@ -92,6 +93,7 @@ class MyApp extends StatelessWidget {
         '/offerMenu': (context) => const OfferMenu(),
         '/myVehicle': (context) => const MyVehicle(),
         '/addVehicle': (context) => const AddVehicle(),
+        '/addRideSchedule': (context) => const AddRideSchedule(),
         // '/rideShare': (context) => rideShare(),
         '/profile': (context) => const ProfilePage(),
         '/detailprofile': (context) => const DetailProfilePage(),

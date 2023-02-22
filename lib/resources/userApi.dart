@@ -9,13 +9,22 @@ import 'package:intl/intl.dart';
 import 'package:nunut_application/resources/midtransApi.dart';
 import '../models/mwallet.dart';
 
-CollectionReference collectionRef = FirebaseFirestore.instance.collection("users");
+CollectionReference collectionRef =
+    FirebaseFirestore.instance.collection("users");
+CollectionReference walletRef = FirebaseFirestore.instance.collection("wallet");
 
 class UserService {
-  Future<void> tambahData({required UserModel user, required UserCredential userCredential}) async {
+  Future<void> tambahData(
+      {required UserModel user, required UserCredential userCredential}) async {
     DocumentReference docRef = collectionRef.doc(userCredential.user!.uid);
 
-    await docRef.set(user.toJson()).whenComplete(() => print("Data Berhasil Ditambahkan")).catchError((e) => print(e.toString()));
+    await docRef.set(user.toJson()).whenComplete(() {
+      print("Data Berhasil Ditambahkan");
+      walletRef.doc(userCredential.user!.uid).set({
+        "balance": 0,
+        "user_id": userCredential.user!.uid,
+      });
+    }).catchError((e) => print(e.toString()));
   }
 
   Future<UserModel> getUserByID(String id) async {
@@ -27,7 +36,8 @@ class UserService {
 
       Wallet walletData = await MidtransApi.getWallet(id);
       double numValue = double.parse(walletData.balance.toString());
-      NumberFormat currencyFormatter = NumberFormat.simpleCurrency(locale: "id", decimalDigits: 0, name: "");
+      NumberFormat currencyFormatter =
+          NumberFormat.simpleCurrency(locale: "id", decimalDigits: 0, name: "");
 
       Result result = Result.fromJson(json.decode(response.body));
       return UserModel(
@@ -50,7 +60,10 @@ class UserService {
       print(userAuth.uid);
       print(user.name.toString());
 
-      await docRef.update(user.toJson()).whenComplete(() => print("Data Berhasil Diupdate")).catchError((e) => print(e.toString()));
+      await docRef
+          .update(user.toJson())
+          .whenComplete(() => print("Data Berhasil Diupdate"))
+          .catchError((e) => print(e.toString()));
     } catch (e) {
       throw e;
     }
