@@ -1,4 +1,3 @@
-import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:nunut_application/models/muser.dart';
 import 'package:nunut_application/resources/userApi.dart';
@@ -63,17 +62,19 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.fromLTRB(20, 24, 0, 7),
-                              child: BorderedText(
-                                child: Text(
-                                  "Data Diri",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 38,
-                                  ),
-                                ),
-                                strokeWidth: 3.0,
-                                strokeColor: Colors.black,
-                              ),
+                              // child: BorderedText(
+                              //   child: Text(
+                              //     "Data Diri",
+                              //     style: TextStyle(
+                              //       color: Colors.white,
+                              //       fontSize: 38,
+                              //     ),
+                              //   ),
+                              //   strokeWidth: 3.0,
+                              //   strokeColor: Colors.black,
+                              // ),
+                              child: NunutText(
+                                  title: "Data Diri", isTitle: true, size: 32),
                             ),
                             SizedBox(height: 3),
                             Padding(
