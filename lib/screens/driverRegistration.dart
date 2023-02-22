@@ -1,13 +1,12 @@
-import 'package:bordered_text/bordered_text.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:nunut_application/models/muser.dart';
 import 'package:nunut_application/resources/driverApi.dart';
 import 'package:nunut_application/resources/userApi.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutTextFormField.dart';
 import 'dart:io';
+import '../models/muser.dart';
 import '../widgets/nunutText.dart';
 
 class DriverRegistration extends StatefulWidget {
@@ -34,10 +33,10 @@ class _DriverRegistrationState extends State<DriverRegistration> {
 
   @override
   Widget build(BuildContext context) {
-    // UserModel user = ModalRoute.of(context)!.settings.arguments as UserModel;
-    // fullName.text = user.name;
-    // nik.text = user.nik;
-    // noTelp.text = user.phone;
+    UserModel user = ModalRoute.of(context)!.settings.arguments as UserModel;
+    fullName.text = user.name;
+    nik.text = user.nik;
+    noTelp.text = user.phone;
 
     return Scaffold(
       body: CustomScrollView(
@@ -80,17 +79,21 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                                 Padding(
                                   padding:
                                       const EdgeInsets.fromLTRB(20, 24, 0, 7),
-                                  child: BorderedText(
-                                    child: Text(
-                                      "Data Diri",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 38,
-                                      ),
-                                    ),
-                                    strokeWidth: 3.0,
-                                    strokeColor: Colors.black,
-                                  ),
+                                  // child: BorderedText(
+                                  //   child: Text(
+                                  //     "Data Diri",
+                                  //     style: TextStyle(
+                                  //       color: Colors.white,
+                                  //       fontSize: 38,
+                                  //     ),
+                                  //   ),
+                                  //   strokeWidth: 3.0,
+                                  //   strokeColor: Colors.black,
+                                  // ),
+                                  child: NunutText(
+                                      title: "Data Diri",
+                                      isTitle: true,
+                                      size: 32),
                                 ),
                                 SizedBox(height: 3),
                                 Padding(
