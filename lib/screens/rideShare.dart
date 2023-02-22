@@ -396,7 +396,6 @@ class _RideShareState extends State<RideShare> {
                                       );
                                       setState(() {
                                         pickUpController.text = result;
-                                        print("Result: " + result);
                                       });
                                       // Navigator.push(
                                       //   context,
