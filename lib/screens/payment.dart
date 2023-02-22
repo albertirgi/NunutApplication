@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutBackground.dart';
@@ -18,6 +19,7 @@ class _PaymentState extends State<Payment> {
   double biayaAdmin = 0;
   double pajak = 0;
   double total = 0;
+  bool isWalletEnough = false;
   @override
   void initState() {
     // TODO: implement initState
@@ -25,6 +27,7 @@ class _PaymentState extends State<Payment> {
     // biayaAdmin = widget.rideSchedule.biayaAdmin.toString();
     pajak = (10 / 100 * widget.rideSchedule.price!);
     total = widget.rideSchedule.price! + pajak;
+    isWalletEnough = widget.rideSchedule.price! <= double.parse(config.user.wallet!.replaceAll(".", ""));
   }
 
   @override
@@ -313,7 +316,7 @@ class _PaymentState extends State<Payment> {
                         ),
                         child: Row(
                           children: [
-                            NunutText(title: "IDR " + "17.500", fontWeight: FontWeight.bold, size: 14),
+                            NunutText(title: "IDR " + config.user.wallet.toString(), fontWeight: FontWeight.bold, size: 14),
                             SizedBox(width: 1),
                             Icon(Icons.add, color: Colors.black, size: 14),
                           ],
@@ -324,7 +327,9 @@ class _PaymentState extends State<Payment> {
                 ),
                 SizedBox(height: 20),
                 NunutButton(
-                  title: "Pilih Metode Pembayaran",
+                  title: isWalletEnough ? "Konfirmasi Pembayaran" : "Saldo Tidak Cukup",
+                  backgroundColor: isWalletEnough ? nunutPrimaryColor : Colors.grey,
+                  isDisabled: !isWalletEnough,
                   borderRadius: 10,
                   borderColor: Colors.transparent,
                   fontWeight: FontWeight.bold,

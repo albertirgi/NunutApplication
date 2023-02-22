@@ -19,6 +19,7 @@ class NunutButton extends StatelessWidget {
   final FontWeight fontWeight;
   final int type;
   final Function()? onPressedArrowButton;
+  final bool isDisabled;
 
   const NunutButton({
     super.key,
@@ -38,6 +39,7 @@ class NunutButton extends StatelessWidget {
     this.elevation = 0.0,
     this.fontWeight = FontWeight.normal,
     this.type = 1,
+    this.isDisabled = false,
   });
 
   @override
@@ -47,10 +49,9 @@ class NunutButton extends StatelessWidget {
       height: heightButton,
       margin: margin,
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: isDisabled ? null : onPressed,
         child: Row(
-          mainAxisAlignment:
-              type != 1 ? MainAxisAlignment.start : MainAxisAlignment.center,
+          mainAxisAlignment: type != 1 ? MainAxisAlignment.start : MainAxisAlignment.center,
           children: [
             NunutText(
               title: title,
