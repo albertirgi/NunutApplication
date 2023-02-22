@@ -5,6 +5,7 @@ class UserModel {
   final String phone;
   String? id;
   String? driverId;
+  String? wallet;
 
   UserModel({
     required this.email,
@@ -13,6 +14,7 @@ class UserModel {
     required this.phone,
     this.id,
     this.driverId,
+    this.wallet,
   });
 
   Map<String, dynamic> toJson() {
@@ -23,6 +25,7 @@ class UserModel {
       "phone": phone,
       "id": id,
       "driver_id": driverId,
+      "wallet": wallet,
     };
   }
 
@@ -34,6 +37,7 @@ class UserModel {
       phone: json['phone'],
       id: json['id'],
       driverId: json['driverId'],
+      wallet: json['wallet'],
     );
   }
 }

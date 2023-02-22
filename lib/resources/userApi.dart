@@ -5,6 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nunut_application/models/mresult.dart';
 import 'package:nunut_application/models/muser.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import 'package:nunut_application/resources/midtransApi.dart';
+import '../models/mwallet.dart';
 
 CollectionReference collectionRef = FirebaseFirestore.instance.collection("users");
 
@@ -19,19 +22,22 @@ class UserService {
     try {
       DocumentSnapshot snapshot = await collectionRef.doc(id).get();
 
-      //get driver id by user id with https://ayonunut.com/api/v1/driver?user=BlL5wZXp8wMkbSKpIGXlAnZYKMJ3
       var url = Uri.parse("https://ayonunut.com/api/v1/driver-user/$id");
       var response = await http.get(url);
 
+      Wallet walletData = await MidtransApi.getWallet(id);
+      double numValue = double.parse(walletData.balance.toString());
+      NumberFormat currencyFormatter = NumberFormat.simpleCurrency(locale: "id", decimalDigits: 0, name: "");
+
       Result result = Result.fromJson(json.decode(response.body));
       return UserModel(
-        email: snapshot['email'],
-        name: snapshot['name'],
-        nik: snapshot['nik'],
-        phone: snapshot['phone'],
-        id: id,
-        driverId: result.status == 200 ? result.data["driver_id"] : "empty",
-      );
+          email: snapshot['email'],
+          name: snapshot['name'],
+          nik: snapshot['nik'],
+          phone: snapshot['phone'],
+          id: id,
+          driverId: result.status == 200 ? result.data["driver_id"] : "empty",
+          wallet: currencyFormatter.format(numValue));
     } catch (e) {
       throw e;
     }

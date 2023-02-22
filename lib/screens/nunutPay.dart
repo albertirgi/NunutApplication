@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/models/mtransaction.dart';
 import 'package:nunut_application/models/muser.dart';
 import 'package:nunut_application/resources/authApi.dart';
@@ -115,11 +116,7 @@ class _NunutPayState extends State<NunutPay> {
                             // ),
                             SizedBox(width: 5),
                             NunutText(
-                              title: NumberFormat.currency(
-                                locale: 'id',
-                                symbol: '',
-                                decimalDigits: 0,
-                              ).format(walletBalance),
+                              title: config.user.wallet.toString(),
                               isTitle: true,
                               size: 65,
                             )

@@ -188,14 +188,14 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String balance = "0";
+  // String balance = "0";
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      initSaldo();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) async {
+    //   initSaldo();
+    // });
   }
 
   ChooseBuildingAlertDialog(bool fromUKP) async {
@@ -235,19 +235,19 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void didchangeDependencies() {
-    super.didChangeDependencies();
-    initSaldo();
-  }
+  // void didchangeDependencies() {
+  //   super.didChangeDependencies();
+  //   initSaldo();
+  // }
 
-  initSaldo() async {
-    Wallet walletData = await MidtransApi.getWallet(config.user.id!);
-    setState(() {
-      double numValue = double.parse(walletData.balance.toString());
-      NumberFormat currencyFormatter = NumberFormat.simpleCurrency(locale: "id", decimalDigits: 0, name: "");
-      balance = currencyFormatter.format(numValue);
-    });
-  }
+  // initSaldo() async {
+  //   Wallet walletData = await MidtransApi.getWallet(config.user.id!);
+  //   setState(() {
+  //     double numValue = double.parse(walletData.balance.toString());
+  //     NumberFormat currencyFormatter = NumberFormat.simpleCurrency(locale: "id", decimalDigits: 0, name: "");
+  //     balance = currencyFormatter.format(numValue);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -476,7 +476,7 @@ class _HomeState extends State<Home> {
                                       children: [
                                         NunutText(title: "Rp", fontWeight: FontWeight.bold, size: 8),
                                         SizedBox(width: 5),
-                                        NunutText(title: balance.toString(), fontWeight: FontWeight.bold, size: 12),
+                                        NunutText(title: config.user.wallet.toString(), fontWeight: FontWeight.bold, size: 12),
                                         SizedBox(width: 10),
                                         Icon(Icons.add, color: Colors.black, size: 12),
                                       ],
