@@ -7,7 +7,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:nunut_application/configuration.dart';
+import 'package:nunut_application/models/mmaplocation.dart';
 import 'package:nunut_application/models/mvehicle.dart';
+import 'package:nunut_application/resources/mapLocationApi.dart';
 import 'package:nunut_application/resources/rideScheduleApi.dart';
 import 'package:nunut_application/resources/vehicleApi.dart';
 import 'package:nunut_application/screens/mapList.dart';
@@ -29,6 +31,8 @@ class _AddRideScheduleState extends State<AddRideSchedule> {
   TextEditingController _meetingPointController = TextEditingController();
   TextEditingController _destinationController = TextEditingController();
   String _selectedVehicle = "Mobil";
+  String _selectedMeetingPoint = "";
+  String _selectedDestination = "";
   int _capacityValue = 1;
   List<Vehicle2> _vehicleList = [];
   @override
@@ -76,18 +80,26 @@ class _AddRideScheduleState extends State<AddRideSchedule> {
                           obscureText: false,
                           controller: _dateController,
                           onTap: () async {
-                            FocusScope.of(context).requestFocus(new FocusNode());
-                            DateTime? pickedDate = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(2000), lastDate: DateTime(2101));
+                            FocusScope.of(context)
+                                .requestFocus(new FocusNode());
+                            DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime(2101));
 
                             if (pickedDate != null) {
-                              String formattedDate = DateFormat('MMMM dd, yyyy').format(pickedDate);
+                              String formattedDate = DateFormat('MMMM dd, yyyy')
+                                  .format(pickedDate);
                               setState(() {
-                                _dateController.text = formattedDate; //set output date to TextField value.
+                                _dateController.text =
+                                    formattedDate; //set output date to TextField value.
                               });
                             }
                           },
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
                             isDense: true,
                             hintText: "dd/mm/yyyy",
                             hintStyle: TextStyle(
@@ -135,25 +147,32 @@ class _AddRideScheduleState extends State<AddRideSchedule> {
                           obscureText: false,
                           controller: _timeController,
                           onTap: () async {
-                            FocusScope.of(context).requestFocus(new FocusNode());
+                            FocusScope.of(context)
+                                .requestFocus(new FocusNode());
                             TimeOfDay? picked = await showTimePicker(
                               context: context,
                               initialTime: TimeOfDay.now(),
                               builder: (BuildContext context, Widget? child) {
                                 return MediaQuery(
-                                  data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+                                  data: MediaQuery.of(context)
+                                      .copyWith(alwaysUse24HourFormat: true),
                                   child: child!,
                                 );
                               },
                             );
                             if (picked != null) {
                               setState(() {
-                                _timeController.text = picked.hour.toString().padLeft(2, '0') + ":" + picked.minute.toString().padLeft(2, '0');
+                                _timeController.text = picked.hour
+                                        .toString()
+                                        .padLeft(2, '0') +
+                                    ":" +
+                                    picked.minute.toString().padLeft(2, '0');
                               });
                             }
                           },
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
                             isDense: true,
                             hintText: "00:00",
                             hintStyle: TextStyle(
@@ -200,7 +219,8 @@ class _AddRideScheduleState extends State<AddRideSchedule> {
                 obscureText: false,
                 controller: _meetingPointController,
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   isDense: true,
                   hintText: "Pilih meeting pointmu...",
                   hintStyle: TextStyle(
@@ -225,16 +245,20 @@ class _AddRideScheduleState extends State<AddRideSchedule> {
                   ),
                 ),
                 onTap: () async {
-                  final result = await Navigator.push(
+                  final fromUkpBool = _destinationController.text
+                      .contains('Universitas Kristen Petra');
+                  MapLocation result = await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MapList(
-                        fromUKP: true,
-                      ),
+                      builder: (context) =>
+                          MapList(fromUKP: fromUkpBool, sendId: true),
                     ),
                   );
                   setState(() {
-                    _meetingPointController.text = result;
+                    if (result.name != null) {
+                      _selectedMeetingPoint = result.mapId!;
+                      _meetingPointController.text = result.name!;
+                    }
                   });
                 },
               ),
@@ -255,7 +279,8 @@ class _AddRideScheduleState extends State<AddRideSchedule> {
                 obscureText: false,
                 controller: _destinationController,
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   isDense: true,
                   hintText: "Pilih tujuan destinasimu...",
                   hintStyle: TextStyle(
@@ -280,16 +305,23 @@ class _AddRideScheduleState extends State<AddRideSchedule> {
                   ),
                 ),
                 onTap: () async {
-                  final result = await Navigator.push(
+                  final fromUkpBool = _meetingPointController.text
+                      .contains('Universitas Kristen Petra');
+                  print(fromUkpBool);
+                  MapLocation result = await Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => MapList(
-                        fromUKP: true,
+                        fromUKP: fromUkpBool,
+                        sendId: true,
                       ),
                     ),
                   );
                   setState(() {
-                    _destinationController.text = result;
+                    if (result.name != null) {
+                      _selectedDestination = result.mapId!;
+                      _destinationController.text = result.name!;
+                    }
                   });
                 },
               ),
@@ -314,7 +346,10 @@ class _AddRideScheduleState extends State<AddRideSchedule> {
                             items: _vehicleList
                                 .map((item) => DropdownMenuItem<String>(
                                       value: item.id,
-                                      child: NunutText(title: item.licensePlate!, size: 14, overflow: TextOverflow.ellipsis),
+                                      child: NunutText(
+                                          title: item.licensePlate!,
+                                          size: 14,
+                                          overflow: TextOverflow.ellipsis),
                                     ))
                                 .toList(),
                             value: _selectedVehicle,
@@ -330,13 +365,15 @@ class _AddRideScheduleState extends State<AddRideSchedule> {
                             iconEnabledColor: Colors.black,
                             iconDisabledColor: Colors.grey,
                             buttonHeight: 40,
-                            buttonPadding: const EdgeInsets.only(left: 14, right: 14),
+                            buttonPadding:
+                                const EdgeInsets.only(left: 14, right: 14),
                             buttonDecoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(24),
                               color: Colors.grey[300],
                             ),
                             itemHeight: 50,
-                            itemPadding: const EdgeInsets.only(left: 14, right: 14),
+                            itemPadding:
+                                const EdgeInsets.only(left: 14, right: 14),
                             dropdownMaxHeight: 200,
                             dropdownWidth: 200,
                             dropdownPadding: null,
@@ -383,7 +420,10 @@ class _AddRideScheduleState extends State<AddRideSchedule> {
                                 shape: CircleBorder(),
                               ),
                             ),
-                            NunutText(title: _capacityValue.toString(), fontWeight: FontWeight.bold, size: 14),
+                            NunutText(
+                                title: _capacityValue.toString(),
+                                fontWeight: FontWeight.bold,
+                                size: 14),
                             ElevatedButton(
                               onPressed: () {
                                 setState(() {
@@ -410,11 +450,12 @@ class _AddRideScheduleState extends State<AddRideSchedule> {
                 child: NunutButton(
                   title: "Buat",
                   onPressed: () async {
-                    var postRideScheduleStatus = await RideScheduleApi.PostRideSchedule(
+                    var postRideScheduleStatus =
+                        await RideScheduleApi.PostRideSchedule(
                       _dateController.text.toString(),
                       _timeController.text.toString(),
-                      "0061c009-8209-4f6c-9501-2700651b5457",
-                      "048841f5-f35b-46c2-8f8a-c6fdd972900e",
+                      _selectedMeetingPoint,
+                      _selectedDestination,
                       _selectedVehicle,
                       _capacityValue,
                       config.user.driverId,

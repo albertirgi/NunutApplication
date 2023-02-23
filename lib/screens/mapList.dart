@@ -6,7 +6,8 @@ import 'package:nunut_application/widgets/nunutText.dart';
 
 class MapList extends StatefulWidget {
   bool fromUKP;
-  MapList({super.key, required this.fromUKP});
+  bool sendId;
+  MapList({super.key, required this.fromUKP, this.sendId = false});
 
   @override
   State<MapList> createState() => _MapListState();
@@ -46,7 +47,14 @@ class _MapListState extends State<MapList> {
 
     mapLocationList.clear();
     searchText = searchText.isNotEmpty ? searchText.replaceAll(" ", "%20") : "";
-    mapLocationList = await mapLocationApi.getMapList(page: searchText.isNotEmpty ? 0 : _page, checkUrl: true, parameter: searchText.isNotEmpty ? "name=$searchText" : "");
+    mapLocationList = await mapLocationApi.getMapList(
+        page: searchText.isNotEmpty ? 0 : _page,
+        checkUrl: true,
+        parameter: searchText.isNotEmpty ? "name=$searchText" : "");
+    if (widget.fromUKP == true) {
+      mapLocationList.removeWhere(
+          (element) => element.name!.contains("Universitas Kristen Petra"));
+    }
 
     setState(() {
       mapLocationListLoading = false;
@@ -61,10 +69,15 @@ class _MapListState extends State<MapList> {
       });
 
       mapLocationPageList.clear();
-      mapLocationPageList = await mapLocationApi.getMapList(checkUrl: true, page: _page);
+      mapLocationPageList =
+          await mapLocationApi.getMapList(checkUrl: true, page: _page);
       _page++;
 
       mapLocationList.addAll(mapLocationPageList);
+      if (widget.fromUKP == true) {
+        mapLocationList.removeWhere(
+            (element) => element.name!.contains("Universitas Kristen Petra"));
+      }
       if (mapLocationPageList.length < 10 || mapLocationPageList.isEmpty) {
         done = true;
       }
@@ -77,7 +90,10 @@ class _MapListState extends State<MapList> {
   }
 
   scrollListener() {
-    if (_scrollController!.offset >= _scrollController!.position.maxScrollExtent - 100 && !_scrollController!.position.outOfRange && !done) {
+    if (_scrollController!.offset >=
+            _scrollController!.position.maxScrollExtent - 100 &&
+        !_scrollController!.position.outOfRange &&
+        !done) {
       loadmore();
     }
   }
@@ -112,7 +128,14 @@ class _MapListState extends State<MapList> {
                   },
                 ),
                 SizedBox(height: 20),
-                NunutText(title: widget.fromUKP ? "Pilih Lokasi \nDestinasi" : "Pilih Lokasi \nMeeting Point", isTitle: true, size: 32),
+                NunutText(
+                    title: widget.sendId
+                        ? "Pilih Lokasi"
+                        : (widget.fromUKP
+                            ? "Pilih Lokasi \nDestinasi"
+                            : "Pilih Lokasi \nMeeting Point"),
+                    isTitle: true,
+                    size: 32),
                 SizedBox(height: 40),
                 TextFormField(
                   controller: searchController,
@@ -197,7 +220,11 @@ class _MapListState extends State<MapList> {
   Widget SingleMapRow(MapLocation mapLocation) {
     return InkWell(
       onTap: () {
-        Navigator.pop(context, mapLocation.name);
+        if (widget.sendId) {
+          Navigator.pop(context, mapLocation);
+        } else {
+          Navigator.pop(context, mapLocation.name);
+        }
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 10),
@@ -208,7 +235,11 @@ class _MapListState extends State<MapList> {
                 Icon(Icons.circle, color: nunutPrimaryColor, size: 18),
                 SizedBox(width: 12),
                 Expanded(
-                  child: NunutText(title: mapLocation.name!, fontWeight: FontWeight.w500, size: 16, maxLines: 2),
+                  child: NunutText(
+                      title: mapLocation.name!,
+                      fontWeight: FontWeight.w500,
+                      size: 16,
+                      maxLines: 2),
                 ),
               ],
             ),

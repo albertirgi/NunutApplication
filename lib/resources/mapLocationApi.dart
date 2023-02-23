@@ -45,6 +45,21 @@ class MapLocationApi {
     }
     return mapLocation;
   }
+
+  static Future<MapLocation> getMapUkp() async {
+    var url = Uri.parse(config.baseUrl + '/map-petra/');
+    var response = await http.get(url);
+
+    Result result;
+    MapLocation mapLocation = MapLocation(longitude: "", latitude: "");
+
+    result = Result.fromJson(json.decode(response.body));
+
+    if (result.status == 200) {
+      mapLocation = MapLocation.fromJson(result.data[0]);
+    }
+    return mapLocation;
+  }
 }
 
 final mapLocationApi = MapLocationApi();
