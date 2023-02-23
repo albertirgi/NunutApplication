@@ -16,6 +16,14 @@ class DriverRegistration extends StatefulWidget {
   State<DriverRegistration> createState() => _DriverRegistrationState();
 }
 
+Function WrappingFileName = (String fileName) {
+  if (fileName.length > 40) {
+    return fileName.substring(0, 40) + "...";
+  } else {
+    return fileName;
+  }
+};
+
 class _DriverRegistrationState extends State<DriverRegistration> {
   TextEditingController fullName = TextEditingController();
   TextEditingController nik = TextEditingController();
@@ -324,7 +332,7 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             NunutText(
-                              title: "Persyaratan",
+                              title: "Persyaratan Berkas Driver",
                               fontWeight: FontWeight.bold,
                             ),
                           ],
@@ -337,7 +345,7 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             NunutText(
-                              title: "Foto KTM",
+                              title: "Foto KTP",
                               fontWeight: FontWeight.bold,
                             ),
                             SizedBox(height: 2),
@@ -355,8 +363,8 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                                           File(result.files.single.path!);
                                       setState(() {
                                         _ktmImage = file;
-                                        ktmButtonTitle =
-                                            result.files.single.name;
+                                        ktmButtonTitle = WrappingFileName(
+                                            result.files.single.name);
                                       });
                                     } else {
                                       // User canceled the picker
@@ -394,7 +402,8 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                                       setState(() {
                                         _drivingLicense = file;
                                         drivingLicenseButtonTitle =
-                                            result.files.single.name;
+                                            WrappingFileName(
+                                                result.files.single.name);
                                       });
                                     } else {
                                       // User canceled the picker
@@ -432,7 +441,8 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                                       setState(() {
                                         _aggrementLetter = file;
                                         aggrementLetterButtonTitle =
-                                            result.files.single.name;
+                                            WrappingFileName(
+                                                result.files.single.name);
                                       });
                                     } else {
                                       // User canceled the picker
