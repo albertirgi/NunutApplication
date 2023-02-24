@@ -310,7 +310,6 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                                     nik: nik.text,
                                     phone: noTelp.text));
                             Navigator.pop(context);
-                            Navigator.popAndPushNamed(context, '/profile');
                           })),
                 ],
               ),

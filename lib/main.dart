@@ -95,7 +95,7 @@ class MyApp extends StatelessWidget {
         '/addVehicle': (context) => const AddVehicle(),
         '/addRideSchedule': (context) => const AddRideSchedule(),
         // '/rideShare': (context) => rideShare(),
-        '/profile': (context) => const ProfilePage(),
+        // '/profile': (context) => const ProfilePage(),
         '/detailprofile': (context) => const DetailProfilePage(),
         '/driverRegistration': (context) => const DriverRegistration(),
         '/detailNotification': (context) => const DetailNotificationPage(),

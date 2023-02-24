@@ -16,13 +16,13 @@ class DriverRegistration extends StatefulWidget {
   State<DriverRegistration> createState() => _DriverRegistrationState();
 }
 
-Function WrappingFileName = (String fileName) {
-  if (fileName.length > 40) {
-    return fileName.substring(0, 40) + "...";
+String WrappingFileName(String fileName) {
+  if (fileName.length > 30) {
+    return fileName.substring(0, 30) + "...";
   } else {
     return fileName;
   }
-};
+}
 
 class _DriverRegistrationState extends State<DriverRegistration> {
   TextEditingController fullName = TextEditingController();
@@ -99,7 +99,7 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                                   //   strokeColor: Colors.black,
                                   // ),
                                   child: NunutText(
-                                      title: "Data Diri",
+                                      title: "Daftar Driver",
                                       isTitle: true,
                                       size: 32),
                                 ),
@@ -108,7 +108,7 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                                   padding:
                                       const EdgeInsets.fromLTRB(20, 0, 0, 0),
                                   child: Text(
-                                    "Informasi Pribadi",
+                                    "Persyaratan Berkas Driver",
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 16,
@@ -134,7 +134,7 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                                       radius: 90,
                                       backgroundImage: _profilePicture == null
                                           ? NetworkImage(
-                                              "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiO")
+                                              "https://firebasestorage.googleapis.com/v0/b/nunut-da274.appspot.com/o/default-avatar.png?alt=media&token=215b4ac9-5b92-4ee1-a923-64941391a78d")
                                           : Image.file(_profilePicture!).image,
                                     ),
                                   ),
@@ -164,84 +164,84 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 10),
+                      // SizedBox(height: 10),
                       Container(
                         margin: EdgeInsets.only(top: 0, left: 20, right: 20),
                         child: Column(
                           children: [
-                            NunutTextFormField(
-                              title: "Nama Lengkap",
-                              hintText: "Nama Lengkap",
-                              obsecureText: false,
-                              controller: fullName,
-                              width: 1.5,
-                            ),
-                            NunutTextFormField(
-                              title: "NIK",
-                              hintText: "NIK ",
-                              obsecureText: false,
-                              controller: nik,
-                              width: 1.5,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                NunutText(
-                                  title: "Nomor Telepon",
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                SizedBox(height: 2),
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 50,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(12),
-                                        border: Border.all(
-                                          color: Colors.black,
-                                          width: 1.5,
-                                        ),
-                                        //color: nunutPrimaryColor,
-                                      ),
-                                      child: Center(
-                                        child: NunutText(
-                                          title: "+62",
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: 10),
-                                    Expanded(
-                                      child: TextFormField(
-                                        cursorColor: Colors.black,
-                                        obscureText: false,
-                                        controller: noTelp,
-                                        decoration: InputDecoration(
-                                          hintText: "Nomor Telepon",
-                                          border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                            borderSide: BorderSide(
-                                              color: Colors.black,
-                                              width: 1.5,
-                                            ),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                            borderSide: BorderSide(
-                                              color: Colors.black,
-                                              width: 1.5,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
+                            // NunutTextFormField(
+                            //   title: "Nama Lengkap",
+                            //   hintText: "Nama Lengkap",
+                            //   obsecureText: false,
+                            //   controller: fullName,
+                            //   width: 1.5,
+                            // ),
+                            // NunutTextFormField(
+                            //   title: "NIK",
+                            //   hintText: "NIK ",
+                            //   obsecureText: false,
+                            //   controller: nik,
+                            //   width: 1.5,
+                            // ),
+                            // Column(
+                            //   crossAxisAlignment: CrossAxisAlignment.start,
+                            //   children: [
+                            //     NunutText(
+                            //       title: "Nomor Telepon",
+                            //       fontWeight: FontWeight.bold,
+                            //     ),
+                            //     SizedBox(height: 2),
+                            //     Row(
+                            //       children: [
+                            //         Container(
+                            //           width: 50,
+                            //           height: 50,
+                            //           decoration: BoxDecoration(
+                            //             borderRadius: BorderRadius.circular(12),
+                            //             border: Border.all(
+                            //               color: Colors.black,
+                            //               width: 1.5,
+                            //             ),
+                            //             //color: nunutPrimaryColor,
+                            //           ),
+                            //           child: Center(
+                            //             child: NunutText(
+                            //               title: "+62",
+                            //               fontWeight: FontWeight.bold,
+                            //             ),
+                            //           ),
+                            //         ),
+                            //         SizedBox(width: 10),
+                            //         Expanded(
+                            //           child: TextFormField(
+                            //             cursorColor: Colors.black,
+                            //             obscureText: false,
+                            //             controller: noTelp,
+                            //             decoration: InputDecoration(
+                            //               hintText: "Nomor Telepon",
+                            //               border: OutlineInputBorder(
+                            //                 borderRadius:
+                            //                     BorderRadius.circular(12),
+                            //                 borderSide: BorderSide(
+                            //                   color: Colors.black,
+                            //                   width: 1.5,
+                            //                 ),
+                            //               ),
+                            //               focusedBorder: OutlineInputBorder(
+                            //                 borderRadius:
+                            //                     BorderRadius.circular(12),
+                            //                 borderSide: BorderSide(
+                            //                   color: Colors.black,
+                            //                   width: 1.5,
+                            //                 ),
+                            //               ),
+                            //             ),
+                            //           ),
+                            //         ),
+                            //       ],
+                            //     )
+                            //   ],
+                            // ),
                           ],
                         ),
                       ),
@@ -325,19 +325,19 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                       //     ],
                       //   ),
                       // ),
-                      SizedBox(height: 10),
-                      Container(
-                        margin: EdgeInsets.only(top: 0, left: 20, right: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            NunutText(
-                              title: "Persyaratan Berkas Driver",
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ],
-                        ),
-                      ),
+                      // SizedBox(height: 10),
+                      // Container(
+                      //   margin: EdgeInsets.only(top: 0, left: 20, right: 20),
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       NunutText(
+                      //         title: "Persyaratan Berkas Driver",
+                      //         fontWeight: FontWeight.bold,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                       SizedBox(height: 20),
                       Container(
                         margin: EdgeInsets.only(top: 0, left: 20, right: 20),

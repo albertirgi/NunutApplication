@@ -126,7 +126,7 @@ class _OfferMenuState extends State<OfferMenu> {
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, "/rideList");
+                          Navigator.pushNamed(context, "/distance");
                         },
                         child: Column(
                           children: [

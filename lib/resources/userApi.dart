@@ -18,7 +18,12 @@ class UserService {
       {required UserModel user, required UserCredential userCredential}) async {
     DocumentReference docRef = collectionRef.doc(userCredential.user!.uid);
 
-    await docRef.set(user.toJson()).whenComplete(() {
+    await docRef.set({
+      "email": user.email,
+      "name": user.name,
+      "nik": user.nik,
+      "phone": user.phone,
+    }).whenComplete(() {
       print("Data Berhasil Ditambahkan");
       walletRef.doc(userCredential.user!.uid).set({
         "balance": 0,

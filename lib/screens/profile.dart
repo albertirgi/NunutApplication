@@ -179,8 +179,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 InkWell(
                                   onTap: () {
                                     //to detail Profile page
-                                    Navigator.pushNamed(
-                                        context, '/detailprofile',
+                                    Navigator.pushNamed(context, '/orderList',
                                         arguments: config.user);
                                   },
                                   child: Container(
@@ -293,7 +292,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             } else if (profilePageMenu[index].identifier ==
                                 "registerDriver") {
                               Navigator.pushNamed(
-                                  context, '/driverRegistration',arguments: config.user);
+                                  context, '/driverRegistration',
+                                  arguments: config.user);
                             }
                             // else if(profilePageMenu[index].identifier == "profileDriver"){
                             //   Navigator.pushNamed(context, '/myVehicle');

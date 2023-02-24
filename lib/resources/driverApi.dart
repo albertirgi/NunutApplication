@@ -88,10 +88,7 @@ class DriverApi {
       File? aggrementLetter,
       File? profilePicture) async {
     // Validate the form
-    if (fullname.isEmpty ||
-        nik.isEmpty ||
-        phone.isEmpty ||
-        ktmImage == null ||
+    if (ktmImage == null ||
         drivingLicense == null ||
         aggrementLetter == null ||
         profilePicture == null) {
@@ -101,9 +98,9 @@ class DriverApi {
     var url = Uri.parse(config.baseUrl + '/driver');
     var request = http.MultipartRequest('POST', url);
     UserModel user = await AuthService.getCurrentUser();
-    request.fields['name'] = fullname;
-    request.fields['phone'] = phone;
-    request.fields['nik'] = nik;
+    request.fields['name'] = user.name;
+    request.fields['phone'] = user.phone;
+    request.fields['nik'] = user.nik;
     request.fields['user_id'] = user.id!;
     request.files.add(
       http.MultipartFile(
@@ -137,7 +134,9 @@ class DriverApi {
         filename: profilePicture.path.split('/').last,
       ),
     );
+
     var response = await request.send();
+    print(response.stream.first.toString());
     return response;
   }
 }

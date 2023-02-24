@@ -24,7 +24,7 @@ class NunutPay extends StatefulWidget {
 }
 
 class _NunutPayState extends State<NunutPay> {
-  bool isLoading = false;
+  bool isLoading = true;
   bool userGenerated = false;
   Wallet wallet = Wallet();
   int walletBalance = 0;
@@ -107,25 +107,29 @@ class _NunutPayState extends State<NunutPay> {
                                 color: Colors.black,
                                 spreadRadius: 0,
                                 blurRadius: 0,
-                                offset: Offset(-1, -1), // changes position of shadow
+                                offset: Offset(
+                                    -1, -1), // changes position of shadow
                               ),
                               BoxShadow(
                                 color: Colors.black,
                                 spreadRadius: 0,
                                 blurRadius: 0,
-                                offset: Offset(-1, 1), // changes position of shadow
+                                offset:
+                                    Offset(-1, 1), // changes position of shadow
                               ),
                               BoxShadow(
                                 color: Colors.black,
                                 spreadRadius: 0,
                                 blurRadius: 0,
-                                offset: Offset(1, -1), // changes position of shadow
+                                offset:
+                                    Offset(1, -1), // changes position of shadow
                               ),
                               BoxShadow(
                                 color: Colors.black,
                                 spreadRadius: 0,
                                 blurRadius: 0,
-                                offset: Offset(5, 5), // changes position of shadow
+                                offset:
+                                    Offset(5, 5), // changes position of shadow
                               ),
                             ],
                           ),
@@ -138,7 +142,15 @@ class _NunutPayState extends State<NunutPay> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 textBaseline: TextBaseline.alphabetic,
                                 crossAxisAlignment: CrossAxisAlignment.baseline,
-                                children: [NunutText(title: "Rp", isTitle: true, size: 24), SizedBox(width: 5), NunutText(title: config.user.wallet.toString(), isTitle: true, size: 65)],
+                                children: [
+                                  NunutText(
+                                      title: "Rp", isTitle: true, size: 24),
+                                  SizedBox(width: 5),
+                                  NunutText(
+                                      title: config.user.wallet.toString(),
+                                      isTitle: true,
+                                      size: 65)
+                                ],
                               ),
                             ],
                           ),
@@ -170,7 +182,8 @@ class _NunutPayState extends State<NunutPay> {
                                   Navigator.pushNamed(context, '/withdraw');
                                 },
                                 widthButton: 130,
-                                iconButton: Icon(Icons.add, color: Colors.black, size: 20),
+                                iconButton: Icon(Icons.add,
+                                    color: Colors.black, size: 20),
                                 heightButton: 40,
                               ),
                             ],
@@ -179,7 +192,8 @@ class _NunutPayState extends State<NunutPay> {
                         SizedBox(height: 20),
                         Container(
                           width: MediaQuery.of(context).size.width,
-                          padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+                          padding:
+                              EdgeInsets.only(left: 20, right: 20, top: 20),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.only(
@@ -191,72 +205,119 @@ class _NunutPayState extends State<NunutPay> {
                                 color: Colors.grey.withOpacity(0.5),
                                 spreadRadius: 3,
                                 blurRadius: 7,
-                                offset: Offset(0, 3), // changes position of shadow
+                                offset:
+                                    Offset(0, 3), // changes position of shadow
                               ),
                             ],
                           ),
                           child: Column(
                             children: [
-                              NunutText(title: "Transaksi", size: 20, fontWeight: FontWeight.w500),
-                              transactionLength == 0
+                              NunutText(
+                                  title: "Transaksi",
+                                  size: 20,
+                                  fontWeight: FontWeight.w500),
+                              isLoading
                                   ? Container(
                                       padding: EdgeInsets.all(40),
                                       child: Center(
                                         child: CircularProgressIndicator(
-                                          valueColor: AlwaysStoppedAnimation<Color>(nunutPrimaryColor),
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  nunutPrimaryColor),
                                         ),
                                       ),
                                     )
-                                  : ListView.separated(
-                                      physics: NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      itemBuilder: (context, index) {
-                                        return Row(
-                                          children: [
-                                            Icon(Icons.arrow_upward),
-                                            SizedBox(width: 10),
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                NunutText(title: transactions[index].type == "topup" ? "Top Up" : "Withdraw", fontWeight: FontWeight.bold),
-                                                NunutText(title: "Bank Transfer"),
-                                              ],
+                                  : transactionLength == 0
+                                      ? Container(
+                                          padding: EdgeInsets.all(40),
+                                          child: Center(
+                                            child: NunutText(
+                                              title: "Tidak ada transaksi",
+                                              color: Colors.grey,
+                                              size: 16,
                                             ),
-                                            Spacer(),
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.end,
+                                          ),
+                                        )
+                                      : ListView.separated(
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          itemBuilder: (context, index) {
+                                            return Row(
                                               children: [
-                                                NunutText(
-                                                  title: transactions[index].type == "topup"
-                                                      ? "+ " +
-                                                          NumberFormat.currency(
-                                                            locale: 'id',
-                                                            symbol: 'Rp ',
-                                                            decimalDigits: 0,
-                                                          ).format(transactions[index].amount)
-                                                      : "- " +
-                                                          NumberFormat.currency(
-                                                            locale: 'id',
-                                                            symbol: 'Rp ',
-                                                            decimalDigits: 0,
-                                                          ).format(transactions[index].amount),
-                                                  fontWeight: FontWeight.bold,
+                                                Icon(Icons.arrow_upward),
+                                                SizedBox(width: 10),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    NunutText(
+                                                        title:
+                                                            transactions[index]
+                                                                        .type ==
+                                                                    "topup"
+                                                                ? "Top Up"
+                                                                : "Withdraw",
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                    NunutText(
+                                                        title: "Bank Transfer"),
+                                                  ],
                                                 ),
-                                                NunutText(
-                                                  title: DateFormat("d MMMM yyyy, hh:MM", "id_ID").format(transactions[index].transaction_time!), //"20 Desember 2022, 12:50",
-                                                  color: Colors.grey,
-                                                  size: 12,
+                                                Spacer(),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
+                                                  children: [
+                                                    NunutText(
+                                                      title: transactions[index]
+                                                                  .type ==
+                                                              "topup"
+                                                          ? "+ " +
+                                                              NumberFormat
+                                                                  .currency(
+                                                                locale: 'id',
+                                                                symbol: 'Rp ',
+                                                                decimalDigits:
+                                                                    0,
+                                                              ).format(
+                                                                  transactions[
+                                                                          index]
+                                                                      .amount)
+                                                          : "- " +
+                                                              NumberFormat
+                                                                  .currency(
+                                                                locale: 'id',
+                                                                symbol: 'Rp ',
+                                                                decimalDigits:
+                                                                    0,
+                                                              ).format(
+                                                                  transactions[
+                                                                          index]
+                                                                      .amount),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                    NunutText(
+                                                      title: DateFormat(
+                                                              "d MMMM yyyy, hh:MM",
+                                                              "id_ID")
+                                                          .format(transactions[
+                                                                  index]
+                                                              .transaction_time!), //"20 Desember 2022, 12:50",
+                                                      color: Colors.grey,
+                                                      size: 12,
+                                                    ),
+                                                  ],
                                                 ),
                                               ],
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                      separatorBuilder: (context, index) {
-                                        return SizedBox(height: 30);
-                                      },
-                                      itemCount: transactionLength,
-                                    ),
+                                            );
+                                          },
+                                          separatorBuilder: (context, index) {
+                                            return SizedBox(height: 30);
+                                          },
+                                          itemCount: transactionLength,
+                                        ),
                             ],
                           ),
                         ),
@@ -291,11 +352,15 @@ class _NunutPayState extends State<NunutPay> {
   }
 
   void getTransaction(String wallet_id) async {
+    setState(() {
+      isLoading = true;
+    });
     transactions = await MidtransApi.getTransactionByWallet(wallet_id);
     setState(() {
       isLoading = false;
       transactionLength = transactions.length;
-      transactions.sort((a, b) => b.transaction_time!.compareTo(a.transaction_time!));
+      transactions
+          .sort((a, b) => b.transaction_time!.compareTo(a.transaction_time!));
     });
   }
 }

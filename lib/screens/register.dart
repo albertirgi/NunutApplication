@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutTextFormField.dart';
@@ -90,12 +91,15 @@ class _RegisterPageState extends State<RegisterPage> {
                   width: 1.5,
                   suffixIcon: IconButton(
                     icon: Icon(
-                      confirmationPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                      confirmationPasswordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
                       color: Colors.black,
                     ),
                     onPressed: () {
                       setState(() {
-                        confirmationPasswordVisible = !confirmationPasswordVisible;
+                        confirmationPasswordVisible =
+                            !confirmationPasswordVisible;
                       });
                     },
                   ),
@@ -170,15 +174,22 @@ class _RegisterPageState extends State<RegisterPage> {
                   widthButton: 200,
                   onPressed: () {
                     //all field must be filled
-                    if (email.text.isNotEmpty && fullName.text.isNotEmpty && password.text.isNotEmpty && confirmPassword.text.isNotEmpty && nik.text.isNotEmpty && noTelp.text.isNotEmpty) {
-                      final bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email.text); // check email valid or not
+                    if (email.text.isNotEmpty &&
+                        fullName.text.isNotEmpty &&
+                        password.text.isNotEmpty &&
+                        confirmPassword.text.isNotEmpty &&
+                        nik.text.isNotEmpty &&
+                        noTelp.text.isNotEmpty) {
+                      final bool emailValid = RegExp(
+                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                          .hasMatch(email.text); // check email valid or not
                       if (emailValid) {
                         if (password.text.length >= 8) {
                           if (password.text == confirmPassword.text) {
                             Future.delayed(
                               Duration(seconds: 3),
-                              () {
-                                AuthService.signUp(
+                              () async {
+                                config.user = await AuthService.signUp(
                                   email: email.text,
                                   name: fullName.text,
                                   nik: nik.text,
@@ -195,7 +206,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                 Future.delayed(
                                   Duration(seconds: 2),
                                   () {
-                                    Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context, '/main', (route) => false);
                                   },
                                 );
                               },
