@@ -222,6 +222,8 @@ class _RideBookDetailState extends State<RideBookDetail> {
                               widthBorder: 0,
                               fontWeight: FontWeight.bold,
                               onPressed: () {
+                                Navigator.pop(context);
+                                Navigator.pop(context);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

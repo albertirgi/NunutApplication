@@ -14,7 +14,7 @@ import 'package:nunut_application/screens/home.dart';
 import 'package:nunut_application/screens/login.dart';
 import 'package:nunut_application/screens/mainScreen.dart';
 import 'package:nunut_application/screens/myProfilePage.dart';
-import 'package:nunut_application/screens/notifikasiSukses.dart';
+import 'package:nunut_application/screens/success.dart';
 import 'package:nunut_application/screens/nunutPay.dart';
 import 'package:nunut_application/screens/offerMenu.dart';
 import 'package:nunut_application/screens/orderList.dart';
@@ -101,7 +101,7 @@ class MyApp extends StatelessWidget {
         '/detailNotification': (context) => const DetailNotificationPage(),
         '/pengaduanKendala': (context) => const PengaduanKendalaPage(),
         '/batalkanTumpangan': (context) => const BatalkanTumpangan(),
-        '/notifikasiSukses': (context) => const NotifikasiSuksesPage(),
+        '/success': (context) => const Success(),
         '/home': (context) => const Home(),
         '/nunutPay': (context) => const NunutPay(),
         '/topUp': (context) => const TopUp(),

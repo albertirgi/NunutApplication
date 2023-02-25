@@ -27,8 +27,7 @@ class _PengaduanKendalaPageState extends State<PengaduanKendalaPage> {
         child: Stack(
           children: [
             Image(
-              image:
-                  AssetImage('assets/backgroundCircle/backgroundCircle1.png'),
+              image: AssetImage('assets/backgroundCircle/backgroundCircle1.png'),
               fit: BoxFit.cover,
             ),
             Container(
@@ -123,28 +122,20 @@ class _PengaduanKendalaPageState extends State<PengaduanKendalaPage> {
                           ),
                         ),
                         onPressed: () async {
-                          var status_post = await ReportApi.PostReport(
-                              title.text.toString(),
-                              description.text.toString(),
-                              "CONTOH RIDE REQ ID",
-                              user_id.toString());
+                          var status_post = await ReportApi.PostReport(title.text.toString(), description.text.toString(), "CONTOH RIDE REQ ID", user_id.toString());
                           //get status api
                           //log("status post: $status_post");
                           if (status_post == true) {
-                            Navigator.pushNamed(context, '/notifikasiSukses',
-                                arguments: {
-                                  'title':
-                                      "Pengaduan Kendala Berhasil Terkirim!",
-                                  'description':
-                                      "Mohon menunggu balasan dari Nunut pada email anda!",
-                                });
+                            Navigator.pushNamed(context, '/success', arguments: {
+                              'title': "Pengaduan Kendala Berhasil Terkirim!",
+                              'description': "Mohon menunggu balasan dari Nunut pada email anda!",
+                            });
                             setState(() {
                               title.text = "";
                               description.text = "";
                             });
                           } else {
-                            Fluttertoast.showToast(
-                                msg: "Laporan Gagal Terkirim");
+                            Fluttertoast.showToast(msg: "Laporan Gagal Terkirim");
                           }
                         },
                         child: Text(

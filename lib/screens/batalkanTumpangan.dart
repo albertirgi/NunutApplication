@@ -20,8 +20,7 @@ class _BatalkanTumpanganState extends State<BatalkanTumpangan> {
         child: Stack(
           children: [
             Image(
-              image:
-                  AssetImage('assets/backgroundCircle/backgroundCircle1.png'),
+              image: AssetImage('assets/backgroundCircle/backgroundCircle1.png'),
               fit: BoxFit.cover,
             ),
             Container(
@@ -116,11 +115,10 @@ class _BatalkanTumpanganState extends State<BatalkanTumpangan> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.pushNamed(context, '/notifikasiSukses',
-                              arguments: {
-                                'title': "Pembatalan Tumpangan Berhasil",
-                                'description': "Pembatalan tumpangan berhasil!",
-                              });
+                          Navigator.pushNamed(context, '/success', arguments: {
+                            'title': "Pembatalan Tumpangan Berhasil",
+                            'description': "Pembatalan tumpangan berhasil!",
+                          });
                         },
                         child: Text(
                           "Batalkan Tumpangan",

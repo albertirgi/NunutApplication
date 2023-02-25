@@ -11,6 +11,7 @@ class NunutText extends StatelessWidget {
   final TextOverflow? overflow;
   final bool isTitle;
   final double? height;
+  final TextAlign? textAlign;
 
   const NunutText({
     super.key,
@@ -23,6 +24,7 @@ class NunutText extends StatelessWidget {
     this.overflow = TextOverflow.ellipsis,
     this.isTitle = false,
     this.height,
+    this.textAlign,
   });
 
   @override
@@ -54,6 +56,7 @@ class NunutText extends StatelessWidget {
       ),
       overflow: overflow,
       maxLines: maxLines,
+      textAlign: textAlign,
     );
   }
 }
