@@ -119,49 +119,6 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                               ],
                             ),
                           ),
-                          //Profile Picture
-                          Expanded(
-                            flex: 3,
-                            child: Container(
-                              height: 90,
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                    child: CircleAvatar(
-                                      //border circle avatar black
-                                      backgroundColor: Colors.black,
-                                      radius: 90,
-                                      backgroundImage: _profilePicture == null
-                                          ? NetworkImage(
-                                              "https://firebasestorage.googleapis.com/v0/b/nunut-da274.appspot.com/o/default-avatar.png?alt=media&token=215b4ac9-5b92-4ee1-a923-64941391a78d")
-                                          : Image.file(_profilePicture!).image,
-                                    ),
-                                  ),
-                                  //icon add bottom of image profile
-                                  Positioned(
-                                    bottom: -2,
-                                    right: 20,
-                                    child: InkWell(
-                                      onTap: () {
-                                        //upload image profile
-                                        FilePicker.platform
-                                            .pickFiles(type: FileType.image)
-                                            .then((value) {
-                                          setState(() {
-                                            _profilePicture =
-                                                File(value!.files.single.path!);
-                                          });
-                                        });
-                                      },
-                                      child: Icon(Icons.add_circle,
-                                          color: Colors.black, size: 27),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
                         ],
                       ),
                       // SizedBox(height: 10),
@@ -476,7 +433,6 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                                     _ktmImage,
                                     _drivingLicense,
                                     _aggrementLetter,
-                                    _profilePicture,
                                   );
                                   if (res.statusCode == 200) {
                                     ScaffoldMessenger.of(context).showSnackBar(

@@ -137,10 +137,10 @@ class _ProfilePageState extends State<ProfilePage> {
                               //border circle avatar black
                               backgroundColor: Colors.black,
                               radius: 30,
-                              backgroundImage: NetworkImage(
-                                //image profile
-                                "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiO",
-                              ),
+                              backgroundImage: config.user.photo == null
+                                  ? NetworkImage(
+                                      "https://firebasestorage.googleapis.com/v0/b/nunut-da274.appspot.com/o/avatar.png?alt=media&token=62dfdb20-7aa0-4ca4-badf-31c282583b1b")
+                                  : NetworkImage(config.user.photo!),
                             ),
                           ),
                           Container(
@@ -179,7 +179,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                 InkWell(
                                   onTap: () {
                                     //to detail Profile page
-                                    Navigator.pushNamed(context, '/orderList',
+                                    Navigator.pushNamed(
+                                        context, '/detailprofile',
                                         arguments: config.user);
                                   },
                                   child: Container(

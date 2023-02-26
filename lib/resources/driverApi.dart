@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:nunut_application/configuration.dart';
@@ -85,13 +86,9 @@ class DriverApi {
       String phone,
       File? ktmImage,
       File? drivingLicense,
-      File? aggrementLetter,
-      File? profilePicture) async {
+      File? aggrementLetter) async {
     // Validate the form
-    if (ktmImage == null ||
-        drivingLicense == null ||
-        aggrementLetter == null ||
-        profilePicture == null) {
+    if (ktmImage == null || drivingLicense == null || aggrementLetter == null) {
       print("Please fill all the field");
       return http.StreamedResponse(Stream.empty(), 400);
     }
@@ -102,6 +99,8 @@ class DriverApi {
     request.fields['phone'] = user.phone;
     request.fields['nik'] = user.nik;
     request.fields['user_id'] = user.id!;
+    request.fields['image'] = user.photo ??
+        "https://firebasestorage.googleapis.com/v0/b/nunut-da274.appspot.com/o/avatar.png?alt=media&token=62dfdb20-7aa0-4ca4-badf-31c282583b1b";
     request.files.add(
       http.MultipartFile(
         'aggrement_letter',
@@ -124,14 +123,6 @@ class DriverApi {
         ktmImage.readAsBytes().asStream(),
         ktmImage.lengthSync(),
         filename: ktmImage.path.split('/').last,
-      ),
-    );
-    request.files.add(
-      await http.MultipartFile(
-        'image',
-        profilePicture.readAsBytes().asStream(),
-        profilePicture.lengthSync(),
-        filename: profilePicture.path.split('/').last,
       ),
     );
 

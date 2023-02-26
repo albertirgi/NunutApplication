@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:nunut_application/models/muser.dart';
 import 'package:nunut_application/resources/userApi.dart';
@@ -17,6 +20,8 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
   TextEditingController fullName = TextEditingController();
   TextEditingController nik = TextEditingController();
   TextEditingController noTelp = TextEditingController();
+  File? _profilePicture;
+
   @override
   Widget build(BuildContext context) {
     UserModel user = ModalRoute.of(context)!.settings.arguments as UserModel;
@@ -104,9 +109,10 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                                   //border circle avatar black
                                   backgroundColor: Colors.black,
                                   radius: 90,
-                                  backgroundImage: NetworkImage(
-                                      //image profile
-                                      "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiO"),
+                                  backgroundImage: _profilePicture == null
+                                      ? NetworkImage(
+                                          "https://firebasestorage.googleapis.com/v0/b/nunut-da274.appspot.com/o/avatar.png?alt=media&token=62dfdb20-7aa0-4ca4-badf-31c282583b1b")
+                                      : Image.file(_profilePicture!).image,
                                 ),
                               ),
                               //icon add bottom of image profile
@@ -114,7 +120,17 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                                 bottom: -2,
                                 right: 20,
                                 child: InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    //upload image profile
+                                    FilePicker.platform
+                                        .pickFiles(type: FileType.image)
+                                        .then((value) {
+                                      setState(() {
+                                        _profilePicture =
+                                            File(value!.files.single.path!);
+                                      });
+                                    });
+                                  },
                                   child: Icon(Icons.add_circle,
                                       color: Colors.black, size: 27),
                                 ),
@@ -308,7 +324,10 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                                     email: user.email,
                                     name: fullName.text,
                                     nik: nik.text,
-                                    phone: noTelp.text));
+                                    phone: noTelp.text),
+                                profile_picture: _profilePicture == null
+                                    ? File("path")
+                                    : _profilePicture!);
                             Navigator.pop(context);
                           })),
                 ],
