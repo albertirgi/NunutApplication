@@ -62,7 +62,7 @@ class _SuccessState extends State<Success> {
                     height: 60,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.popUntil(context, ModalRoute.withName('/main'));
+                        Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
                       },
                       child: NunutText(
                         title: "Kembali ke Halaman Utama",

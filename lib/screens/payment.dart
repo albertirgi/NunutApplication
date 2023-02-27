@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/models/mrideschedule.dart';
+import 'package:nunut_application/models/mwallet.dart';
+import 'package:nunut_application/resources/midtransApi.dart';
+import 'package:nunut_application/resources/rideRequestApi.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutBackground.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:intl/intl.dart';
+import 'package:nunut_application/widgets/popUpLoading.dart';
 
 class Payment extends StatefulWidget {
   RideSchedule rideSchedule;
@@ -307,19 +311,24 @@ class _PaymentState extends State<Payment> {
                       ),
                       NunutText(title: "Saldo Anda", color: Colors.white, fontWeight: FontWeight.w500, size: 14),
                       Spacer(),
-                      Container(
-                        margin: EdgeInsets.only(right: 4),
-                        padding: EdgeInsets.only(left: 16, right: 8, top: 8, bottom: 8),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(24),
-                        ),
-                        child: Row(
-                          children: [
-                            NunutText(title: "IDR " + config.user.wallet.toString(), fontWeight: FontWeight.bold, size: 14),
-                            SizedBox(width: 1),
-                            Icon(Icons.add, color: Colors.black, size: 14),
-                          ],
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/nunutPay');
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(right: 4),
+                          padding: EdgeInsets.only(left: 16, right: 8, top: 8, bottom: 8),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                          child: Row(
+                            children: [
+                              NunutText(title: "IDR " + config.user.wallet.toString(), fontWeight: FontWeight.bold, size: 14),
+                              SizedBox(width: 1),
+                              Icon(Icons.add, color: Colors.black, size: 14),
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -333,8 +342,32 @@ class _PaymentState extends State<Payment> {
                   borderRadius: 10,
                   borderColor: Colors.transparent,
                   fontWeight: FontWeight.bold,
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/nunutPay');
+                  onPressed: () async {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return PopUpLoading(title: "Transaksi Sedang Diproses...", subtitle: "Harap Menunggu...");
+                      },
+                    );
+
+                    bool result = await rideRequestApi.addRideRequest(rideScheduleId: widget.rideSchedule.id.toString(), status_ride: "ONGOING", user_id: config.user.id!, checkUrl: true);
+                    if (result) {
+                      Wallet walletData = await MidtransApi.getWallet(config.user.id!);
+                      double numValue = double.parse(walletData.balance.toString());
+                      NumberFormat currencyFormatter = NumberFormat.simpleCurrency(locale: "id", decimalDigits: 0, name: "");
+                      config.user.wallet = currencyFormatter.format(numValue);
+
+                      Navigator.pushNamed(context, '/success', arguments: {
+                        'title': "Pembayaran Berhasil!",
+                        'description': "Pembayaran Anda Berhasil Dilakukan",
+                      });
+                    } else {
+                      Navigator.pushNamed(context, '/success', arguments: {
+                        'title': "Pembayaran Gagal!",
+                        'description': "Pembayaran Anda Gagal Dilakukan",
+                      });
+                    }
                   },
                 ),
                 SizedBox(height: 20),
