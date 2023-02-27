@@ -1,5 +1,6 @@
 import 'package:nunut_application/models/mdriver.dart';
 import 'package:nunut_application/models/mmaplocation.dart';
+import 'package:nunut_application/models/mriderequest.dart';
 import 'package:nunut_application/models/mvehicle.dart';
 
 class RideSchedule {
@@ -13,6 +14,7 @@ class RideSchedule {
   dynamic driver;
   dynamic vehicle;
   int? capacity;
+  List<RideRequest>? rideRequest;
   bool? isActive;
 
   RideSchedule({
@@ -26,6 +28,7 @@ class RideSchedule {
     this.driver,
     this.vehicle,
     this.capacity,
+    this.rideRequest,
     this.isActive,
   });
 
@@ -49,6 +52,7 @@ class RideSchedule {
               : Vehicle.fromJson(parsedJson["vehicle_id"])
           : null,
       capacity: parsedJson["capacity"] as int? ?? 0,
+      rideRequest: parsedJson["ride_request_id"] != null ? (parsedJson["ride_request_id"] as List).map((i) => RideRequest.fromJson(i)).toList() : null,
       isActive: parsedJson["is_active"] as bool? ?? false,
     );
   }
@@ -73,6 +77,9 @@ class RideSchedule {
       data['vehicle_id'] = this.vehicle!.toJson();
     }
     data['capacity'] = this.capacity;
+    if (this.rideRequest != null) {
+      data['ride_request_id'] = this.rideRequest!.map((v) => v.toJson()).toList();
+    }
     data['is_active'] = this.isActive;
     return data;
   }

@@ -67,15 +67,14 @@ class _RideShareState extends State<RideShare> {
       _page = 1;
     });
 
-    // tempParameter.isNotEmpty ? tempParameter += "&" : tempParameter += "";
-    String initialParameter =
-        widget.fromUKP ? "user=${config.user.id}&driver&vehicle&meeting_point=UniversitasKristenPetra" : "user=${config.user.id}&driver&vehicle&destination=UniversitasKristenPetra";
+    String initialParameter = "ride_request&user=${config.user.id}&driver&vehicle";
+    initialParameter += widget.fromUKP ? "&meeting_point=UniversitasKristenPetra" : "&destination=UniversitasKristenPetra";
     tempParameter = initialParameter + tempParameter;
 
     rideScheduleList.clear();
     rideScheduleList = await rideScheduleApi.getRideScheduleList(
       parameter: tempParameter,
-      // page: _page,
+      page: _page,
       checkUrl: true,
     );
 
@@ -91,10 +90,13 @@ class _RideShareState extends State<RideShare> {
         isLoading = true;
       });
 
+      String initialParameter = "ride_request&user=${config.user.id}&driver&vehicle";
+      initialParameter += widget.fromUKP ? "&meeting_point=UniversitasKristenPetra" : "&destination=UniversitasKristenPetra";
+
       rideSchedulePageList.clear();
       rideSchedulePageList = await rideScheduleApi.getRideScheduleList(
-        parameter: widget.fromUKP ? "user=${config.user.id}&driver&vehicle&meeting_point=UniversitasKristenPetra" : "user=${config.user.id}&driver&vehicle&destination=UniversitasKristenPetra",
-        // page: _page,
+        parameter: initialParameter,
+        page: _page,
         checkUrl: true,
       );
       _page++;
@@ -633,6 +635,8 @@ class _RideShareState extends State<RideShare> {
                                               name: rideScheduleList[index].driver!.name,
                                               destination: rideScheduleList[index].destination!.name!,
                                               isBookmarked: rideScheduleList[index].isBookmarked!,
+                                              capacity: rideScheduleList[index].capacity!,
+                                              totalBooked: rideScheduleList[index].rideRequest!.length,
                                               price: NumberFormat.currency(
                                                 locale: 'id',
                                                 symbol: '',
@@ -705,8 +709,6 @@ class _RideShareState extends State<RideShare> {
         : pickUpController.text.isNotEmpty
             ? _parameter += "&meeting_point=${pickUpController.text.replaceAll(" ", "")}"
             : _parameter += "";
-
-    print("parameter: $_parameter");
 
     return _parameter;
   }
