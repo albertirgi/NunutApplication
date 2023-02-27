@@ -5,7 +5,16 @@ import 'package:nunut_application/widgets/nunutText.dart';
 class PopUpLoading extends StatelessWidget {
   final String title;
   final String subtitle;
-  const PopUpLoading({super.key, required this.title, required this.subtitle});
+  final double height;
+  final double width;
+
+  const PopUpLoading({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    this.height = 200,
+    this.width = 120,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +22,8 @@ class PopUpLoading extends StatelessWidget {
       backgroundColor: Colors.transparent,
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 20),
-        height: 200,
-        width: 120,
+        height: height,
+        width: width,
         decoration: BoxDecoration(
           color: nunutPrimaryColor,
           borderRadius: BorderRadius.circular(18),
