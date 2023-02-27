@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/resources/rideRequestApi.dart';
+import 'package:nunut_application/screens/bookingDetail.dart';
 import 'package:nunut_application/screens/orderDetail.dart';
 import 'package:nunut_application/screens/rideDetail.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
@@ -214,9 +215,9 @@ class _OrderListState extends State<OrderList> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => OrderDetail(
-                                            rideScheduleId:
-                                                rideScheduleList[index].id!,
+                                          builder: (context) => BookingDetail(
+                                            rideSchedule:
+                                                rideScheduleList[index],
                                           ),
                                         ),
                                       );

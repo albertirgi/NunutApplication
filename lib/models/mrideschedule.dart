@@ -1,5 +1,6 @@
 import 'package:nunut_application/models/mdriver.dart';
 import 'package:nunut_application/models/mmaplocation.dart';
+import 'package:nunut_application/models/mriderequest.dart';
 import 'package:nunut_application/models/mvehicle.dart';
 
 class RideSchedule {
@@ -14,6 +15,7 @@ class RideSchedule {
   dynamic vehicle;
   int? capacity;
   bool? isActive;
+  Map<String, dynamic>? rideRequestList;
 
   RideSchedule({
     this.date,
@@ -27,6 +29,7 @@ class RideSchedule {
     this.vehicle,
     this.capacity,
     this.isActive,
+    this.rideRequestList,
   });
 
   factory RideSchedule.fromJson(Map<String, dynamic> parsedJson) {
@@ -35,9 +38,15 @@ class RideSchedule {
       time: parsedJson["time"] as String? ?? "",
       id: parsedJson["ride_schedule_id"] as String? ?? "",
       price: parsedJson["price"] as int? ?? 0,
-      meetingPoint: parsedJson["meeting_point"] != null ? MapLocation.fromJson(parsedJson["meeting_point"]) : null,
-      destination: parsedJson["destination"] != null ? MapLocation.fromJson(parsedJson["destination"]) : null,
-      isBookmarked: parsedJson.containsKey("is_bookmarked") ? parsedJson["is_bookmarked"] as bool? ?? false : false,
+      meetingPoint: parsedJson["meeting_point"] != null
+          ? MapLocation.fromJson(parsedJson["meeting_point"])
+          : null,
+      destination: parsedJson["destination"] != null
+          ? MapLocation.fromJson(parsedJson["destination"])
+          : null,
+      isBookmarked: parsedJson.containsKey("is_bookmarked")
+          ? parsedJson["is_bookmarked"] as bool? ?? false
+          : false,
       driver: parsedJson["driver_id"] != null
           ? parsedJson["driver_id"].runtimeType == String
               ? parsedJson["driver_id"] as String? ?? ""
@@ -50,6 +59,9 @@ class RideSchedule {
           : null,
       capacity: parsedJson["capacity"] as int? ?? 0,
       isActive: parsedJson["is_active"] as bool? ?? false,
+      rideRequestList: parsedJson["ride_request"] != null
+          ? parsedJson["ride_request"]
+          : null,
     );
   }
 

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:nunut_application/configuration.dart';
+import 'package:nunut_application/functions.dart';
 import 'package:nunut_application/models/mbookmark.dart';
 import 'package:nunut_application/models/mresult.dart';
 
@@ -21,6 +22,11 @@ class RideScheduleApi {
     var price = 10000;
     var meetingPoint = await mapLocationApi.getMapListById(meeting_point_id);
     var destination = await mapLocationApi.getMapListById(destination_id);
+    double startLat = double.parse(meetingPoint.latitude.replaceAll('.', ''));
+    double startLong = double.parse(meetingPoint.longitude.replaceAll('.', ''));
+    double endLat = double.parse(destination.latitude.replaceAll('.', ''));
+    double endLong = double.parse(destination.longitude.replaceAll('.', ''));
+    var distance = startCalculate(startLat, startLong, endLat, endLong);
     var body = {
       'date': date,
       'time': time,
@@ -32,6 +38,7 @@ class RideScheduleApi {
       'driver_id': driver_id,
       'price': price,
       'is_active': true,
+      'distance': distance,
     };
     var bodyJson = json.encode(body);
 

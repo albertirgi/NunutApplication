@@ -144,12 +144,19 @@ class _NunutPayState extends State<NunutPay> {
                                 crossAxisAlignment: CrossAxisAlignment.baseline,
                                 children: [
                                   NunutText(
-                                      title: "Rp", isTitle: true, size: 24),
+                                    title: "Rp",
+                                    isTitle: true,
+                                    size: 24,
+                                  ),
                                   SizedBox(width: 5),
-                                  NunutText(
+                                  Expanded(
+                                    child: NunutText(
                                       title: config.user.wallet.toString(),
                                       isTitle: true,
-                                      size: 65)
+                                      size: 65,
+                                      maxLines: 1,
+                                    ),
+                                  )
                                 ],
                               ),
                             ],
@@ -243,6 +250,11 @@ class _NunutPayState extends State<NunutPay> {
                                               NeverScrollableScrollPhysics(),
                                           shrinkWrap: true,
                                           itemBuilder: (context, index) {
+                                            String status =
+                                                transactions[index].status ??
+                                                    "Pending";
+                                            status = status[0].toUpperCase() +
+                                                status.substring(1);
                                             return Row(
                                               children: [
                                                 Icon(Icons.arrow_upward),
@@ -283,7 +295,8 @@ class _NunutPayState extends State<NunutPay> {
                                                               ).format(
                                                                   transactions[
                                                                           index]
-                                                                      .amount)
+                                                                      .amount) +
+                                                              " ($status)"
                                                           : "- " +
                                                               NumberFormat
                                                                   .currency(
@@ -294,7 +307,8 @@ class _NunutPayState extends State<NunutPay> {
                                                               ).format(
                                                                   transactions[
                                                                           index]
-                                                                      .amount),
+                                                                      .amount) +
+                                                              " ($status)",
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     ),

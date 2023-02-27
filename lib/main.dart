@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:nunut_application/models/mmaplocation.dart';
+import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/screens/addRideSchedule.dart';
 import 'package:nunut_application/screens/batalkanTumpangan.dart';
 import 'package:nunut_application/screens/bookingDetail.dart';
@@ -73,7 +75,17 @@ class MyApp extends StatelessWidget {
         '/': (context) => const SplashScreen(),
         '/main': (context) => const MainPage(),
         '/login': (context) => const LoginPage(),
-        '/bookingDetail': (context) => const BookingDetail(),
+        '/bookingDetail': (context) => BookingDetail(
+              rideSchedule: RideSchedule(
+                date: "",
+                time: "",
+                id: "",
+                price: 10000,
+                meetingPoint: MapLocation(latitude: "", longitude: ""),
+                destination: MapLocation(latitude: "", longitude: ""),
+                driver: "",
+              ),
+            ),
         '/promotionList': (context) => const PromotionList(),
         '/promotionDetail': (context) => const PromotionDetail(),
         '/orderList': (context) => const OrderList(),
