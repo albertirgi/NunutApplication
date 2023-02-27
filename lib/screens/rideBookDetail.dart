@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/screens/payment.dart';
@@ -21,7 +18,8 @@ class _RideBookDetailState extends State<RideBookDetail> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    availableSeat = widget.rideSchedule.capacity! - widget.rideSchedule.rideRequest!.length;
+    availableSeat =
+        widget.rideSchedule.capacity! - widget.rideSchedule.rideRequest!.length;
   }
 
   @override
@@ -36,7 +34,9 @@ class _RideBookDetailState extends State<RideBookDetail> {
             fontWeight: FontWeight.bold,
             size: 35,
           ),
-          NunutText(title: "${widget.rideSchedule.vehicle.transportationType} | ${widget.rideSchedule.vehicle.licensePlate}"),
+          NunutText(
+              title:
+                  "${widget.rideSchedule.vehicle.transportationType} | ${widget.rideSchedule.vehicle.licensePlate}"),
           SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -101,15 +101,23 @@ class _RideBookDetailState extends State<RideBookDetail> {
               children: [
                 Expanded(
                   flex: 1,
-                  child: NunutText(title: widget.rideSchedule.date.toString(), maxLines: 2, fontWeight: FontWeight.bold),
+                  child: NunutText(
+                      title: widget.rideSchedule.date.toString(),
+                      maxLines: 2,
+                      fontWeight: FontWeight.bold),
                 ),
                 Expanded(
                   flex: 1,
-                  child: NunutText(title: widget.rideSchedule.time.toString(), maxLines: 2, fontWeight: FontWeight.bold),
+                  child: NunutText(
+                      title: widget.rideSchedule.time.toString(),
+                      maxLines: 2,
+                      fontWeight: FontWeight.bold),
                 ),
                 Expanded(
                   flex: 1,
-                  child: NunutText(title: availableSeat.toString(), fontWeight: FontWeight.bold),
+                  child: NunutText(
+                      title: availableSeat.toString(),
+                      fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -137,11 +145,16 @@ class _RideBookDetailState extends State<RideBookDetail> {
               children: [
                 Expanded(
                   flex: 1,
-                  child: NunutText(title: widget.rideSchedule.meetingPoint!.name!.toString(), maxLines: 2, fontWeight: FontWeight.bold),
+                  child: NunutText(
+                      title: widget.rideSchedule.meetingPoint!.name!.toString(),
+                      maxLines: 2,
+                      fontWeight: FontWeight.bold),
                 ),
                 Expanded(
                   flex: 1,
-                  child: NunutText(title: widget.rideSchedule.destination!.name!, fontWeight: FontWeight.bold),
+                  child: NunutText(
+                      title: widget.rideSchedule.destination!.name!,
+                      fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -163,7 +176,7 @@ class _RideBookDetailState extends State<RideBookDetail> {
                     ),
                     content: Material(
                       child: Container(
-                        height: 300,
+                        height: 350,
                         decoration: BoxDecoration(
                           color: Colors.white,
                         ),
@@ -178,13 +191,16 @@ class _RideBookDetailState extends State<RideBookDetail> {
                                 child: Icon(Icons.close),
                               ),
                             ),
-                            NunutText(title: "Anda akan memesan perjalanan : ", fontWeight: FontWeight.bold),
+                            NunutText(
+                                title: "Anda akan memesan perjalanan : ",
+                                fontWeight: FontWeight.bold),
                             SizedBox(height: 16),
                             Row(
                               children: [
                                 Icon(Icons.date_range_outlined),
                                 SizedBox(width: 8),
-                                NunutText(title: widget.rideSchedule.date.toString()),
+                                NunutText(
+                                    title: widget.rideSchedule.date.toString()),
                               ],
                             ),
                             SizedBox(height: 12),
@@ -192,7 +208,8 @@ class _RideBookDetailState extends State<RideBookDetail> {
                               children: [
                                 Icon(Icons.timeline),
                                 SizedBox(width: 8),
-                                NunutText(title: widget.rideSchedule.time.toString()),
+                                NunutText(
+                                    title: widget.rideSchedule.time.toString()),
                               ],
                             ),
                             SizedBox(height: 12),
@@ -201,7 +218,9 @@ class _RideBookDetailState extends State<RideBookDetail> {
                                 Icon(Icons.location_city_outlined),
                                 SizedBox(width: 8),
                                 Expanded(
-                                  child: NunutText(title: "${widget.rideSchedule.meetingPoint!.name} - ${widget.rideSchedule.destination!.name}"),
+                                  child: NunutText(
+                                      title:
+                                          "${widget.rideSchedule.meetingPoint!.name} - ${widget.rideSchedule.destination!.name}"),
                                 )
                               ],
                             ),
@@ -210,7 +229,8 @@ class _RideBookDetailState extends State<RideBookDetail> {
                               children: [
                                 Icon(Icons.people),
                                 SizedBox(width: 8),
-                                NunutText(title: widget.rideSchedule.driver.name),
+                                NunutText(
+                                    title: widget.rideSchedule.driver.name),
                               ],
                             ),
                             // SizedBox(height: 12),
@@ -277,7 +297,8 @@ class _RideBookDetailState extends State<RideBookDetail> {
               child: Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
+                    margin: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.1),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       boxShadow: [
@@ -292,7 +313,8 @@ class _RideBookDetailState extends State<RideBookDetail> {
                       backgroundColor: Colors.white,
                       radius: 110,
                       child: CircleAvatar(
-                        backgroundImage: NetworkImage(widget.rideSchedule.driver.image),
+                        backgroundImage:
+                            NetworkImage(widget.rideSchedule.driver.image),
                         radius: 100,
                       ), //CircleAvatar
                     ),
