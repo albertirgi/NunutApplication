@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/configuration.dart';
@@ -17,7 +20,6 @@ class RideBookmark extends StatefulWidget {
 
 class _RideBookmarkState extends State<RideBookmark> {
   List<Bookmark> bookmarkedList = [];
-  // List<RideSchedule> rideScheduleList = [];
   bool? bookmarkedListLoading;
 
   void initState() {
@@ -31,7 +33,6 @@ class _RideBookmarkState extends State<RideBookmark> {
     });
 
     bookmarkedList = await rideScheduleApi.getBookmarkList(userId: config.user.id!, checkUrl: true);
-
     setState(() {
       bookmarkedListLoading = false;
     });
@@ -99,6 +100,8 @@ class _RideBookmarkState extends State<RideBookmark> {
                                   decimalDigits: 0,
                                 ).format(bookmarkedList[index].rideSchedule.price!),
                                 isBookmarked: true,
+                                capacity: bookmarkedList[index].rideSchedule.capacity!,
+                                totalBooked: bookmarkedList[index].rideSchedule.rideRequest!.length,
                                 IconOnTap: () {
                                   showDialog<String>(
                                     context: context,

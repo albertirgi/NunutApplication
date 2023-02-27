@@ -13,6 +13,8 @@ class TwoColumnView extends StatelessWidget {
   final String destination;
   final String price;
   final bool isBookmarked;
+  final int capacity;
+  final int totalBooked;
   final Function()? IconOnTap;
 
   const TwoColumnView({
@@ -24,6 +26,8 @@ class TwoColumnView extends StatelessWidget {
     required this.price,
     this.isBookmarked = false,
     this.IconOnTap,
+    required this.capacity,
+    required this.totalBooked,
   });
 
   @override
@@ -116,7 +120,7 @@ class TwoColumnView extends StatelessWidget {
                   Row(
                     children: [
                       Icon(Icons.person, size: 14),
-                      Text(" 2/4", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                      NunutText(title: totalBooked.toString() + "/" + capacity.toString(), fontWeight: FontWeight.bold, size: 12),
                       Spacer(),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.baseline,

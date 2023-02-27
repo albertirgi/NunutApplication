@@ -14,6 +14,7 @@ class RideSchedule {
   dynamic driver;
   dynamic vehicle;
   int? capacity;
+  List<RideRequest>? rideRequest;
   bool? isActive;
   Map<String, dynamic>? rideRequestList;
 
@@ -28,6 +29,7 @@ class RideSchedule {
     this.driver,
     this.vehicle,
     this.capacity,
+    this.rideRequest,
     this.isActive,
     this.rideRequestList,
   });
@@ -58,6 +60,7 @@ class RideSchedule {
               : Vehicle.fromJson(parsedJson["vehicle_id"])
           : null,
       capacity: parsedJson["capacity"] as int? ?? 0,
+      rideRequest: parsedJson["ride_request_id"] != null ? (parsedJson["ride_request_id"] as List).map((i) => RideRequest.fromJson(i)).toList() : null,
       isActive: parsedJson["is_active"] as bool? ?? false,
       rideRequestList: parsedJson["ride_request"] != null
           ? parsedJson["ride_request"]
@@ -85,6 +88,9 @@ class RideSchedule {
       data['vehicle_id'] = this.vehicle!.toJson();
     }
     data['capacity'] = this.capacity;
+    if (this.rideRequest != null) {
+      data['ride_request_id'] = this.rideRequest!.map((v) => v.toJson()).toList();
+    }
     data['is_active'] = this.isActive;
     return data;
   }

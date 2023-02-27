@@ -9,15 +9,10 @@ import 'package:http/http.dart' as http;
 import '../models/mrideschedule.dart';
 
 class RideRequestApi {
-  Future<List<RideRequest>> getRideRequestList(
-      {required String rideScheduleId,
-      String parameter = "",
-      bool checkUrl = false}) async {
+  Future<List<RideRequest>> getRideRequestList({required String rideScheduleId, String parameter = "", bool checkUrl = false}) async {
     String _parameter = "";
     if (parameter.isNotEmpty) _parameter += "&$parameter";
-    var url = Uri.parse(config.baseUrl +
-        '/ride-request?ride_schedule=${rideScheduleId}' +
-        _parameter);
+    var url = Uri.parse(config.baseUrl + '/ride-request?ride_schedule=${rideScheduleId}' + _parameter);
 
     if (checkUrl) print(url);
 
@@ -36,8 +31,7 @@ class RideRequestApi {
     return rideRequestList;
   }
 
-  Future<List<RideSchedule>> getOrderList(
-      {String parameter = "", bool checkUrl = false, int page = 0}) async {
+  Future<List<RideSchedule>> getOrderList({String parameter = "", bool checkUrl = false, int page = 0}) async {
     String _parameter = "";
     if (page > 0) _parameter = "/list/$page";
     if (parameter.isNotEmpty) _parameter += "?$parameter";
@@ -58,6 +52,37 @@ class RideRequestApi {
       });
     }
     return rideScheduleList;
+  }
+
+  //post ride request
+  Future<bool> addRideRequest({required String rideScheduleId, required String status_ride, required String user_id, bool checkUrl = false}) async {
+    var url = Uri.parse(config.baseUrl + '/ride-request');
+
+    if (checkUrl) print(url);
+    var body = jsonEncode({
+      "ride_schedule_id": rideScheduleId,
+      "status_ride": status_ride,
+      "user_id": user_id,
+    });
+    print(body);
+    // return true;
+
+    var response = await http.post(
+      url,
+      headers: {"Content-Type": "application/json"},
+      body: body,
+    );
+
+    Result result;
+
+    result = Result.fromJson(json.decode(response.body));
+    print(json.decode(response.body));
+
+    if (result.status == 200) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
 
