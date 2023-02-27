@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/screens/payment.dart';
@@ -13,11 +16,12 @@ class RideBookDetail extends StatefulWidget {
 }
 
 class _RideBookDetailState extends State<RideBookDetail> {
+  int availableSeat = 0;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    print(widget.rideSchedule.driver.image);
+    availableSeat = widget.rideSchedule.capacity! - widget.rideSchedule.rideRequest!.length;
   }
 
   @override
@@ -105,7 +109,7 @@ class _RideBookDetailState extends State<RideBookDetail> {
                 ),
                 Expanded(
                   flex: 1,
-                  child: NunutText(title: widget.rideSchedule.capacity.toString(), fontWeight: FontWeight.bold),
+                  child: NunutText(title: availableSeat.toString(), fontWeight: FontWeight.bold),
                 ),
               ],
             ),
