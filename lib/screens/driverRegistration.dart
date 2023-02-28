@@ -1,10 +1,10 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/resources/driverApi.dart';
 import 'package:nunut_application/resources/userApi.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
-import 'package:nunut_application/widgets/nunutTextFormField.dart';
 import 'dart:io';
 import '../models/muser.dart';
 import '../widgets/nunutText.dart';
@@ -435,20 +435,26 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                                     _aggrementLetter,
                                   );
                                   if (res.statusCode == 200) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                            "Pendaftaran driver berhasil. Silahkan tunggu konfirmasi dari admin"),
-                                      ),
-                                    );
+                                    Fluttertoast.showToast(
+                                        msg:
+                                            "Pendaftaran driver berhasil. Silahkan tunggu konfirmasi dari admin",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.green,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0);
                                     Navigator.pop(context);
                                   } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                            "Pendaftaran driver gagal. Silahkan coba lagi"),
-                                      ),
-                                    );
+                                    Fluttertoast.showToast(
+                                        msg:
+                                            "Pendaftaran driver gagal. Silahkan coba lagi",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.green,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0);
                                   }
                                   setState(() {
                                     _isLoading = false;

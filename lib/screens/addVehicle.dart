@@ -1,8 +1,6 @@
-import 'dart:developer';
-
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:bordered_text/bordered_text.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:month_year_picker/month_year_picker.dart';
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/models/muser.dart';
@@ -485,20 +483,26 @@ class _AddVehicleState extends State<AddVehicle> {
                           );
                           VehicleApi.addVehicle(data).then((value) {
                             if (value['status'] == 200) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(value['message']),
-                                ),
-                              );
+                              Fluttertoast.showToast(
+                                  msg: Text(value['message']).toString(),
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.green,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
                               Navigator.pop(context);
                               Navigator.pop(context);
                               Navigator.pushNamed(context, '/myVehicle');
                             } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(value['message']),
-                                ),
-                              );
+                              Fluttertoast.showToast(
+                                  msg: Text(value['message']).toString(),
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.green,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
                             }
                           });
                         },

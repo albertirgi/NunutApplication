@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
@@ -197,12 +198,15 @@ class _RegisterPageState extends State<RegisterPage> {
                                   phone: noTelp.text,
                                 );
 
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text("Account Created"),
-                                    duration: Duration(seconds: 1),
-                                  ),
-                                );
+                                Fluttertoast.showToast(
+                                    msg:
+                                        "Akun berhasil dibuat, selamat menggunakan NUNUT !",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.green,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
                                 Future.delayed(
                                   Duration(seconds: 2),
                                   () {
@@ -213,32 +217,44 @@ class _RegisterPageState extends State<RegisterPage> {
                               },
                             );
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text("Password tidak sama"),
-                              ),
-                            );
+                            Fluttertoast.showToast(
+                                msg: "Password tidak sama",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.green,
+                                textColor: Colors.white,
+                                fontSize: 16.0);
                           }
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text("Password minimal 8 karakter"),
-                            ),
-                          );
+                          Fluttertoast.showToast(
+                              msg: "Password minimal 8 karakter",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.green,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
                         }
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text("Email tidak valid"),
-                          ),
-                        );
+                        Fluttertoast.showToast(
+                            msg: "Email tidak ditulis dengan benar",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.green,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
                       }
                     } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Semua Data harus diisi"),
-                        ),
-                      );
+                      Fluttertoast.showToast(
+                          msg: "Semua field harus diisi",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.green,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
                     }
                   },
                 ),

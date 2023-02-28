@@ -292,6 +292,33 @@ class _RideShareState extends State<RideShare> {
                               },
                             ),
                           ),
+                          SizedBox(width: 10),
+                          Container(
+                            width: 40,
+                            height: 40,
+                            // margin:
+                            //     EdgeInsets.only(top: 62, bottom: 10, right: 10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(24),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: Offset(
+                                      0, 0), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: IconButton(
+                              icon: Icon(Icons.list,
+                                  color: Colors.black, size: 18),
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/orderList');
+                              },
+                            ),
+                          ),
                           // SizedBox(width: 10),
                           //icon task
                           // Container(

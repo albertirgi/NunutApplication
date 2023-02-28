@@ -1,13 +1,9 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/models/muser.dart';
 import 'package:nunut_application/resources/authApi.dart';
 import 'package:nunut_application/resources/midtransApi.dart';
-import 'package:nunut_application/resources/walletApi.dart';
-import 'package:nunut_application/screens/snap.dart';
 import 'package:nunut_application/screens/topUpPayment.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutBackground.dart';
@@ -450,13 +446,14 @@ class _TopUpState extends State<TopUp> {
                           isLoading = false;
                         });
                         if (res["status"] == 500 || res["status"] == 400) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                  "Transaction failed. Please try again later"),
-                              backgroundColor: Colors.red,
-                            ),
-                          );
+                          Fluttertoast.showToast(
+                              msg: "Transaksi gagal, silahkan coba lagi",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.green,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
                           return;
                         }
                         Navigator.push(

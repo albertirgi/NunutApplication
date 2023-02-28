@@ -1,13 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/resources/midtransApi.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutBackground.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
-import 'package:nunut_application/widgets/nunutRadioButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
-import 'package:nunut_application/widgets/nunutTextFormField.dart';
 import 'package:intl/intl.dart';
 
 class WithdrawConfirmation extends StatefulWidget {
@@ -193,20 +190,23 @@ class _WithdrawConfirmationState extends State<WithdrawConfirmation> {
                               args["beneficiary"], _total.toInt())
                           .then((value) {
                         if (value.status == 200) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content:
-                                  Text('Pengajuan withdraw sedang diproses'),
-                              duration: Duration(seconds: 1),
-                            ),
-                          );
+                          Fluttertoast.showToast(
+                              msg: "Pengajuan withdraw berhasil",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.green,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Pengajuan withdraw gagal'),
-                              duration: Duration(seconds: 1),
-                            ),
-                          );
+                          Fluttertoast.showToast(
+                              msg: "Pengajuan withdraw gagal",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.green,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
                         }
                         Navigator.popUntil(
                             context, ModalRoute.withName('/nunutPay'));

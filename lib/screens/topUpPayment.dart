@@ -1,7 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/resources/midtransApi.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
@@ -217,35 +216,40 @@ class _TopUpPaymentState extends State<TopUpPayment> {
                         _isLoading = false;
                       });
                       if (res["status"] == 500 || res["status"] == 400) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                                "Error fetch transaction. Please try again later"),
-                            backgroundColor: Colors.red,
-                          ),
-                        );
+                        Fluttertoast.showToast(
+                            msg:
+                                "Gagal memuat data transaksi, silahkan coba lagi",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.green,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
                         return;
                       }
                       if (res["data"]["status"] == "settlement") {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                                "Transaction success. Please wait for a moment"),
+                        Fluttertoast.showToast(
+                            msg:
+                                "Transaksi berhasil, mohon tunggu beberapa saat",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
                             backgroundColor: Colors.green,
-                          ),
-                        );
+                            textColor: Colors.white,
+                            fontSize: 16.0);
                         Navigator.popUntil(
                             context, ModalRoute.withName('/nunutPay'));
                         Navigator.pop(context);
                         Navigator.pushNamed(context, '/nunutPay');
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                                "Transaction failed. Please try again later"),
-                            backgroundColor: Colors.red,
-                          ),
-                        );
+                        Fluttertoast.showToast(
+                            msg: "Transaksi gagal, silahkan coba lagi",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.green,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
                         Navigator.popUntil(
                             context, ModalRoute.withName('/nunutPay'));
                         Navigator.pop(context);
@@ -283,9 +287,14 @@ class _TopUpPaymentState extends State<TopUpPayment> {
               onTap: () {
                 Clipboard.setData(new ClipboardData(
                     text: widget.data["data"]["biller_code"]));
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text("Copied to clipboard"),
-                ));
+                Fluttertoast.showToast(
+                    msg: "Disalin ke clipboard",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.green,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
               },
               child: Text(
                 "Copy",
@@ -315,9 +324,14 @@ class _TopUpPaymentState extends State<TopUpPayment> {
               onTap: () {
                 Clipboard.setData(
                     new ClipboardData(text: widget.data["data"]["bill_key"]));
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text("Copied to clipboard"),
-                ));
+                Fluttertoast.showToast(
+                    msg: "Disalin ke clipboard",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.green,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
               },
               child: Text(
                 "Copy",
@@ -354,9 +368,14 @@ class _TopUpPaymentState extends State<TopUpPayment> {
               onTap: () {
                 Clipboard.setData(new ClipboardData(
                     text: widget.data["data"]["permata_va_number"]));
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text("Copied to clipboard"),
-                ));
+                Fluttertoast.showToast(
+                    msg: "Disalin ke clipboard",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.green,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
               },
               child: Text(
                 "Copy",
@@ -393,9 +412,14 @@ class _TopUpPaymentState extends State<TopUpPayment> {
               onTap: () {
                 Clipboard.setData(new ClipboardData(
                     text: widget.data["data"]["va_numbers"][0]["va_number"]));
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text("Copied to clipboard"),
-                ));
+                Fluttertoast.showToast(
+                    msg: "Disalin ke clipboard",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.green,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
               },
               child: Text(
                 "Copy",

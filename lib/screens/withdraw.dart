@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/models/mresult.dart';
 import 'package:nunut_application/models/muser.dart';
@@ -9,7 +10,6 @@ import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutRadioButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:nunut_application/widgets/nunutTextFormField.dart';
-import 'dart:developer';
 
 class Withdraw extends StatefulWidget {
   const Withdraw({super.key});
@@ -509,21 +509,25 @@ class _WithdrawState extends State<Withdraw> {
                                                 _accountTextEditingController
                                                     .text);
                                         if (res.status == 200) {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                  "Account added successfully"),
-                                            ),
-                                          );
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  "Akun rekening berhasil ditambahkan",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.BOTTOM,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor: Colors.green,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0);
                                         } else {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                  "Error adding account. Please try again later"),
-                                            ),
-                                          );
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  "Akun rekening gagal ditambahkan",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.BOTTOM,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor: Colors.green,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0);
                                         }
                                         Navigator.pop(context);
                                         setState(() {
