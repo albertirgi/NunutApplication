@@ -1,14 +1,11 @@
-import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:nunut_application/models/mpromotion.dart';
 import 'package:nunut_application/resources/promotionApi.dart';
 import 'package:nunut_application/screens/promotionDetail.dart';
-import 'package:nunut_application/widgets/couponCard.dart';
-import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 
 import '../theme.dart';
-import 'package:intl/intl.dart';
+import '../widgets/couponCard.dart';
 
 class PromotionList extends StatefulWidget {
   const PromotionList({super.key});
@@ -18,7 +15,7 @@ class PromotionList extends StatefulWidget {
 }
 
 class _PromotionListState extends State<PromotionList> {
-  List<Promotion> promotionList = [];
+  List<PromotionModel> promotionList = [];
   bool? promotionListLoading;
 
   @override
@@ -38,6 +35,21 @@ class _PromotionListState extends State<PromotionList> {
     setState(() {
       promotionListLoading = false;
     });
+  }
+
+  String formatCurrency(dynamic number) {
+    String currency = "";
+    if (number != String) {
+      currency = "Rp " + number.toString();
+    } else {
+      currency = "Rp" + number;
+    }
+
+    RegExp regex = RegExp(r'(\d)(?=(\d{3})+(?!\d))');
+    currency = currency.replaceAllMapped(regex, (Match match) {
+      return '${match.group(1)},';
+    });
+    return currency;
   }
 
   Widget promoTerbaru(String heading, String kodePromo) {
@@ -75,154 +87,90 @@ class _PromotionListState extends State<PromotionList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: Colors.black,
-        ),
-        backgroundColor: Colors.grey[50],
-        elevation: 0,
-      ),
-      body: ListView(
-        shrinkWrap: true,
-        physics: ScrollPhysics(),
+      body: Stack(
         children: [
-          BorderedText(
-            child: Text(
-              "Promo",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 32,
-              ),
-            ),
-            strokeWidth: 3.0,
-            strokeColor: Colors.black,
-          ),
-          SizedBox(height: 40),
-          Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: 24,
-              vertical: 0,
-            ),
-            child: NunutText(
-              title: "Kode Promo",
-              fontWeight: FontWeight.bold,
+          Align(
+            alignment: Alignment.topCenter,
+            child: Image.asset(
+              "assets/lingkaranKuning_2.png",
+              width: MediaQuery.of(context).size.width * 0.815,
             ),
           ),
-          Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: 24,
-              vertical: 0,
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
+          Positioned(
+            top: MediaQuery.of(context).size.height * 0.085,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.55,
-                  child: TextField(
-                    decoration: new InputDecoration(
-                      hintText: "Kode Promo",
-                      labelStyle: new TextStyle(
-                        color: const Color(0xFF424242),
-                      ),
-                      hintStyle: TextStyle(
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.arrow_back),
                 ),
-                SizedBox(width: 8),
-                NunutButton(
-                  title: "Gunakan",
-                  onPressed: () {},
-                  widthButton: 115,
-                  heightButton: 40,
-                  borderRadius: 8,
+                SizedBox(height: 10),
+                Container(
+                  margin: EdgeInsets.only(left: 18),
+                  child: NunutText(
+                      title: "Kupon Promosi", size: 32, isTitle: true),
                 ),
               ],
             ),
           ),
-          SizedBox(height: 20),
-          // Container(
-          //   padding: EdgeInsets.symmetric(
-          //     horizontal: 24,
-          //     vertical: 0,
-          //   ),
-          //   child: NunutText(title: "Promo Terbaru"),
-          // ),
-          // SizedBox(height: 24),
-          // Container(
-          //   height: 95,
-          //   child: ListView.separated(
-          //     padding: EdgeInsets.symmetric(
-          //       horizontal: 24,
-          //       vertical: 0,
-          //     ),
-          //     shrinkWrap: true,
-          //     physics: BouncingScrollPhysics(),
-          //     scrollDirection: Axis.horizontal,
-          //     itemCount: promotionList.length,
-          //     itemBuilder: (context, index) {
-          //       return promoTerbaru("", promotionList[index].code!);
-          //     },
-          //     separatorBuilder: (context, index) {
-          //       return SizedBox(width: 8);
-          //     },
-          //   ),
-          // ),
-          SizedBox(height: 24),
-          Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: 24,
-              vertical: 0,
-            ),
-            child: NunutText(title: "Kuponku"),
-          ),
           promotionListLoading!
-              ? Container(
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                )
-              : ListView.separated(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 16,
-                  ),
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => PromotionDetail(promotion: promotionList[index]),
-                          ),
-                        );
-                      },
-                      child: CouponCard(
-                        imagePath: promotionList[index].image!,
-                        date: NunutText(
-                          title: promotionList[index].expiredAt!,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        minTransaction: NunutText(
-                          title: NumberFormat.currency(
-                            locale: 'id',
-                            symbol: '',
-                            decimalDigits: 0,
-                          ).format(int.parse(promotionList[index].minimum!)),
-                          fontWeight: FontWeight.bold,
-                        ),
+              ? Center(child: CircularProgressIndicator())
+              : promotionList.isNotEmpty
+                  ? Positioned(
+                      top: MediaQuery.of(context).size.height * 0.22,
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: Container(
+                        child: RefreshIndicator(
+                            onRefresh: () async {
+                              initPromotionList();
+                            },
+                            child: ListView.separated(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 24,
+                                vertical: 16,
+                              ),
+                              itemBuilder: (context, index) {
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => PromotionDetail(
+                                            promotion: promotionList[index]),
+                                      ),
+                                    );
+                                  },
+                                  child: CouponCard(
+                                    imagePath: promotionList[index].image,
+                                    date: NunutText(
+                                      title: promotionList[index].expiredAt,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    minTransaction: NunutText(
+                                      title: formatCurrency(
+                                          promotionList[index].minimum!),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                );
+                              },
+                              separatorBuilder: (context, index) {
+                                return SizedBox(height: 8);
+                              },
+                              itemCount: promotionList.length,
+                            )),
                       ),
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return SizedBox(height: 8);
-                  },
-                  itemCount: promotionList.length,
-                )
+                    )
+                  : Center(
+                      child: Text("No bookmarked ride"),
+                    ),
         ],
       ),
     );
