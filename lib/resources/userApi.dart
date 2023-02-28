@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/models/mresult.dart';
 import 'package:nunut_application/models/muser.dart';
 import 'package:http/http.dart' as http;
@@ -58,17 +61,37 @@ class UserService {
     }
   }
 
-  Future<void> updateUser({required UserModel user}) async {
+  Future<void> updateUser(
+      {required UserModel user, required File profile_picture}) async {
     try {
       User? userAuth = FirebaseAuth.instance.currentUser;
       DocumentReference docRef = collectionRef.doc(userAuth!.uid);
+      var url = Uri.parse(config.baseUrl + '/user');
+      var request = http.MultipartRequest('PUT', url);
       print(userAuth.uid);
       print(user.name.toString());
+      request.fields['name'] = user.name.toString();
+      request.fields['email'] = user.email.toString();
+      request.fields['phone'] = user.phone.toString();
+      request.fields['nik'] = user.nik.toString();
+      request.fields['user_id'] = userAuth.uid;
 
-      await docRef
-          .update(user.toJson())
-          .whenComplete(() => print("Data Berhasil Diupdate"))
-          .catchError((e) => print(e.toString()));
+      request.files.add(
+        await http.MultipartFile(
+          'image',
+          profile_picture.readAsBytes().asStream(),
+          profile_picture.lengthSync(),
+          filename: profile_picture.path.split('/').last,
+        ),
+      );
+
+      var response = await request.send();
+      print(response.stream.first.toString());
+
+      // await docRef
+      //     .update(user.toJson())
+      //     .whenComplete(() => print("Data Berhasil Diupdate"))
+      //     .catchError((e) => print(e.toString()));
     } catch (e) {
       throw e;
     }

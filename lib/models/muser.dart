@@ -6,6 +6,7 @@ class UserModel {
   String? id;
   String? driverId;
   String? wallet;
+  String? photo;
 
   UserModel({
     required this.email,
@@ -15,6 +16,7 @@ class UserModel {
     this.id,
     this.driverId,
     this.wallet,
+    this.photo,
   });
 
   Map<String, dynamic> toJson() {
@@ -26,6 +28,7 @@ class UserModel {
       "id": id,
       "driver_id": driverId,
       "wallet": wallet,
+      "photo": photo,
     };
   }
 
@@ -38,6 +41,7 @@ class UserModel {
       id: json['id'],
       driverId: json['driverId'],
       wallet: json['wallet'],
+      photo: json['photo'],
     );
   }
 }

@@ -33,7 +33,7 @@ class Vehicle2 {
   String? licensePlate;
   String? expiredAt;
   String? transportationType;
-  // String? vehileType;
+  String? vehicleType;
   String? note;
   bool? isMain;
 
@@ -44,7 +44,7 @@ class Vehicle2 {
     this.licensePlate,
     this.expiredAt,
     this.transportationType,
-    // this.vehileType,
+    this.vehicleType,
     this.note,
     this.isMain,
   });
@@ -57,7 +57,7 @@ class Vehicle2 {
       "license_plate": licensePlate,
       "expired_at": expiredAt,
       "transportation_type": transportationType,
-      // "vehicle_type": vehileType,
+      "vehicle_type": vehicleType,
       "note": note,
       "is_main": isMain,
     };

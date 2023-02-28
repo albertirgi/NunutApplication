@@ -136,7 +136,7 @@ class _MapListState extends State<MapList> {
                             : "Pilih Lokasi \nMeeting Point"),
                     isTitle: true,
                     size: 32),
-                SizedBox(height: 40),
+                SizedBox(height: 20),
                 TextFormField(
                   controller: searchController,
                   onChanged: (value) {
