@@ -6,7 +6,7 @@ import '../widgets/couponCard.dart';
 import '../widgets/nunutText.dart';
 
 class PromotionDetail extends StatefulWidget {
-  final Promotion? promotion;
+  final PromotionModel? promotion;
   const PromotionDetail({super.key, this.promotion});
 
   @override
@@ -42,14 +42,21 @@ class _PromotionDetailState extends State<PromotionDetail> {
       body: ListView(
         children: [
           CouponCard(
-            imagePath: widget.promotion!.image!,
-            date: NunutText(title: widget.promotion!.expiredAt!, fontWeight: FontWeight.bold),
-            minTransaction: NunutText(title: "Rp. " + widget.promotion!.minimum!, fontWeight: FontWeight.bold),
+            imagePath: widget.promotion!.image,
+            date: NunutText(
+                title: widget.promotion!.expiredAt,
+                fontWeight: FontWeight.bold),
+            minTransaction: NunutText(
+                title: "Rp. " + (widget.promotion!.minimum!).toString(),
+                fontWeight: FontWeight.bold),
             useBorder: false,
           ),
           Container(
             margin: EdgeInsets.only(top: 12, left: 48),
-            child: NunutText(title: "Syarat & Ketentuan", fontWeight: FontWeight.bold, size: 18),
+            child: NunutText(
+                title: "Syarat & Ketentuan",
+                fontWeight: FontWeight.bold,
+                size: 18),
           ),
           Container(
             margin: EdgeInsets.only(top: 4, left: 32, right: 36),
@@ -64,7 +71,7 @@ class _PromotionDetailState extends State<PromotionDetail> {
                     SizedBox(width: index == 0 ? 8 : 4),
                     Expanded(
                       child: NunutText(
-                        title: widget.promotion!.tnc![index],
+                        title: widget.promotion!.tnc[index],
                         size: 14,
                         fontWeight: FontWeight.w500,
                       ),
@@ -72,7 +79,7 @@ class _PromotionDetailState extends State<PromotionDetail> {
                   ],
                 );
               },
-              itemCount: widget.promotion!.tnc!.length,
+              itemCount: widget.promotion!.tnc.length,
               separatorBuilder: (context, index) {
                 return SizedBox(height: 4);
               },
