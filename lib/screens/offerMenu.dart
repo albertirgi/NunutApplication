@@ -49,8 +49,7 @@ class _OfferMenuState extends State<OfferMenu> {
                   fontWeight: FontWeight.bold,
                 ),
                 SizedBox(height: 10),
-                NunutText(
-                    title: "Yuk tawarkan tumpangan!", isTitle: true, size: 32),
+                NunutText(title: "Yuk tawarkan tumpangan!", isTitle: true, size: 32),
                 // BorderedText(
                 //   child: Text(
                 //     "Yuk tawarkan tumpangan!",
@@ -96,8 +95,7 @@ class _OfferMenuState extends State<OfferMenu> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.of(context)
-                              .pushNamed('/addRideSchedule', arguments: true);
+                          Navigator.of(context).pushNamed('/addRideSchedule', arguments: true);
                         },
                         child: Column(
                           children: [
@@ -126,7 +124,7 @@ class _OfferMenuState extends State<OfferMenu> {
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, "/distance");
+                          Navigator.of(context).pushNamed('/rideList');
                         },
                         child: Column(
                           children: [

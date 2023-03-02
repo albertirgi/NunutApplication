@@ -17,7 +17,7 @@ class OrderList extends StatefulWidget {
 
 class _OrderListState extends State<OrderList> {
   TextEditingController searchController = TextEditingController();
-  bool isActiveClicked = false;
+  bool isActiveClicked = true;
   List<String> images = <String>[
     "https://images.unsplash.com/photo-1458071103673-6a6e4c4a3413?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
     "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=80",
@@ -48,11 +48,8 @@ class _OrderListState extends State<OrderList> {
 
     rideScheduleList.clear();
 
-    rideScheduleList = await rideRequestApi.getOrderList(
-        parameter:
-            "ride_schedule_only=${config.user.id}&status_ride=${isActiveClicked ? "active" : "inactive"}&driver&vehicle",
-        page: _page,
-        checkUrl: true);
+    rideScheduleList =
+        await rideRequestApi.getOrderList(parameter: "ride_schedule_only=${config.user.id}&status_ride=${isActiveClicked ? "active" : "inactive"}&driver&vehicle", page: _page, checkUrl: true);
 
     setState(() {
       rideScheduleListLoading = false;
@@ -67,11 +64,8 @@ class _OrderListState extends State<OrderList> {
       });
 
       rideSchedulePageList.clear();
-      rideSchedulePageList = await rideRequestApi.getOrderList(
-          parameter:
-              "ride_schedule_only=${config.user.id}&status_ride=${isActiveClicked ? "active" : "inactive"}&driver&vehicle",
-          page: _page,
-          checkUrl: true);
+      rideSchedulePageList =
+          await rideRequestApi.getOrderList(parameter: "ride_schedule_only=${config.user.id}&status_ride=${isActiveClicked ? "active" : "inactive"}&driver&vehicle", page: _page, checkUrl: true);
       _page++;
 
       rideScheduleList.addAll(rideSchedulePageList);
@@ -84,10 +78,7 @@ class _OrderListState extends State<OrderList> {
   }
 
   scrollListener() {
-    if (_scrollController!.offset >=
-            _scrollController!.position.maxScrollExtent - 100 &&
-        !_scrollController!.position.outOfRange &&
-        !done) {
+    if (_scrollController!.offset >= _scrollController!.position.maxScrollExtent - 100 && !_scrollController!.position.outOfRange && !done) {
       if (rideSchedulePageList.isEmpty) {
         loadmore();
       } else {
@@ -112,8 +103,7 @@ class _OrderListState extends State<OrderList> {
             top: 0,
             right: 0,
             child: Image(
-              image:
-                  AssetImage('assets/backgroundCircle/backgroundCircle3.png'),
+              image: AssetImage('assets/backgroundCircle/backgroundCircle3.png'),
               fit: BoxFit.cover,
             ),
           ),
@@ -132,8 +122,7 @@ class _OrderListState extends State<OrderList> {
                 SizedBox(height: 20),
                 NunutText(title: "Daftar Tumpangan", isTitle: true, size: 32),
                 Container(
-                  margin:
-                      EdgeInsets.only(top: 40, left: 8, right: 24, bottom: 10),
+                  margin: EdgeInsets.only(top: 40, left: 8, right: 24, bottom: 10),
                   child: Row(
                     children: [
                       InkWell(
@@ -143,12 +132,7 @@ class _OrderListState extends State<OrderList> {
                             initRideScheduleList();
                           });
                         },
-                        child: NunutText(
-                            title: "Sedang Aktif",
-                            size: 18,
-                            fontWeight: isActiveClicked
-                                ? FontWeight.bold
-                                : FontWeight.normal),
+                        child: NunutText(title: "Sedang Aktif", size: 18, fontWeight: isActiveClicked ? FontWeight.bold : FontWeight.normal),
                       ),
                       Container(
                         margin: EdgeInsets.symmetric(horizontal: 8),
@@ -163,85 +147,75 @@ class _OrderListState extends State<OrderList> {
                             initRideScheduleList();
                           });
                         },
-                        child: NunutText(
-                            title: "Selesai",
-                            size: 18,
-                            fontWeight: isActiveClicked
-                                ? FontWeight.normal
-                                : FontWeight.bold),
+                        child: NunutText(title: "Selesai", size: 18, fontWeight: isActiveClicked ? FontWeight.normal : FontWeight.bold),
                       ),
                     ],
                   ),
                 ),
                 rideScheduleListLoading
                     ? Container(
-                        margin: EdgeInsets.only(top: 50),
+                        margin: EdgeInsets.only(top: 100),
                         child: Center(
                           child: CircularProgressIndicator(),
                         ),
                       )
-                    : Expanded(
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: ListView.separated(
-                                padding: EdgeInsets.only(top: 0),
-                                shrinkWrap: true,
-                                physics: BouncingScrollPhysics(),
-                                controller: _scrollController,
-                                itemBuilder: (context, index) {
-                                  return NunutTripCard(
-                                    isUser: true,
-                                    images: images,
-                                    date: rideScheduleList[index].date!,
-                                    totalPerson: rideScheduleList[index]
-                                        .capacity!
-                                        .toString(),
-                                    time: rideScheduleList[index].time!,
-                                    carName: rideScheduleList[index]
-                                        .vehicle!
-                                        .transportationType!,
-                                    plateNumber: rideScheduleList[index]
-                                        .vehicle!
-                                        .licensePlate!,
-                                    pickupLocation: rideScheduleList[index]
-                                        .meetingPoint!
-                                        .name!,
-                                    destination: rideScheduleList[index]
-                                        .destination!
-                                        .name!,
-                                    isActive: isActiveClicked,
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => BookingDetail(
-                                            rideSchedule:
-                                                rideScheduleList[index],
-                                          ),
-                                        ),
+                    : rideScheduleList.isNotEmpty
+                        ? Expanded(
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: ListView.separated(
+                                    padding: EdgeInsets.only(top: 0),
+                                    shrinkWrap: true,
+                                    physics: BouncingScrollPhysics(),
+                                    controller: _scrollController,
+                                    itemBuilder: (context, index) {
+                                      return NunutTripCard(
+                                        isUser: true,
+                                        images: images,
+                                        date: rideScheduleList[index].date!,
+                                        totalPerson: rideScheduleList[index].capacity!.toString(),
+                                        time: rideScheduleList[index].time!,
+                                        carName: rideScheduleList[index].vehicle!.transportationType!,
+                                        plateNumber: rideScheduleList[index].vehicle!.licensePlate!,
+                                        pickupLocation: rideScheduleList[index].meetingPoint!.name!,
+                                        destination: rideScheduleList[index].destination!.name!,
+                                        isActive: isActiveClicked,
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => BookingDetail(
+                                                rideSchedule: rideScheduleList[index],
+                                              ),
+                                            ),
+                                          );
+                                        },
                                       );
                                     },
-                                  );
-                                },
-                                separatorBuilder: (context, index) {
-                                  return SizedBox(height: 12);
-                                },
-                                itemCount: rideScheduleList.length,
-                              ),
+                                    separatorBuilder: (context, index) {
+                                      return SizedBox(height: 12);
+                                    },
+                                    itemCount: rideScheduleList.length,
+                                  ),
+                                ),
+                                isLoading
+                                    ? Container(
+                                        margin: EdgeInsets.only(top: 20, bottom: 20),
+                                        child: Center(
+                                          child: CircularProgressIndicator(),
+                                        ),
+                                      )
+                                    : Container(),
+                              ],
                             ),
-                            isLoading
-                                ? Container(
-                                    margin:
-                                        EdgeInsets.only(top: 20, bottom: 20),
-                                    child: Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                  )
-                                : Container(),
-                          ],
-                        ),
-                      ),
+                          )
+                        : Container(
+                            margin: EdgeInsets.only(top: 100),
+                            child: Center(
+                              child: NunutText(title: "Data tidak ditemukan", color: Colors.grey),
+                            ),
+                          ),
               ],
             ),
           ),

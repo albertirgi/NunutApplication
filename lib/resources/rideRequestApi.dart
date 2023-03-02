@@ -84,6 +84,22 @@ class RideRequestApi {
       return false;
     }
   }
+
+  Future<bool> changeStatusRideRequest({required String rideRequestId, required String status, bool checkUrl = false}) async {
+    var url = Uri.parse(config.baseUrl + '/ride-request/status/$rideRequestId/$status');
+
+    if (checkUrl) print(url);
+    var response = await http.get(url);
+
+    Result result;
+    result = Result.fromJson(json.decode(response.body));
+
+    if (result.status == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
 
 final rideRequestApi = RideRequestApi();

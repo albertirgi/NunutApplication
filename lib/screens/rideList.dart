@@ -20,7 +20,7 @@ class RideList extends StatefulWidget {
 
 class _RideListState extends State<RideList> {
   TextEditingController searchController = TextEditingController();
-  bool isActiveClicked = false;
+  bool isActiveClicked = true;
   List<String> images = <String>[
     "https://images.unsplash.com/photo-1458071103673-6a6e4c4a3413?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
     "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=80",
@@ -57,11 +57,7 @@ class _RideListState extends State<RideList> {
     });
 
     rideScheduleList.clear();
-    rideScheduleList = await rideScheduleApi.getRideScheduleList(
-        parameter:
-            "driver=${config.user.driverId}&user=${config.user.id}&vehicle&ride_request",
-        page: _page,
-        checkUrl: true);
+    rideScheduleList = await rideScheduleApi.getRideScheduleList(parameter: "driver=${config.user.driverId}&user=${config.user.id}&vehicle&ride_request", page: _page, checkUrl: true);
 
     setState(() {
       rideScheduleListLoading = false;
@@ -76,11 +72,7 @@ class _RideListState extends State<RideList> {
       });
 
       rideSchedulePageList.clear();
-      rideSchedulePageList = await rideScheduleApi.getRideScheduleList(
-          parameter:
-              "driver=${config.user.driverId}&user=${config.user.id}&vehicle&ride_request",
-          page: _page,
-          checkUrl: true);
+      rideSchedulePageList = await rideScheduleApi.getRideScheduleList(parameter: "driver=${config.user.driverId}&user=${config.user.id}&vehicle&ride_request", page: _page, checkUrl: true);
       _page++;
 
       rideScheduleList.addAll(rideSchedulePageList);
@@ -93,10 +85,7 @@ class _RideListState extends State<RideList> {
   }
 
   scrollListener() {
-    if (_scrollController!.offset >=
-            _scrollController!.position.maxScrollExtent - 100 &&
-        !_scrollController!.position.outOfRange &&
-        !done) {
+    if (_scrollController!.offset >= _scrollController!.position.maxScrollExtent - 100 && !_scrollController!.position.outOfRange && !done) {
       if (rideSchedulePageList.isEmpty) {
         loadmore();
       } else {
@@ -135,8 +124,7 @@ class _RideListState extends State<RideList> {
             top: 0,
             right: 0,
             child: Image(
-              image:
-                  AssetImage('assets/backgroundCircle/backgroundCircle3.png'),
+              image: AssetImage('assets/backgroundCircle/backgroundCircle3.png'),
               fit: BoxFit.cover,
             ),
           ),
@@ -155,8 +143,7 @@ class _RideListState extends State<RideList> {
                 SizedBox(height: 20),
                 NunutText(title: "Tumpanganku", isTitle: true, size: 32),
                 Container(
-                  margin:
-                      EdgeInsets.only(top: 40, left: 8, right: 24, bottom: 10),
+                  margin: EdgeInsets.only(top: 40, left: 8, right: 24, bottom: 10),
                   child: Row(
                     children: [
                       InkWell(
@@ -165,12 +152,7 @@ class _RideListState extends State<RideList> {
                             isActiveClicked = true;
                           });
                         },
-                        child: NunutText(
-                            title: "Sedang Aktif",
-                            size: 18,
-                            fontWeight: isActiveClicked
-                                ? FontWeight.bold
-                                : FontWeight.normal),
+                        child: NunutText(title: "Sedang Aktif", size: 18, fontWeight: isActiveClicked ? FontWeight.bold : FontWeight.normal),
                       ),
                       Container(
                         margin: EdgeInsets.symmetric(horizontal: 8),
@@ -184,12 +166,7 @@ class _RideListState extends State<RideList> {
                             isActiveClicked = false;
                           });
                         },
-                        child: NunutText(
-                            title: "Selesai",
-                            size: 18,
-                            fontWeight: isActiveClicked
-                                ? FontWeight.normal
-                                : FontWeight.bold),
+                        child: NunutText(title: "Selesai", size: 18, fontWeight: isActiveClicked ? FontWeight.normal : FontWeight.bold),
                       ),
                     ],
                   ),
@@ -214,30 +191,19 @@ class _RideListState extends State<RideList> {
                                   return NunutTripCard(
                                     images: images,
                                     date: rideScheduleList[index].date!,
-                                    totalPerson: rideScheduleList[index]
-                                        .capacity!
-                                        .toString(),
+                                    totalPerson: rideScheduleList[index].capacity!.toString(),
                                     time: rideScheduleList[index].time!,
-                                    carName: rideScheduleList[index]
-                                        .vehicle!
-                                        .transportationType!,
-                                    plateNumber: rideScheduleList[index]
-                                        .vehicle!
-                                        .licensePlate!,
-                                    pickupLocation: rideScheduleList[index]
-                                        .meetingPoint!
-                                        .name!,
-                                    destination: rideScheduleList[index]
-                                        .destination!
-                                        .name!,
+                                    carName: rideScheduleList[index].vehicle!.transportationType!,
+                                    plateNumber: rideScheduleList[index].vehicle!.licensePlate!,
+                                    pickupLocation: rideScheduleList[index].meetingPoint!.name!,
+                                    destination: rideScheduleList[index].destination!.name!,
                                     isActive: rideScheduleList[index].isActive!,
                                     onPressed: () {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => RideDetail(
-                                            rideScheduleId:
-                                                rideScheduleList[index].id!,
+                                            rideScheduleId: rideScheduleList[index].id!,
                                           ),
                                         ),
                                       );
@@ -252,8 +218,7 @@ class _RideListState extends State<RideList> {
                             ),
                             isLoading
                                 ? Container(
-                                    margin:
-                                        EdgeInsets.only(top: 20, bottom: 20),
+                                    margin: EdgeInsets.only(top: 20, bottom: 20),
                                     child: Center(
                                       child: CircularProgressIndicator(),
                                     ),

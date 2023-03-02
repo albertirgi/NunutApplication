@@ -351,7 +351,7 @@ class _PaymentState extends State<Payment> {
                       },
                     );
 
-                    bool result = await rideRequestApi.addRideRequest(rideScheduleId: widget.rideSchedule.id.toString(), status_ride: "ONGOING", user_id: config.user.id!, checkUrl: true);
+                    bool result = await rideRequestApi.addRideRequest(rideScheduleId: widget.rideSchedule.id.toString(), status_ride: "REGISTERED", user_id: config.user.id!, checkUrl: true);
                     if (result) {
                       Wallet walletData = await MidtransApi.getWallet(config.user.id!);
                       double numValue = double.parse(walletData.balance.toString());

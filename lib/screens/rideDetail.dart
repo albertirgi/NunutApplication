@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class _RideDetailState extends State<RideDetail> {
     });
 
     rideSchedule = RideSchedule();
-    rideSchedule = await rideScheduleApi.getRideScheduleById(id: widget.rideScheduleId, parameter: "driver&vehicle", checkUrl: true);
+    rideSchedule = await rideScheduleApi.getRideScheduleById(id: widget.rideScheduleId, parameter: "driver&vehicle");
     await initRideRequestList();
 
     setState(() {
@@ -53,11 +54,15 @@ class _RideDetailState extends State<RideDetail> {
     // });
 
     rideRequestList.clear();
-    rideRequestList = await rideRequestApi.getRideRequestList(rideScheduleId: widget.rideScheduleId, parameter: "user", checkUrl: true);
+    rideRequestList = await rideRequestApi.getRideRequestList(rideScheduleId: widget.rideScheduleId, parameter: "user");
 
     // setState(() {
     //   rideRequestListLoading = false;
     // });
+  }
+
+  FutureOr onGoBack(dynamic value) {
+    onRefresh();
   }
 
   @override
@@ -347,8 +352,7 @@ class _RideDetailState extends State<RideDetail> {
                                     color: Colors.black,
                                   ),
                                   onPressed: () {
-                                    Navigator.pushNamed(context, '/qrCode');
-                                    //Navigator.pushNamed(context, '/qrCode').then((value) => onGoBack(value));
+                                    Navigator.pushNamed(context, '/qrCode').then((value) => onGoBack(value));
                                   },
                                 ),
                               ],
@@ -382,9 +386,9 @@ class _RideDetailState extends State<RideDetail> {
                                               mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
                                                 Icon(
-                                                  index % 2 == 1 ? Icons.check_circle_outline : Icons.cancel_outlined,
+                                                  rideRequestList[index].status == "ONGOING" ? Icons.check_circle_outline : Icons.cancel_outlined,
                                                   size: 30,
-                                                  color: index % 2 == 1 ? Colors.green : Colors.red,
+                                                  color: rideRequestList[index].status == "ONGOING" ? Colors.green : Colors.red,
                                                 )
                                               ],
                                             ),
@@ -491,5 +495,12 @@ class _RideDetailState extends State<RideDetail> {
         ],
       ),
     );
+  }
+
+  onRefresh() async {
+    rideScheduleLoading = true;
+    rideSchedule = RideSchedule();
+    rideRequestList.clear();
+    await initRideScheduleDetail();
   }
 }
