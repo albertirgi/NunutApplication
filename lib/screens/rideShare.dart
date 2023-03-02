@@ -653,7 +653,7 @@ class _RideShareState extends State<RideShare> {
                                                     rideSchedule: rideScheduleList[index],
                                                   ),
                                                 ),
-                                              );
+                                              ).then((value) => onGoBack(value));
                                             },
                                             child: TwoColumnView(
                                               imagePath: rideScheduleList[index].driver!.image,
