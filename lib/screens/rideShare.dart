@@ -43,6 +43,7 @@ class _RideShareState extends State<RideShare> {
   GoogleMapController? mapController;
   ScrollController? _scrollController;
   String buildingName = "";
+  bool isBookmarking = false;
   // Position? _currentPosition;
 
   @override
@@ -664,22 +665,29 @@ class _RideShareState extends State<RideShare> {
                                               capacity: rideScheduleList[index].capacity!,
                                               totalBooked: rideScheduleList[index].rideRequest!.length,
                                               price: priceFormat(rideScheduleList[index].price.toString()),
-                                              IconOnTap: () async {
-                                                bool result;
-                                                rideScheduleList[index].isBookmarked!
-                                                    ? result =
-                                                        await rideScheduleApi.deleteBookmarkByRideScheduleId(rideScheduleId: rideScheduleList[index].id!, userId: config.user.id!, checkUrl: true)
-                                                    : result = await rideScheduleApi.updateBookmark(rideScheduleId: rideScheduleList[index].id!, userId: config.user.id!);
-                                                if (result) {
-                                                  rideScheduleList[index].isBookmarked = !rideScheduleList[index].isBookmarked!;
-                                                  if (rideScheduleList[index].isBookmarked!) {
-                                                    Fluttertoast.showToast(msg: 'Berhasil menambahkan ke bookmark');
-                                                  } else {
-                                                    Fluttertoast.showToast(msg: 'Berhasil menghapus dari bookmark');
-                                                  }
-                                                }
-                                                setState(() {});
-                                              },
+                                              IconOnTap: !isBookmarking
+                                                  ? () async {
+                                                      setState(() {
+                                                        isBookmarking = true;
+                                                      });
+                                                      bool result;
+                                                      rideScheduleList[index].isBookmarked!
+                                                          ? result =
+                                                              await rideScheduleApi.deleteBookmarkByRideScheduleId(rideScheduleId: rideScheduleList[index].id!, userId: config.user.id!, checkUrl: true)
+                                                          : result = await rideScheduleApi.updateBookmark(rideScheduleId: rideScheduleList[index].id!, userId: config.user.id!);
+                                                      if (result) {
+                                                        rideScheduleList[index].isBookmarked = !rideScheduleList[index].isBookmarked!;
+                                                        if (rideScheduleList[index].isBookmarked!) {
+                                                          Fluttertoast.showToast(msg: 'Berhasil menambahkan ke bookmark');
+                                                        } else {
+                                                          Fluttertoast.showToast(msg: 'Berhasil menghapus dari bookmark');
+                                                        }
+                                                      }
+                                                      setState(() {
+                                                        isBookmarking = false;
+                                                      });
+                                                    }
+                                                  : null,
                                             ),
                                           );
                                         },

@@ -19,6 +19,7 @@ class RideBookDetail extends StatefulWidget {
 class _RideBookDetailState extends State<RideBookDetail> {
   int availableSeat = 0;
   RideSchedule rideSchedule = RideSchedule();
+  bool isBookmarking = false;
   @override
   void initState() {
     // TODO: implement initState
@@ -318,21 +319,28 @@ class _RideBookDetailState extends State<RideBookDetail> {
                   color: Colors.white,
                 ),
                 child: IconButton(
-                  onPressed: () async {
-                    bool result;
-                    rideSchedule.isBookmarked!
-                        ? result = await rideScheduleApi.deleteBookmarkByRideScheduleId(rideScheduleId: rideSchedule.id!, userId: config.user.id!, checkUrl: true)
-                        : result = await rideScheduleApi.updateBookmark(rideScheduleId: rideSchedule.id!, userId: config.user.id!);
-                    if (result) {
-                      rideSchedule.isBookmarked = !rideSchedule.isBookmarked!;
-                      if (rideSchedule.isBookmarked!) {
-                        Fluttertoast.showToast(msg: 'Berhasil menambahkan ke bookmark');
-                      } else {
-                        Fluttertoast.showToast(msg: 'Berhasil menghapus dari bookmark');
-                      }
-                    }
-                    setState(() {});
-                  },
+                  onPressed: !isBookmarking
+                      ? () async {
+                          setState(() {
+                            isBookmarking = true;
+                          });
+                          bool result;
+                          rideSchedule.isBookmarked!
+                              ? result = await rideScheduleApi.deleteBookmarkByRideScheduleId(rideScheduleId: rideSchedule.id!, userId: config.user.id!, checkUrl: true)
+                              : result = await rideScheduleApi.updateBookmark(rideScheduleId: rideSchedule.id!, userId: config.user.id!);
+                          if (result) {
+                            rideSchedule.isBookmarked = !rideSchedule.isBookmarked!;
+                            if (rideSchedule.isBookmarked!) {
+                              Fluttertoast.showToast(msg: 'Berhasil menambahkan ke bookmark');
+                            } else {
+                              Fluttertoast.showToast(msg: 'Berhasil menghapus dari bookmark');
+                            }
+                          }
+                          setState(() {
+                            isBookmarking = false;
+                          });
+                        }
+                      : null,
                   icon: Icon(
                     rideSchedule.isBookmarked! ? Icons.bookmark : Icons.bookmark_border,
                     color: rideSchedule.isBookmarked! ? nunutPrimaryColor : Colors.black,
