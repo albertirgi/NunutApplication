@@ -418,7 +418,7 @@ class _RideShareState extends State<RideShare> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => MapList(
-                                            fromUKP: widget.fromUKP,
+                                            removeUKP: true,
                                           ),
                                         ),
                                       );
@@ -469,7 +469,7 @@ class _RideShareState extends State<RideShare> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => MapList(
-                                            fromUKP: widget.fromUKP,
+                                            removeUKP: true,
                                           ),
                                         ),
                                       );
