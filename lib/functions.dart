@@ -8,6 +8,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/models/mmaplocation.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:intl/intl.dart';
 
 openwhatsapp(BuildContext context, String number) async {
   var whatsappURl_android = "https://wa.me/" + number;
@@ -18,13 +19,7 @@ openwhatsapp(BuildContext context, String number) async {
       await launchUrl(Uri.parse(whatappURL_ios));
     } else {
       Fluttertoast.showToast(
-          msg: "whatsapp no installed",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+          msg: "whatsapp no installed", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.CENTER, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
     }
   } else {
     // android , web
@@ -32,27 +27,18 @@ openwhatsapp(BuildContext context, String number) async {
       await launchUrl(Uri.parse(whatsappURl_android));
     } else {
       Fluttertoast.showToast(
-          msg: "whatsapp no installed",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+          msg: "whatsapp no installed", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.CENTER, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
     }
   }
 }
 
 double calculateDistance(lat1, lon1, lat2, lon2) {
   var p = 0.017453292519943295;
-  var a = 0.5 -
-      cos((lat2 - lat1) * p) / 2 +
-      cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lon2 - lon1) * p)) / 2;
+  var a = 0.5 - cos((lat2 - lat1) * p) / 2 + cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lon2 - lon1) * p)) / 2;
   return 12742 * asin(sqrt(a));
 }
 
-startCalculate(
-    double startLat, double startLong, double endLat, double endLong) async {
+startCalculate(double startLat, double startLong, double endLat, double endLong) async {
   GoogleMapController? mapController; //contrller for Google map
   PolylinePoints polylinePoints = PolylinePoints();
 
@@ -116,14 +102,16 @@ startCalculate(
   //polulineCoordinates is the List of longitute and latidtude.
   double totalDistance = 0;
   for (var i = 0; i < polylineCoordinates.length - 1; i++) {
-    totalDistance += calculateDistance(
-        polylineCoordinates[i].latitude,
-        polylineCoordinates[i].longitude,
-        polylineCoordinates[i + 1].latitude,
-        polylineCoordinates[i + 1].longitude);
+    totalDistance += calculateDistance(polylineCoordinates[i].latitude, polylineCoordinates[i].longitude, polylineCoordinates[i + 1].latitude, polylineCoordinates[i + 1].longitude);
   }
 
   distance = totalDistance;
 
   return distance;
+}
+
+String priceFormat(String price) {
+  double numValue = double.parse(price);
+  NumberFormat currencyFormatter = NumberFormat.simpleCurrency(locale: "id", decimalDigits: 0, name: "");
+  return currencyFormatter.format(numValue);
 }

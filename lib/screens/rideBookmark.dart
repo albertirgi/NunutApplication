@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/configuration.dart';
+import 'package:nunut_application/functions.dart';
 import 'package:nunut_application/models/mbookmark.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:nunut_application/widgets/twoColumnView.dart';
@@ -94,11 +95,7 @@ class _RideBookmarkState extends State<RideBookmark> {
                                 departureTime: bookmarkedList[index].rideSchedule.time!,
                                 name: bookmarkedList[index].driver.name,
                                 destination: bookmarkedList[index].rideSchedule.destination!.name!,
-                                price: NumberFormat.currency(
-                                  locale: 'id',
-                                  symbol: '',
-                                  decimalDigits: 0,
-                                ).format(bookmarkedList[index].rideSchedule.price!),
+                                price: priceFormat(bookmarkedList[index].rideSchedule.price!.toString()),
                                 isBookmarked: true,
                                 capacity: bookmarkedList[index].rideSchedule.capacity!,
                                 totalBooked: bookmarkedList[index].rideSchedule.rideRequest!.length,

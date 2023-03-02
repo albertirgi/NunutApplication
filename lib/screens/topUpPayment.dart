@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nunut_application/functions.dart';
 import 'package:nunut_application/resources/midtransApi.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
@@ -38,34 +39,28 @@ class _TopUpPaymentState extends State<TopUpPayment> {
   @override
   Widget build(BuildContext context) {
     double numValue = double.parse(widget.data["data"]["gross_amount"]);
-    NumberFormat currencyFormatter = NumberFormat.simpleCurrency(
-        locale: "id", decimalDigits: 0, name: "Rp. ");
     String bank = "Permata";
     String expiry_date = "";
     Map<String, dynamic> payloadData = widget.data["data"];
     if (widget.data["data"]["payment_type"] == "echannel") {
       bank = "Mandiri";
       expiry_date = widget.data["data"]["expiry_time"];
-    } else if (widget.data["data"]["payment_type"] == "bank_transfer" &&
-        payloadData.containsKey("permata_va_number")) {
+    } else if (widget.data["data"]["payment_type"] == "bank_transfer" && payloadData.containsKey("permata_va_number")) {
       bank = "Permata";
       DateTime time = DateTime.parse(widget.data["data"]["transaction_time"]);
       DateTime expired_date = time.add(Duration(days: 1));
       expiry_date = DateFormat("yyyy-MM-dd HH:mm:ss").format(expired_date);
-    } else if (widget.data["data"]["payment_type"] == "bank_transfer" &&
-        widget.data["data"]["va_numbers"][0]['bank'] == "bni") {
+    } else if (widget.data["data"]["payment_type"] == "bank_transfer" && widget.data["data"]["va_numbers"][0]['bank'] == "bni") {
       bank = "BNI";
       expiry_date = widget.data["data"]["expiry_time"];
-    } else if (widget.data["data"]["payment_type"] == "bank_transfer" &&
-        widget.data["data"]["va_numbers"][0]['bank'] == "bri") {
+    } else if (widget.data["data"]["payment_type"] == "bank_transfer" && widget.data["data"]["va_numbers"][0]['bank'] == "bri") {
       bank = "BRI";
       expiry_date = widget.data["data"]["expiry_time"];
-    } else if (widget.data["data"]["payment_type"] == "bank_transfer" &&
-        widget.data["data"]["va_numbers"][0]['bank'] == "bca") {
+    } else if (widget.data["data"]["payment_type"] == "bank_transfer" && widget.data["data"]["va_numbers"][0]['bank'] == "bca") {
       bank = "BCA";
       expiry_date = widget.data["data"]["expiry_time"];
     }
-    String newGrossAmount = currencyFormatter.format(numValue);
+    String newGrossAmount = priceFormat(numValue.toString());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -119,8 +114,7 @@ class _TopUpPaymentState extends State<TopUpPayment> {
                   Row(
                     children: [
                       NunutText(
-                        title: "Order ID #" +
-                            widget.data["data"]["transaction_id"],
+                        title: "Order ID #" + widget.data["data"]["transaction_id"],
                         size: 10,
                         color: Colors.black,
                       ),
@@ -136,15 +130,12 @@ class _TopUpPaymentState extends State<TopUpPayment> {
               fontWeight: FontWeight.bold,
             ),
             NunutText(
-              title:
-                  "Complete payment from ${bank} to the virtual account number below.",
+              title: "Complete payment from ${bank} to the virtual account number below.",
               size: 18,
             ),
             SizedBox(height: 40),
             Container(
-              child: bank == "Mandiri"
-                  ? mandiriPayment()
-                  : (bank == "Permata" ? permataPayment() : bankPayment()),
+              child: bank == "Mandiri" ? mandiriPayment() : (bank == "Permata" ? permataPayment() : bankPayment()),
             ),
             Expanded(
               child: Align(
@@ -182,19 +173,10 @@ class _TopUpPaymentState extends State<TopUpPayment> {
                                   margin: EdgeInsets.only(top: 25.0),
                                   child: Center(
                                     child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        NunutText(
-                                            title: "Loading...",
-                                            color: Colors.white,
-                                            size: 20,
-                                            fontWeight: FontWeight.w500),
-                                        NunutText(
-                                            title: "Mohon Tunggu",
-                                            color: Colors.white,
-                                            size: 20,
-                                            fontWeight: FontWeight.w500),
+                                        NunutText(title: "Loading...", color: Colors.white, size: 20, fontWeight: FontWeight.w500),
+                                        NunutText(title: "Mohon Tunggu", color: Colors.white, size: 20, fontWeight: FontWeight.w500),
                                       ],
                                     ),
                                   ),
@@ -208,8 +190,7 @@ class _TopUpPaymentState extends State<TopUpPayment> {
                     setState(() {
                       _isLoading = true;
                     });
-                    var res = await MidtransApi.getTransaction(
-                        widget.data["data"]["order_id"]);
+                    var res = await MidtransApi.getTransaction(widget.data["data"]["order_id"]);
 
                     if (res != null) {
                       setState(() {
@@ -217,8 +198,7 @@ class _TopUpPaymentState extends State<TopUpPayment> {
                       });
                       if (res["status"] == 500 || res["status"] == 400) {
                         Fluttertoast.showToast(
-                            msg:
-                                "Gagal memuat data transaksi, silahkan coba lagi",
+                            msg: "Gagal memuat data transaksi, silahkan coba lagi",
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
                             timeInSecForIosWeb: 1,
@@ -229,16 +209,14 @@ class _TopUpPaymentState extends State<TopUpPayment> {
                       }
                       if (res["data"]["status"] == "settlement") {
                         Fluttertoast.showToast(
-                            msg:
-                                "Transaksi berhasil, mohon tunggu beberapa saat",
+                            msg: "Transaksi berhasil, mohon tunggu beberapa saat",
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
                             timeInSecForIosWeb: 1,
                             backgroundColor: Colors.green,
                             textColor: Colors.white,
                             fontSize: 16.0);
-                        Navigator.popUntil(
-                            context, ModalRoute.withName('/nunutPay'));
+                        Navigator.popUntil(context, ModalRoute.withName('/nunutPay'));
                         Navigator.pop(context);
                         Navigator.pushNamed(context, '/nunutPay');
                       } else {
@@ -250,8 +228,7 @@ class _TopUpPaymentState extends State<TopUpPayment> {
                             backgroundColor: Colors.green,
                             textColor: Colors.white,
                             fontSize: 16.0);
-                        Navigator.popUntil(
-                            context, ModalRoute.withName('/nunutPay'));
+                        Navigator.popUntil(context, ModalRoute.withName('/nunutPay'));
                         Navigator.pop(context);
                         Navigator.pushNamed(context, '/nunutPay');
                       }
@@ -285,8 +262,7 @@ class _TopUpPaymentState extends State<TopUpPayment> {
             ),
             InkWell(
               onTap: () {
-                Clipboard.setData(new ClipboardData(
-                    text: widget.data["data"]["biller_code"]));
+                Clipboard.setData(new ClipboardData(text: widget.data["data"]["biller_code"]));
                 Fluttertoast.showToast(
                     msg: "Disalin ke clipboard",
                     toastLength: Toast.LENGTH_SHORT,
@@ -322,8 +298,7 @@ class _TopUpPaymentState extends State<TopUpPayment> {
             ),
             InkWell(
               onTap: () {
-                Clipboard.setData(
-                    new ClipboardData(text: widget.data["data"]["bill_key"]));
+                Clipboard.setData(new ClipboardData(text: widget.data["data"]["bill_key"]));
                 Fluttertoast.showToast(
                     msg: "Disalin ke clipboard",
                     toastLength: Toast.LENGTH_SHORT,
@@ -366,8 +341,7 @@ class _TopUpPaymentState extends State<TopUpPayment> {
             ),
             InkWell(
               onTap: () {
-                Clipboard.setData(new ClipboardData(
-                    text: widget.data["data"]["permata_va_number"]));
+                Clipboard.setData(new ClipboardData(text: widget.data["data"]["permata_va_number"]));
                 Fluttertoast.showToast(
                     msg: "Disalin ke clipboard",
                     toastLength: Toast.LENGTH_SHORT,
@@ -410,8 +384,7 @@ class _TopUpPaymentState extends State<TopUpPayment> {
             ),
             InkWell(
               onTap: () {
-                Clipboard.setData(new ClipboardData(
-                    text: widget.data["data"]["va_numbers"][0]["va_number"]));
+                Clipboard.setData(new ClipboardData(text: widget.data["data"]["va_numbers"][0]["va_number"]));
                 Fluttertoast.showToast(
                     msg: "Disalin ke clipboard",
                     toastLength: Toast.LENGTH_SHORT,

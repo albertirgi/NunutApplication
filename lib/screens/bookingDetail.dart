@@ -64,11 +64,7 @@ class BookingDetail extends StatelessWidget {
                 ),
                 child: InkWell(
                   onTap: () {
-                    String number = rideSchedule.driver != null
-                        ? rideSchedule.driver.phone
-                            .toString()
-                            .replaceFirst("08", "6")
-                        : "6282256640981";
+                    String number = rideSchedule.driver != null ? rideSchedule.driver.phone.toString().replaceFirst("08", "6") : "6282256640981";
                     openwhatsapp(context, number);
                   },
                   child: Icon(
@@ -99,9 +95,7 @@ class BookingDetail extends StatelessWidget {
             ],
           ),
           NunutText(
-            title: rideSchedule.vehicle!.transportationType! +
-                " | " +
-                rideSchedule.vehicle!.licensePlate!,
+            title: rideSchedule.vehicle!.transportationType! + " | " + rideSchedule.vehicle!.licensePlate!,
             color: Colors.grey[700],
             size: 14,
           ),
@@ -116,8 +110,7 @@ class BookingDetail extends StatelessWidget {
     if (rideSchedule.id!.length < 5) {
       rideScheduleId = "12345";
     } else {
-      rideScheduleId =
-          rideSchedule.id.toString().substring(rideSchedule.id!.length - 5);
+      rideScheduleId = rideSchedule.id.toString().substring(rideSchedule.id!.length - 5);
     }
     return Scaffold(
       appBar: AppBar(
@@ -125,9 +118,7 @@ class BookingDetail extends StatelessWidget {
         elevation: 0,
         toolbarHeight: 100,
         centerTitle: true,
-        title: NunutText(
-            title: "Booking Nunut #" + rideScheduleId,
-            fontWeight: FontWeight.bold),
+        title: NunutText(title: "Booking Nunut #" + rideScheduleId, fontWeight: FontWeight.bold),
         backgroundColor: nunutPrimaryColor,
       ),
       body: SafeArea(
@@ -138,10 +129,8 @@ class BookingDetail extends StatelessWidget {
             driverBookingDetailContent("Driver", context),
             bookingDetailContent("Tanggal", rideSchedule.date.toString()),
             bookingDetailContent("Jam Berangkat", rideSchedule.time.toString()),
-            bookingDetailContent(
-                "Meeting Point", rideSchedule.meetingPoint!.name!),
-            bookingDetailContent(
-                "Harga", "IDR " + rideSchedule.price.toString()),
+            bookingDetailContent("Meeting Point", rideSchedule.meetingPoint!.name!),
+            bookingDetailContent("Harga", "IDR " + priceFormat(rideSchedule.price.toString())),
             SizedBox(height: 32),
             NunutButton(
               title: "Lihat QR Code",
@@ -171,8 +160,7 @@ class BookingDetail extends StatelessWidget {
                             ),
                           ),
                           QrImage(
-                            data: rideSchedule
-                                .rideRequestList!['ride_request_id'],
+                            data: rideSchedule.rideRequestList!['ride_request_id'],
                             // embeddedImage: AssetImage("assets/icon.png"),
                             // embeddedImageStyle: QrEmbeddedImageStyle(
                             //   size: Size(75, 75),

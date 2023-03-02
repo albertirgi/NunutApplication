@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nunut_application/functions.dart';
 import 'package:nunut_application/models/muser.dart';
 import 'package:nunut_application/resources/authApi.dart';
 import 'package:nunut_application/resources/midtransApi.dart';
@@ -128,10 +129,7 @@ class _TopUpState extends State<TopUp> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                NunutText(
-                    title: "Nominal Top-Up",
-                    fontWeight: FontWeight.bold,
-                    size: 20),
+                NunutText(title: "Nominal Top-Up", fontWeight: FontWeight.bold, size: 20),
                 NunutTextFormField(
                   title: "",
                   hintText: "Minimal top-up : 10.000",
@@ -187,10 +185,7 @@ class _TopUpState extends State<TopUp> {
                   ],
                 ),
                 SizedBox(height: 30),
-                NunutText(
-                    title: "Pilih Metode Pembayaran",
-                    fontWeight: FontWeight.bold,
-                    size: 20),
+                NunutText(title: "Pilih Metode Pembayaran", fontWeight: FontWeight.bold, size: 20),
                 SizedBox(height: 20),
                 // Theme(
                 //   data: Theme.of(context).copyWith(
@@ -414,19 +409,10 @@ class _TopUpState extends State<TopUp> {
                                     margin: EdgeInsets.only(top: 25.0),
                                     child: Center(
                                       child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                          NunutText(
-                                              title: "Loading...",
-                                              color: Colors.white,
-                                              size: 20,
-                                              fontWeight: FontWeight.w500),
-                                          NunutText(
-                                              title: "Mohon Tunggu",
-                                              color: Colors.white,
-                                              size: 20,
-                                              fontWeight: FontWeight.w500),
+                                          NunutText(title: "Loading...", color: Colors.white, size: 20, fontWeight: FontWeight.w500),
+                                          NunutText(title: "Mohon Tunggu", color: Colors.white, size: 20, fontWeight: FontWeight.w500),
                                         ],
                                       ),
                                     ),
@@ -504,26 +490,17 @@ class _TopUpState extends State<TopUp> {
       default:
     }
     String amount = topUpController.text.replaceAll(RegExp(r'[A-Za-z\. ]'), "");
-    return await MidtransApi.Topup(int.parse(amount), user.name, "", user.email,
-        user.phone, user.id!, payment_type, bank);
+    return await MidtransApi.Topup(int.parse(amount), user.name, "", user.email, user.phone, user.id!, payment_type, bank);
   }
 }
 
 class CurrencyInputFormatter extends TextInputFormatter {
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     if (newValue.selection.baseOffset == 0) {
       print(true);
       return newValue;
     }
 
-    double numValue = double.parse(newValue.text);
-    NumberFormat currencyFormatter = NumberFormat.simpleCurrency(
-        locale: "id", decimalDigits: 0, name: "Rp. ");
-    String newText = currencyFormatter.format(numValue);
-
-    return newValue.copyWith(
-        text: newText,
-        selection: new TextSelection.collapsed(offset: newText.length));
+    return newValue.copyWith(text: priceFormat(newValue.text), selection: new TextSelection.collapsed(offset: priceFormat(newValue.text).length));
   }
 }

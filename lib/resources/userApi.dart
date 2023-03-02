@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:nunut_application/configuration.dart';
+import 'package:nunut_application/functions.dart';
 import 'package:nunut_application/models/mresult.dart';
 import 'package:nunut_application/models/muser.dart';
 import 'package:http/http.dart' as http;
@@ -12,13 +13,11 @@ import 'package:intl/intl.dart';
 import 'package:nunut_application/resources/midtransApi.dart';
 import '../models/mwallet.dart';
 
-CollectionReference collectionRef =
-    FirebaseFirestore.instance.collection("users");
+CollectionReference collectionRef = FirebaseFirestore.instance.collection("users");
 CollectionReference walletRef = FirebaseFirestore.instance.collection("wallet");
 
 class UserService {
-  Future<void> tambahData(
-      {required UserModel user, required UserCredential userCredential}) async {
+  Future<void> tambahData({required UserModel user, required UserCredential userCredential}) async {
     DocumentReference docRef = collectionRef.doc(userCredential.user!.uid);
 
     await docRef.set({
@@ -43,26 +42,23 @@ class UserService {
       var response = await http.get(url);
 
       Wallet walletData = await MidtransApi.getWallet(id);
-      double numValue = double.parse(walletData.balance.toString());
-      NumberFormat currencyFormatter =
-          NumberFormat.simpleCurrency(locale: "id", decimalDigits: 0, name: "");
 
       Result result = Result.fromJson(json.decode(response.body));
       return UserModel(
-          email: snapshot['email'],
-          name: snapshot['name'],
-          nik: snapshot['nik'],
-          phone: snapshot['phone'],
-          id: id,
-          driverId: result.status == 200 ? result.data["driver_id"] : "empty",
-          wallet: currencyFormatter.format(numValue));
+        email: snapshot['email'],
+        name: snapshot['name'],
+        nik: snapshot['nik'],
+        phone: snapshot['phone'],
+        id: id,
+        driverId: result.status == 200 ? result.data["driver_id"] : "empty",
+        wallet: priceFormat(walletData.balance.toString()),
+      );
     } catch (e) {
       throw e;
     }
   }
 
-  Future<void> updateUser(
-      {required UserModel user, required File profile_picture}) async {
+  Future<void> updateUser({required UserModel user, required File profile_picture}) async {
     try {
       User? userAuth = FirebaseAuth.instance.currentUser;
       DocumentReference docRef = collectionRef.doc(userAuth!.uid);

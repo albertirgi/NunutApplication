@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:nunut_application/configuration.dart';
+import 'package:nunut_application/functions.dart';
 import 'package:nunut_application/resources/rideScheduleApi.dart';
 import 'package:nunut_application/screens/mapList.dart';
 import 'package:nunut_application/screens/rideBookDetail.dart';
@@ -52,9 +53,7 @@ class _RideShareState extends State<RideShare> {
     // _getCurrentPosition();
     _scrollController = ScrollController();
     _scrollController!.addListener(scrollListener);
-    widget.fromUKP
-        ? pickUpController.text = "Universitas Kristen Petra"
-        : destinationController.text = "Universitas Kristen Petra";
+    widget.fromUKP ? pickUpController.text = "Universitas Kristen Petra" : destinationController.text = "Universitas Kristen Petra";
   }
 
   void dispose() {
@@ -69,11 +68,8 @@ class _RideShareState extends State<RideShare> {
       _page = 1;
     });
 
-    String initialParameter =
-        "user_view&ride_request&user=${config.user.id}&driver&vehicle";
-    initialParameter += widget.fromUKP
-        ? "&meeting_point=UniversitasKristenPetra"
-        : "&destination=UniversitasKristenPetra";
+    String initialParameter = "user_view&ride_request&user=${config.user.id}&driver&vehicle";
+    initialParameter += widget.fromUKP ? "&meeting_point=UniversitasKristenPetra" : "&destination=UniversitasKristenPetra";
     tempParameter = initialParameter + tempParameter;
 
     rideScheduleList.clear();
@@ -95,11 +91,8 @@ class _RideShareState extends State<RideShare> {
         isLoading = true;
       });
 
-      String initialParameter =
-          "user_view&ride_request&user=${config.user.id}&driver&vehicle";
-      initialParameter += widget.fromUKP
-          ? "&meeting_point=UniversitasKristenPetra"
-          : "&destination=UniversitasKristenPetra";
+      String initialParameter = "user_view&ride_request&user=${config.user.id}&driver&vehicle";
+      initialParameter += widget.fromUKP ? "&meeting_point=UniversitasKristenPetra" : "&destination=UniversitasKristenPetra";
 
       rideSchedulePageList.clear();
       rideSchedulePageList = await rideScheduleApi.getRideScheduleList(
@@ -122,10 +115,7 @@ class _RideShareState extends State<RideShare> {
   }
 
   scrollListener() {
-    if (_scrollController!.offset >=
-            _scrollController!.position.maxScrollExtent - 100 &&
-        !_scrollController!.position.outOfRange &&
-        !done) {
+    if (_scrollController!.offset >= _scrollController!.position.maxScrollExtent - 100 && !_scrollController!.position.outOfRange && !done) {
       // loadmore();
     }
   }
@@ -221,8 +211,7 @@ class _RideShareState extends State<RideShare> {
         child: Stack(
           children: [
             Image(
-              image:
-                  AssetImage('assets/backgroundCircle/backgroundCircle1.png'),
+              image: AssetImage('assets/backgroundCircle/backgroundCircle1.png'),
               fit: BoxFit.cover,
             ),
             Container(
@@ -279,16 +268,14 @@ class _RideShareState extends State<RideShare> {
                                   color: Colors.grey.withOpacity(0.5),
                                   spreadRadius: 2,
                                   blurRadius: 5,
-                                  offset: Offset(
-                                      0, 0), // changes position of shadow
+                                  offset: Offset(0, 0), // changes position of shadow
                                 ),
                               ],
                             ),
                             child: IconButton(
                               icon: Icon(Icons.bookmark, color: Colors.black),
                               onPressed: () {
-                                Navigator.pushNamed(context, '/rideBookmark')
-                                    .then((value) => onGoBack(value));
+                                Navigator.pushNamed(context, '/rideBookmark').then((value) => onGoBack(value));
                               },
                             ),
                           ),
@@ -306,14 +293,12 @@ class _RideShareState extends State<RideShare> {
                                   color: Colors.grey.withOpacity(0.5),
                                   spreadRadius: 2,
                                   blurRadius: 5,
-                                  offset: Offset(
-                                      0, 0), // changes position of shadow
+                                  offset: Offset(0, 0), // changes position of shadow
                                 ),
                               ],
                             ),
                             child: IconButton(
-                              icon: Icon(Icons.list,
-                                  color: Colors.black, size: 18),
+                              icon: Icon(Icons.list, color: Colors.black, size: 18),
                               onPressed: () {
                                 Navigator.pushNamed(context, '/orderList');
                               },
@@ -347,11 +332,8 @@ class _RideShareState extends State<RideShare> {
                       ),
                     ],
                   ),
-                  NunutText(
-                      title: "Hai, " + config.user.name,
-                      fontWeight: FontWeight.bold),
-                  NunutText(
-                      title: "Butuh \nTumpangan?", isTitle: true, size: 32),
+                  NunutText(title: "Hai, " + config.user.name, fontWeight: FontWeight.bold),
+                  NunutText(title: "Butuh \nTumpangan?", isTitle: true, size: 32),
                   Container(
                     margin: EdgeInsets.only(top: 20),
                     decoration: BoxDecoration(
@@ -377,23 +359,15 @@ class _RideShareState extends State<RideShare> {
                               children: [
                                 Padding(
                                   padding: EdgeInsets.only(bottom: 2.0),
-                                  child: Icon(Icons.circle,
-                                      color: nunutPrimaryColor, size: 18),
+                                  child: Icon(Icons.circle, color: nunutPrimaryColor, size: 18),
                                 ),
-                                Icon(Icons.fiber_manual_record,
-                                    color: Colors.grey, size: 8),
-                                Icon(Icons.fiber_manual_record,
-                                    color: Colors.grey, size: 8),
-                                Icon(Icons.fiber_manual_record,
-                                    color: Colors.grey, size: 8),
-                                Icon(Icons.fiber_manual_record,
-                                    color: Colors.grey, size: 8),
-                                Icon(Icons.fiber_manual_record,
-                                    color: Colors.grey, size: 8),
-                                Icon(Icons.fiber_manual_record,
-                                    color: Colors.grey, size: 8),
-                                Icon(Icons.fiber_manual_record,
-                                    color: Colors.grey, size: 8),
+                                Icon(Icons.fiber_manual_record, color: Colors.grey, size: 8),
+                                Icon(Icons.fiber_manual_record, color: Colors.grey, size: 8),
+                                Icon(Icons.fiber_manual_record, color: Colors.grey, size: 8),
+                                Icon(Icons.fiber_manual_record, color: Colors.grey, size: 8),
+                                Icon(Icons.fiber_manual_record, color: Colors.grey, size: 8),
+                                Icon(Icons.fiber_manual_record, color: Colors.grey, size: 8),
+                                Icon(Icons.fiber_manual_record, color: Colors.grey, size: 8),
                                 Padding(
                                   padding: EdgeInsets.only(top: 2.0),
                                   child: Icon(
@@ -515,8 +489,7 @@ class _RideShareState extends State<RideShare> {
                                 ),
                                 SizedBox(height: 14),
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
                                       width: 230,
@@ -525,35 +498,23 @@ class _RideShareState extends State<RideShare> {
                                         style: TextStyle(fontSize: 12),
                                         controller: dateController,
                                         decoration: InputDecoration(
-                                          prefixIcon: Icon(Icons.calendar_today,
-                                              color: Colors.black, size: 14),
-                                          contentPadding:
-                                              EdgeInsets.only(left: 10),
+                                          prefixIcon: Icon(Icons.calendar_today, color: Colors.black, size: 14),
+                                          contentPadding: EdgeInsets.only(left: 10),
                                           filled: true,
                                           fillColor: Colors.grey[200],
                                           border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(24),
+                                            borderRadius: BorderRadius.circular(24),
                                             borderSide: BorderSide.none,
                                           ),
                                         ),
                                         onTap: () async {
-                                          FocusScope.of(context)
-                                              .requestFocus(new FocusNode());
-                                          DateTime? pickedDate =
-                                              await showDatePicker(
-                                                  context: context,
-                                                  initialDate: DateTime.now(),
-                                                  firstDate: DateTime(2000),
-                                                  lastDate: DateTime(2101));
+                                          FocusScope.of(context).requestFocus(new FocusNode());
+                                          DateTime? pickedDate = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(2000), lastDate: DateTime(2101));
 
                                           if (pickedDate != null) {
-                                            String formattedDate =
-                                                DateFormat.yMMMd()
-                                                    .format(pickedDate);
+                                            String formattedDate = DateFormat.yMMMd().format(pickedDate);
                                             setState(() {
-                                              dateController.text =
-                                                  formattedDate;
+                                              dateController.text = formattedDate;
                                             });
                                           }
                                           // print("Date: " + dateController.text);
@@ -603,13 +564,10 @@ class _RideShareState extends State<RideShare> {
                                           setState(() {
                                             isSearch = true;
                                           });
-                                          String _parameter =
-                                              await parameterController();
-                                          initRideScheduleList(
-                                              tempParameter: _parameter);
+                                          String _parameter = await parameterController();
+                                          initRideScheduleList(tempParameter: _parameter);
                                         },
-                                        icon:
-                                            Icon(Icons.arrow_right_alt_rounded),
+                                        icon: Icon(Icons.arrow_right_alt_rounded),
                                       ),
                                     )
                                   ],
@@ -684,88 +642,40 @@ class _RideShareState extends State<RideShare> {
                                         physics: BouncingScrollPhysics(),
                                         shrinkWrap: true,
                                         itemCount: rideScheduleList.length,
-                                        gridDelegate:
-                                            SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 2,
-                                                childAspectRatio: 0.65,
-                                                crossAxisSpacing: 15,
-                                                mainAxisSpacing: 15),
+                                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.65, crossAxisSpacing: 15, mainAxisSpacing: 15),
                                         itemBuilder: (context, index) {
                                           return InkWell(
                                             onTap: () {
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      RideBookDetail(
-                                                    rideSchedule:
-                                                        rideScheduleList[index],
+                                                  builder: (context) => RideBookDetail(
+                                                    rideSchedule: rideScheduleList[index],
                                                   ),
                                                 ),
                                               );
                                             },
                                             child: TwoColumnView(
-                                              imagePath: rideScheduleList[index]
-                                                  .driver!
-                                                  .image,
-                                              departureTime:
-                                                  rideScheduleList[index].time!,
-                                              name: rideScheduleList[index]
-                                                  .driver!
-                                                  .name,
-                                              destination:
-                                                  rideScheduleList[index]
-                                                      .destination!
-                                                      .name!,
-                                              isBookmarked:
-                                                  rideScheduleList[index]
-                                                      .isBookmarked!,
-                                              capacity: rideScheduleList[index]
-                                                  .capacity!,
-                                              totalBooked:
-                                                  rideScheduleList[index]
-                                                      .rideRequest!
-                                                      .length,
-                                              price: NumberFormat.currency(
-                                                locale: 'id',
-                                                symbol: '',
-                                                decimalDigits: 0,
-                                              ).format(rideScheduleList[index]
-                                                  .price),
+                                              imagePath: rideScheduleList[index].driver!.image,
+                                              departureTime: rideScheduleList[index].time!,
+                                              name: rideScheduleList[index].driver!.name,
+                                              destination: rideScheduleList[index].destination!.name!,
+                                              isBookmarked: rideScheduleList[index].isBookmarked!,
+                                              capacity: rideScheduleList[index].capacity!,
+                                              totalBooked: rideScheduleList[index].rideRequest!.length,
+                                              price: priceFormat(rideScheduleList[index].price.toString()),
                                               IconOnTap: () async {
                                                 bool result;
                                                 rideScheduleList[index].isBookmarked!
-                                                    ? result = await rideScheduleApi
-                                                        .deleteBookmarkByRideScheduleId(
-                                                            rideScheduleId:
-                                                                rideScheduleList[
-                                                                        index]
-                                                                    .id!,
-                                                            userId:
-                                                                config.user.id!,
-                                                            checkUrl: true)
-                                                    : result = await rideScheduleApi
-                                                        .updateBookmark(
-                                                            rideScheduleId:
-                                                                rideScheduleList[
-                                                                        index]
-                                                                    .id!,
-                                                            userId: config
-                                                                .user.id!);
+                                                    ? result =
+                                                        await rideScheduleApi.deleteBookmarkByRideScheduleId(rideScheduleId: rideScheduleList[index].id!, userId: config.user.id!, checkUrl: true)
+                                                    : result = await rideScheduleApi.updateBookmark(rideScheduleId: rideScheduleList[index].id!, userId: config.user.id!);
                                                 if (result) {
-                                                  rideScheduleList[index]
-                                                          .isBookmarked =
-                                                      !rideScheduleList[index]
-                                                          .isBookmarked!;
-                                                  if (rideScheduleList[index]
-                                                      .isBookmarked!) {
-                                                    Fluttertoast.showToast(
-                                                        msg:
-                                                            'Berhasil menambahkan ke bookmark');
+                                                  rideScheduleList[index].isBookmarked = !rideScheduleList[index].isBookmarked!;
+                                                  if (rideScheduleList[index].isBookmarked!) {
+                                                    Fluttertoast.showToast(msg: 'Berhasil menambahkan ke bookmark');
                                                   } else {
-                                                    Fluttertoast.showToast(
-                                                        msg:
-                                                            'Berhasil menghapus dari bookmark');
+                                                    Fluttertoast.showToast(msg: 'Berhasil menghapus dari bookmark');
                                                   }
                                                 }
                                                 setState(() {});
@@ -789,16 +699,8 @@ class _RideShareState extends State<RideShare> {
                               heightFactor: 5,
                               child: Column(
                                 children: [
-                                  NunutText(
-                                      title: "Tumpangan tidak tersedia",
-                                      color: Colors.grey,
-                                      size: 16,
-                                      fontWeight: FontWeight.w500),
-                                  NunutText(
-                                      title: "Mohon ubah kolom pencarian",
-                                      color: Colors.grey,
-                                      size: 16,
-                                      fontWeight: FontWeight.w500),
+                                  NunutText(title: "Tumpangan tidak tersedia", color: Colors.grey, size: 16, fontWeight: FontWeight.w500),
+                                  NunutText(title: "Mohon ubah kolom pencarian", color: Colors.grey, size: 16, fontWeight: FontWeight.w500),
                                 ],
                               ),
                             )
@@ -823,13 +725,11 @@ class _RideShareState extends State<RideShare> {
 
     widget.fromUKP
         ? destinationController.text.isNotEmpty
-            ? _parameter +=
-                "&destination=${destinationController.text.replaceAll(" ", "")}"
+            ? _parameter += "&destination=${destinationController.text.replaceAll(" ", "")}"
             // ? print("destination: ${destinationController.text.replaceAll(" ", "")}")
             : _parameter += ""
         : pickUpController.text.isNotEmpty
-            ? _parameter +=
-                "&meeting_point=${pickUpController.text.replaceAll(" ", "")}"
+            ? _parameter += "&meeting_point=${pickUpController.text.replaceAll(" ", "")}"
             : _parameter += "";
 
     return _parameter;

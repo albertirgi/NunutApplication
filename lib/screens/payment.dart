@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nunut_application/configuration.dart';
+import 'package:nunut_application/functions.dart';
 import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/models/mwallet.dart';
 import 'package:nunut_application/resources/midtransApi.dart';
@@ -230,7 +231,7 @@ class _PaymentState extends State<Payment> {
                     NunutText(title: "Biaya Nunut", size: 14),
                     Spacer(),
                     NunutText(
-                      title: NumberFormat.currency(locale: 'id', symbol: '', decimalDigits: 0).format(widget.rideSchedule.price!),
+                      title: priceFormat(widget.rideSchedule.price!.toString()),
                       size: 14,
                       fontWeight: FontWeight.bold,
                     ),
@@ -241,7 +242,7 @@ class _PaymentState extends State<Payment> {
                     NunutText(title: "Pajak (10%)", size: 14),
                     Spacer(),
                     NunutText(
-                      title: NumberFormat.currency(locale: 'id', symbol: '', decimalDigits: 0).format(pajak),
+                      title: priceFormat(pajak.toString()),
                       size: 14,
                       fontWeight: FontWeight.bold,
                     ),
@@ -287,7 +288,7 @@ class _PaymentState extends State<Payment> {
                     NunutText(title: "Total Harga", fontWeight: FontWeight.bold, size: 14),
                     Spacer(),
                     NunutText(
-                      title: NumberFormat.currency(locale: 'id', symbol: '', decimalDigits: 0).format(total),
+                      title: priceFormat(total.toString()),
                       fontWeight: FontWeight.bold,
                       size: 22,
                     ),
@@ -354,9 +355,7 @@ class _PaymentState extends State<Payment> {
                     bool result = await rideRequestApi.addRideRequest(rideScheduleId: widget.rideSchedule.id.toString(), status_ride: "REGISTERED", user_id: config.user.id!, checkUrl: true);
                     if (result) {
                       Wallet walletData = await MidtransApi.getWallet(config.user.id!);
-                      double numValue = double.parse(walletData.balance.toString());
-                      NumberFormat currencyFormatter = NumberFormat.simpleCurrency(locale: "id", decimalDigits: 0, name: "");
-                      config.user.wallet = currencyFormatter.format(numValue);
+                      priceFormat(walletData.balance.toString());
 
                       Navigator.pushNamed(context, '/success', arguments: {
                         'title': "Pembayaran Berhasil!",
