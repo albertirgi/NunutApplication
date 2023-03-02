@@ -45,6 +45,7 @@ dependencies:
   flutter_google_places: ^0.3.0
   flutter_polyline_points: ^1.0.0
   fluttertoast: ^8.1.2
+  font_awesome_flutter: ^10.4.0
   geocoder: ^0.2.1
   geocoding: ^2.0.5
   geolocator: ^9.0.2
