@@ -174,7 +174,7 @@ class _OrderListState extends State<OrderList> {
                                         isUser: true,
                                         images: images,
                                         date: rideScheduleList[index].date!,
-                                        totalPerson: rideScheduleList[index].capacity!.toString(),
+                                        totalPerson: rideScheduleList[index].capacity.toString(),
                                         time: rideScheduleList[index].time!,
                                         carName: rideScheduleList[index].vehicle!.transportationType!,
                                         plateNumber: rideScheduleList[index].vehicle!.licensePlate!,

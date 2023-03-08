@@ -120,7 +120,7 @@ class _MapListState extends State<MapList> {
                 ),
                 SizedBox(height: 40),
                 NunutText(title: "Pilih Lokasi", isTitle: true, size: 32),
-                SizedBox(height: 40),
+                SizedBox(height: 60),
                 TextFormField(
                   controller: searchController,
                   onChanged: (value) {

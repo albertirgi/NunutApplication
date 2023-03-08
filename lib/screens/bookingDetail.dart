@@ -130,6 +130,7 @@ class BookingDetail extends StatelessWidget {
             bookingDetailContent("Tanggal", rideSchedule.date.toString()),
             bookingDetailContent("Jam Berangkat", rideSchedule.time.toString()),
             bookingDetailContent("Meeting Point", rideSchedule.meetingPoint!.name!),
+            bookingDetailContent("Destination", rideSchedule.destination!.name!),
             bookingDetailContent("Harga", "IDR " + priceFormat(rideSchedule.price.toString())),
             SizedBox(height: 32),
             NunutButton(
