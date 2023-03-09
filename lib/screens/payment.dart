@@ -314,7 +314,9 @@ class _PaymentState extends State<Payment> {
                       Spacer(),
                       InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, '/nunutPay');
+                          // Navigator.pushNamed(context, '/nunutPay');
+                          //push and remove until to page rideShare
+                          Navigator.pushNamedAndRemoveUntil(context, '/nunutPay', (route) => false);
                         },
                         child: Container(
                           margin: EdgeInsets.only(right: 4),

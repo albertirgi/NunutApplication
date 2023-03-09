@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:nunut_application/functions.dart';
 import 'package:nunut_application/models/mpromotion.dart';
 import 'package:nunut_application/resources/promotionApi.dart';
 import 'package:nunut_application/screens/promotionDetail.dart';
@@ -22,6 +25,7 @@ class _PromotionListState extends State<PromotionList> {
   void initState() {
     super.initState();
     initPromotionList();
+    print(jsonEncode(promotionList));
   }
 
   initPromotionList() async {
@@ -30,26 +34,11 @@ class _PromotionListState extends State<PromotionList> {
     });
 
     promotionList.clear();
-    promotionList = await promotionApi.getPromotionList();
+    promotionList = await promotionApi.getPromotionList(checkURL: true);
 
     setState(() {
       promotionListLoading = false;
     });
-  }
-
-  String formatCurrency(dynamic number) {
-    String currency = "";
-    if (number != String) {
-      currency = "Rp " + number.toString();
-    } else {
-      currency = "Rp" + number;
-    }
-
-    RegExp regex = RegExp(r'(\d)(?=(\d{3})+(?!\d))');
-    currency = currency.replaceAllMapped(regex, (Match match) {
-      return '${match.group(1)},';
-    });
-    return currency;
   }
 
   Widget promoTerbaru(String heading, String kodePromo) {
@@ -110,8 +99,7 @@ class _PromotionListState extends State<PromotionList> {
                 SizedBox(height: 10),
                 Container(
                   margin: EdgeInsets.only(left: 18),
-                  child: NunutText(
-                      title: "Kupon Promosi", size: 32, isTitle: true),
+                  child: NunutText(title: "Kupon Promosi", size: 32, isTitle: true),
                 ),
               ],
             ),
@@ -142,20 +130,20 @@ class _PromotionListState extends State<PromotionList> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => PromotionDetail(
-                                            promotion: promotionList[index]),
+                                        builder: (context) => PromotionDetail(promotion: promotionList[index]),
                                       ),
                                     );
                                   },
                                   child: CouponCard(
+                                    title:
+                                        "Diskon Rp. ${priceFormat(promotionList[index].maximumDiscount.toString())} dengan minimal transaksi Rp. ${priceFormat(promotionList[index].minimumPuchase.toString())}",
                                     imagePath: promotionList[index].image,
                                     date: NunutText(
                                       title: promotionList[index].expiredAt,
                                       fontWeight: FontWeight.bold,
                                     ),
                                     minTransaction: NunutText(
-                                      title: formatCurrency(
-                                          promotionList[index].minimum!),
+                                      title: "Rp. " + priceFormat(promotionList[index].minimumPuchase.toString()),
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),

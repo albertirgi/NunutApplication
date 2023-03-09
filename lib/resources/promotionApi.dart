@@ -6,8 +6,9 @@ import 'package:nunut_application/models/mresult.dart';
 import 'package:nunut_application/models/mpromotion.dart';
 
 class PromotionApi {
-  Future<List<PromotionModel>> getPromotionList() async {
+  Future<List<PromotionModel>> getPromotionList({bool checkURL = false}) async {
     var url = Uri.parse(config.baseUrl + '/voucher');
+    if (checkURL) print(url);
     var response = await http.get(url);
 
     Result result;
@@ -16,9 +17,7 @@ class PromotionApi {
     result = Result.fromJson(json.decode(response.body));
 
     if (result.status == 200) {
-      log(result.data.toString());
       result.data.forEach((item) {
-        log("isi item " + item.toString());
         PromotionList.add(PromotionModel.fromJson(item));
       });
     }

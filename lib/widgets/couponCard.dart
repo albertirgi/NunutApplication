@@ -7,6 +7,7 @@ class CouponCard extends StatelessWidget {
   final Widget date;
   final Widget minTransaction;
   final bool useBorder;
+  final String title;
 
   const CouponCard({
     super.key,
@@ -15,6 +16,7 @@ class CouponCard extends StatelessWidget {
     required this.date,
     required this.minTransaction,
     this.useBorder = true,
+    required this.title,
   });
 
   @override
@@ -34,16 +36,30 @@ class CouponCard extends StatelessWidget {
       child: Column(
         children: [
           Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              ),
+            ),
             width: MediaQuery.of(context).size.width,
             height: 125,
-            child: Image.network(imagePath, fit: BoxFit.cover),
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              ),
+              child: Image.network(imagePath, fit: BoxFit.cover),
+            ),
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
             child: Column(
               children: [
+                NunutText(title: title, size: 18, maxLines: 2, fontWeight: FontWeight.bold, height: 1.2),
+                SizedBox(height: 8),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

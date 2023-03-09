@@ -21,8 +21,7 @@ class Promotion {
 
   factory Promotion.fromJson(Map<String, dynamic> json) => Promotion(
         message: json["message"],
-        data: List<PromotionModel>.from(
-            json["data"].map((x) => PromotionModel.fromJson(x))),
+        data: List<PromotionModel>.from(json["data"].map((x) => PromotionModel.fromJson(x))),
         status: json["status"],
       );
 
@@ -38,8 +37,8 @@ class PromotionModel {
     required this.voucherId,
     required this.code,
     required this.expiredAt,
-    required this.minimum,
-    required this.maximum,
+    required this.minimumPuchase,
+    required this.maximumDiscount,
     required this.tnc,
     required this.image,
     required this.type,
@@ -49,8 +48,8 @@ class PromotionModel {
   String voucherId;
   String code;
   String expiredAt;
-  dynamic minimum;
-  dynamic maximum;
+  int minimumPuchase;
+  int maximumDiscount;
   List<String> tnc;
   String image;
   String type;
@@ -60,8 +59,8 @@ class PromotionModel {
         voucherId: json["voucher_id"],
         code: json["code"],
         expiredAt: json["expired_at"],
-        minimum: json["minimum"],
-        maximum: json["maximum"],
+        minimumPuchase: json["minimum_purchase"],
+        maximumDiscount: json["maximum_discount"],
         tnc: List<String>.from(json["tnc"].map((x) => x)),
         image: json["image"],
         type: json["type"],
@@ -72,8 +71,8 @@ class PromotionModel {
         "voucher_id": voucherId,
         "code": code,
         "expired_at": expiredAt,
-        "minimum": minimum,
-        "maximum": maximum,
+        "minimum_puchase": minimumPuchase,
+        "maximum_discount": maximumDiscount,
         "tnc": List<dynamic>.from(tnc.map((x) => x)),
         "image": image,
         "type": type,

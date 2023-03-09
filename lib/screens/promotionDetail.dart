@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nunut_application/functions.dart';
 import 'package:nunut_application/models/mpromotion.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 
@@ -42,21 +43,15 @@ class _PromotionDetailState extends State<PromotionDetail> {
       body: ListView(
         children: [
           CouponCard(
+            title: "Diskon ${widget.promotion!.discount} dengan minimal transaksi Rp. ${priceFormat(widget.promotion!.minimumPuchase.toString())}",
             imagePath: widget.promotion!.image,
-            date: NunutText(
-                title: widget.promotion!.expiredAt,
-                fontWeight: FontWeight.bold),
-            minTransaction: NunutText(
-                title: "Rp. " + (widget.promotion!.minimum!).toString(),
-                fontWeight: FontWeight.bold),
+            date: NunutText(title: widget.promotion!.expiredAt, fontWeight: FontWeight.bold),
+            minTransaction: NunutText(title: "Rp. " + priceFormat(widget.promotion!.minimumPuchase.toString()), fontWeight: FontWeight.bold),
             useBorder: false,
           ),
           Container(
             margin: EdgeInsets.only(top: 12, left: 48),
-            child: NunutText(
-                title: "Syarat & Ketentuan",
-                fontWeight: FontWeight.bold,
-                size: 18),
+            child: NunutText(title: "Syarat & Ketentuan", fontWeight: FontWeight.bold, size: 18),
           ),
           Container(
             margin: EdgeInsets.only(top: 4, left: 32, right: 36),
@@ -88,13 +83,7 @@ class _PromotionDetailState extends State<PromotionDetail> {
           Center(
             child: Container(
               margin: EdgeInsets.all(28),
-              child: NunutButton(
-                title: "Gunakan",
-                backgroundColor: Colors.black,
-                textColor: Colors.white,
-                borderRadius: 8,
-                onPressed: () {},
-              ),
+              child: NunutButton(title: "Gunakan", backgroundColor: Colors.black, textColor: Colors.white, borderRadius: 8, onPressed: () {}),
             ),
           )
         ],

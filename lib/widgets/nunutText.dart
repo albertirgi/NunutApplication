@@ -10,7 +10,7 @@ class NunutText extends StatelessWidget {
   final TextDecoration textDecoration;
   final TextOverflow? overflow;
   final bool isTitle;
-  final double? height;
+  final double height;
   final TextAlign? textAlign;
 
   const NunutText({
@@ -23,7 +23,7 @@ class NunutText extends StatelessWidget {
     this.textDecoration = TextDecoration.none,
     this.overflow = TextOverflow.ellipsis,
     this.isTitle = false,
-    this.height,
+    this.height = 1.5,
     this.textAlign,
   });
 
@@ -51,7 +51,7 @@ class NunutText extends StatelessWidget {
           fontWeight: isTitle ? FontWeight.bold : fontWeight,
           decoration: textDecoration,
           shadows: shadows,
-          height: isTitle ? 1 : 1.5,
+          height: isTitle ? 1 : height,
         ),
       ),
       overflow: overflow,
