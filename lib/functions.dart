@@ -115,3 +115,17 @@ String priceFormat(String price) {
   NumberFormat currencyFormatter = NumberFormat.simpleCurrency(locale: "id", decimalDigits: 0, name: "");
   return currencyFormatter.format(numValue);
 }
+
+class PopWithResults<T> {
+  /// poped from this page
+  final String fromPage;
+
+  /// pop until this page
+  final String toPage;
+
+  /// results
+  final dynamic results;
+
+  /// constructor
+  PopWithResults({@required required this.fromPage, @required required this.toPage, required this.results});
+}

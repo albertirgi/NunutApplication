@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/functions.dart';
+import 'package:nunut_application/models/mpromotion.dart';
 import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/models/mwallet.dart';
 import 'package:nunut_application/resources/midtransApi.dart';
@@ -25,6 +28,9 @@ class _PaymentState extends State<Payment> {
   double pajak = 0;
   double total = 0;
   bool isWalletEnough = false;
+  PromotionModel? selectedPromotion;
+  bool useVoucher = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -32,12 +38,21 @@ class _PaymentState extends State<Payment> {
     // biayaAdmin = widget.rideSchedule.biayaAdmin.toString();
     pajak = (10 / 100 * widget.rideSchedule.price!);
     total = widget.rideSchedule.price! + pajak;
-    isWalletEnough = widget.rideSchedule.price! <= double.parse(config.user.wallet!.replaceAll(".", ""));
+    checkWalletEnough();
+  }
+
+  void checkWalletEnough() {
+    setState(() {
+      isWalletEnough = widget.rideSchedule.price! <= double.parse(config.user.wallet!.replaceAll(".", ""));
+    });
+  }
+
+  FutureOr onGoBack(dynamic value) {
+    onRefresh();
   }
 
   @override
   Widget build(BuildContext context) {
-    bool useVoucher = false;
     return Scaffold(
       body: SingleChildScrollView(
         child: NunutBackground(
@@ -248,32 +263,53 @@ class _PaymentState extends State<Payment> {
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    NunutText(title: "Biaya Admin", size: 14),
-                    Spacer(),
-                    NunutText(title: "1.000", size: 14, fontWeight: FontWeight.bold),
-                  ],
-                ),
+                // Row(
+                //   children: [
+                //     NunutText(title: "Biaya Admin", size: 14),
+                //     Spacer(),
+                //     NunutText(title: "1.000", size: 14, fontWeight: FontWeight.bold),
+                //   ],
+                // ),
                 useVoucher
                     ? Row(
                         children: [
                           NunutText(title: "Diskon", size: 14, color: nunutPrimaryColor4),
                           Spacer(),
-                          NunutText(title: "-2.500", size: 14, fontWeight: FontWeight.bold, color: nunutPrimaryColor4),
+                          NunutText(title: "- " + priceFormat(selectedPromotion!.maximumDiscount.toString()), size: 14, fontWeight: FontWeight.bold, color: nunutPrimaryColor4),
                         ],
                       )
                     : Container(),
                 SizedBox(height: 20),
                 NunutButton(
-                  title: "Promo Berhasil Digunakan",
+                  title: useVoucher ? "Promo Berhasil Digunakan" : "Gunakan Promo",
                   onPressed: () {
-                    Navigator.pushNamed(context, '/promotionList');
+                    // Navigator.pushNamed(context, '/promotionList');
+                    Navigator.of(context).pushNamed('/promotionList').then((results) {
+                      if (results is PopWithResults) {
+                        PopWithResults popResult = results;
+                        if (popResult.toPage == "/payment") {
+                          setState(() {
+                            useVoucher = true;
+                            selectedPromotion = popResult.results;
+                            total = total - selectedPromotion!.maximumDiscount;
+                          });
+                        } else {
+                          // pop to previous page
+                          Navigator.of(context).pop(results);
+                        }
+                      }
+                    });
                   },
-                  iconButton: Icon(
-                    Icons.verified_outlined,
-                    color: Colors.green,
-                  ),
+                  iconButton: useVoucher
+                      ? Icon(
+                          Icons.verified_outlined,
+                          color: Colors.green,
+                        )
+                      : Icon(
+                          Icons.arrow_forward_ios,
+                          color: Colors.white,
+                          size: 14,
+                        ),
                   backgroundColor: Colors.white,
                   widthButton: 325,
                   borderRadius: 12,
@@ -314,9 +350,7 @@ class _PaymentState extends State<Payment> {
                       Spacer(),
                       InkWell(
                         onTap: () {
-                          // Navigator.pushNamed(context, '/nunutPay');
-                          //push and remove until to page rideShare
-                          Navigator.pushNamedAndRemoveUntil(context, '/nunutPay', (route) => false);
+                          Navigator.pushNamed(context, '/nunutPay');
                         },
                         child: Container(
                           margin: EdgeInsets.only(right: 4),
@@ -378,5 +412,12 @@ class _PaymentState extends State<Payment> {
         ),
       ),
     );
+  }
+
+  onRefresh() async {
+    await Future.delayed(Duration(seconds: 1));
+    checkWalletEnough();
+    total = total;
+    useVoucher = useVoucher;
   }
 }

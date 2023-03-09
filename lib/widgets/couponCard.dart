@@ -8,6 +8,7 @@ class CouponCard extends StatelessWidget {
   final Widget minTransaction;
   final bool useBorder;
   final String title;
+  final bool isList;
 
   const CouponCard({
     super.key,
@@ -17,6 +18,7 @@ class CouponCard extends StatelessWidget {
     required this.minTransaction,
     this.useBorder = true,
     required this.title,
+    this.isList = true,
   });
 
   @override
@@ -53,11 +55,11 @@ class CouponCard extends StatelessWidget {
             ),
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: isList ? 14 : 20),
             child: Column(
               children: [
                 NunutText(title: title, size: 18, maxLines: 2, fontWeight: FontWeight.bold, height: 1.2),
-                SizedBox(height: 8),
+                isList ? SizedBox(height: 12) : SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

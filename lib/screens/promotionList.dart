@@ -127,12 +127,23 @@ class _PromotionListState extends State<PromotionList> {
                               itemBuilder: (context, index) {
                                 return InkWell(
                                   onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => PromotionDetail(promotion: promotionList[index]),
-                                      ),
-                                    );
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //     builder: (context) => PromotionDetail(promotion: promotionList[index]),
+                                    //   ),
+                                    // );
+                                    Navigator.of(context).pushNamed('/promotionDetail', arguments: {'promotion': promotionList[index]}).then((results) {
+                                      if (results is PopWithResults) {
+                                        PopWithResults popResult = results;
+                                        if (popResult.toPage == "/promotionList") {
+                                          // TODO do stuff
+                                        } else {
+                                          // pop to previous page
+                                          Navigator.of(context).pop(results);
+                                        }
+                                      }
+                                    });
                                   },
                                   child: CouponCard(
                                     title:
