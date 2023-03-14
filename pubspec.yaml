@@ -59,6 +59,7 @@ dependencies:
   qr_code_scanner: ^1.0.1
   qr_flutter: ^4.0.0
   roundcheckbox: ^2.0.5
+  shared_preferences: ^2.0.18
   shimmer: ^2.0.0
   string_extensions: ^0.6.6
   text_scroll: ^0.1.2

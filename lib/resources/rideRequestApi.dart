@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/models/mresult.dart';
@@ -16,7 +15,13 @@ class RideRequestApi {
 
     if (checkUrl) print(url);
 
-    var response = await http.get(url);
+    var response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${config.user.token}',
+      },
+    );
 
     Result result;
     List<RideRequest> rideRequestList = [];
@@ -39,7 +44,13 @@ class RideRequestApi {
 
     if (checkUrl) print(url);
 
-    var response = await http.get(url);
+    var response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${config.user.token}',
+      },
+    );
 
     Result result;
     List<RideSchedule> rideScheduleList = [];
@@ -76,7 +87,10 @@ class RideRequestApi {
 
     var response = await http.post(
       url,
-      headers: {"Content-Type": "application/json"},
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer ${config.user.token}",
+      },
       body: body,
     );
 
@@ -96,7 +110,13 @@ class RideRequestApi {
     var url = Uri.parse(config.baseUrl + '/ride-request/status/$rideRequestId/$status');
 
     if (checkUrl) print(url);
-    var response = await http.get(url);
+    var response = await http.get(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer ${config.user.token}",
+      },
+    );
 
     Result result;
     result = Result.fromJson(json.decode(response.body));

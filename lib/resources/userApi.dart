@@ -3,13 +3,12 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/functions.dart';
 import 'package:nunut_application/models/mresult.dart';
 import 'package:nunut_application/models/muser.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
+import 'package:nunut_application/resources/authApi.dart';
 import 'package:nunut_application/resources/midtransApi.dart';
 import '../models/mwallet.dart';
 
@@ -52,6 +51,8 @@ class UserService {
         id: id,
         driverId: result.status == 200 ? result.data["driver_id"] : "empty",
         wallet: priceFormat(walletData.balance.toString()),
+        // token: _token,
+        token: "empty",
       );
     } catch (e) {
       throw e;

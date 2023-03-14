@@ -6,8 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:nunut_application/models/mresult.dart';
 
 class MapLocationApi {
-  Future<List<MapLocation>> getMapList(
-      {String parameter = "", bool checkUrl = false, int page = 0}) async {
+  Future<List<MapLocation>> getMapList({String parameter = "", bool checkUrl = false, int page = 0}) async {
     String _parameter = "";
     if (page > 0) _parameter = "/list/$page";
     if (parameter.isNotEmpty) _parameter += "?$parameter";
@@ -15,7 +14,13 @@ class MapLocationApi {
 
     if (checkUrl) print(url);
 
-    var response = await http.get(url);
+    var response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${config.user.token}',
+      },
+    );
 
     Result result;
     List<MapLocation> mapLocationList = [];
@@ -33,7 +38,13 @@ class MapLocationApi {
   Future<MapLocation> getMapListById(String id) async {
     var url = Uri.parse(config.baseUrl + '/map/' + id);
 
-    var response = await http.get(url);
+    var response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${config.user.token}',
+      },
+    );
 
     Result result;
     MapLocation mapLocation = MapLocation(longitude: "", latitude: "");
@@ -48,7 +59,13 @@ class MapLocationApi {
 
   static Future<MapLocation> getMapUkp() async {
     var url = Uri.parse(config.baseUrl + '/map-petra/');
-    var response = await http.get(url);
+    var response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${config.user.token}',
+      },
+    );
 
     Result result;
     MapLocation mapLocation = MapLocation(longitude: "", latitude: "");

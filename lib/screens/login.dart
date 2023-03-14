@@ -4,11 +4,13 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/configuration.dart';
+import 'package:nunut_application/resources/userApi.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:nunut_application/widgets/nunutTextFormField.dart';
 import 'package:nunut_application/widgets/popUpLoading.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/muser.dart';
 import '../resources/authApi.dart';
@@ -25,6 +27,45 @@ class _LoginPageState extends State<LoginPage> {
   bool passwordVisible = false;
 
   late UserModel tmpUser = UserModel(email: "", name: "", nik: "", phone: "");
+  var haveToken = false;
+  bool tokenLoading = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  //checkToken
+  // void checkToken() async {
+  //   setState(() {
+  //     tokenLoading = true;
+  //   });
+
+  //   SharedPreferences prefs = await SharedPreferences.getInstance().then((value) {
+  //     var email = value.getString('email');
+  //     var token = value.getString("token");
+  //     var id = value.getString("id");
+  //     if (token != "" && email != "") {
+  //       print(email);
+  //       print(" MAMBU BANGET ");
+  //       print(token);
+  //     }
+  //     return value;
+  //   });
+
+  //   if (prefs.getString("token") != null) {
+  //     haveToken = true;
+  //     config.user = await UserService().getUserByID(prefs.getString("id")!);
+  //     Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
+  //   } else {
+  //     haveToken = false;
+  //   }
+
+  //   setState(() {
+  //     tokenLoading = false;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -93,9 +134,14 @@ class _LoginPageState extends State<LoginPage> {
                         },
                       );
                       tmpUser = await AuthService.signIn(email: username.text, password: password.text, context: context);
+                      tmpUser.token = await AuthService.getToken(username.text, password.text);
 
                       if (tmpUser.email != "") {
                         config.user = tmpUser;
+                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                        prefs.setString("email", tmpUser.email);
+                        prefs.setString("token", tmpUser.token!);
+                        prefs.setString("id", tmpUser.id!);
                         Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
                       } else {
                         Fluttertoast.showToast(msg: "Email atau password salah", textColor: Colors.white);
