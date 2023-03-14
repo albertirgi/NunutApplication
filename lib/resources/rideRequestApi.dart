@@ -56,7 +56,7 @@ class RideRequestApi {
   }
 
   //post ride request
-  Future<bool> addRideRequest({required String rideScheduleId, required String status_ride, required String user_id, bool checkUrl = false}) async {
+  Future<bool> addRideRequest({required String rideScheduleId, required String status_ride, required String user_id, bool checkUrl = false, String voucherId = ""}) async {
     var url = Uri.parse(config.baseUrl + '/ride-request');
 
     if (checkUrl) print(url);
@@ -65,8 +65,14 @@ class RideRequestApi {
       "status_ride": status_ride,
       "user_id": user_id,
     });
-    print(body);
-    // return true;
+
+    if (voucherId.isNotEmpty)
+      body = jsonEncode({
+        "ride_schedule_id": rideScheduleId,
+        "status_ride": status_ride,
+        "user_id": user_id,
+        "voucher_id": voucherId,
+      });
 
     var response = await http.post(
       url,
