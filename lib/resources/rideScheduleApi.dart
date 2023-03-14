@@ -42,17 +42,18 @@ class RideScheduleApi {
     };
     var bodyJson = json.encode(body);
 
-    var response = await http.post(url,
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: bodyJson);
-    //log("Response :" + response.body.toString());
+    var response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${config.user.token}',
+      },
+      body: bodyJson,
+    );
 
     Result result;
     result = Result.fromJson(json.decode(response.body.toString()));
-    //log("Result : " + result.status.toString());
     if (result.status == 200) {
       return true;
     } else {
@@ -68,7 +69,13 @@ class RideScheduleApi {
 
     if (checkUrl) print(url);
 
-    var response = await http.get(url);
+    var response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${config.user.token}',
+      },
+    );
 
     Result result;
     List<RideSchedule> rideScheduleList = [];
@@ -90,7 +97,13 @@ class RideScheduleApi {
 
     if (checkUrl) print(url);
 
-    var response = await http.get(url);
+    var response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${config.user.token}',
+      },
+    );
 
     Result result;
     RideSchedule rideSchedule = RideSchedule();
@@ -110,6 +123,10 @@ class RideScheduleApi {
       body: {
         "ride_schedule_id": rideScheduleId,
         "user_id": userId,
+      },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${config.user.token}',
       },
     );
 

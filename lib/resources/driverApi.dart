@@ -12,7 +12,13 @@ import 'package:nunut_application/resources/authApi.dart';
 class DriverApi {
   Future<List<Driver>> getDriverList() async {
     var url = Uri.parse(config.baseUrl + '/driver');
-    var response = await http.get(url);
+    var response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${config.user.token}',
+      },
+    );
 
     Result result;
     List<Driver> driverList = [];
@@ -29,21 +35,16 @@ class DriverApi {
 
   Future<Driver> getDriverById(String id) async {
     var url = Uri.parse(config.baseUrl + '/driver/' + id);
-    var response = await http.get(url);
+    var response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${config.user.token}',
+      },
+    );
 
     Result result;
-    Driver driver = Driver(
-        driverId: "",
-        aggrementLetter: "",
-        drivingLicense: "",
-        name: "",
-        email: "",
-        image: "",
-        nik: "",
-        phone: "",
-        status: "",
-        studentCard: "",
-        userId: "");
+    Driver driver = Driver(driverId: "", aggrementLetter: "", drivingLicense: "", name: "", email: "", image: "", nik: "", phone: "", status: "", studentCard: "", userId: "");
 
     result = Result.fromJson(json.decode(response.body));
 
@@ -63,12 +64,10 @@ class DriverApi {
     request.fields['status'] = driver.status;
     request.fields['user_id'] = driver.userId;
     request.files.add(
-      await http.MultipartFile.fromPath(
-          'aggrement_letter', driver.aggrementLetter),
+      await http.MultipartFile.fromPath('aggrement_letter', driver.aggrementLetter),
     );
     request.files.add(
-      await http.MultipartFile.fromPath(
-          'driving_license', driver.drivingLicense),
+      await http.MultipartFile.fromPath('driving_license', driver.drivingLicense),
     );
     request.files.add(
       await http.MultipartFile.fromPath('student_card', driver.studentCard),
@@ -76,17 +75,15 @@ class DriverApi {
     request.files.add(
       await http.MultipartFile.fromPath('image', driver.image),
     );
-    var response = await request.send();
-    print(response.stream.first.toString());
+    request.headers.addAll(<String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ${config.user.token}',
+    });
+
+    request.send();
   }
 
-  static Future<http.StreamedResponse> registerDriver(
-      String fullname,
-      String nik,
-      String phone,
-      File? ktmImage,
-      File? drivingLicense,
-      File? aggrementLetter) async {
+  static Future<http.StreamedResponse> registerDriver(String fullname, String nik, String phone, File? ktmImage, File? drivingLicense, File? aggrementLetter) async {
     // Validate the form
     if (ktmImage == null || drivingLicense == null || aggrementLetter == null) {
       print("Please fill all the field");
@@ -99,8 +96,7 @@ class DriverApi {
     request.fields['phone'] = user.phone;
     request.fields['nik'] = user.nik;
     request.fields['user_id'] = user.id!;
-    request.fields['image'] = user.photo ??
-        "https://firebasestorage.googleapis.com/v0/b/nunut-da274.appspot.com/o/avatar.png?alt=media&token=62dfdb20-7aa0-4ca4-badf-31c282583b1b";
+    request.fields['image'] = user.photo ?? "https://firebasestorage.googleapis.com/v0/b/nunut-da274.appspot.com/o/avatar.png?alt=media&token=62dfdb20-7aa0-4ca4-badf-31c282583b1b";
     request.files.add(
       http.MultipartFile(
         'aggrement_letter',

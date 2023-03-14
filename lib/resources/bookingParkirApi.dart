@@ -13,10 +13,17 @@ class BookingParkirApi {
     //   'status': "false",
     // });
 
-    var response = await http.post(url, body: {
-      'parking_slot_id': id_parking_slot,
-      'ride_schedule_id': id_ride_order,
-    });
+    var response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${config.user.token}',
+      },
+      body: {
+        'parking_slot_id': id_parking_slot,
+        'ride_schedule_id': id_ride_order,
+      },
+    );
     //log("Response :" + response.body.toString());
 
     Result result;
@@ -33,15 +40,20 @@ class BookingParkirApi {
   }
 
   static Future UpdateStatusSlotParkir(id_parking_slot) async {
-    var urlUpdateStatus =
-        Uri.parse(config.baseUrl + '/parking-slot/' + id_parking_slot);
-    var responseUpdateStatus = await http.put(urlUpdateStatus, body: {
-      'status': "false",
-    });
+    var urlUpdateStatus = Uri.parse(config.baseUrl + '/parking-slot/' + id_parking_slot);
+    var responseUpdateStatus = await http.put(
+      urlUpdateStatus,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${config.user.token}',
+      },
+      body: {
+        'status': "false",
+      },
+    );
 
     Result resultUpdateStatus;
-    resultUpdateStatus =
-        Result.fromJson(json.decode(responseUpdateStatus.body.toString()));
+    resultUpdateStatus = Result.fromJson(json.decode(responseUpdateStatus.body.toString()));
     //log("Result : " + resultUpdateStatus.status.toString());
     if (resultUpdateStatus.status == 200) {
       return true;

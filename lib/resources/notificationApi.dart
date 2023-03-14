@@ -9,21 +9,22 @@ import 'package:nunut_application/models/mnotification.dart';
 class NotificationApi {
   Future<List<NotificationModel>> getNotificationList() async {
     var url = Uri.parse(config.baseUrl + '/notification');
-    var response = await http.get(url);
+    var response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${config.user.token}',
+      },
+    );
 
     Result result;
     List<NotificationModel> notificationList = [];
-    //log("url : " + url.toString());
 
     result = Result.fromJson(json.decode(response.body));
     if (result.status == 200) {
-      //log("isi result " + result.data.toString());
       result.data.forEach((item) {
-        //log("isi item " + item.toString());
         notificationList.add(NotificationModel.fromJson(item));
-        //log("isi notificationList " + notificationList[0].title.toString());
       });
-      //log("isi notificationList " + notificationList.toString());
     }
 
     return notificationList;

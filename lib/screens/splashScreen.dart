@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:nunut_application/configuration.dart';
+import 'package:nunut_application/resources/userApi.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -10,14 +13,36 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
+  bool haveToken = false;
   @override
   void initState() {
+    checkToken();
     // TODO: implement initState
-     Timer(Duration(seconds: 3), () {
-      Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+    Timer(Duration(seconds: 3), () {
+      haveToken ? Navigator.pushReplacementNamed(context, '/main') : Navigator.pushReplacementNamed(context, '/login');
     });
     super.initState();
+  }
+
+  void checkToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance().then((value) {
+      var email = value.getString('email');
+      var token = value.getString("token");
+      var id = value.getString("id");
+      if (token != "" && email != "") {
+        print(email);
+        print(" MAMBU BANGET ");
+        print(token);
+      }
+      return value;
+    });
+
+    if (prefs.getString("token") != null) {
+      haveToken = true;
+      config.user = await UserService().getUserByID(prefs.getString("id")!);
+    } else {
+      haveToken = false;
+    }
   }
 
   @override
@@ -32,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
               image: AssetImage(
                 'assets/splashscreen.jpg',
               ),
-              fit: BoxFit.cover
+              fit: BoxFit.cover,
             ),
           ),
         ),
