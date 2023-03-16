@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/functions.dart';
@@ -142,7 +143,13 @@ class RideScheduleApi {
 
   Future<bool> deleteBookmarkByBookmarkId({required String bookmarkId, bool checkUrl = false}) async {
     var url = Uri.parse(config.baseUrl + '/bookmark/$bookmarkId');
-    var response = await http.delete(url);
+    var response = await http.delete(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${config.user.token}',
+      },
+    );
     if (checkUrl) print(url);
 
     Result result;
@@ -157,7 +164,13 @@ class RideScheduleApi {
 
   Future<bool> deleteBookmarkByRideScheduleId({required String rideScheduleId, required String userId, bool checkUrl = false}) async {
     var url = Uri.parse(config.baseUrl + '/bookmark?ride_schedule=$rideScheduleId&user=$userId');
-    var response = await http.delete(url);
+    var response = await http.delete(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${config.user.token}',
+      },
+    );
     if (checkUrl) print(url);
 
     Result result;
@@ -174,7 +187,13 @@ class RideScheduleApi {
     var url = Uri.parse(config.baseUrl + '/bookmark?ride_request&user=$userId&ride_schedule&driver&vehicle');
     if (checkUrl) print(url);
 
-    var response = await http.get(url);
+    var response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${config.user.token}',
+      },
+    );
 
     Result result;
     List<Bookmark> rideScheduleList = [];
@@ -187,6 +206,29 @@ class RideScheduleApi {
       });
     }
     return rideScheduleList;
+  }
+
+  static Future<bool> rideScheduleDone({required String rideScheduleId, bool checkUrl = false}) async {
+    var url = Uri.parse(config.baseUrl + '/ride-schedule/finish/' + rideScheduleId);
+    if (checkUrl) print(url);
+
+    var response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${config.user.token}',
+      },
+    );
+
+    Result result;
+    result = Result.fromJson(json.decode(response.body));
+
+    if (result.status == 200) {
+      return true;
+    } else {
+      log(result.message.toString());
+      return false;
+    }
   }
 }
 

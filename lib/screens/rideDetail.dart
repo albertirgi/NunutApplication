@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/models/mriderequest.dart';
 import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/resources/rideRequestApi.dart';
@@ -10,6 +11,7 @@ import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:flutter_dash/flutter_dash.dart';
+import 'package:nunut_application/widgets/popUpLoading.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:text_scroll/text_scroll.dart';
 
@@ -402,28 +404,28 @@ class _RideDetailState extends State<RideDetail> {
                                     itemCount: rideRequestList.length,
                                   ),
                             SizedBox(height: 10),
-                            Divider(color: Colors.grey, thickness: 0.5),
-                            SizedBox(height: 10),
-                            NunutText(title: "Tempat Parkir", fontWeight: FontWeight.bold, size: 16),
-                            SizedBox(height: 5),
-                            NunutText(title: "Yuk pesan tempat parkir sekarang!", fontWeight: FontWeight.w500, size: 14),
-                            SizedBox(height: 20),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                NunutButton(
-                                  title: "Pesan",
-                                  textSize: 14,
-                                  widthButton: 120,
-                                  heightButton: 40,
-                                  fontWeight: FontWeight.w600,
-                                  borderColor: Colors.transparent,
-                                  onPressed: () {
-                                    Navigator.pushNamed(context, '/bookingParkir', arguments: widget.rideScheduleId);
-                                  },
-                                ),
-                              ],
-                            ),
+                            // Divider(color: Colors.grey, thickness: 0.5),
+                            // SizedBox(height: 10),
+                            // NunutText(title: "Tempat Parkir", fontWeight: FontWeight.bold, size: 16),
+                            // SizedBox(height: 5),
+                            // NunutText(title: "Yuk pesan tempat parkir sekarang!", fontWeight: FontWeight.w500, size: 14),
+                            // SizedBox(height: 20),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.end,
+                            //   children: [
+                            //     NunutButton(
+                            //       title: "Pesan",
+                            //       textSize: 14,
+                            //       widthButton: 120,
+                            //       heightButton: 40,
+                            //       fontWeight: FontWeight.w600,
+                            //       borderColor: Colors.transparent,
+                            //       onPressed: () {
+                            //         Navigator.pushNamed(context, '/bookingParkir', arguments: widget.rideScheduleId);
+                            //       },
+                            //     ),
+                            //   ],
+                            // ),
                             SizedBox(height: 20),
                           ],
                         ),
@@ -441,7 +443,32 @@ class _RideDetailState extends State<RideDetail> {
                         height: 40,
                         margin: EdgeInsets.zero,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return PopUpLoading(
+                                  title: "Konfirmasi",
+                                  subtitle: "Apakah anda yakin ingin menyelesaikan perjalanan?",
+                                  isConfirmation: true,
+                                );
+                              },
+                            ).then((value) {
+                              if (value == true) {
+                                RideScheduleApi.rideScheduleDone(rideScheduleId: widget.rideScheduleId, checkUrl: true).then((value) {
+                                  if (value) {
+                                    Fluttertoast.showToast(msg: "Perjalanan selesai");
+                                    Navigator.pushNamed(context, '/home');
+                                  } else {
+                                    Fluttertoast.showToast(msg: "Gagal menyelesaikan perjalanan");
+                                  }
+                                });
+                              } else {
+                                Fluttertoast.showToast(msg: "Gagal menyelesaikan perjalanan");
+                              }
+                            });
+                          },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
