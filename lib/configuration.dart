@@ -13,7 +13,7 @@ class Configuration extends InheritedWidget {
   Configuration({Key? key, Widget? child}) : super(key: key, child: child != null ? child : MaterialApp());
   bool updateShouldNotify(Configuration oldWidget) => true;
 
-  late UserModel user;
+  UserModel user = UserModel(email: "", name: "", nik: "", phone: "", token: "");
   int selectedNavbar = 1;
   String? selectedBuilding;
 }

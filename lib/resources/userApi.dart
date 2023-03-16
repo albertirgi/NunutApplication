@@ -41,8 +41,8 @@ class UserService {
       var response = await http.get(url);
 
       Wallet walletData = await MidtransApi.getWallet(id);
-
       Result result = Result.fromJson(json.decode(response.body));
+
       return UserModel(
         email: snapshot['email'],
         name: snapshot['name'],
