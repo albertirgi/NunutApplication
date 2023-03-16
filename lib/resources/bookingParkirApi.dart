@@ -8,10 +8,6 @@ class BookingParkirApi {
   static Future SendBookingParkir(id_parking_slot, id_ride_order) async {
     var url = Uri.parse(config.baseUrl + '/parking-request/');
     var urlUpdateStatus = Uri.parse(config.baseUrl + '/parking-slot/');
-    // var responseUpdateStatus = await http.put(urlUpdateStatus, body: {
-    //   'id': id_parking_slot,
-    //   'status': "false",
-    // });
 
     var response = await http.post(
       url,
@@ -24,14 +20,9 @@ class BookingParkirApi {
         'ride_schedule_id': id_ride_order,
       },
     );
-    //log("Response :" + response.body.toString());
 
     Result result;
     result = Result.fromJson(json.decode(response.body.toString()));
-    //Result resultUpdateStatus;
-    // resultUpdateStatus =
-    //     Result.fromJson(json.decode(responseUpdateStatus.body.toString()));
-    //log("Result : " + result.status.toString());
     if (result.status == 200) {
       return true;
     } else {
@@ -54,7 +45,6 @@ class BookingParkirApi {
 
     Result resultUpdateStatus;
     resultUpdateStatus = Result.fromJson(json.decode(responseUpdateStatus.body.toString()));
-    //log("Result : " + resultUpdateStatus.status.toString());
     if (resultUpdateStatus.status == 200) {
       return true;
     } else {

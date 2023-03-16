@@ -122,8 +122,11 @@ class DriverApi {
       ),
     );
 
+    request.headers.addAll(<String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ${config.user.token}',
+    });
     var response = await request.send();
-    print(response.stream.first.toString());
     return response;
   }
 }
