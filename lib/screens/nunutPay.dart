@@ -137,8 +137,7 @@ class _NunutPayState extends State<NunutPay> {
                               SizedBox(height: 10),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                textBaseline: TextBaseline.alphabetic,
-                                crossAxisAlignment: CrossAxisAlignment.baseline,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   NunutText(
                                     title: "Rp",
@@ -146,13 +145,11 @@ class _NunutPayState extends State<NunutPay> {
                                     size: 24,
                                   ),
                                   SizedBox(width: 5),
-                                  Expanded(
-                                    child: NunutText(
-                                      title: config.user.wallet.toString(),
-                                      isTitle: true,
-                                      size: 65,
-                                      maxLines: 1,
-                                    ),
+                                  NunutText(
+                                    title: config.user.wallet.toString(),
+                                    isTitle: true,
+                                    size: 65,
+                                    maxLines: 1,
                                   )
                                 ],
                               ),
