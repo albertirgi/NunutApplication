@@ -1,10 +1,6 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/configuration.dart';
-import 'package:nunut_application/resources/userApi.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
@@ -95,8 +91,8 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 NunutTextFormField(
-                  title: "Nama Pengguna",
-                  hintText: "Nama Pengguna",
+                  title: "Email Pengguna",
+                  hintText: "Email Pengguna",
                   obsecureText: false,
                   controller: username,
                   width: 1.5,
@@ -119,76 +115,97 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                 ),
+                SizedBox(height: 24),
                 NunutButton(
                   title: "Masuk",
                   widthButton: 200,
                   onPressed: () async {
                     if (username.text == "" || password.text == "") {
-                      Fluttertoast.showToast(msg: "Email dan password harus diisi", textColor: Colors.white);
+                      Fluttertoast.showToast(
+                          msg: "Email dan password harus diisi",
+                          textColor: Colors.white);
                     } else {
                       showDialog(
                         context: context,
                         barrierDismissible: false,
                         builder: (BuildContext context) {
-                          return PopUpLoading(title: "Sedang Login...", subtitle: "Harap Menunggu...");
+                          return PopUpLoading(
+                              title: "Sedang Login...",
+                              subtitle: "Harap Menunggu...");
                         },
                       );
 
-                      tmpUser.token = await AuthService.getToken(username.text, password.text);
+                      tmpUser.token = await AuthService.getToken(
+                          username.text, password.text);
                       config.user.token = tmpUser.token;
-                      tmpUser = await AuthService.signIn(email: username.text, password: password.text, context: context);
+                      tmpUser = await AuthService.signIn(
+                          email: username.text,
+                          password: password.text,
+                          context: context);
 
                       if (tmpUser.email != "") {
                         config.user = tmpUser;
-                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
                         prefs.setString("email", tmpUser.email);
                         prefs.setString("token", tmpUser.token!);
                         prefs.setString("id", tmpUser.id!);
-                        Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, '/main', (route) => false);
                       } else {
-                        Fluttertoast.showToast(msg: "Email atau password salah", textColor: Colors.white);
+                        Fluttertoast.showToast(
+                            msg: "Email atau password salah",
+                            textColor: Colors.white);
                       }
                     }
                   },
                 ),
-                SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        margin: EdgeInsets.only(right: 10),
-                        height: 1.5,
-                        width: MediaQuery.of(context).size.width,
-                        color: Colors.black,
-                      ),
-                    ),
-                    NunutText(title: "Atau"),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        margin: EdgeInsets.only(left: 10),
-                        height: 1.5,
-                        width: MediaQuery.of(context).size.width,
-                        color: Colors.black,
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 16),
-                NunutButton(
-                  title: "Masuk GOOGLE",
-                  widthButton: 200,
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/register');
-                  },
-                ),
+                // SizedBox(height: 24),
+                // Row(
+                //   children: [
+                //     Expanded(
+                //       flex: 1,
+                //       child: Container(
+                //         margin: EdgeInsets.only(right: 10),
+                //         height: 1.5,
+                //         width: MediaQuery.of(context).size.width,
+                //         color: Colors.black,
+                //       ),
+                //     ),
+                //     NunutText(title: "Atau"),
+                //     Expanded(
+                //       flex: 1,
+                //       child: Container(
+                //         margin: EdgeInsets.only(left: 10),
+                //         height: 1.5,
+                //         width: MediaQuery.of(context).size.width,
+                //         color: Colors.black,
+                //       ),
+                //     )
+                //   ],
+                // ),
+                // SizedBox(height: 16),
+                // NunutButton(
+                //   title: "Masuk GOOGLE",
+                //   widthButton: 200,
+                //   onPressed: () {
+                //     Navigator.pushNamed(context, '/register');
+                //   },
+                // ),
                 SizedBox(height: 24),
+                NunutText(
+                  title: "Belum punya akun?",
+                  size: 14,
+                  color: greyFontColor,
+                ),
+                //SizedBox(height: 8),
                 InkWell(
                   child: NunutText(
-                    title: "Belum punya akun? daftar sekarang",
-                    size: 12,
-                    color: nunutPrimaryColor,
+                    title: "Daftar Sekarang",
+                    size: 14,
+                    color: greyFontColor,
+                    textDecoration: TextDecoration.underline,
+                    fontWeight: FontWeight.w800,
                   ),
                   onTap: () {
                     Navigator.pushNamed(context, '/register');

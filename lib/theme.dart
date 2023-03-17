@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 //Shared color
 Color nunutPrimaryColor = Color(0xffFAD14B);
+Color nunutSecondaryColor = Color.fromARGB(255, 219, 184, 70);
 Color nunutBlueColor = Color.fromARGB(255, 80, 112, 226);
 Color nunutPrimaryColor2 = Color(0xffFF8A00);
 Color nunutPrimaryColor3 = Color(0xffFF0000);

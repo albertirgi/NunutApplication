@@ -52,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
       identifier: "kendaraanku",
     ),
     ProfilePageMenu(
-      title: "Daftar Driver",
+      title: "Data Driver",
       icon: "assets/icons/dashboard.png",
       identifier: "registerDriver",
     ),
@@ -67,6 +67,28 @@ class _ProfilePageState extends State<ProfilePage> {
       identifier: "keluar",
     ),
   ];
+
+  //function for remove driver menu from profile page menu
+  // List<ProfilePageMenu> removeDriverMenu() {
+  //   List<ProfilePageMenu> newProfilePageMenu = [];
+  //   for (var i = 0; i < profilePageMenu.length; i++) {
+  //     if (profilePageMenu[i].identifier != "registerDriver") {
+  //       newProfilePageMenu.add(profilePageMenu[i]);
+  //     }
+  //   }
+  //   return newProfilePageMenu;
+  // }
+
+  // //function for add driver menu from profile page menu
+  // List<ProfilePageMenu> addDriverMenu() {
+  //   List<ProfilePageMenu> newProfilePageMenu = [];
+  //   for (var i = 0; i < profilePageMenu.length; i++) {
+  //     if (profilePageMenu[i].identifier != "profilDriver") {
+  //       newProfilePageMenu.add(profilePageMenu[i]);
+  //     }
+  //   }
+  //   return newProfilePageMenu;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -240,6 +262,15 @@ class _ProfilePageState extends State<ProfilePage> {
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
+                        // if (config.user.driverId == null){
+                        //  profilePageMenu = removeDriverMenu();
+                        // }
+                        // else {
+                        //   profilePageMenu = addDriverMenu();
+                        // }
+                        // setState(() {
+                        //   profilePageMenu = profilePageMenu;
+                        // });
                         return InkWell(
                           onTap: () {
                             if (profilePageMenu[index].identifier == "keluar") {
