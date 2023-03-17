@@ -36,9 +36,14 @@ class UserService {
   Future<UserModel> getUserByID(String id) async {
     try {
       DocumentSnapshot snapshot = await collectionRef.doc(id).get();
-
       var url = Uri.parse("https://ayonunut.com/api/v1/driver-user/$id");
-      var response = await http.get(url);
+      var response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ${config.user.token}',
+        },
+      );
 
       Wallet walletData = await MidtransApi.getWallet(id);
       Result result = Result.fromJson(json.decode(response.body));
