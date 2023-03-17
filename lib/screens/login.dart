@@ -133,8 +133,10 @@ class _LoginPageState extends State<LoginPage> {
                           return PopUpLoading(title: "Sedang Login...", subtitle: "Harap Menunggu...");
                         },
                       );
-                      tmpUser = await AuthService.signIn(email: username.text, password: password.text, context: context);
+
                       tmpUser.token = await AuthService.getToken(username.text, password.text);
+                      config.user.token = tmpUser.token;
+                      tmpUser = await AuthService.signIn(email: username.text, password: password.text, context: context);
 
                       if (tmpUser.email != "") {
                         config.user = tmpUser;
