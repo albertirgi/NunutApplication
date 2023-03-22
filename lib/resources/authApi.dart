@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +52,6 @@ class AuthService {
     } catch (e) {
       Navigator.pop(context);
       Fluttertoast.showToast(msg: "Password atau Email Salah", backgroundColor: nunutPrimaryColor, textColor: Colors.white);
-      log(e.toString());
       throw e;
     }
   }

@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -37,7 +36,7 @@ class UserService {
 
   Future<UserModel> getUserByID(String id) async {
     try {
-      var snapshot = await collectionRef.doc(id).get();
+      DocumentSnapshot snapshot = await collectionRef.doc(id).get();
       var url = Uri.parse("https://ayonunut.com/api/v1/driver-user/$id");
       var response = await http.get(
         url,
