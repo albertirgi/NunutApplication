@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/models/muser.dart';
 import 'package:nunut_application/resources/userApi.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
@@ -23,6 +24,11 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
   File? _profilePicture;
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     UserModel user = ModalRoute.of(context)!.settings.arguments as UserModel;
     fullName.text = user.name;
@@ -35,8 +41,7 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
         child: Stack(
           children: [
             Image(
-              image:
-                  AssetImage('assets/backgroundCircle/backgroundCircle1.png'),
+              image: AssetImage('assets/backgroundCircle/backgroundCircle1.png'),
               fit: BoxFit.cover,
             ),
             Container(
@@ -78,8 +83,7 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                               //   strokeWidth: 3.0,
                               //   strokeColor: Colors.black,
                               // ),
-                              child: NunutText(
-                                  title: "Data Diri", isTitle: true, size: 32),
+                              child: NunutText(title: "Data Diri", isTitle: true, size: 32),
                             ),
                             SizedBox(height: 3),
                             Padding(
@@ -110,8 +114,9 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                                   backgroundColor: Colors.black,
                                   radius: 90,
                                   backgroundImage: _profilePicture == null
-                                      ? NetworkImage(
-                                          "https://firebasestorage.googleapis.com/v0/b/nunut-da274.appspot.com/o/avatar.png?alt=media&token=62dfdb20-7aa0-4ca4-badf-31c282583b1b")
+                                      ? config.user.photo == null
+                                          ? NetworkImage("https://firebasestorage.googleapis.com/v0/b/nunut-da274.appspot.com/o/avatar.png?alt=media&token=62dfdb20-7aa0-4ca4-badf-31c282583b1b")
+                                          : NetworkImage(config.user.photo!)
                                       : Image.file(_profilePicture!).image,
                                 ),
                               ),
@@ -122,17 +127,13 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                                 child: InkWell(
                                   onTap: () {
                                     //upload image profile
-                                    FilePicker.platform
-                                        .pickFiles(type: FileType.image)
-                                        .then((value) {
+                                    FilePicker.platform.pickFiles(type: FileType.image).then((value) {
                                       setState(() {
-                                        _profilePicture =
-                                            File(value!.files.single.path!);
+                                        _profilePicture = File(value!.files.single.path!);
                                       });
                                     });
                                   },
-                                  child: Icon(Icons.add_circle,
-                                      color: Colors.black, size: 27),
+                                  child: Icon(Icons.add_circle, color: Colors.black, size: 27),
                                 ),
                               ),
                             ],
@@ -319,16 +320,9 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                       child: NunutButton(
                           title: "Simpan Data",
                           onPressed: () {
-                            userService.updateUser(
-                                user: UserModel(
-                                    email: user.email,
-                                    name: fullName.text,
-                                    nik: nik.text,
-                                    phone: noTelp.text),
-                                profile_picture: _profilePicture == null
-                                    ? File("path")
-                                    : _profilePicture!);
-                            Navigator.pop(context);
+                            userService.updateUser(user: UserModel(email: user.email, name: fullName.text, nik: nik.text, phone: noTelp.text), profile_picture: _profilePicture ?? null).then((value) {
+                              Navigator.pop(context);
+                            });
                           })),
                 ],
               ),

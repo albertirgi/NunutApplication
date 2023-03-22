@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -47,12 +48,12 @@ class AuthService {
   }) async {
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(email: email, password: password);
-
       UserModel user = await UserService().getUserByID(userCredential.user!.uid);
       return user;
     } catch (e) {
       Navigator.pop(context);
       Fluttertoast.showToast(msg: "Password atau Email Salah", backgroundColor: nunutPrimaryColor, textColor: Colors.white);
+      log(e.toString());
       throw e;
     }
   }

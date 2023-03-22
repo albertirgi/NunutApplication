@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/resources/authApi.dart';
@@ -15,8 +17,7 @@ class ProfilePageMenu {
   String title;
   String icon;
   String identifier;
-  ProfilePageMenu(
-      {required this.title, required this.icon, required this.identifier});
+  ProfilePageMenu({required this.title, required this.icon, required this.identifier});
 }
 
 class _ProfilePageState extends State<ProfilePage> {
@@ -97,8 +98,7 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Stack(
           children: [
             Image(
-              image:
-                  AssetImage('assets/backgroundCircle/backgroundCircle1.png'),
+              image: AssetImage('assets/backgroundCircle/backgroundCircle1.png'),
               fit: BoxFit.cover,
             ),
             Container(
@@ -133,8 +133,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     //     strokeColor: Colors.black,
                     //   ),
                     // ),
-                    child:
-                        NunutText(title: "Profilku", isTitle: true, size: 32),
+                    child: NunutText(title: "Profilku", isTitle: true, size: 32),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 21),
@@ -160,8 +159,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               backgroundColor: Colors.black,
                               radius: 30,
                               backgroundImage: config.user.photo == null
-                                  ? NetworkImage(
-                                      "https://firebasestorage.googleapis.com/v0/b/nunut-da274.appspot.com/o/avatar.png?alt=media&token=62dfdb20-7aa0-4ca4-badf-31c282583b1b")
+                                  ? NetworkImage("https://firebasestorage.googleapis.com/v0/b/nunut-da274.appspot.com/o/avatar.png?alt=media&token=62dfdb20-7aa0-4ca4-badf-31c282583b1b")
                                   : NetworkImage(config.user.photo!),
                             ),
                           ),
@@ -201,9 +199,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 InkWell(
                                   onTap: () {
                                     //to detail Profile page
-                                    Navigator.pushNamed(
-                                        context, '/detailprofile',
-                                        arguments: config.user);
+                                    Navigator.pushNamed(context, '/detailprofile', arguments: config.user).then((value) => setState(() {}));
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -216,8 +212,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                     width: 110,
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 3, vertical: 4),
+                                      padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
                                       child: Row(
                                         children: [
                                           //icons
@@ -225,10 +220,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                           SizedBox(width: 5),
                                           Text(
                                             "Edit Profile",
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold),
+                                            style: TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.bold),
                                           ),
                                         ],
                                       ),
@@ -278,54 +270,37 @@ class _ProfilePageState extends State<ProfilePage> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                    title: NunutText(
-                                        title: "Keluar",
-                                        fontWeight: FontWeight.bold,
-                                        size: 18),
-                                    content: NunutText(
-                                        title:
-                                            "Apakah anda yakin ingin keluar?",
-                                        color: Colors.black),
+                                    title: NunutText(title: "Keluar", fontWeight: FontWeight.bold, size: 18),
+                                    content: NunutText(title: "Apakah anda yakin ingin keluar?", color: Colors.black),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     actions: [
                                       TextButton(
-                                        child: NunutText(
-                                            title: "Tidak", color: Colors.red),
+                                        child: NunutText(title: "Tidak", color: Colors.red),
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                         },
                                       ),
                                       TextButton(
-                                        child: NunutText(
-                                            title: "Ya", color: Colors.green),
+                                        child: NunutText(title: "Ya", color: Colors.green),
                                         onPressed: () {
                                           AuthService.signOut();
-                                          Navigator.pushNamedAndRemoveUntil(
-                                              context,
-                                              '/login',
-                                              (route) => false);
+                                          Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
                                         },
                                       ),
                                     ],
                                   );
                                 },
                               );
-                            } else if (profilePageMenu[index].identifier ==
-                                "promo") {
+                            } else if (profilePageMenu[index].identifier == "promo") {
                               Navigator.pushNamed(context, '/promotionList');
-                            } else if (profilePageMenu[index].identifier ==
-                                "bookmark") {
+                            } else if (profilePageMenu[index].identifier == "bookmark") {
                               Navigator.pushNamed(context, '/rideBookmark');
-                            } else if (profilePageMenu[index].identifier ==
-                                "kendaraanku") {
+                            } else if (profilePageMenu[index].identifier == "kendaraanku") {
                               Navigator.pushNamed(context, '/myVehicle');
-                            } else if (profilePageMenu[index].identifier ==
-                                "registerDriver") {
-                              Navigator.pushNamed(
-                                  context, '/driverRegistration',
-                                  arguments: config.user);
+                            } else if (profilePageMenu[index].identifier == "registerDriver") {
+                              Navigator.pushNamed(context, '/driverRegistration', arguments: config.user);
                             }
                             // else if(profilePageMenu[index].identifier == "profileDriver"){
                             //   Navigator.pushNamed(context, '/myVehicle');
@@ -338,8 +313,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 flex: 1,
                                 // child: Icon(Icons.account_circle,
                                 //     color: Colors.black)),
-                                child: Image.asset(profilePageMenu[index].icon,
-                                    width: 20, height: 20),
+                                child: Image.asset(profilePageMenu[index].icon, width: 20, height: 20),
                               ),
                               Expanded(
                                 flex: 9,
@@ -354,8 +328,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                   ),
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     children: [
                                       Expanded(
                                         flex: 9,
@@ -371,8 +344,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
                                       Expanded(
                                         flex: 1,
-                                        child: Icon(Icons.keyboard_arrow_right,
-                                            color: Colors.black),
+                                        child: Icon(Icons.keyboard_arrow_right, color: Colors.black),
                                       ),
                                     ],
                                   ),

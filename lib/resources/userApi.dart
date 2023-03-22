@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,6 +11,7 @@ import 'package:nunut_application/models/muser.dart';
 import 'package:http/http.dart' as http;
 import 'package:nunut_application/resources/authApi.dart';
 import 'package:nunut_application/resources/midtransApi.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/mwallet.dart';
 
 CollectionReference collectionRef = FirebaseFirestore.instance.collection("users");
@@ -35,7 +37,7 @@ class UserService {
 
   Future<UserModel> getUserByID(String id) async {
     try {
-      DocumentSnapshot snapshot = await collectionRef.doc(id).get();
+      var snapshot = await collectionRef.doc(id).get();
       var url = Uri.parse("https://ayonunut.com/api/v1/driver-user/$id");
       var response = await http.get(
         url,
@@ -53,6 +55,7 @@ class UserService {
         name: snapshot['name'],
         nik: snapshot['nik'],
         phone: snapshot['phone'],
+        photo: snapshot['image'] ?? "empty",
         id: id,
         driverId: result.status == 200 ? result.data["driver_id"] : "empty",
         wallet: priceFormat(walletData.balance.toString()),
@@ -64,31 +67,56 @@ class UserService {
     }
   }
 
-  Future<void> updateUser({required UserModel user, required File profile_picture}) async {
+  Future<void> updateUser({required UserModel user, File? profile_picture}) async {
     try {
       User? userAuth = FirebaseAuth.instance.currentUser;
       DocumentReference docRef = collectionRef.doc(userAuth!.uid);
-      var url = Uri.parse(config.baseUrl + '/user');
+      var url = Uri.parse(config.baseUrl + '/user/' + userAuth.uid);
       var request = http.MultipartRequest('PUT', url);
-      print(userAuth.uid);
-      print(user.name.toString());
       request.fields['name'] = user.name.toString();
-      request.fields['email'] = user.email.toString();
+      // request.fields['email'] = user.email.toString();
       request.fields['phone'] = user.phone.toString();
       request.fields['nik'] = user.nik.toString();
       request.fields['user_id'] = userAuth.uid;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      request.files.add(
-        await http.MultipartFile(
-          'image',
-          profile_picture.readAsBytes().asStream(),
-          profile_picture.lengthSync(),
-          filename: profile_picture.path.split('/').last,
-        ),
-      );
+      if (profile_picture != null) {
+        request.files.add(
+          await http.MultipartFile(
+            'image',
+            profile_picture.readAsBytes().asStream(),
+            profile_picture.lengthSync(),
+            filename: profile_picture.path.split('/').last,
+          ),
+        );
+      } else {
+        if (config.user.photo != "empty" && config.user.photo != "" && config.user.photo != null) {
+          request.fields['image'] = config.user.photo.toString();
+        } else {
+          request.fields['image'] = "https://firebasestorage.googleapis.com/v0/b/nunut-da274.appspot.com/o/avatar.png?alt=media&token=62dfdb20-7aa0-4ca4-badf-31c282583b1b";
+        }
+      }
+
+      request.headers.addAll(<String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${prefs.getString('token')}',
+      });
 
       var response = await request.send();
-      print(response.stream.first.toString());
+      String responseString = await response.stream.bytesToString();
+      Map<String, dynamic> data = json.decode(responseString);
+      UserModel newUser = UserModel(
+        email: data['data']['email'],
+        name: data['data']['name'],
+        nik: data['data']['nik'],
+        phone: data['data']['phone'],
+        photo: data['data']['image'],
+        id: config.user.id,
+        driverId: config.user.driverId,
+        wallet: config.user.wallet,
+        token: config.user.token,
+      );
+      config.user = newUser;
 
       // await docRef
       //     .update(user.toJson())
