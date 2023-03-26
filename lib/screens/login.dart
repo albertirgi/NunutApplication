@@ -121,41 +121,30 @@ class _LoginPageState extends State<LoginPage> {
                   widthButton: 200,
                   onPressed: () async {
                     if (username.text == "" || password.text == "") {
-                      Fluttertoast.showToast(
-                          msg: "Email dan password harus diisi",
-                          textColor: Colors.white);
+                      Fluttertoast.showToast(msg: "Email dan password harus diisi", textColor: Colors.white);
                     } else {
                       showDialog(
                         context: context,
                         barrierDismissible: false,
                         builder: (BuildContext context) {
-                          return PopUpLoading(
-                              title: "Sedang Login...",
-                              subtitle: "Harap Menunggu...");
+                          return PopUpLoading(title: "Sedang Login...", subtitle: "Harap Menunggu...");
                         },
                       );
 
-                      tmpUser.token = await AuthService.getToken(
-                          username.text, password.text);
-                      config.user.token = tmpUser.token;
-                      tmpUser = await AuthService.signIn(
-                          email: username.text,
-                          password: password.text,
-                          context: context);
+                      String token = await AuthService.getToken(username.text, password.text);
+                      config.user.token = token;
+                      tmpUser = await AuthService.signIn(email: username.text, password: password.text, context: context);
 
                       if (tmpUser.email != "") {
                         config.user = tmpUser;
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
+                        config.user.token = token;
+                        SharedPreferences prefs = await SharedPreferences.getInstance();
                         prefs.setString("email", tmpUser.email);
                         prefs.setString("token", tmpUser.token!);
                         prefs.setString("id", tmpUser.id!);
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, '/main', (route) => false);
+                        Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
                       } else {
-                        Fluttertoast.showToast(
-                            msg: "Email atau password salah",
-                            textColor: Colors.white);
+                        Fluttertoast.showToast(msg: "Email atau password salah", textColor: Colors.white);
                       }
                     }
                   },

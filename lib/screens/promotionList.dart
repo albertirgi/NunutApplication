@@ -25,7 +25,6 @@ class _PromotionListState extends State<PromotionList> {
   void initState() {
     super.initState();
     initPromotionList();
-    print(jsonEncode(promotionList));
   }
 
   initPromotionList() async {
@@ -75,6 +74,8 @@ class _PromotionListState extends State<PromotionList> {
 
   @override
   Widget build(BuildContext context) {
+    final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
+    final isFromProfile = arguments["isFromProfile"] as bool?;
     return Scaffold(
       body: Stack(
         children: [
@@ -114,61 +115,62 @@ class _PromotionListState extends State<PromotionList> {
                       right: 0,
                       child: Container(
                         child: RefreshIndicator(
-                            onRefresh: () async {
-                              initPromotionList();
-                            },
-                            child: ListView.separated(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 24,
-                                vertical: 16,
-                              ),
-                              itemBuilder: (context, index) {
-                                return InkWell(
-                                  onTap: () {
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //     builder: (context) => PromotionDetail(promotion: promotionList[index]),
-                                    //   ),
-                                    // );
-                                    Navigator.of(context).pushNamed('/promotionDetail', arguments: {'promotion': promotionList[index]}).then((results) {
-                                      if (results is PopWithResults) {
-                                        PopWithResults popResult = results;
-                                        if (popResult.toPage == "/promotionList") {
-                                          // TODO do stuff
-                                        } else {
-                                          // pop to previous page
-                                          Navigator.of(context).pop(results);
-                                        }
+                          onRefresh: () async {
+                            initPromotionList();
+                          },
+                          child: ListView.separated(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 24,
+                              vertical: 16,
+                            ),
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: () {
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) => PromotionDetail(promotion: promotionList[index]),
+                                  //   ),
+                                  // );
+                                  Navigator.of(context).pushNamed('/promotionDetail', arguments: {'promotion': promotionList[index], 'isFromProfile': isFromProfile}).then((results) {
+                                    if (results is PopWithResults) {
+                                      PopWithResults popResult = results;
+                                      if (popResult.toPage == "/promotionList") {
+                                        // TODO do stuff
+                                      } else {
+                                        // pop to previous page
+                                        Navigator.of(context).pop(results);
                                       }
-                                    });
-                                  },
-                                  child: CouponCard(
-                                    title:
-                                        "Diskon Rp. ${priceFormat(promotionList[index].maximumDiscount.toString())} dengan minimal transaksi Rp. ${priceFormat(promotionList[index].minimumPuchase.toString())}",
-                                    imagePath: promotionList[index].image,
-                                    date: NunutText(
-                                      title: promotionList[index].expiredAt,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    minTransaction: NunutText(
-                                      title: "Rp. " + priceFormat(promotionList[index].minimumPuchase.toString()),
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    }
+                                  });
+                                },
+                                child: CouponCard(
+                                  title:
+                                      "Diskon Rp. ${priceFormat(promotionList[index].maximumDiscount.toString())} dengan minimal transaksi Rp. ${priceFormat(promotionList[index].minimumPuchase.toString())}",
+                                  imagePath: promotionList[index].image,
+                                  date: NunutText(
+                                    title: promotionList[index].expiredAt,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                );
-                              },
-                              separatorBuilder: (context, index) {
-                                return SizedBox(height: 8);
-                              },
-                              itemCount: promotionList.length,
-                            )),
+                                  minTransaction: NunutText(
+                                    title: "Rp. " + priceFormat(promotionList[index].minimumPuchase.toString()),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              );
+                            },
+                            separatorBuilder: (context, index) {
+                              return SizedBox(height: 8);
+                            },
+                            itemCount: promotionList.length,
+                          ),
+                        ),
                       ),
                     )
                   : Center(
-                      child: Text("No bookmarked ride"),
+                      child: Text("Voucher tidak tersedia"),
                     ),
         ],
       ),

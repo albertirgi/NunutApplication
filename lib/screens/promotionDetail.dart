@@ -7,8 +7,6 @@ import '../widgets/couponCard.dart';
 import '../widgets/nunutText.dart';
 
 class PromotionDetail extends StatefulWidget {
-  // final PromotionModel? promotion;
-  // const PromotionDetail({super.key, this.promotion});
   const PromotionDetail({super.key});
 
   @override
@@ -24,6 +22,7 @@ class _PromotionDetailState extends State<PromotionDetail> {
   @override
   Widget build(BuildContext context) {
     final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
+    final isFromProfile = arguments["isFromProfile"] as bool?;
     final promotion = arguments["promotion"] as PromotionModel?;
     return Scaffold(
       body: Stack(
@@ -93,26 +92,28 @@ class _PromotionDetailState extends State<PromotionDetail> {
                     ],
                   ),
                 ),
-                Center(
-                  child: Container(
-                    margin: EdgeInsets.all(28),
-                    child: NunutButton(
-                      title: "Gunakan",
-                      backgroundColor: Colors.black,
-                      textColor: Colors.white,
-                      borderRadius: 8,
-                      onPressed: () {
-                        Navigator.of(context).pop(
-                          PopWithResults(
-                            fromPage: "/promotionDetail",
-                            toPage: "/payment",
-                            results: promotion,
+                !isFromProfile!
+                    ? Center(
+                        child: Container(
+                          margin: EdgeInsets.all(28),
+                          child: NunutButton(
+                            title: "Gunakan",
+                            backgroundColor: Colors.black,
+                            textColor: Colors.white,
+                            borderRadius: 8,
+                            onPressed: () {
+                              Navigator.of(context).pop(
+                                PopWithResults(
+                                  fromPage: "/promotionDetail",
+                                  toPage: "/payment",
+                                  results: promotion,
+                                ),
+                              );
+                            },
                           ),
-                        );
-                      },
-                    ),
-                  ),
-                )
+                        ),
+                      )
+                    : Container(),
               ],
             ),
           ),

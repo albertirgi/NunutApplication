@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/models/mmaplocation.dart';
 import 'package:nunut_application/resources/mapLocationApi.dart';
 import 'package:nunut_application/theme.dart';
@@ -27,6 +28,7 @@ class _MapListState extends State<MapList> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    print("WOI : " + config.user.token.toString());
     initMapLocationList();
     _scrollController = ScrollController();
     _scrollController!.addListener(scrollListener);

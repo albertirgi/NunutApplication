@@ -284,7 +284,7 @@ class _PaymentState extends State<Payment> {
                   title: useVoucher ? "Promo Berhasil Digunakan" : "Gunakan Promo",
                   onPressed: () {
                     // Navigator.pushNamed(context, '/promotionList');
-                    Navigator.of(context).pushNamed('/promotionList').then((results) {
+                    Navigator.of(context).pushNamed('/promotionList', arguments: {'isFromProfile': false}).then((results) {
                       if (results is PopWithResults) {
                         PopWithResults popResult = results;
                         if (popResult.toPage == "/payment") {

@@ -22,6 +22,7 @@ class MapLocationApi {
       },
     );
 
+    print("TOKEN : ${config.user.token}");
     Result result;
     List<MapLocation> mapLocationList = [];
 

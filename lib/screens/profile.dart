@@ -294,7 +294,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 },
                               );
                             } else if (profilePageMenu[index].identifier == "promo") {
-                              Navigator.pushNamed(context, '/promotionList');
+                              Navigator.pushNamed(context, '/promotionList', arguments: {"isFromProfile": true});
                             } else if (profilePageMenu[index].identifier == "bookmark") {
                               Navigator.pushNamed(context, '/rideBookmark');
                             } else if (profilePageMenu[index].identifier == "kendaraanku") {
@@ -302,9 +302,6 @@ class _ProfilePageState extends State<ProfilePage> {
                             } else if (profilePageMenu[index].identifier == "registerDriver") {
                               Navigator.pushNamed(context, '/driverRegistration', arguments: config.user);
                             }
-                            // else if(profilePageMenu[index].identifier == "profileDriver"){
-                            //   Navigator.pushNamed(context, '/myVehicle');
-                            // }
                           },
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
