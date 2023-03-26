@@ -191,7 +191,7 @@ class BookingDetail extends StatelessWidget {
               title: "Ada Masalah?",
               fontWeight: FontWeight.bold,
               onPressed: () {
-                Navigator.pushNamed(context, '/pengaduanKendala');
+                Navigator.pushNamed(context, '/pengaduanKendala', arguments: {'rideSchedule': rideSchedule});
               },
               borderRadius: 8,
               widthBorder: 0,

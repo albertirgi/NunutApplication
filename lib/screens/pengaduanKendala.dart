@@ -4,8 +4,10 @@ import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/configuration.dart';
+import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/resources/reportApi.dart';
 import 'package:nunut_application/theme.dart';
+import 'package:nunut_application/widgets/nunutText.dart';
 
 import '../widgets/nunutTextFormField.dart';
 
@@ -22,6 +24,8 @@ class _PengaduanKendalaPageState extends State<PengaduanKendalaPage> {
   final user_id = config.user.id;
   @override
   Widget build(BuildContext context) {
+    final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
+    final rideSchedule = arguments["rideSchedule"] as RideSchedule?;
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -50,16 +54,11 @@ class _PengaduanKendalaPageState extends State<PengaduanKendalaPage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 24, 0, 7),
-                    child: BorderedText(
-                      child: Text(
-                        "Pengaduan Kendala",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 38,
-                        ),
-                      ),
-                      strokeWidth: 3.0,
-                      strokeColor: Colors.black,
+                    child: NunutText(
+                      title: "Pengaduan Kendala",
+                      size: 32,
+                      isTitle: true,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   SizedBox(height: 20),
@@ -122,10 +121,8 @@ class _PengaduanKendalaPageState extends State<PengaduanKendalaPage> {
                           ),
                         ),
                         onPressed: () async {
-                          var status_post = await ReportApi.PostReport(title.text.toString(), description.text.toString(), "CONTOH RIDE REQ ID", user_id.toString());
-                          //get status api
-                          //log("status post: $status_post");
-                          if (status_post == true) {
+                          var status_post = await ReportApi.PostReport(title.text.toString(), description.text.toString(), rideSchedule!.id, user_id.toString());
+                          if (status_post) {
                             Navigator.pushNamed(context, '/success', arguments: {
                               'title': "Pengaduan Kendala Berhasil Terkirim!",
                               'description': "Mohon menunggu balasan dari Nunut pada email anda!",

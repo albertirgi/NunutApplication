@@ -7,14 +7,15 @@ import 'package:nunut_application/models/mreport.dart';
 class ReportApi {
   static Future PostReport(title, description, ride_request_id, user_id) async {
     var url = Uri.parse(config.baseUrl + '/report/');
+    var body = jsonEncode({
+      'title': title,
+      'description': description,
+      'ride_request_id': ride_request_id,
+      'user_id': user_id,
+    });
     var response = await http.post(
       url,
-      body: {
-        'title': title,
-        'description': description,
-        'ride_request_id': ride_request_id,
-        'user_id': user_id,
-      },
+      body: body,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer ${config.user.token}',
@@ -22,7 +23,8 @@ class ReportApi {
     );
 
     Result result;
-    result = Result.fromJson(json.decode(response.body.toString()));
+    result = Result.fromJson(json.decode(response.body));
+    print(json.decode(response.body));
     if (result.status == 200) {
       return true;
     } else {
