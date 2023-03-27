@@ -139,9 +139,9 @@ class _LoginPageState extends State<LoginPage> {
                         config.user = tmpUser;
                         config.user.token = token;
                         SharedPreferences prefs = await SharedPreferences.getInstance();
-                        prefs.setString("email", tmpUser.email);
-                        prefs.setString("token", tmpUser.token!);
-                        prefs.setString("id", tmpUser.id!);
+                        prefs.setString("email", config.user.email);
+                        prefs.setString("token", config.user.token!);
+                        prefs.setString("id", config.user.id!);
                         Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
                       } else {
                         Fluttertoast.showToast(msg: "Email atau password salah", textColor: Colors.white);

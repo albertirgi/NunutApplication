@@ -40,10 +40,13 @@ class _SplashScreenState extends State<SplashScreen> {
       return value;
     });
 
+    print("TOKEN : " + prefs.getString("token").toString());
+
     if (prefs.getString("token") != null) {
+      print("MASUK IF");
       haveToken = true;
+      config.user.token = await prefs.getString("token");
       config.user = await UserService().getUserByID(prefs.getString("id")!);
-      config.user.token = prefs.getString("token");
     } else {
       haveToken = false;
     }
