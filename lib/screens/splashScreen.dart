@@ -27,23 +27,8 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void checkToken() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance().then((value) {
-      // var email = value.getString('email');
-      // var token = value.getString("token");
-      // var id = value.getString("id");
-      // if (token != "" && email != "") {
-      //   print(email);
-      //   print(" MAMBU BANGET ");
-      //   print(token);
-      //   print(id);
-      // }
-      return value;
-    });
-
-    print("TOKEN : " + prefs.getString("token").toString());
-
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getString("token") != null) {
-      print("MASUK IF");
       haveToken = true;
       config.user.token = await prefs.getString("token");
       config.user = await UserService().getUserByID(prefs.getString("id")!);
