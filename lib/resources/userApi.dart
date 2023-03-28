@@ -59,7 +59,7 @@ class UserService {
         driverId: result.status == 200 ? result.data["driver_id"] : "empty",
         wallet: priceFormat(walletData.balance.toString()),
         // token: _token,
-        token: "empty",
+        token: config.user.token,
       );
     } catch (e) {
       throw e;

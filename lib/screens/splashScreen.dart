@@ -30,8 +30,10 @@ class _SplashScreenState extends State<SplashScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getString("token") != null) {
       haveToken = true;
-      config.user.token = await prefs.getString("token");
+      String token = await prefs.getString("token")!;
+      config.user.token = token;
       config.user = await UserService().getUserByID(prefs.getString("id")!);
+      config.user.token = token;
     } else {
       haveToken = false;
     }
