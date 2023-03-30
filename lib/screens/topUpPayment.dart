@@ -22,7 +22,6 @@ class _TopUpPaymentState extends State<TopUpPayment> {
   @override
   void initState() {
     super.initState();
-    print(widget.data.toString());
   }
 
   @override

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/functions.dart';
 import 'package:nunut_application/models/mtransaction.dart';
@@ -170,11 +171,7 @@ class _NunutPayState extends State<NunutPay> {
                                 widthButton: 110,
                                 textColor: Colors.white,
                                 backgroundColor: Colors.black,
-                                iconButton: Icon(
-                                  Icons.add,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
+                                iconButton: Icon(Icons.call_made, color: Colors.white, size: 20),
                                 heightButton: 40,
                               ),
                               NunutButton(
@@ -183,7 +180,7 @@ class _NunutPayState extends State<NunutPay> {
                                   Navigator.pushNamed(context, '/withdraw');
                                 },
                                 widthButton: 130,
-                                iconButton: Icon(Icons.add, color: Colors.black, size: 20),
+                                iconButton: Icon(Icons.call_received, color: Colors.black, size: 20),
                                 heightButton: 40,
                               ),
                             ],

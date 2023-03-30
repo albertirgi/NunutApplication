@@ -77,18 +77,10 @@ class _PaymentState extends State<Payment> {
             ),
             Container(
               margin: EdgeInsets.only(top: 8, left: 32),
-              child: Row(
-                children: [
-                  NunutText(
-                    title: "Selesaikan pembayaran dalam ",
-                    fontWeight: FontWeight.w500,
-                    size: 14,
-                  ),
-                  NunutText(
-                    title: "01:59",
-                    fontWeight: FontWeight.bold,
-                  ),
-                ],
+              child: NunutText(
+                title: "Selesaikan pembayaran dalam ",
+                fontWeight: FontWeight.w500,
+                size: 14,
               ),
             ),
             SizedBox(height: 20),

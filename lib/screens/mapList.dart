@@ -28,7 +28,6 @@ class _MapListState extends State<MapList> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("WOI : " + config.user.token.toString());
     initMapLocationList();
     _scrollController = ScrollController();
     _scrollController!.addListener(scrollListener);
