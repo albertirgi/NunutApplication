@@ -24,7 +24,6 @@ class ReportApi {
 
     Result result;
     result = Result.fromJson(json.decode(response.body));
-    print(json.decode(response.body));
     if (result.status == 200) {
       return true;
     } else {

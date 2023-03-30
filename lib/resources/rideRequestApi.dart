@@ -56,7 +56,6 @@ class RideRequestApi {
     List<RideSchedule> rideScheduleList = [];
 
     result = Result.fromJson(json.decode(response.body));
-    print(json.decode(response.body));
 
     if (result.status == 200) {
       result.data.forEach((item) {
@@ -97,7 +96,6 @@ class RideRequestApi {
     Result result;
 
     result = Result.fromJson(json.decode(response.body));
-    print(json.decode(response.body));
 
     if (result.status == 200) {
       return true;

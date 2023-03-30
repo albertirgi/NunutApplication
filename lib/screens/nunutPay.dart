@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/functions.dart';
 import 'package:nunut_application/models/mtransaction.dart';

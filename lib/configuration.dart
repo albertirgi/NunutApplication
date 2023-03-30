@@ -14,6 +14,7 @@ class Configuration extends InheritedWidget {
   bool updateShouldNotify(Configuration oldWidget) => true;
 
   UserModel user = UserModel(email: "", name: "", nik: "", phone: "", token: "");
+  String token = "";
   int selectedNavbar = 1;
   String? selectedBuilding;
 }
