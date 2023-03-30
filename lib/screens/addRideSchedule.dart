@@ -33,12 +33,23 @@ class _AddRideScheduleState extends State<AddRideSchedule> {
   String _selectedVehicle = "Mobil";
   String _selectedMeetingPoint = "";
   String _selectedDestination = "";
+  bool lockDestination = false;
+  bool lockMeetingPoint = false;
   int _capacityValue = 1;
   List<Vehicle2> _vehicleList = [];
   @override
   void initState() {
     super.initState();
     loadVehicle();
+  }
+
+  @override
+  void dispose() {
+    _dateController.dispose();
+    _timeController.dispose();
+    _meetingPointController.dispose();
+    _destinationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -229,17 +240,34 @@ class _AddRideScheduleState extends State<AddRideSchedule> {
                   ),
                 ),
                 onTap: () async {
+                  if (lockMeetingPoint) {
+                    _destinationController.text = '';
+                    _selectedDestination = '';
+                    lockMeetingPoint = false;
+                  }
                   final removeUKP = _destinationController.text.contains('Universitas Kristen Petra');
                   MapLocation result = await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MapList(removeUKP: removeUKP, sendId: true),
+                      builder: (context) => MapList(removeUKP: false, sendId: true),
                     ),
                   );
                   setState(() {
                     if (result.name != null) {
                       _selectedMeetingPoint = result.mapId!;
                       _meetingPointController.text = result.name!;
+                      if (!_meetingPointController.text.contains('Universitas Kristen Petra')) {
+                        _destinationController.text = 'Gedung Q Universitas Kristen Petra';
+                        _selectedDestination = "074d950a-44ab-408a-9c00-03f4f9da42c3";
+                        lockDestination = true;
+                      } else {
+                        lockDestination = false;
+                      }
+
+                      if (_meetingPointController.text == _destinationController.text) {
+                        _destinationController.text = '';
+                        _selectedDestination = '';
+                      }
                     }
                   });
                 },
@@ -286,12 +314,17 @@ class _AddRideScheduleState extends State<AddRideSchedule> {
                   ),
                 ),
                 onTap: () async {
+                  if (lockDestination) {
+                    _meetingPointController.text = '';
+                    _selectedMeetingPoint = '';
+                    lockDestination = false;
+                  }
                   final removeUKP = _meetingPointController.text.contains('Universitas Kristen Petra');
                   MapLocation result = await Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => MapList(
-                        removeUKP: removeUKP,
+                        removeUKP: false,
                         sendId: true,
                       ),
                     ),
@@ -300,6 +333,18 @@ class _AddRideScheduleState extends State<AddRideSchedule> {
                     if (result.name != null) {
                       _selectedDestination = result.mapId!;
                       _destinationController.text = result.name!;
+                      if (!_destinationController.text.contains('Universitas Kristen Petra')) {
+                        _meetingPointController.text = 'Gedung Q Universitas Kristen Petra';
+                        _selectedMeetingPoint = "074d950a-44ab-408a-9c00-03f4f9da42c3";
+                        lockMeetingPoint = true;
+                      } else {
+                        lockMeetingPoint = false;
+                      }
+
+                      if (_destinationController.text == _meetingPointController.text) {
+                        _meetingPointController.text = '';
+                        _selectedMeetingPoint = '';
+                      }
                     }
                   });
                 },

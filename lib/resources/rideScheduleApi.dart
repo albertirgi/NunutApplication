@@ -23,11 +23,11 @@ class RideScheduleApi {
     var price = 10000;
     var meetingPoint = await mapLocationApi.getMapListById(meeting_point_id);
     var destination = await mapLocationApi.getMapListById(destination_id);
-    double startLat = double.parse(meetingPoint.latitude.replaceAll('.', ''));
-    double startLong = double.parse(meetingPoint.longitude.replaceAll('.', ''));
-    double endLat = double.parse(destination.latitude.replaceAll('.', ''));
-    double endLong = double.parse(destination.longitude.replaceAll('.', ''));
-    var distance = startCalculate(startLat, startLong, endLat, endLong);
+    double startLat = double.parse(meetingPoint.latitude);
+    double startLong = double.parse(meetingPoint.longitude);
+    double endLat = double.parse(destination.latitude);
+    double endLong = double.parse(destination.longitude);
+    var distance = await startCalculate(startLat, startLong, endLat, endLong);
     var body = {
       'date': date,
       'time': time,
@@ -53,8 +53,7 @@ class RideScheduleApi {
       body: bodyJson,
     );
 
-    Result result;
-    result = Result.fromJson(json.decode(response.body.toString()));
+    Result result = Result.fromJson(json.decode(response.body.toString()));
     if (result.status == 200) {
       return true;
     } else {

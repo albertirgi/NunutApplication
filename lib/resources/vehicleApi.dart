@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/models/mvehicle.dart';
 import 'package:http/http.dart' as http;
@@ -52,6 +54,7 @@ class VehicleApi {
       Uri.parse(config.baseUrl + '/vehicle'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${config.user.token}',
       },
       body: jsonEncode(vehicle.toJson()),
     );

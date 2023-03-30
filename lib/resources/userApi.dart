@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -36,7 +37,15 @@ class UserService {
 
   Future<UserModel> getUserByID(String id) async {
     try {
-      DocumentSnapshot snapshot = await collectionRef.doc(id).get();
+      // DocumentSnapshot snapshot = await collectionRef.doc(id).get();
+      var urlUser = Uri.parse("https://ayonunut.com/api/v1/user/$id");
+      var responseUser = await http.get(
+        urlUser,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ${config.user.token}',
+        },
+      );
       var url = Uri.parse("https://ayonunut.com/api/v1/driver-user/$id");
       var response = await http.get(
         url,
@@ -48,13 +57,14 @@ class UserService {
 
       Wallet walletData = await MidtransApi.getWallet(id);
       Result result = Result.fromJson(json.decode(response.body));
+      Result resultUser = Result.fromJson(json.decode(responseUser.body));
 
       return UserModel(
-        email: snapshot['email'],
-        name: snapshot['name'],
-        nik: snapshot['nik'],
-        phone: snapshot['phone'],
-        photo: snapshot['image'] ?? "empty",
+        email: resultUser.status == 200 ? resultUser.data["email"] : "empty",
+        name: resultUser.status == 200 ? resultUser.data["name"] : "empty",
+        nik: resultUser.status == 200 ? resultUser.data["nik"] : "empty",
+        phone: resultUser.status == 200 ? resultUser.data["phone"] : "empty",
+        photo: resultUser.status == 200 ? resultUser.data["image"] : "empty",
         id: id,
         driverId: result.status == 200 ? result.data["driver_id"] : "empty",
         wallet: priceFormat(walletData.balance.toString()),

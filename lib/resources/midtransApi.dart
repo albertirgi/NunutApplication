@@ -117,6 +117,7 @@ class MidtransApi {
 
     List<Transaction> result = [];
     Map<String, dynamic> data = json.decode(response.body.toString());
+    if (data["data"] == null) return result;
     for (var i = 0; i < data["data"].length; i++) {
       result.add(Transaction.fromJson(data["data"][i]));
     }

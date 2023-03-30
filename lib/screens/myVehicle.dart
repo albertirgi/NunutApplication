@@ -149,17 +149,21 @@ class _MyVehicleState extends State<MyVehicle> {
             child: Column(
               children: [
                 Container(
-                  padding:
-                      EdgeInsets.only(top: 20, bottom: 0, left: 20, right: 20),
+                  padding: EdgeInsets.only(top: 20, bottom: 0, left: 20, right: 20),
                   child: Column(
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Image.asset(
-                            "assets/toyota.png",
-                            width: 70,
-                            height: 70,
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              child: Image.asset(
+                                "assets/car.png",
+                                width: 70,
+                                height: 70,
+                              ),
+                            ),
                           ),
                           Column(
                             children: [
