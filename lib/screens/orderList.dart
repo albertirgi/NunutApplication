@@ -48,8 +48,7 @@ class _OrderListState extends State<OrderList> {
 
     rideScheduleList.clear();
 
-    rideScheduleList =
-        await rideRequestApi.getOrderList(parameter: "ride_schedule_only=${config.user.id}&status_ride=${isActiveClicked ? "active" : "inactive"}&driver&vehicle", page: _page, checkUrl: true);
+    rideScheduleList = await rideRequestApi.getOrderList(parameter: "ride_schedule_only=${config.user.id}&status_ride=${isActiveClicked ? "active" : "inactive"}&driver&vehicle", page: _page);
 
     setState(() {
       rideScheduleListLoading = false;
@@ -64,8 +63,7 @@ class _OrderListState extends State<OrderList> {
       });
 
       rideSchedulePageList.clear();
-      rideSchedulePageList =
-          await rideRequestApi.getOrderList(parameter: "ride_schedule_only=${config.user.id}&status_ride=${isActiveClicked ? "active" : "inactive"}&driver&vehicle", page: _page, checkUrl: true);
+      rideSchedulePageList = await rideRequestApi.getOrderList(parameter: "ride_schedule_only=${config.user.id}&status_ride=${isActiveClicked ? "active" : "inactive"}&driver&vehicle", page: _page);
       _page++;
 
       rideScheduleList.addAll(rideSchedulePageList);

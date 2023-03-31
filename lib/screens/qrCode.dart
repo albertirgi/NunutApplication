@@ -51,7 +51,7 @@ class QRCodeState extends State<QRCode> {
 
   updateRideRequestStatus(String barcodeCode) async {
     updateSuccess = false;
-    updateSuccess = await RideRequestApi().changeStatusRideRequest(rideRequestId: barcodeCode, status: "ONGOING", checkUrl: true);
+    updateSuccess = await RideRequestApi().changeStatusRideRequest(rideRequestId: barcodeCode, status: "ONGOING");
     if (updateSuccess) {
       Fluttertoast.showToast(
         msg: "Berhasil Absen Penumpang",

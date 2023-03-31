@@ -78,7 +78,7 @@ class _PaymentState extends State<Payment> {
             Container(
               margin: EdgeInsets.only(top: 8, left: 32),
               child: NunutText(
-                title: "Selesaikan pembayaran dalam ",
+                title: "Mohon selesaikan pembayaran Anda",
                 fontWeight: FontWeight.w500,
                 size: 14,
               ),
@@ -90,91 +90,6 @@ class _PaymentState extends State<Payment> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Container(
-                //   margin: EdgeInsets.only(left: 32),
-                //   child: Row(
-                //     children: [
-                //       Column(
-                //         children: [
-                //           Container(
-                //             decoration: BoxDecoration(
-                //               color: nunutPrimaryColor,
-                //               borderRadius: BorderRadius.circular(50),
-                //               border: Border.all(
-                //                 color: Colors.black,
-                //                 width: 2,
-                //               ),
-                //             ),
-                //             width: 50,
-                //             height: 50,
-                //             child: Center(
-                //               child: NunutText(title: "1", fontWeight: FontWeight.bold, size: 24),
-                //             ),
-                //           ),
-                //           SizedBox(height: 3),
-                //           NunutText(title: "Billing", size: 12, fontWeight: FontWeight.bold),
-                //         ],
-                //       ),
-                //       SizedBox(width: 3),
-                //       Container(
-                //         width: 35,
-                //         height: 2,
-                //         color: Colors.grey.withOpacity(0.4),
-                //       ),
-                //       SizedBox(width: 3),
-                //       Column(
-                //         children: [
-                //           Container(
-                //             decoration: BoxDecoration(
-                //               color: Colors.white,
-                //               borderRadius: BorderRadius.circular(50),
-                //               border: Border.all(
-                //                 color: Colors.grey.withOpacity(0.4),
-                //                 width: 2,
-                //               ),
-                //             ),
-                //             width: 50,
-                //             height: 50,
-                //             child: Center(
-                //               child: NunutText(title: "2", fontWeight: FontWeight.bold, size: 24, color: Colors.grey[400]),
-                //             ),
-                //           ),
-                //           SizedBox(height: 3),
-                //           NunutText(title: "Pilih Metode", size: 12, fontWeight: FontWeight.bold, color: Colors.grey[400]),
-                //         ],
-                //       ),
-                //       SizedBox(width: 3),
-                //       Container(
-                //         width: 35,
-                //         height: 2,
-                //         color: Colors.grey.withOpacity(0.4),
-                //       ),
-                //       SizedBox(width: 3),
-                //       Column(
-                //         children: [
-                //           Container(
-                //             decoration: BoxDecoration(
-                //               color: Colors.white,
-                //               borderRadius: BorderRadius.circular(50),
-                //               border: Border.all(
-                //                 color: Colors.grey.withOpacity(0.4),
-                //                 width: 2,
-                //               ),
-                //             ),
-                //             width: 50,
-                //             height: 50,
-                //             child: Center(
-                //               child: NunutText(title: "3", size: 24, fontWeight: FontWeight.bold, color: Colors.grey[400]),
-                //             ),
-                //           ),
-                //           SizedBox(height: 3),
-                //           NunutText(title: "Selesai!", size: 12, fontWeight: FontWeight.bold, color: Colors.grey[400]),
-                //         ],
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                // SizedBox(height: 20),
                 NunutText(title: "Perjalanan Anda", fontWeight: FontWeight.bold, size: 22),
                 SizedBox(height: 10),
                 Row(
@@ -255,13 +170,6 @@ class _PaymentState extends State<Payment> {
                     ),
                   ],
                 ),
-                // Row(
-                //   children: [
-                //     NunutText(title: "Biaya Admin", size: 14),
-                //     Spacer(),
-                //     NunutText(title: "1.000", size: 14, fontWeight: FontWeight.bold),
-                //   ],
-                // ),
                 useVoucher
                     ? Row(
                         children: [
@@ -381,11 +289,7 @@ class _PaymentState extends State<Payment> {
                     );
 
                     bool result = await rideRequestApi.addRideRequest(
-                        rideScheduleId: widget.rideSchedule.id.toString(),
-                        status_ride: "REGISTERED",
-                        user_id: config.user.id!,
-                        checkUrl: true,
-                        voucherId: useVoucher ? selectedPromotion!.voucherId : "");
+                        rideScheduleId: widget.rideSchedule.id.toString(), status_ride: "REGISTERED", user_id: config.user.id!, voucherId: useVoucher ? selectedPromotion!.voucherId : "");
                     if (result) {
                       Wallet walletData = await MidtransApi.getWallet(config.user.id!);
                       priceFormat(walletData.balance.toString());
@@ -393,6 +297,7 @@ class _PaymentState extends State<Payment> {
                       Navigator.pushNamed(context, '/success', arguments: {
                         'title': "Pembayaran Berhasil!",
                         'description': "Pembayaran Anda Berhasil Dilakukan",
+                        'afterBooking': true,
                       });
                     } else {
                       Navigator.pushNamed(context, '/success', arguments: {

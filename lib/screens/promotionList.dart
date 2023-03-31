@@ -33,7 +33,7 @@ class _PromotionListState extends State<PromotionList> {
     });
 
     promotionList.clear();
-    promotionList = await promotionApi.getPromotionList(checkURL: true);
+    promotionList = await promotionApi.getPromotionList();
 
     setState(() {
       promotionListLoading = false;

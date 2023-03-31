@@ -78,7 +78,7 @@ class _DistanceState extends State<Distance> {
     });
 
     mapLocationList.clear();
-    mapLocationList = await mapLocationApi.getMapList(checkUrl: true);
+    mapLocationList = await mapLocationApi.getMapList();
 
     setState(() {
       mapLocationListLoading = false;
