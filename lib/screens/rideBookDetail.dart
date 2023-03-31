@@ -326,7 +326,7 @@ class _RideBookDetailState extends State<RideBookDetail> {
                           });
                           bool result;
                           rideSchedule.isBookmarked!
-                              ? result = await rideScheduleApi.deleteBookmarkByRideScheduleId(rideScheduleId: rideSchedule.id!, userId: config.user.id!, checkUrl: true)
+                              ? result = await rideScheduleApi.deleteBookmarkByRideScheduleId(rideScheduleId: rideSchedule.id!, userId: config.user.id!)
                               : result = await rideScheduleApi.updateBookmark(rideScheduleId: rideSchedule.id!, userId: config.user.id!);
                           if (result) {
                             rideSchedule.isBookmarked = !rideSchedule.isBookmarked!;

@@ -57,7 +57,7 @@ class _RideListState extends State<RideList> {
     });
 
     rideScheduleList.clear();
-    rideScheduleList = await rideScheduleApi.getRideScheduleList(parameter: "driver=${config.user.driverId}&user=${config.user.id}&vehicle&ride_request", page: _page, checkUrl: true);
+    rideScheduleList = await rideScheduleApi.getRideScheduleList(parameter: "driver=${config.user.driverId}&user=${config.user.id}&vehicle&ride_request", page: _page);
 
     setState(() {
       rideScheduleListLoading = false;
@@ -72,7 +72,7 @@ class _RideListState extends State<RideList> {
       });
 
       rideSchedulePageList.clear();
-      rideSchedulePageList = await rideScheduleApi.getRideScheduleList(parameter: "driver=${config.user.driverId}&user=${config.user.id}&vehicle&ride_request", page: _page, checkUrl: true);
+      rideSchedulePageList = await rideScheduleApi.getRideScheduleList(parameter: "driver=${config.user.driverId}&user=${config.user.id}&vehicle&ride_request", page: _page);
       _page++;
 
       rideScheduleList.addAll(rideSchedulePageList);

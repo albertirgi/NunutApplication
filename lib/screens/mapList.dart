@@ -48,7 +48,7 @@ class _MapListState extends State<MapList> {
 
     mapLocationList.clear();
     searchText = searchText.isNotEmpty ? searchText.replaceAll(" ", "%20") : "";
-    mapLocationList = await mapLocationApi.getMapList(page: searchText.isNotEmpty ? 0 : _page, checkUrl: true, parameter: searchText.isNotEmpty ? "name=$searchText" : "");
+    mapLocationList = await mapLocationApi.getMapList(page: searchText.isNotEmpty ? 0 : _page, parameter: searchText.isNotEmpty ? "name=$searchText" : "");
     if (widget.removeUKP == true) {
       mapLocationList.removeWhere((element) => element.name!.contains("Universitas Kristen Petra"));
     }
@@ -66,7 +66,7 @@ class _MapListState extends State<MapList> {
       });
 
       mapLocationPageList.clear();
-      mapLocationPageList = await mapLocationApi.getMapList(checkUrl: true, page: _page);
+      mapLocationPageList = await mapLocationApi.getMapList(page: _page);
       _page++;
 
       mapLocationList.addAll(mapLocationPageList);

@@ -39,8 +39,7 @@ class _OrderDetailState extends State<OrderDetail> {
     });
 
     rideSchedule = RideSchedule();
-    rideSchedule = await rideScheduleApi.getRideScheduleById(
-        id: widget.rideScheduleId, parameter: "driver&vehicle", checkUrl: true);
+    rideSchedule = await rideScheduleApi.getRideScheduleById(id: widget.rideScheduleId, parameter: "driver&vehicle");
     await initRideRequestList();
 
     setState(() {
@@ -54,10 +53,7 @@ class _OrderDetailState extends State<OrderDetail> {
     // });
 
     rideRequestList.clear();
-    rideRequestList = await rideRequestApi.getRideRequestList(
-        rideScheduleId: widget.rideScheduleId,
-        parameter: "user",
-        checkUrl: true);
+    rideRequestList = await rideRequestApi.getRideRequestList(rideScheduleId: widget.rideScheduleId, parameter: "user");
 
     // setState(() {
     //   rideRequestListLoading = false;
@@ -86,8 +82,7 @@ class _OrderDetailState extends State<OrderDetail> {
           Align(
             alignment: Alignment.topCenter,
             child: Image(
-              image:
-                  AssetImage('assets/backgroundCircle/backgroundCircle2.png'),
+              image: AssetImage('assets/backgroundCircle/backgroundCircle2.png'),
               fit: BoxFit.cover,
             ),
           ),
@@ -204,10 +199,7 @@ class _OrderDetailState extends State<OrderDetail> {
                             SizedBox(height: 50),
                             Divider(color: Colors.grey, thickness: 0.5),
                             SizedBox(height: 20),
-                            NunutText(
-                                title: "Daftar Penumpang",
-                                fontWeight: FontWeight.bold,
-                                size: 16),
+                            NunutText(title: "Daftar Penumpang", fontWeight: FontWeight.bold, size: 16),
                             SizedBox(height: 20),
                             Container(
                               height: 150,
@@ -237,22 +229,17 @@ class _OrderDetailState extends State<OrderDetail> {
                               size: 22,
                             ),
                             Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 5),
+                              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
                                           Container(
                                             width: 10,
@@ -266,9 +253,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                             margin: EdgeInsets.only(left: 10),
                                             child: SizedBox(
                                               child: NunutText(
-                                                title: rideSchedule
-                                                    .meetingPoint!.name
-                                                    .toString(),
+                                                title: rideSchedule.meetingPoint!.name.toString(),
                                                 size: 16,
                                               ),
                                             ),
@@ -297,8 +282,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                           Container(
                                             margin: EdgeInsets.only(left: 10),
                                             child: TextScroll(
-                                              rideSchedule.destination!.name
-                                                  .toString(),
+                                              rideSchedule.destination!.name.toString(),
                                               style: TextStyle(
                                                 fontSize: 16,
                                                 color: Colors.black,
@@ -319,8 +303,7 @@ class _OrderDetailState extends State<OrderDetail> {
                               heightButton: 35,
                               textSize: 14,
                               borderColor: Colors.transparent,
-                              iconButton:
-                                  Icon(Icons.map_outlined, color: Colors.black),
+                              iconButton: Icon(Icons.map_outlined, color: Colors.black),
                               onPressed: () {},
                             ),
                             SizedBox(height: 16),
@@ -329,10 +312,7 @@ class _OrderDetailState extends State<OrderDetail> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                NunutText(
-                                    title: "Daftar Penumpang",
-                                    fontWeight: FontWeight.bold,
-                                    size: 16),
+                                NunutText(title: "Daftar Penumpang", fontWeight: FontWeight.bold, size: 16),
                               ],
                             ),
                             SizedBox(height: 20),
@@ -340,11 +320,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                 ? Container(
                                     height: 100,
                                     child: Center(
-                                      child: NunutText(
-                                          title: "Belum ada penumpang",
-                                          fontWeight: FontWeight.w500,
-                                          size: 14,
-                                          color: Colors.grey),
+                                      child: NunutText(title: "Belum ada penumpang", fontWeight: FontWeight.w500, size: 14, color: Colors.grey),
                                     ),
                                   )
                                 : ListView.separated(
@@ -353,8 +329,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                     physics: NeverScrollableScrollPhysics(),
                                     itemBuilder: (context, index) {
                                       return Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
                                           // CircleAvatar(
                                           //   radius: 20,
@@ -363,26 +338,15 @@ class _OrderDetailState extends State<OrderDetail> {
                                           //   ),
                                           // ),
                                           // SizedBox(width: 10),
-                                          NunutText(
-                                              title: rideRequestList[index]
-                                                  .user!
-                                                  .name,
-                                              fontWeight: FontWeight.w500,
-                                              size: 14),
+                                          NunutText(title: rideRequestList[index].user!.name, fontWeight: FontWeight.w500, size: 14),
                                           Flexible(
                                             child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
+                                              mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
                                                 Icon(
-                                                  index % 2 == 1
-                                                      ? Icons
-                                                          .check_circle_outline
-                                                      : Icons.cancel_outlined,
+                                                  index % 2 == 1 ? Icons.check_circle_outline : Icons.cancel_outlined,
                                                   size: 30,
-                                                  color: index % 2 == 1
-                                                      ? Colors.green
-                                                      : Colors.red,
+                                                  color: index % 2 == 1 ? Colors.green : Colors.red,
                                                 )
                                               ],
                                             ),
