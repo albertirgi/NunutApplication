@@ -25,7 +25,6 @@ class Payment extends StatefulWidget {
 
 class _PaymentState extends State<Payment> {
   double biayaAdmin = 0;
-  double pajak = 0;
   double total = 0;
   bool isWalletEnough = false;
   PromotionModel? selectedPromotion;
@@ -35,9 +34,6 @@ class _PaymentState extends State<Payment> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // biayaAdmin = widget.rideSchedule.biayaAdmin.toString();
-    pajak = (10 / 100 * widget.rideSchedule.price!);
-    total = widget.rideSchedule.price! + pajak;
     checkWalletEnough();
   }
 
@@ -154,17 +150,6 @@ class _PaymentState extends State<Payment> {
                     Spacer(),
                     NunutText(
                       title: priceFormat(widget.rideSchedule.price!.toString()),
-                      size: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    NunutText(title: "Pajak (10%)", size: 14),
-                    Spacer(),
-                    NunutText(
-                      title: priceFormat(pajak.toString()),
                       size: 14,
                       fontWeight: FontWeight.bold,
                     ),
