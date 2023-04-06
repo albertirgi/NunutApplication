@@ -35,6 +35,7 @@ class _PaymentState extends State<Payment> {
     // TODO: implement initState
     super.initState();
     checkWalletEnough();
+    total = widget.rideSchedule.price!.toDouble();
   }
 
   void checkWalletEnough() {
@@ -282,7 +283,7 @@ class _PaymentState extends State<Payment> {
                       Navigator.pushNamed(context, '/success', arguments: {
                         'title': "Pembayaran Berhasil!",
                         'description': "Pembayaran Anda Berhasil Dilakukan",
-                        'afterBooking': true,
+                        'afterBooking': "true",
                       });
                     } else {
                       Navigator.pushNamed(context, '/success', arguments: {

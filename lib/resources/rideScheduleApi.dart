@@ -125,7 +125,6 @@ class RideScheduleApi {
         "user_id": userId,
       },
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': 'Bearer ${config.user.token}',
       },
     );

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
@@ -83,11 +84,12 @@ class DriverApi {
     request.send();
   }
 
-  static Future<http.StreamedResponse> registerDriver(String fullname, String nik, String phone, File? ktmImage, File? drivingLicense, File? aggrementLetter) async {
+  static Future<Result> registerDriver(String fullname, String nik, String phone, File? ktmImage, File? drivingLicense, File? aggrementLetter) async {
     // Validate the form
     if (ktmImage == null || drivingLicense == null || aggrementLetter == null) {
       print("Please fill all the field");
-      return http.StreamedResponse(Stream.empty(), 400);
+      Result result = Result(status: 400, message: "Please fill all the field");
+      return result;
     }
     var url = Uri.parse(config.baseUrl + '/driver');
     var request = http.MultipartRequest('POST', url);
@@ -127,6 +129,9 @@ class DriverApi {
       'Authorization': 'Bearer ${config.user.token}',
     });
     var response = await request.send();
-    return response;
+    // var responseString = await response.stream.bytesToString().toString();
+    // print("WOI : " + responseString);
+    Result result = Result.fromJson(await response.stream.bytesToString().then((value) => json.decode(value)));
+    return result;
   }
 }

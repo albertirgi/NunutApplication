@@ -54,8 +54,7 @@ class _DriverRegistrationState extends State<DriverRegistration> {
             child: Stack(
               children: [
                 Image(
-                  image: AssetImage(
-                      'assets/backgroundCircle/backgroundCircle1.png'),
+                  image: AssetImage('assets/backgroundCircle/backgroundCircle1.png'),
                   fit: BoxFit.cover,
                 ),
                 Container(
@@ -85,8 +84,7 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(20, 24, 0, 7),
+                                  padding: const EdgeInsets.fromLTRB(20, 24, 0, 7),
                                   // child: BorderedText(
                                   //   child: Text(
                                   //     "Data Diri",
@@ -98,15 +96,11 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                                   //   strokeWidth: 3.0,
                                   //   strokeColor: Colors.black,
                                   // ),
-                                  child: NunutText(
-                                      title: "Daftar Driver",
-                                      isTitle: true,
-                                      size: 32),
+                                  child: NunutText(title: "Daftar Driver", isTitle: true, size: 32),
                                 ),
                                 SizedBox(height: 3),
                                 Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                  padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                                   child: Text(
                                     "Persyaratan Berkas Driver",
                                     style: TextStyle(
@@ -308,20 +302,17 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                             SizedBox(height: 2),
                             NunutButton(
                               title: ktmButtonTitle,
-                              iconButton:
-                                  Icon(Icons.file_upload, color: Colors.black),
+                              iconButton: Icon(Icons.file_upload, color: Colors.black),
                               heightButton: 45,
                               onPressed: () {
                                 FilePicker.platform.pickFiles().then(
                                   (value) {
                                     FilePickerResult? result = value;
                                     if (result != null) {
-                                      File file =
-                                          File(result.files.single.path!);
+                                      File file = File(result.files.single.path!);
                                       setState(() {
                                         _ktmImage = file;
-                                        ktmButtonTitle = WrappingFileName(
-                                            result.files.single.name);
+                                        ktmButtonTitle = WrappingFileName(result.files.single.name);
                                       });
                                     } else {
                                       // User canceled the picker
@@ -346,21 +337,17 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                             SizedBox(height: 2),
                             NunutButton(
                               title: drivingLicenseButtonTitle,
-                              iconButton:
-                                  Icon(Icons.file_upload, color: Colors.black),
+                              iconButton: Icon(Icons.file_upload, color: Colors.black),
                               heightButton: 45,
                               onPressed: () {
                                 FilePicker.platform.pickFiles().then(
                                   (value) {
                                     FilePickerResult? result = value;
                                     if (result != null) {
-                                      File file =
-                                          File(result.files.single.path!);
+                                      File file = File(result.files.single.path!);
                                       setState(() {
                                         _drivingLicense = file;
-                                        drivingLicenseButtonTitle =
-                                            WrappingFileName(
-                                                result.files.single.name);
+                                        drivingLicenseButtonTitle = WrappingFileName(result.files.single.name);
                                       });
                                     } else {
                                       // User canceled the picker
@@ -385,21 +372,17 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                             SizedBox(height: 2),
                             NunutButton(
                               title: aggrementLetterButtonTitle,
-                              iconButton:
-                                  Icon(Icons.file_upload, color: Colors.black),
+                              iconButton: Icon(Icons.file_upload, color: Colors.black),
                               heightButton: 45,
                               onPressed: () {
                                 FilePicker.platform.pickFiles().then(
                                   (value) {
                                     FilePickerResult? result = value;
                                     if (result != null) {
-                                      File file =
-                                          File(result.files.single.path!);
+                                      File file = File(result.files.single.path!);
                                       setState(() {
                                         _aggrementLetter = file;
-                                        aggrementLetterButtonTitle =
-                                            WrappingFileName(
-                                                result.files.single.name);
+                                        aggrementLetterButtonTitle = WrappingFileName(result.files.single.name);
                                       });
                                     } else {
                                       // User canceled the picker
@@ -417,8 +400,7 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                         margin: EdgeInsets.only(top: 0, left: 20, right: 20),
                         child: _isLoading
                             ? Center(
-                                child: CircularProgressIndicator(
-                                    color: nunutPrimaryColor),
+                                child: CircularProgressIndicator(color: nunutPrimaryColor),
                               )
                             : NunutButton(
                                 title: "Simpan Data",
@@ -434,10 +416,9 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                                     _drivingLicense,
                                     _aggrementLetter,
                                   );
-                                  if (res.statusCode == 200) {
+                                  if (res.status == 200) {
                                     Fluttertoast.showToast(
-                                        msg:
-                                            "Pendaftaran driver berhasil. Silahkan tunggu konfirmasi dari admin",
+                                        msg: "Pendaftaran driver berhasil. Silahkan tunggu konfirmasi dari admin",
                                         toastLength: Toast.LENGTH_SHORT,
                                         gravity: ToastGravity.BOTTOM,
                                         timeInSecForIosWeb: 1,
@@ -447,8 +428,7 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                                     Navigator.pop(context);
                                   } else {
                                     Fluttertoast.showToast(
-                                        msg:
-                                            "Pendaftaran driver gagal. Silahkan coba lagi",
+                                        msg: "Pendaftaran driver gagal. Silahkan coba lagi",
                                         toastLength: Toast.LENGTH_SHORT,
                                         gravity: ToastGravity.BOTTOM,
                                         timeInSecForIosWeb: 1,

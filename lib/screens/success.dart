@@ -16,7 +16,8 @@ class _SuccessState extends State<Success> {
     final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
     final title = arguments["title"] as String?;
     final desc = arguments["description"] as String?;
-    final afterBooking = arguments["afterBooking"] as bool?;
+    var afterBooking = arguments["afterBooking"] as String?;
+    afterBooking == null ? afterBooking = "false" : afterBooking = "true";
 
     return WillPopScope(
       onWillPop: () async => false,
@@ -61,10 +62,10 @@ class _SuccessState extends State<Success> {
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
-                        afterBooking ? Navigator.pushNamed(context, '/orderList') : null;
+                        afterBooking == "true" ? Navigator.pushNamed(context, '/orderList') : null;
                       },
                       child: NunutText(
-                        title: afterBooking! ? "Lihat Daftar Pesanan" : "Kembali ke Halaman Utama",
+                        title: afterBooking == "true" ? "Lihat Daftar Pesanan" : "Kembali ke Halaman Utama",
                         fontWeight: FontWeight.bold,
                         size: 20,
                       ),
