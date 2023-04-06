@@ -129,8 +129,6 @@ class DriverApi {
       'Authorization': 'Bearer ${config.user.token}',
     });
     var response = await request.send();
-    // var responseString = await response.stream.bytesToString().toString();
-    // print("WOI : " + responseString);
     Result result = Result.fromJson(await response.stream.bytesToString().then((value) => json.decode(value)));
     return result;
   }
