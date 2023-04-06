@@ -19,7 +19,7 @@ class _WithdrawConfirmationState extends State<WithdrawConfirmation> {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    double _total = double.parse(args['amount'].replaceAll('.', '')) - 1000;
+    double _total = double.parse(args['amount'].replaceAll('.', '')) + 1000;
     return Scaffold(
       body: SingleChildScrollView(
         child: NunutBackground(
@@ -126,7 +126,7 @@ class _WithdrawConfirmationState extends State<WithdrawConfirmation> {
                   children: [
                     NunutText(title: "Potongan Biaya Admin", fontWeight: FontWeight.bold, size: 14, color: nunutPrimaryColor),
                     Spacer(),
-                    NunutText(title: "1000", fontWeight: FontWeight.bold, size: 14, color: nunutPrimaryColor),
+                    NunutText(title: "1.000", fontWeight: FontWeight.bold, size: 14, color: nunutPrimaryColor),
                   ],
                 ),
                 SizedBox(height: 5),

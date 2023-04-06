@@ -55,7 +55,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ProfilePageMenu(
             title: "Profil Driver",
             icon: "assets/icons/dashboard.png",
-            identifier: "profilDriver",
+            identifier: "registerDriver",
           ));
     }
   }

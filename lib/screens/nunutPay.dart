@@ -191,7 +191,7 @@ class _NunutPayState extends State<NunutPay> {
                                 NunutButton(
                                   title: "Withdraw",
                                   onPressed: () {
-                                    Navigator.pushNamed(context, '/withdraw');
+                                    Navigator.pushNamed(context, '/withdraw').then((value) => onGoBack(value));
                                   },
                                   widthButton: 130,
                                   iconButton: Icon(Icons.remove, color: Colors.black, size: 20),
@@ -247,16 +247,22 @@ class _NunutPayState extends State<NunutPay> {
                                             shrinkWrap: true,
                                             itemBuilder: (context, index) {
                                               String status = transactions[index].status ?? "Pending";
-                                              status = status[0].toUpperCase() + status.substring(1);
+                                              status = status[0].toUpperCase() + status.toLowerCase().substring(1);
+                                              String type = transactions[index].type![0].toUpperCase() + transactions[index].type!.toLowerCase().substring(1);
                                               return Row(
+                                                crossAxisAlignment: CrossAxisAlignment.center,
                                                 children: [
                                                   Icon(Icons.arrow_upward),
                                                   SizedBox(width: 10),
                                                   Column(
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
-                                                      NunutText(title: transactions[index].type == "topup" ? "Top Up" : "Withdraw", fontWeight: FontWeight.bold),
-                                                      NunutText(title: "Bank Transfer"),
+                                                      NunutText(
+                                                          title: transactions[index].type == "topup"
+                                                              ? "Top Up"
+                                                              : (transactions[index].type == "withdraw" ? "Withdraw" : (type == "Wallet" ? "Nunut Ride" : type)),
+                                                          fontWeight: FontWeight.bold),
+                                                      NunutText(title: type == "Wallet" ? "Wallet" : "Bank Transfer"),
                                                     ],
                                                   ),
                                                   Spacer(),
@@ -265,8 +271,12 @@ class _NunutPayState extends State<NunutPay> {
                                                     children: [
                                                       NunutText(
                                                         title: transactions[index].type == "topup"
-                                                            ? "+ " + priceFormat(transactions[index].amount.toString()) + " ($status)"
-                                                            : "- " + priceFormat(transactions[index].amount.toString()) + " ($status)",
+                                                            ? "+ " + priceFormat(transactions[index].amount.toString())
+                                                            : "- " + priceFormat(transactions[index].amount.toString()),
+                                                        fontWeight: FontWeight.bold,
+                                                      ),
+                                                      NunutText(
+                                                        title: status,
                                                         fontWeight: FontWeight.bold,
                                                       ),
                                                       NunutText(

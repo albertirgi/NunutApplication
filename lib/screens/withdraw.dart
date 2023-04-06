@@ -22,9 +22,8 @@ class _WithdrawState extends State<Withdraw> {
   //controller
   TextEditingController WithdrawController = TextEditingController();
   TextEditingController _accountTextEditingController = TextEditingController();
-  TextEditingController _accountHolderNameTextEditingController =
-      TextEditingController();
-  String? _isPaymentSelected = "vdwLOfizVdU1dzaMbhy9";
+  TextEditingController _accountHolderNameTextEditingController = TextEditingController();
+  String? _isPaymentSelected = "";
   bool isExpanded = false;
   final List<String> items = [
     'BCA',
@@ -144,10 +143,7 @@ class _WithdrawState extends State<Withdraw> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                NunutText(
-                    title: "Nominal Withdraw",
-                    fontWeight: FontWeight.bold,
-                    size: 20),
+                NunutText(title: "Nominal Withdraw", fontWeight: FontWeight.bold, size: 20),
                 NunutTextFormField(
                   title: "",
                   hintText: "Minimal withdraw : 10.000",
@@ -203,10 +199,7 @@ class _WithdrawState extends State<Withdraw> {
                   ],
                 ),
                 SizedBox(height: 30),
-                NunutText(
-                    title: "Rekening Tujuan",
-                    fontWeight: FontWeight.bold,
-                    size: 20),
+                NunutText(title: "Rekening Tujuan", fontWeight: FontWeight.bold, size: 20),
                 SizedBox(height: 20),
                 Theme(
                   data: Theme.of(context).copyWith(
@@ -225,11 +218,7 @@ class _WithdrawState extends State<Withdraw> {
                         itemCount: beneficiaries.length,
                         itemBuilder: (context, index) {
                           return NunutRadioButton(
-                            label: beneficiaries[index]['name'] +
-                                " - " +
-                                beneficiaries[index]['bank'] +
-                                " " +
-                                beneficiaries[index]['account'],
+                            label: beneficiaries[index]['name'] + " - " + beneficiaries[index]['bank'] + " " + beneficiaries[index]['account'],
                             groupValue: _isPaymentSelected,
                             value: beneficiaries[index]['beneficiary_id'],
                             onChanged: (radioValue) {
@@ -262,16 +251,12 @@ class _WithdrawState extends State<Withdraw> {
                         ),
                       ),
                       builder: (context) {
-                        return StatefulBuilder(
-                            builder: (context, setStateModal) {
+                        return StatefulBuilder(builder: (context, setStateModal) {
                           return Padding(
-                            padding: EdgeInsets.only(
-                                bottom:
-                                    MediaQuery.of(context).viewInsets.bottom),
+                            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                             child: Container(
                               constraints: BoxConstraints(
-                                minHeight:
-                                    MediaQuery.of(context).size.height * 0.65,
+                                minHeight: MediaQuery.of(context).size.height * 0.65,
                               ),
                               height: MediaQuery.of(context).size.height * 0.65,
                               padding: EdgeInsets.all(24),
@@ -286,8 +271,7 @@ class _WithdrawState extends State<Withdraw> {
                                         height: 5,
                                         decoration: BoxDecoration(
                                           color: Colors.grey[300],
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+                                          borderRadius: BorderRadius.circular(10),
                                         ),
                                       ),
                                       onTap: () => Navigator.pop(context),
@@ -295,8 +279,7 @@ class _WithdrawState extends State<Withdraw> {
                                         int sensitivity = 8;
                                         if (details.delta.dy > sensitivity) {
                                           // Down Swipe
-                                        } else if (details.delta.dy <
-                                            -sensitivity) {
+                                        } else if (details.delta.dy < -sensitivity) {
                                           // Up Swipe
                                         }
                                       },
@@ -315,8 +298,7 @@ class _WithdrawState extends State<Withdraw> {
                                     children: [
                                       Flexible(
                                         child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             NunutText(
                                               title: "Nama Bank/Perusahaan",
@@ -328,59 +310,42 @@ class _WithdrawState extends State<Withdraw> {
                                               child: DropdownButton2(
                                                 isExpanded: true,
                                                 items: items
-                                                    .map((item) =>
-                                                        DropdownMenuItem<
-                                                            String>(
+                                                    .map((item) => DropdownMenuItem<String>(
                                                           value: item,
-                                                          child: NunutText(
-                                                              title: item,
-                                                              size: 14,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis),
+                                                          child: NunutText(title: item, size: 14, overflow: TextOverflow.ellipsis),
                                                         ))
                                                     .toList(),
                                                 value: selectedValue,
                                                 onChanged: (value) {
                                                   setStateModal(() {
                                                     setStateModal(() {
-                                                      selectedValue =
-                                                          value as String;
+                                                      selectedValue = value as String;
                                                     });
                                                   });
                                                 },
                                                 icon: const Icon(
-                                                  Icons
-                                                      .arrow_forward_ios_outlined,
+                                                  Icons.arrow_forward_ios_outlined,
                                                 ),
                                                 iconSize: 14,
                                                 iconEnabledColor: Colors.black,
                                                 iconDisabledColor: Colors.grey,
                                                 buttonHeight: 25,
-                                                buttonPadding:
-                                                    const EdgeInsets.only(
-                                                        left: 14, right: 14),
+                                                buttonPadding: const EdgeInsets.only(left: 14, right: 14),
                                                 buttonDecoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(24),
+                                                  borderRadius: BorderRadius.circular(24),
                                                   color: Colors.grey[300],
                                                 ),
                                                 itemHeight: 40,
-                                                itemPadding:
-                                                    const EdgeInsets.only(
-                                                        left: 14, right: 14),
+                                                itemPadding: const EdgeInsets.only(left: 14, right: 14),
                                                 dropdownMaxHeight: 200,
                                                 dropdownWidth: 200,
                                                 dropdownPadding: null,
-                                                dropdownDecoration:
-                                                    BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(24),
+                                                dropdownDecoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(24),
                                                   color: Colors.grey[300],
                                                 ),
                                                 dropdownElevation: 8,
-                                                scrollbarRadius:
-                                                    const Radius.circular(40),
+                                                scrollbarRadius: const Radius.circular(40),
                                                 scrollbarThickness: 6,
                                                 scrollbarAlwaysShow: true,
                                                 offset: const Offset(-20, 0),
@@ -393,8 +358,7 @@ class _WithdrawState extends State<Withdraw> {
                                   ),
                                   SizedBox(height: 20),
                                   Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       NunutText(
                                         title: "Nomor Rekening",
@@ -403,8 +367,7 @@ class _WithdrawState extends State<Withdraw> {
                                       ),
                                       SizedBox(height: 10),
                                       TextFormField(
-                                        controller:
-                                            _accountTextEditingController,
+                                        controller: _accountTextEditingController,
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 12,
@@ -413,8 +376,7 @@ class _WithdrawState extends State<Withdraw> {
                                         obscureText: false,
                                         // controller: _licensePlateController,
                                         decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.symmetric(
-                                              horizontal: 10, vertical: 10),
+                                          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                                           isDense: true,
                                           hintText: "e.g. L 1234 XX",
                                           hintStyle: TextStyle(
@@ -424,16 +386,14 @@ class _WithdrawState extends State<Withdraw> {
                                           filled: true,
                                           fillColor: Colors.grey[300],
                                           border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(50),
+                                            borderRadius: BorderRadius.circular(50),
                                             borderSide: const BorderSide(
                                               width: 0,
                                               style: BorderStyle.none,
                                             ),
                                           ),
                                           focusedBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(50),
+                                            borderRadius: BorderRadius.circular(50),
                                             borderSide: const BorderSide(
                                               width: 0,
                                               style: BorderStyle.none,
@@ -445,8 +405,7 @@ class _WithdrawState extends State<Withdraw> {
                                   ),
                                   SizedBox(height: 20),
                                   Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       NunutText(
                                         title: "Nama Pemilik Rekening",
@@ -455,8 +414,7 @@ class _WithdrawState extends State<Withdraw> {
                                       ),
                                       SizedBox(height: 10),
                                       TextFormField(
-                                        controller:
-                                            _accountHolderNameTextEditingController,
+                                        controller: _accountHolderNameTextEditingController,
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 12,
@@ -465,8 +423,7 @@ class _WithdrawState extends State<Withdraw> {
                                         obscureText: false,
                                         // controller: _licensePlateController,
                                         decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.symmetric(
-                                              horizontal: 10, vertical: 10),
+                                          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                                           isDense: true,
                                           hintText: "e.g. 11/2024",
                                           hintStyle: TextStyle(
@@ -476,16 +433,14 @@ class _WithdrawState extends State<Withdraw> {
                                           filled: true,
                                           fillColor: Colors.grey[300],
                                           border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(50),
+                                            borderRadius: BorderRadius.circular(50),
                                             borderSide: const BorderSide(
                                               width: 0,
                                               style: BorderStyle.none,
                                             ),
                                           ),
                                           focusedBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(50),
+                                            borderRadius: BorderRadius.circular(50),
                                             borderSide: const BorderSide(
                                               width: 0,
                                               style: BorderStyle.none,
@@ -501,17 +456,10 @@ class _WithdrawState extends State<Withdraw> {
                                     child: NunutButton(
                                       title: "Tambah",
                                       onPressed: () async {
-                                        Result res =
-                                            await MidtransApi.storeBeneficiary(
-                                                _accountHolderNameTextEditingController
-                                                    .text,
-                                                selectedValue,
-                                                _accountTextEditingController
-                                                    .text);
+                                        Result res = await MidtransApi.storeBeneficiary(_accountHolderNameTextEditingController.text, selectedValue, _accountTextEditingController.text);
                                         if (res.status == 200) {
                                           Fluttertoast.showToast(
-                                              msg:
-                                                  "Akun rekening berhasil ditambahkan",
+                                              msg: "Akun rekening berhasil ditambahkan",
                                               toastLength: Toast.LENGTH_SHORT,
                                               gravity: ToastGravity.BOTTOM,
                                               timeInSecForIosWeb: 1,
@@ -520,8 +468,7 @@ class _WithdrawState extends State<Withdraw> {
                                               fontSize: 16.0);
                                         } else {
                                           Fluttertoast.showToast(
-                                              msg:
-                                                  "Akun rekening gagal ditambahkan",
+                                              msg: "Akun rekening gagal ditambahkan",
                                               toastLength: Toast.LENGTH_SHORT,
                                               gravity: ToastGravity.BOTTOM,
                                               timeInSecForIosWeb: 1,
@@ -549,30 +496,32 @@ class _WithdrawState extends State<Withdraw> {
                       },
                     );
                   },
-                  child: NunutText(
-                      title: "Tambah akun rekening baru",
-                      size: 14,
-                      textDecoration: TextDecoration.underline),
+                  child: NunutText(title: "Tambah akun rekening baru", size: 14, textDecoration: TextDecoration.underline),
                 ),
                 Container(
-                  margin: EdgeInsets.only(
-                      bottom: 20,
-                      top: isExpanded
-                          ? MediaQuery.of(context).size.height * 0.1
-                          : MediaQuery.of(context).size.height * 0.35),
+                  margin: EdgeInsets.only(bottom: 20, top: isExpanded ? MediaQuery.of(context).size.height * 0.1 : MediaQuery.of(context).size.height * 0.35),
                   child: NunutButton(
                     title: "Lanjutkan",
                     fontWeight: FontWeight.w500,
                     onPressed: () {
-                      String amount =
-                          WithdrawController.text.replaceAll('Rp. ', '');
-                      Navigator.pushNamed(context, '/withdrawConfirmation',
-                          arguments: {
-                            'amount': amount,
-                            'beneficiary': _isPaymentSelected,
-                            'bank': selectedBeneficiary['bank'],
-                            'account_number': selectedBeneficiary['account'],
-                          });
+                      if (_isPaymentSelected == "") {
+                        Fluttertoast.showToast(
+                            msg: "Pilih akun rekening tujuan",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.green,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                        return;
+                      }
+                      String amount = WithdrawController.text.replaceAll('Rp. ', '');
+                      Navigator.pushNamed(context, '/withdrawConfirmation', arguments: {
+                        'amount': amount,
+                        'beneficiary': _isPaymentSelected,
+                        'bank': selectedBeneficiary['bank'],
+                        'account_number': selectedBeneficiary['account'],
+                      }).then((value) => setState(() {}));
                     },
                     borderColor: Colors.transparent,
                     borderRadius: 12,

@@ -84,9 +84,9 @@ class DriverApi {
     request.send();
   }
 
-  static Future<Result> registerDriver(String fullname, String nik, String phone, File? ktmImage, File? drivingLicense, File? aggrementLetter) async {
+  static Future<Result> registerDriver(String fullname, String nik, String phone, File? ktmImage, File? drivingLicense, File? profilePicture) async {
     // Validate the form
-    if (ktmImage == null || drivingLicense == null || aggrementLetter == null) {
+    if (ktmImage == null || drivingLicense == null || profilePicture == null) {
       print("Please fill all the field");
       Result result = Result(status: 400, message: "Please fill all the field");
       return result;
@@ -98,15 +98,19 @@ class DriverApi {
     request.fields['phone'] = user.phone;
     request.fields['nik'] = user.nik;
     request.fields['user_id'] = user.id!;
-    request.fields['image'] = user.photo ?? "https://firebasestorage.googleapis.com/v0/b/nunut-da274.appspot.com/o/avatar.png?alt=media&token=62dfdb20-7aa0-4ca4-badf-31c282583b1b";
-    request.files.add(
-      http.MultipartFile(
-        'aggrement_letter',
-        aggrementLetter.readAsBytes().asStream(),
-        aggrementLetter.lengthSync(),
-        filename: aggrementLetter.path.split('/').last,
-      ),
-    );
+    if (profilePicture != File("")) {
+      request.files.add(
+        http.MultipartFile(
+          'image',
+          profilePicture.readAsBytes().asStream(),
+          profilePicture.lengthSync(),
+          filename: profilePicture.path.split('/').last,
+        ),
+      );
+    } else {
+      request.fields['image'] = user.photo ?? "https://firebasestorage.googleapis.com/v0/b/nunut-da274.appspot.com/o/avatar.png?alt=media&token=62dfdb20-7aa0-4ca4-badf-31c282583b1b";
+    }
+
     request.files.add(
       await http.MultipartFile(
         'driving_license',

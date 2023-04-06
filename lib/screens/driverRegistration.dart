@@ -5,6 +5,7 @@ import 'package:nunut_application/resources/driverApi.dart';
 import 'package:nunut_application/resources/userApi.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
+import 'package:nunut_application/widgets/popUpLoading.dart';
 import 'dart:io';
 import '../models/muser.dart';
 import '../widgets/nunutText.dart';
@@ -73,6 +74,42 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                             },
                           ),
                           //icon chat
+                          //Profile Picture
+                          Container(
+                            height: 90,
+                            padding: const EdgeInsets.only(left: 40),
+                            child: Stack(
+                              alignment: Alignment.topRight,
+                              children: [
+                                CircleAvatar(
+                                  //border circle avatar black
+                                  backgroundColor: Colors.black,
+                                  radius: 50,
+                                  backgroundImage: _profilePicture == null
+                                      ? NetworkImage("https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiO")
+                                      : Image.file(_profilePicture!).image,
+                                ),
+                                //icon add bottom of image profile
+                                Positioned(
+                                  bottom: -2,
+                                  right: 0,
+                                  child: InkWell(
+                                    onTap: () {
+                                      //upload image profile
+                                      FilePicker.platform.pickFiles(type: FileType.image).then((value) {
+                                        setState(() {
+                                          if (value != null) {
+                                            _profilePicture = File(value.files.single.path ?? "");
+                                          }
+                                        });
+                                      });
+                                    },
+                                    child: Icon(Icons.add_circle, color: Colors.black, size: 27),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                       Row(
@@ -102,7 +139,7 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                                 Padding(
                                   padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                                   child: Text(
-                                    "Persyaratan Berkas Driver",
+                                    "Persyaratan Berkas Driver (Maksimal 8 MB)",
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 16,
@@ -197,6 +234,7 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                         ),
                       ),
                       SizedBox(height: 10),
+
                       // Container(
                       //   margin: EdgeInsets.only(top: 0, left: 20, right: 20),
                       //   child: Column(
@@ -301,7 +339,7 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                             ),
                             SizedBox(height: 2),
                             NunutButton(
-                              title: ktmButtonTitle,
+                              title: ktmButtonTitle.length > 25 ? ktmButtonTitle.substring(0, 25) + "..." : ktmButtonTitle,
                               iconButton: Icon(Icons.file_upload, color: Colors.black),
                               heightButton: 45,
                               onPressed: () {
@@ -336,7 +374,7 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                             ),
                             SizedBox(height: 2),
                             NunutButton(
-                              title: drivingLicenseButtonTitle,
+                              title: drivingLicenseButtonTitle.length > 25 ? drivingLicenseButtonTitle.substring(0, 25) + "..." : drivingLicenseButtonTitle,
                               iconButton: Icon(Icons.file_upload, color: Colors.black),
                               heightButton: 45,
                               onPressed: () {
@@ -360,87 +398,91 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                         ),
                       ),
                       SizedBox(height: 20),
-                      Container(
-                        margin: EdgeInsets.only(top: 0, left: 20, right: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            NunutText(
-                              title: "Surat Persetujuan",
-                              fontWeight: FontWeight.bold,
-                            ),
-                            SizedBox(height: 2),
-                            NunutButton(
-                              title: aggrementLetterButtonTitle,
-                              iconButton: Icon(Icons.file_upload, color: Colors.black),
-                              heightButton: 45,
-                              onPressed: () {
-                                FilePicker.platform.pickFiles().then(
-                                  (value) {
-                                    FilePickerResult? result = value;
-                                    if (result != null) {
-                                      File file = File(result.files.single.path!);
-                                      setState(() {
-                                        _aggrementLetter = file;
-                                        aggrementLetterButtonTitle = WrappingFileName(result.files.single.name);
-                                      });
-                                    } else {
-                                      // User canceled the picker
-                                    }
-                                  },
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
+                      // Container(
+                      //   margin: EdgeInsets.only(top: 0, left: 20, right: 20),
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       NunutText(
+                      //         title: "Surat Persetujuan",
+                      //         fontWeight: FontWeight.bold,
+                      //       ),
+                      //       SizedBox(height: 2),
+                      //       NunutButton(
+                      //         title: aggrementLetterButtonTitle,
+                      //         iconButton: Icon(Icons.file_upload, color: Colors.black),
+                      //         heightButton: 45,
+                      //         onPressed: () {
+                      //           FilePicker.platform.pickFiles().then(
+                      //             (value) {
+                      //               FilePickerResult? result = value;
+                      //               if (result != null) {
+                      //                 File file = File(result.files.single.path!);
+                      //                 setState(() {
+                      //                   _aggrementLetter = file;
+                      //                   aggrementLetterButtonTitle = WrappingFileName(result.files.single.name);
+                      //                 });
+                      //               } else {
+                      //                 // User canceled the picker
+                      //               }
+                      //             },
+                      //           );
+                      //         },
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                       Expanded(child: Container()),
                       SizedBox(height: 100),
                       Container(
                         margin: EdgeInsets.only(top: 0, left: 20, right: 20),
-                        child: _isLoading
-                            ? Center(
-                                child: CircularProgressIndicator(color: nunutPrimaryColor),
-                              )
-                            : NunutButton(
-                                title: "Simpan Data",
-                                onPressed: () async {
-                                  setState(() {
-                                    _isLoading = true;
-                                  });
-                                  var res = await DriverApi.registerDriver(
-                                    fullName.text,
-                                    nik.text,
-                                    noTelp.text,
-                                    _ktmImage,
-                                    _drivingLicense,
-                                    _aggrementLetter,
-                                  );
-                                  if (res.status == 200) {
-                                    Fluttertoast.showToast(
-                                        msg: "Pendaftaran driver berhasil. Silahkan tunggu konfirmasi dari admin",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.BOTTOM,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: Colors.green,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0);
-                                    Navigator.pop(context);
-                                  } else {
-                                    Fluttertoast.showToast(
-                                        msg: "Pendaftaran driver gagal. Silahkan coba lagi",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.BOTTOM,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: Colors.green,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0);
-                                  }
-                                  setState(() {
-                                    _isLoading = false;
-                                  });
+                        child: NunutButton(
+                          title: "Simpan Data",
+                          onPressed: () async {
+                            setState(() {
+                              _isLoading = true;
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return PopUpLoading(title: "Sedang Memproses...", subtitle: "Harap Menunggu...");
                                 },
-                              ),
+                              );
+                            });
+                            var res = await DriverApi.registerDriver(
+                              fullName.text,
+                              nik.text,
+                              noTelp.text,
+                              _ktmImage,
+                              _drivingLicense,
+                              _profilePicture,
+                            );
+                            if (res.status == 200) {
+                              Fluttertoast.showToast(
+                                  msg: "Pendaftaran driver berhasil. Silahkan tunggu konfirmasi dari admin",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.green,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
+                              Navigator.pop(context);
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: "Pendaftaran driver gagal. Silahkan coba lagi",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.green,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
+                              Navigator.pop(context);
+                            }
+                            setState(() {
+                              _isLoading = false;
+                            });
+                          },
+                        ),
                       ),
                       SizedBox(height: 20),
                     ],
