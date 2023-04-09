@@ -8,6 +8,7 @@ class UserModel {
   String? wallet;
   String? photo;
   String? token;
+  String? driverStatus;
 
   UserModel({
     required this.email,
@@ -19,6 +20,7 @@ class UserModel {
     this.wallet,
     this.photo,
     this.token,
+    this.driverStatus,
   });
 
   Map<String, dynamic> toJson() {
@@ -32,6 +34,7 @@ class UserModel {
       "wallet": wallet,
       "photo": photo,
       "token": token,
+      "driver_status": driverStatus,
     };
   }
 

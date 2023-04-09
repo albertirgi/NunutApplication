@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/configuration.dart';
+import 'package:nunut_application/resources/driverApi.dart';
 import 'package:nunut_application/screens/home.dart';
 import 'package:nunut_application/screens/offerMenu.dart';
 import 'package:nunut_application/screens/profile.dart';
@@ -80,9 +83,43 @@ class _MainPageState extends State<MainPage> {
               textColor: Colors.white,
               fontSize: 16.0,
             );
+            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+              Navigator.of(context).pushNamed('/driverRegistration', arguments: config.user);
+            });
             return const Home();
-          } else
-            return const OfferMenu();
+          } else {
+            if (config.user.driverStatus?.toLowerCase() == "pending") {
+              config.selectedNavbar = 1;
+              Fluttertoast.showToast(
+                msg: "Data sedang diproses oleh admin. mohon menunggu",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 2,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0,
+              );
+              return const Home();
+            } else if (config.user.driverStatus?.toLowerCase() == "rejected") {
+              config.selectedNavbar = 1;
+              Fluttertoast.showToast(
+                msg: "Mohon maaf, permintaan anda ditolak, harap mengajukan permintaan kembali",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 2,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0,
+              );
+              return const Home();
+            } else if (config.user.driverStatus?.toLowerCase() == "approved") {
+              setState(() {
+                config.selectedNavbar = 0;
+              });
+              return const OfferMenu();
+            }
+          }
+          return const Home();
         case 1:
           return const Home();
         case 2:

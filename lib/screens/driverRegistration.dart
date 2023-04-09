@@ -1,6 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/resources/driverApi.dart';
 import 'package:nunut_application/resources/userApi.dart';
 import 'package:nunut_application/theme.dart';
@@ -43,6 +44,7 @@ class _DriverRegistrationState extends State<DriverRegistration> {
   @override
   Widget build(BuildContext context) {
     UserModel user = ModalRoute.of(context)!.settings.arguments as UserModel;
+
     fullName.text = user.name;
     nik.text = user.nik;
     noTelp.text = user.phone;
@@ -85,9 +87,11 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                                   //border circle avatar black
                                   backgroundColor: Colors.black,
                                   radius: 50,
-                                  backgroundImage: _profilePicture == null
-                                      ? NetworkImage("https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiO")
-                                      : Image.file(_profilePicture!).image,
+                                  backgroundImage: config.user.photo != null
+                                      ? NetworkImage(config.user.photo!)
+                                      : (_profilePicture == null
+                                          ? NetworkImage("https://firebasestorage.googleapis.com/v0/b/nunut-da274.appspot.com/o/default.png?alt=media&token=c105adec-c241-423e-9e0f-cc992bb8408f")
+                                          : Image.file(_profilePicture!).image),
                                 ),
                                 //icon add bottom of image profile
                                 Positioned(

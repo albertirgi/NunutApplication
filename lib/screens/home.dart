@@ -1,5 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/configuration.dart';
+import 'package:nunut_application/models/mdriver.dart';
+import 'package:nunut_application/resources/driverApi.dart';
 import 'package:nunut_application/screens/rideShare.dart';
 import 'package:nunut_application/widgets/customDialog.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
@@ -533,10 +538,44 @@ class _HomeState extends State<Home> {
                               NunutButton(
                                 title: "Tawarkan Tumpangan",
                                 onPressed: () {
-                                  setState(() {
-                                    config.selectedNavbar = 0;
-                                    print(config.selectedNavbar);
-                                  });
+                                  if (config.user.driverId == "empty") {
+                                    Fluttertoast.showToast(
+                                      msg: "Mohon mendaftar sebagai driver sebelum mengakses halaman ini",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      timeInSecForIosWeb: 2,
+                                      backgroundColor: Colors.red,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0,
+                                    );
+                                    Navigator.of(context).pushNamed('/driverRegistration', arguments: config.user);
+                                  } else {
+                                    DriverApi.getDriverById(config.user.driverId ?? "").then((value) {
+                                      if (value.status.toLowerCase() == "pending") {
+                                        Fluttertoast.showToast(
+                                          msg: "Data sedang diproses oleh admin. mohon menunggu",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM,
+                                          timeInSecForIosWeb: 2,
+                                          backgroundColor: Colors.red,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0,
+                                        );
+                                      } else if (value.status.toLowerCase() == "rejected") {
+                                        Fluttertoast.showToast(
+                                          msg: "Mohon maaf, permintaan anda ditolak, harap mengajukan permintaan kembali",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM,
+                                          timeInSecForIosWeb: 2,
+                                          backgroundColor: Colors.red,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0,
+                                        );
+                                      } else if (value.status.toLowerCase() == "approved") {
+                                        Navigator.of(context).pushNamed('/addRideSchedule', arguments: config.user);
+                                      }
+                                    });
+                                  }
                                 },
                                 textColor: Colors.black,
                                 backgroundColor: nunutPrimaryColor,

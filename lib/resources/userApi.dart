@@ -67,6 +67,7 @@ class UserService {
         photo: resultUser.status == 200 ? resultUser.data["image"] : "empty",
         id: id,
         driverId: result.status == 200 ? result.data["driver_id"] : "empty",
+        driverStatus: result.status == 200 ? result.data["status"] : "empty",
         wallet: priceFormat(walletData.balance.toString()),
         // token: _token,
         token: config.user.token,

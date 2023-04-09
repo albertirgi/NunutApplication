@@ -57,7 +57,7 @@ class _RideListState extends State<RideList> {
     });
 
     rideScheduleList.clear();
-    rideScheduleList = await rideScheduleApi.getRideScheduleList(parameter: "driver=${config.user.driverId}&user=${config.user.id}&vehicle&ride_request", page: _page);
+    rideScheduleList = await rideScheduleApi.getRideScheduleList(parameter: "driver=${config.user.driverId}&user=${config.user.id}&vehicle&ride_request", page: _page, checkUrl: true);
 
     setState(() {
       rideScheduleListLoading = false;

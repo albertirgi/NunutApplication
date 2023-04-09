@@ -34,7 +34,7 @@ class DriverApi {
     return driverList;
   }
 
-  Future<Driver> getDriverById(String id) async {
+  static Future<Driver> getDriverById(String id) async {
     var url = Uri.parse(config.baseUrl + '/driver/' + id);
     var response = await http.get(
       url,
@@ -46,11 +46,10 @@ class DriverApi {
 
     Result result;
     Driver driver = Driver(driverId: "", aggrementLetter: "", drivingLicense: "", name: "", email: "", image: "", nik: "", phone: "", status: "", studentCard: "", userId: "");
-
     result = Result.fromJson(json.decode(response.body));
 
     if (result.status == 200) {
-      driver = Driver.fromJson(result.data[0]);
+      driver = Driver.fromJson(result.data);
     }
     return driver;
   }

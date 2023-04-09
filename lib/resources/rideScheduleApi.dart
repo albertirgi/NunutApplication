@@ -224,7 +224,6 @@ class RideScheduleApi {
     if (result.status == 200) {
       return true;
     } else {
-      log(result.message.toString());
       return false;
     }
   }
