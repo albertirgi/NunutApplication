@@ -110,27 +110,29 @@ class _PaymentState extends State<Payment> {
                       ],
                     ),
                     SizedBox(width: 8),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 40.0,
-                          child: Center(
-                            child: NunutText(title: widget.rideSchedule.meetingPoint!.name!),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: 40.0,
+                            child: Center(
+                              child: Expanded(child: NunutText(title: widget.rideSchedule.meetingPoint!.name!, maxLines: 2)),
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 2),
-                        Container(
-                          height: 40.0,
-                          margin: EdgeInsets.only(top: 4.0),
-                          child: Row(
-                            children: [
-                              NunutText(title: widget.rideSchedule.destination!.name!),
-                            ],
+                          SizedBox(height: 2),
+                          Container(
+                            height: 40.0,
+                            margin: EdgeInsets.only(top: 4.0),
+                            child: Row(
+                              children: [
+                                Expanded(child: NunutText(title: widget.rideSchedule.destination!.name!)),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
