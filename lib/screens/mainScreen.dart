@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/resources/driverApi.dart';
 import 'package:nunut_application/screens/home.dart';
@@ -156,21 +157,21 @@ class _MainPageState extends State<MainPage> {
               BottomNavigationBarItem(
                 icon: Container(
                   margin: const EdgeInsets.only(top: 10),
-                  child: Icon(Icons.car_crash, size: 30),
+                  child: Icon(FontAwesomeIcons.car, size: 30),
                 ),
                 label: "",
               ),
               BottomNavigationBarItem(
                 icon: Container(
                   margin: const EdgeInsets.only(top: 10),
-                  child: Icon(Icons.route, size: 30),
+                  child: Icon(FontAwesomeIcons.route, size: 30),
                 ),
                 label: "",
               ),
               BottomNavigationBarItem(
                 icon: Container(
                   margin: const EdgeInsets.only(top: 10),
-                  child: Icon(Icons.person, size: 30),
+                  child: Icon(Icons.person_pin, size: 30),
                 ),
                 label: "",
               ),
