@@ -83,9 +83,9 @@ class PopUpLoading extends StatelessWidget {
                                   onPressed: () {
                                     Navigator.pop(context, true);
                                   },
-                                  child: NunutText(title: "Ya", size: 14, fontWeight: FontWeight.w500),
+                                  child: NunutText(title: "No", size: 14, fontWeight: FontWeight.w500),
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white,
+                                    backgroundColor: nunutPrimaryColor3,
                                     foregroundColor: nunutPrimaryColor,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(18.0),
@@ -96,9 +96,9 @@ class PopUpLoading extends StatelessWidget {
                                   onPressed: () {
                                     Navigator.pop(context, false);
                                   },
-                                  child: NunutText(title: "Tidak", size: 14, fontWeight: FontWeight.w500),
+                                  child: NunutText(title: "Yes", size: 14, fontWeight: FontWeight.w500),
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white,
+                                    backgroundColor: nunutPrimaryColor4,
                                     foregroundColor: nunutPrimaryColor,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(18.0),

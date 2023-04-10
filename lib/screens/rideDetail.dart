@@ -100,7 +100,7 @@ class _RideDetailState extends State<RideDetail> {
                 onPressed: () {
                   showDialog(
                     context: context,
-                    barrierDismissible: false,
+                    barrierDismissible: true,
                     builder: (BuildContext context) {
                       return PopUpLoading(
                         title: "Konfirmasi",
