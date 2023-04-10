@@ -57,7 +57,8 @@ class _RideListState extends State<RideList> {
     });
 
     rideScheduleList.clear();
-    rideScheduleList = await rideScheduleApi.getRideScheduleList(parameter: "driver=${config.user.driverId}&user=${config.user.id}&vehicle&ride_request", page: _page, checkUrl: true);
+    rideScheduleList = await rideScheduleApi.getRideScheduleList(
+        parameter: "driver=${config.user.driverId}&user=${config.user.id}&vehicle&ride_request&status_ride=${isActiveClicked ? "active" : "inactive"}", page: _page, checkUrl: true);
 
     setState(() {
       rideScheduleListLoading = false;
@@ -72,7 +73,8 @@ class _RideListState extends State<RideList> {
       });
 
       rideSchedulePageList.clear();
-      rideSchedulePageList = await rideScheduleApi.getRideScheduleList(parameter: "driver=${config.user.driverId}&user=${config.user.id}&vehicle&ride_request", page: _page);
+      rideSchedulePageList = await rideScheduleApi.getRideScheduleList(
+          parameter: "driver=${config.user.driverId}&user=${config.user.id}&vehicle&ride_request&status_ride=${isActiveClicked ? "active" : "inactive"}", page: _page);
       _page++;
 
       rideScheduleList.addAll(rideSchedulePageList);
@@ -150,6 +152,7 @@ class _RideListState extends State<RideList> {
                         onTap: () {
                           setState(() {
                             isActiveClicked = true;
+                            initRideScheduleList();
                           });
                         },
                         child: NunutText(title: "Sedang Aktif", size: 18, fontWeight: isActiveClicked ? FontWeight.bold : FontWeight.normal),
@@ -164,6 +167,7 @@ class _RideListState extends State<RideList> {
                         onTap: () {
                           setState(() {
                             isActiveClicked = false;
+                            initRideScheduleList();
                           });
                         },
                         child: NunutText(title: "Selesai", size: 18, fontWeight: isActiveClicked ? FontWeight.normal : FontWeight.bold),

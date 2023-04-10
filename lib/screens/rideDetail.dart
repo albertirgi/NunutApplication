@@ -113,7 +113,7 @@ class _RideDetailState extends State<RideDetail> {
                       RideScheduleApi.rideScheduleDone(rideScheduleId: widget.rideScheduleId, checkUrl: true).then((value) {
                         if (value) {
                           Fluttertoast.showToast(msg: "Perjalanan selesai");
-                          Navigator.pushNamed(context, '/home');
+                          Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
                         } else {
                           Fluttertoast.showToast(msg: "Gagal menyelesaikan perjalanan");
                         }
