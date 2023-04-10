@@ -66,10 +66,10 @@ class PopUpLoading extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    NunutText(title: title, size: 20, fontWeight: FontWeight.bold),
+                    NunutText(title: title, size: 16, fontWeight: FontWeight.bold),
                     NunutText(
                       title: subtitle,
-                      size: 14,
+                      size: 12,
                       fontWeight: FontWeight.w500,
                       textAlign: TextAlign.center,
                     ),

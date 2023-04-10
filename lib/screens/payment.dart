@@ -12,8 +12,8 @@ import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutBackground.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
-import 'package:intl/intl.dart';
 import 'package:nunut_application/widgets/popUpLoading.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Payment extends StatefulWidget {
   RideSchedule rideSchedule;
@@ -29,6 +29,7 @@ class _PaymentState extends State<Payment> {
   bool isWalletEnough = false;
   PromotionModel? selectedPromotion;
   bool useVoucher = false;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -45,6 +46,7 @@ class _PaymentState extends State<Payment> {
   }
 
   FutureOr onGoBack(dynamic value) {
+    isLoading = true;
     onRefresh();
   }
 
@@ -236,7 +238,7 @@ class _PaymentState extends State<Payment> {
                       Spacer(),
                       InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, '/nunutPay');
+                          Navigator.pushNamed(context, '/nunutPay').then((value) => onGoBack(value));
                         },
                         child: Container(
                           margin: EdgeInsets.only(right: 4),
@@ -247,7 +249,7 @@ class _PaymentState extends State<Payment> {
                           ),
                           child: Row(
                             children: [
-                              NunutText(title: "IDR " + config.user.wallet.toString(), fontWeight: FontWeight.bold, size: 14),
+                              isLoading ? SpinKitThreeBounce(color: nunutPrimaryColor, size: 14) : NunutText(title: "IDR " + config.user.wallet.toString(), fontWeight: FontWeight.bold, size: 14),
                               SizedBox(width: 1),
                               Icon(Icons.add, color: Colors.black, size: 14),
                             ],
@@ -273,7 +275,6 @@ class _PaymentState extends State<Payment> {
                         return PopUpLoading(title: "Transaksi Sedang Diproses...", subtitle: "Harap Menunggu...");
                       },
                     );
-
                     bool result = await rideRequestApi.addRideRequest(
                         rideScheduleId: widget.rideSchedule.id.toString(), status_ride: "REGISTERED", user_id: config.user.id!, voucherId: useVoucher ? selectedPromotion!.voucherId : "");
                     if (result) {
@@ -303,9 +304,23 @@ class _PaymentState extends State<Payment> {
   }
 
   onRefresh() async {
+    setState(() {
+      isLoading = true;
+    });
     await Future.delayed(Duration(seconds: 1));
-    checkWalletEnough();
+    setState(() {
+      checkWalletEnough();
+    });
+    MidtransApi.getWallet(config.user.id!).then((value) {
+      setState(() {
+        config.user.wallet = priceFormat(value.balance!.toString());
+      });
+      return value;
+    });
     total = total;
     useVoucher = useVoucher;
+    setState(() {
+      isLoading = false;
+    });
   }
 }

@@ -1,10 +1,13 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nunut_application/configuration.dart';
+import 'package:nunut_application/functions.dart';
 import 'package:nunut_application/resources/driverApi.dart';
+import 'package:nunut_application/resources/midtransApi.dart';
 import 'package:nunut_application/screens/home.dart';
 import 'package:nunut_application/screens/offerMenu.dart';
 import 'package:nunut_application/screens/profile.dart';
@@ -32,25 +35,6 @@ class _MainPageState extends State<MainPage> {
   }
 
   Future<bool> _onWillPop() async {
-    // return (await showDialog(
-    //       context: context,
-    //       builder: (context) => AlertDialog(
-    //         title: NunutText(title: 'Keluar dari aplikasi', color: Colors.black, size: 18, fontWeight: FontWeight.bold),
-    //         content: NunutText(title: 'Apakah anda yakin ingin keluar dari aplikasi?', color: Colors.black, size: 16),
-    //         actions: <Widget>[
-    //           TextButton(
-    //             onPressed: () => Navigator.of(context).pop(false),
-    //             child: NunutText(title: 'Tidak', color: Colors.black, size: 16),
-    //           ),
-    //           TextButton(
-    //             onPressed: () => Navigator.of(context).pop(true),
-    //             child: NunutText(title: 'Ya', color: Colors.black, size: 16),
-    //           ),
-    //         ],
-    //       ),
-    //     )) ??
-    //     false;
-
     DateTime now = DateTime.now();
     if (currentBackPressTime == null || now.difference(currentBackPressTime) > Duration(seconds: 2)) {
       currentBackPressTime = now;

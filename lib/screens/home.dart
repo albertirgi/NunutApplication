@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/models/mdriver.dart';
@@ -12,178 +14,9 @@ import 'package:flutter_dash/flutter_dash.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:intl/intl.dart';
+import '../functions.dart';
 import '../models/mwallet.dart';
 import '../resources/midtransApi.dart';
-
-// class HomePage extends StatefulWidget {
-//   const HomePage({Key? key}) : super(key: key);
-
-//   @override
-//   State<HomePage> createState() => _HomePageState();
-// }
-
-// class _HomePageState extends State<HomePage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     List<String> images = <String>[
-//       "https://images.unsplash.com/photo-1458071103673-6a6e4c4a3413?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-//       "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=80",
-//       "https://images.unsplash.com/photo-1470406852800-b97e5d92e2aa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-//       "https://images.unsplash.com/photo-1473700216830-7e08d47f858e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
-//     ];
-//     return Scaffold(
-//       body: SingleChildScrollView(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             NunutButton(
-//               title: "Promo Berhasil Digunakan",
-//               onPressed: () {
-//                 Navigator.pushNamed(context, '/bookingDetail');
-//               },
-//               iconButton: Icon(
-//                 Icons.verified_outlined,
-//                 color: Colors.green,
-//               ),
-//               backgroundColor: Colors.white,
-//               widthButton: 325,
-//               borderRadius: 12,
-//               type: 2,
-//               onPressedArrowButton: () {
-//                 print("TEST");
-//               },
-//               borderColor: Colors.grey[300],
-//               elevation: 10,
-//             ),
-//             NunutButton(
-//               title: "Direct Debit",
-//               onPressed: () {
-//                 Navigator.pushNamed(context, '/bookingDetail');
-//               },
-//               backgroundColor: Colors.white,
-//               widthButton: 325,
-//               borderRadius: 12,
-//               type: 3,
-//               onPressedArrowButton: () {
-//                 print("TEST");
-//               },
-//               borderColor: Colors.grey[300],
-//               elevation: 10,
-//             ),
-//             NunutButton(
-//               title: "Booking Detail",
-//               onPressed: () {
-//                 Navigator.pushNamed(context, '/bookingDetail');
-//               },
-//             ),
-//             NunutButton(
-//               title: "Promotion List",
-//               onPressed: () {
-//                 Navigator.pushNamed(context, '/promotionList');
-//               },
-//             ),
-//             NunutButton(
-//               title: "Order List",
-//               onPressed: () {
-//                 Navigator.pushNamed(context, '/orderList');
-//               },
-//             ),
-//             NunutButton(
-//               title: "Chats",
-//               onPressed: () {
-//                 Navigator.pushNamed(context, '/chat');
-//               },
-//             ),
-//             NunutButton(
-//               title: "Payment",
-//               onPressed: () {
-//                 Navigator.pushNamed(context, '/payment');
-//               },
-//             ),
-//             // NunutButton(
-//             //   title: "Booking Parkir",
-//             //   onPressed: () {
-//             //     Navigator.pushNamed(context, '/bookingParkir');
-//             //   },
-//             // ),
-//             NunutButton(
-//               title: "My Ride",
-//               onPressed: () {
-//                 Navigator.pushNamed(context, '/rideList');
-//               },
-//             ),
-//             NunutButton(
-//               title: "Trip History",
-//               onPressed: () {
-//                 Navigator.pushNamed(context, '/tripHistory');
-//               },
-//             ),
-//             NunutButton(
-//               title: "QR Code",
-//               onPressed: () {
-//                 Navigator.pushNamed(context, '/qrCode');
-//               },
-//             ),
-//             NunutButton(
-//               title: "BUTUH 6",
-//               onPressed: () {
-//                 Navigator.pushNamed(context, '/rideBookDetail');
-//               },
-//             ),
-//             NunutButton(
-//               title: "Offer Menu",
-//               onPressed: () {
-//                 Navigator.pushNamed(context, '/offerMenu');
-//               },
-//             ),
-//             NunutButton(
-//               title: "My Vehicle",
-//               onPressed: () {
-//                 Navigator.pushNamed(context, '/myVehicle');
-//               },
-//             ),
-//             NunutButton(
-//               title: "Ride Share",
-//               onPressed: () {
-//                 Navigator.pushNamed(context, '/rideShare');
-//               },
-//             ),
-//             NunutButton(
-//               title: "My Profile",
-//               onPressed: () {
-//                 Navigator.pushNamed(context, '/profile');
-//               },
-//             ),
-//             NunutButton(
-//               title: "Nunut Pay",
-//               onPressed: () {
-//                 Navigator.pushNamed(context, '/nunutPay');
-//               },
-//             ),
-//             NunutButton(
-//               title: "Home",
-//               onPressed: () {
-//                 Navigator.pushNamed(context, '/home');
-//               },
-//             ),
-//             NunutButton(
-//               title: "Snap",
-//               onPressed: () {
-//                 Navigator.pushNamed(context, '/driverRegistration');
-//               },
-//             ),
-//             NunutButton(
-//               title: "Distance",
-//               onPressed: () {
-//                 Navigator.pushNamed(context, '/distance');
-//               },
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -194,6 +27,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   // String balance = "0";
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -201,6 +35,11 @@ class _HomeState extends State<Home> {
     // WidgetsBinding.instance.addPostFrameCallback((_) async {
     //   initSaldo();
     // });
+  }
+
+  FutureOr onGoBack(dynamic value) {
+    isLoading = false;
+    onRefresh();
   }
 
   ChooseBuildingAlertDialog(bool fromUKP) async {
@@ -230,7 +69,7 @@ class _HomeState extends State<Home> {
                   MaterialPageRoute(
                     builder: (context) => RideShare(fromUKP: fromUKP),
                   ),
-                );
+                ).then((value) => onGoBack(value));
               },
               child: NunutText(title: "OK", color: Colors.green),
             ),
@@ -264,7 +103,6 @@ class _HomeState extends State<Home> {
     //     balance = currencyFormatter.format(numValue);
     //   });
     // });
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -313,7 +151,7 @@ class _HomeState extends State<Home> {
                           child: IconButton(
                             icon: Icon(Icons.bookmark, color: Colors.black),
                             onPressed: () {
-                              Navigator.pushNamed(context, '/rideBookmark');
+                              Navigator.pushNamed(context, '/rideBookmark').then((value) => onGoBack(value));
                             },
                           ),
                         ),
@@ -338,7 +176,7 @@ class _HomeState extends State<Home> {
                           child: IconButton(
                             icon: Icon(Icons.list, color: Colors.black, size: 18),
                             onPressed: () {
-                              Navigator.pushNamed(context, '/orderList');
+                              Navigator.pushNamed(context, '/orderList').then((value) => onGoBack(value));
                             },
                           ),
                         ),
@@ -408,7 +246,7 @@ class _HomeState extends State<Home> {
                                     MaterialPageRoute(
                                       builder: (context) => RideShare(fromUKP: false),
                                     ),
-                                  );
+                                  ).then((value) => onGoBack(value));
                                 },
                               ),
                               Container(
@@ -437,7 +275,7 @@ class _HomeState extends State<Home> {
                                     MaterialPageRoute(
                                       builder: (context) => RideShare(fromUKP: true),
                                     ),
-                                  );
+                                  ).then((value) => onGoBack(value));
                                 },
                               ),
                             ],
@@ -472,7 +310,7 @@ class _HomeState extends State<Home> {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    Navigator.of(context).pushNamed('/nunutPay');
+                                    Navigator.of(context).pushNamed('/nunutPay').then((value) => onGoBack(value));
                                   },
                                   child: Container(
                                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -480,15 +318,17 @@ class _HomeState extends State<Home> {
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(20),
                                     ),
-                                    child: Row(
-                                      children: [
-                                        NunutText(title: "Rp", fontWeight: FontWeight.bold, size: 8),
-                                        SizedBox(width: 5),
-                                        NunutText(title: config.user.wallet.toString(), fontWeight: FontWeight.bold, size: 12),
-                                        SizedBox(width: 10),
-                                        Icon(Icons.add, color: Colors.black, size: 12),
-                                      ],
-                                    ),
+                                    child: isLoading
+                                        ? SpinKitThreeBounce(color: nunutPrimaryColor, size: 14)
+                                        : Row(
+                                            children: [
+                                              NunutText(title: "Rp", fontWeight: FontWeight.bold, size: 8),
+                                              SizedBox(width: 5),
+                                              NunutText(title: config.user.wallet.toString(), fontWeight: FontWeight.bold, size: 12),
+                                              SizedBox(width: 10),
+                                              Icon(Icons.add, color: Colors.black, size: 12),
+                                            ],
+                                          ),
                                   ),
                                 ),
                               ],
@@ -548,7 +388,7 @@ class _HomeState extends State<Home> {
                                       textColor: Colors.white,
                                       fontSize: 16.0,
                                     );
-                                    Navigator.of(context).pushNamed('/driverRegistration', arguments: config.user);
+                                    Navigator.of(context).pushNamed('/driverRegistration', arguments: config.user).then((value) => onGoBack(value));
                                   } else {
                                     DriverApi.getDriverById(config.user.driverId ?? "").then((value) {
                                       if (value.status.toLowerCase() == "pending") {
@@ -572,7 +412,7 @@ class _HomeState extends State<Home> {
                                           fontSize: 16.0,
                                         );
                                       } else if (value.status.toLowerCase() == "approved") {
-                                        Navigator.of(context).pushNamed('/addRideSchedule', arguments: config.user);
+                                        Navigator.of(context).pushNamed('/addRideSchedule', arguments: config.user).then((value) => onGoBack(value));
                                       }
                                     });
                                   }
@@ -630,5 +470,21 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
+  }
+
+  onRefresh() async {
+    setState(() {
+      isLoading = true;
+    });
+    await Future.delayed(Duration(seconds: 1));
+    MidtransApi.getWallet(config.user.id!).then((value) {
+      setState(() {
+        config.user.wallet = priceFormat(value.balance!.toString());
+      });
+      return value;
+    });
+    setState(() {
+      isLoading = false;
+    });
   }
 }
