@@ -95,10 +95,10 @@ class _RideBookDetailState extends State<RideBookDetail> {
                   flex: 1,
                   child: NunutText(title: "JAM BERANGKAT", size: 12),
                 ),
-                Expanded(
-                  flex: 1,
-                  child: NunutText(title: "KAPASITAS TERSISA", size: 12),
-                ),
+                // Expanded(
+                //   flex: 1,
+                //   child: NunutText(title: "KAPASITAS TERSISA", size: 12),
+                // ),
               ],
             ),
           ),
@@ -115,10 +115,10 @@ class _RideBookDetailState extends State<RideBookDetail> {
                   flex: 1,
                   child: NunutText(title: rideSchedule.time.toString(), maxLines: 2, fontWeight: FontWeight.bold),
                 ),
-                Expanded(
-                  flex: 1,
-                  child: NunutText(title: availableSeat.toString(), fontWeight: FontWeight.bold),
-                ),
+                // Expanded(
+                //   flex: 1,
+                //   child: NunutText(title: availableSeat.toString(), fontWeight: FontWeight.bold),
+                // ),
               ],
             ),
           ),
@@ -138,6 +138,7 @@ class _RideBookDetailState extends State<RideBookDetail> {
               ],
             ),
           ),
+          SizedBox(height: 16),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 30),
             child: Row(
@@ -150,6 +151,39 @@ class _RideBookDetailState extends State<RideBookDetail> {
                 Expanded(
                   flex: 1,
                   child: NunutText(title: rideSchedule.destination!.name!, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 16),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: NunutText(title: "KAPASITAS TERSISA", size: 12),
+                    ),
+                    Expanded(
+                      child: SizedBox(),
+                      flex: 1,
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: NunutText(title: availableSeat.toString(), fontWeight: FontWeight.bold),
+                    ),
+                    Expanded(
+                      child: SizedBox(),
+                      flex: 1,
+                    ),
+                  ],
                 ),
               ],
             ),
