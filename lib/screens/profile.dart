@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/resources/authApi.dart';
+import 'package:nunut_application/screens/tnc.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 
@@ -38,6 +39,11 @@ class _ProfilePageState extends State<ProfilePage> {
       title: "Kendaraanku",
       icon: "assets/icons/car.png",
       identifier: "kendaraanku",
+    ),
+    ProfilePageMenu(
+      title: "Syaratan & Ketentuan",
+      icon: "assets/icons/tnc.png",
+      identifier: "tnc",
     ),
     ProfilePageMenu(
       title: "Keluar",
@@ -270,6 +276,13 @@ class _ProfilePageState extends State<ProfilePage> {
                               Navigator.pushNamed(context, '/myVehicle');
                             } else if (profilePageMenu[index].identifier == "registerDriver") {
                               Navigator.pushNamed(context, '/driverRegistration', arguments: config.user);
+                            } else if (profilePageMenu[index].identifier == "tnc") {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => WebViewContainer(),
+                                ),
+                              );
                             }
                           },
                           child: Row(
