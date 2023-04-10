@@ -123,41 +123,35 @@ class NunutTripCard extends StatelessWidget {
                         ],
                       ),
                       SizedBox(width: 8),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: 40.0,
-                            child: Center(
-                              // child: NunutText(title: pickupLocation),
-                              child: TextScroll(
-                                pickupLocation,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              height: 40.0,
+                              child: Expanded(child: NunutText(title: pickupLocation, maxLines: 1)),
+                            ),
+                            SizedBox(height: 2),
+                            Container(
+                              height: 40.0,
+                              margin: EdgeInsets.only(top: 4.0),
+                              child: Row(
+                                children: [
+                                  Expanded(child: NunutText(title: destination, maxLines: 1)),
+                                  // TextScroll(
+                                  //   destination,
+                                  //   style: TextStyle(
+                                  //     fontSize: 16,
+                                  //     fontWeight: FontWeight.w500,
+                                  //   ),
+                                  // ),
+                                ],
                               ),
                             ),
-                          ),
-                          SizedBox(height: 2),
-                          Container(
-                            height: 40.0,
-                            margin: EdgeInsets.only(top: 4.0),
-                            child: Row(
-                              children: [
-                                // NunutText(title: destination),
-                                TextScroll(
-                                  destination,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),

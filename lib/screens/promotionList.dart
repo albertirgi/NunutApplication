@@ -120,7 +120,7 @@ class _PromotionListState extends State<PromotionList> {
                           },
                           child: ListView.separated(
                             shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: ScrollPhysics(),
                             padding: EdgeInsets.symmetric(
                               horizontal: 24,
                               vertical: 16,

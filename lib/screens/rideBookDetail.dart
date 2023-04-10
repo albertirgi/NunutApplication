@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/configuration.dart';
+import 'package:nunut_application/functions.dart';
 import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/resources/rideScheduleApi.dart';
 import 'package:nunut_application/screens/payment.dart';
@@ -53,7 +54,10 @@ class _RideBookDetailState extends State<RideBookDetail> {
                   color: Colors.black,
                 ),
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    String number = rideSchedule.driver.phoneNumber!;
+                    openwhatsapp(context, number);
+                  },
                   icon: Icon(
                     Icons.chat_bubble_outline_outlined,
                     color: Colors.white,

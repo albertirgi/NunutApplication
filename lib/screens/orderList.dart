@@ -118,7 +118,7 @@ class _OrderListState extends State<OrderList> {
                   },
                 ),
                 SizedBox(height: 20),
-                NunutText(title: "Daftar Tumpangan", isTitle: true, size: 32),
+                NunutText(title: "Pemesanan Tumpangan", isTitle: true, size: 32),
                 Container(
                   margin: EdgeInsets.only(top: 40, left: 8, right: 24, bottom: 10),
                   child: Row(
