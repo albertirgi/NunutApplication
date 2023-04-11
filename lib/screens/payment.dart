@@ -116,14 +116,15 @@ class _PaymentState extends State<Payment> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                              height: 40.0,
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: NunutScrollText(
-                                  title: widget.rideSchedule.meetingPoint!.name!,
-                                  textAlign: TextAlign.center,
-                                ),
-                              )),
+                            height: 40.0,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: NunutScrollText(
+                                title: widget.rideSchedule.meetingPoint!.name!,
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
                           SizedBox(height: 2),
                           Container(
                             height: 40.0,
