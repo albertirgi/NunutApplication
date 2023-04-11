@@ -1,0 +1,119 @@
+{
+    "terms_and_cons": {
+    
+        "definisi": [
+            "User adalah Individu yang terdaftar pada Nunut.",
+            "Aplikasi transportasi online berbasis tumpangan sebagai solusi dari berbagai permasalahan transportasi, meliputi kemacetan, pencemaran udara, dan tingginya biaya.",
+            "Nunut merupakan tumpangan yang disediakan oleh user driver menggunakan kendaraan roda 4 dan digunakan oleh user pengguna sebagai penumpang."
+        ],
+        "penyimpanan_data_pribadi_user": [
+            
+            "User diminta untuk memberikan data pribadi saat melakukan pembukaan akun di Nunut.",
+            "Kami menyimpan kerahasiaan dan keamanan informasi diri yang Anda berikan. Penggunaan data Anda akan kami lakukan sesuai dengan ketentuan yang berlaku.",
+            "Pastikan informasi yang Anda berikan adalah informasi yang benar dan akurat, dan mohon menginformasikan kembali kepada Nunut jika terdapat perubahan.",
+            "User wajib memberitahukan dan menyampaikan perubahan Data kepada Nunut. Perubahan tersebut hanya berlaku jika telah diterima dan/atau disetujui oleh Nunut. Dalam hal Nunut tidak menerima informasi apapun mengenai perubahan Data, maka Nunut akan menggunakan Data User yang tercatat pada sistem Nunut.",
+            "User wajib menanggung segala akibat dan/atau kerugian yang mungkin timbul dari kelalaian Nasabah dalam memperbaharui Data pada Nunut."
+                
+
+        ],
+        "persyaratan_dan_tata_cara":{
+            "user_driver":[
+                
+                "Driver adalah civitas akademika Universitas Kristen Petra.",
+                "Driver wajib menyetujui dan melengkapi persyaratan melalui aplikasi Nunut.",
+                "Kendaraan yang dapat didaftarkan oleh driver adalah mobil.",
+                "Driver/host bertanggungjawab penuh atas kendaraan pribadi (mobil) yang digunakan untuk Nunut, termasuk apabila terdapat insiden dan kelalaian driver terhadap mobil dan kelengkapannya.",
+                "Setiap driver hanya dapat membuat satu akun driver.",
+                "Driver yang ingin menumpang harus mendaftar akun penumpang",
+                "Driver wajib menggunakan akun pribadi saat mengantarkan penumpang Nunut.",
+                "Driver tidak wajib menyimpan barang milik Penumpang yang tertinggal dalam kendaraan.",
+                "Driver dilarang menerima pesanan pribadi dengan mengatasnamakan Nunut.",
+                "Driver dilarang melakukan tindakan yang membahayakan dan atau merugikan bagi Penumpang dan Nunut (contoh: bersikap kasar, mengemudi melebihi batas kecepatan wajar, melakukan pelecehan, dsb).",
+                "Driver dilarang membawa barang yang bersifat ilegal.",
+                "Driver yang melanggar syarat dan ketentuan yang berlaku akan mendapat sanksi dan atau pemutusan hubungan kerja dengan Nunut."
+
+
+            ],
+            "user_pengguna":[
+                
+                "Penumpang wajib melengkapi data diri",
+                "Penumpang memilih titik jemput serta tujuan akhir dari daftar yang telah tersedia.",
+                "Penumpang akan bergabung dengan penumpang lain saat menggunakan layanan Nunut. ",
+                "Penumpang diwajibkan untuk menghormati dan tidak melakukan tindakan yang membahayakan dan atau merugikan Driver dan Penumpang lain.",
+                "Penumpang bertanggung jawab atas barang bawaannya masing-masing. Driver dan Nunut tidak bertanggungjawab atas kehilangan, kerusakan, atau apapun yang terjadi pada barang penumpang. Jika ada barang Penumpang yang tertinggal dalam mobil selama menggunakan layanan Nunut, Penumpang dapat menghubungi Driver secara mandiri. ",
+                "Penumpang dilarang membawa benda ilegal saat menggunakan jasa Nunut.",
+                "Penumpang diwajibkan mengenakan sabuk pengaman. Kerugian yang menjadi kelalaian penumpang tidak menjadi tanggung jawab Driver dan Nunut.",
+                "Pembayaran dapat dilakukan menggunakan opsi yang telah tersedia.",
+                "Penumpang dapat melaporkan Driver yang melakukan hal yang tidak sepantasnya (contoh: mengendarai melampaui batas kecepatan wajar) melalui nomot hotline."
+
+            ]
+            
+
+        },
+        "nunut_pay":[
+            "NunutPay adalah produk uang elektronik yang diselenggarakan oleh atau melalui midtrans yang memperbolehkan Pelanggan yang telah terdaftar sebagai pengguna layanan NunutPay untuk melakukan Transaksi.",
+            "Hari Kerja adalah hari selain Sabtu, Minggu dan hari libur nasional, di mana bank-bank di Indonesia buka dan beroperasi untuk kegiatan sehari-hari.",
+            "User dengan ini memberi kuasa kepada NunutPay untuk mendebet dan/atau mengkredit User Wallet termasuk namun tidak terbatas pada biaya admin, koreksi dan klaim, tanpa pemberitahuan terlebih dahulu kepada User dan menggunakan dana hasil pendebetan dan/atau pengkreditan tersebut untuk pemenuhan kewajiban User kepada NunutPay.",
+            "Nunut berhak untuk tidak akan memberikan akses, menolak Transaksi maupun mengakhiri Layanan apabila User menyediakan konten atau melakukan hal yang melibatkan:",
+            "Hak Nunut, selain hak-hak yang telah dinyatakan dalam berdasarkan Syarat dan Ketentuan ini dan dalam SOP, adalah sebagai berikut:"
+        ],
+        "transaksi": [
+            
+            "Setiap transaksi berhasil akan tercatat di User Wallet milik User (History).",
+            "Dalam hal terdapat kesalahan dalam transaksi, NunutPay dapat melakukan koreksi dengan pendebetan dan/atau pengkreditan user wallet atas kesalahan transaksi tersebut, dengan pemberitahuan secara tertulis kepada pengguna.",
+            "User akan menyelesaikan terlebih dahulu setiap klaim user atas permintaan refund atau koreksi sehubungan dengan transaksi secara langsung dengan user sesuai dengan kebijakan internal user.",
+            "User sepakat untuk membayar biaya admin kepada Nunut sebagai biaya atas layanan berdasarkan syarat dan ketentuan ini.",
+            "Pengisian atau top-up saldo wajib dilakukan dengan minimal nominal sebesar Rp. 10.000,-",
+            "Withdrawal atau penarikan saldo dari NunutPay akan dikenakan biaya admin dan pencairan dana akan berlangsung selama 2x24jam."
+        ],
+        "nunut_berhak":[
+            
+            "Barang ilegal ataupun yang mengandung materi ilegal, termasuk namun tidak terbatas pada aktivitas pengunduhan ilegal;",
+            "Menyalahgunakan barang dan/atau jasa yang melanggar kekayaan intelektual atau hak kepemilikan kendaraan maupun lainnya dari pihak ketiga atau barang dan/atau jasa lainnya;",
+            "Memfasilitasi kegiatan yang ilegal, melanggar hukum, atau tindakan pidana lainnya;",
+            "Mencantumkan kalimat penjelasan yang ambigu dan/atau tidak jelas, informasi menyesatkan serta konten dan informasi yang melanggar hukum dan peraturan yang berlaku;",
+            "Berpotensi menimbulkan konflik yang berkaitan dengan etnis, agama, ras dan kelompok;",
+            "Melakukan pornografi, pelecehan dan/atau hal yang melanggar norma-norma etika;",
+            "Melakukan perjudian;",
+            "Melakukan penghinaan, pemerasan, dan/atau konten pemfitnahan; dan/atau",
+            "Mengandung unsur pencurian, penipuan, pencucian uang dan/atau pendanaan terorisme."
+
+        ],
+        "hak_nnunut":[
+            "NunutPay berhak untuk mendapatkan biaya admin dengan melakukan pemotongan secara langsung di setiap transaksi dari User Wallet, sesuai dengan ketentuan yang tertuang dalam Syarat dan Ketentuan ini;",
+            "NunutPay berhak untuk menahan, menangguhkan, menolak pembayaran dan/atau memotong bagian dari Dana Settlement, termasuk namun tidak terbatas jika terdapat kesalahan yang dilakukan oleh User yang menimbulkan kerugian terhadap Nunut dan/atau pelanggaran oleh User terhadap ketentuan dalam Syarat dan Ketentuan ini;",
+            "NunutPay berhak untuk melakukan pengembangan dan/atau pemeliharaan terhadap Layanan sewaktu-waktu tanpa pemberitahuan terlebih dahulu kepada User, pengembangan dan/atau pemeliharaan mana diakui oleh Para Pihak dapat mempengaruhi Transaksi."
+        ],
+        "informasi_keamanan":[
+            "Informasi keamanan berupa Email Pengguna dan Kata Sandi akan dibutuhkan untuk login, aktivasi perangkat, dan mengeksekusi setiap transaksi yang menurut Nunut dibutuhkan sebagai tujuan otentikasi. Untuk tiap informasi keamanan yang akan ditentukan dan ditetapkan oleh User, User harus memastikan untuk menggunakan Kata Sandi yang kuat dan tidak memasukkan Kata Sandi yang mudah ditebak serta informasi diri seperti tanggal lahir dan alamat. Penggunaan informasi tersebut akan dianggap sebagai Kelalaian User. User bertanggung jawab penuh terhadap keamanan dan kerahasiaan seluruh penggunaan Aplikasi Nunut miliknya.",
+            "Informasi keamanan akan menjadi rahasia di bawah tanggung jawab User, karena informasi tersebut memiliki keberlakuan setara dengan instruksi tertulis yang ditandatangani oleh User, dan akan diperlakukan sebagai otorisasi eksplisit oleh User untuk melaksanakan transaksi melalui Aplikasi Mobile.",
+            "User menyetujui untuk membebaskan Nunut dari segala kerugian, tanggung jawab, klaim dan biaya (termasuk biaya hukum) yang mungkin terjadi dalam kaitannya dengan pelaksanaan instruksi dari Nunut, kecuali dijalankan karena kesalahan dari Nunut.",
+            "User bertanggung jawab untuk memperoleh dan menggunakan perangkat lunak dan/atau peralatan yang diperlukan untuk dapat mengakses Nunut dengan risiko yang ditanggung User.",
+            "User juga bertanggung jawab atas kinerja dan keamanan (termasuk tanpa batasan mengambil semua langkah yang diperlukan untuk mencegah penggunaan atau akses yang tidak sah) dari setiap peralatan yang digunakan oleh User untuk mengakses Nunut.",
+            "User harus memastikan bahwa peralatan yang digunakan untuk mengakses Nunut bebas dari kegagalan elektronik, mekanik, data yang gagal atau terkorupsi, virus komputer, bug dan/atau perangkat lunak yang berbahaya/tidak diizinkan oleh penyedia layanan telekomunikasi, atau produsen atau vendor dari peralatan yang relevan. Ini termasuk:",
+            "User menyetujui bahwa Nunut tidak bertanggung jawab atas kegagalan elektronik maupun mekanik, atau data yang terkorupsi, virus komputer, bug dan/atau perangkat lunak yang berbahaya lainnya dari jenis apapun yang mungkin timbul dari layanan yang disediakan oleh penyedia layanan internet yang relevan atau informasi penyedia layanan.",
+            "Dengan melaksanakan transaksi dan menggunakan layanan melalui Aplikasi Nunut, User memahami bahwa seluruh komunikasi dan instruksi dari User yang diterima oleh Nunut akan diperlakukan sebagai bukti sah meskipun tidak dibuat dalam bentuk dokumen tertulis atau diterbitkan dalam bentuk dokumen yang ditandatangani, dan, dengan demikian, Nunut setuju untuk mengganti rugi dan melepaskan Nunut dari segala kerugian, tanggung jawab, tuntutan dan pengeluaran (termasuk biaya hukum) yang dapat muncul terkait dengan eksekusi dari instruksi User, kecuali kesalahan eksekusi dari instruksi diakibatkan oleh kesalahan atau kelalaian pihak Nunut."
+            
+        ],
+        "peralatan":[
+            "Penggunaan komputer pribadi User dan/atau perangkat Mobile dengan perangkat lunak berupa anti-virus terbaru, anti-malware dan firewall yang tersedia dan perangkat lunak yang digunakan secara teratur selalu diperbarui dan dijalankan dengan anti-virus signatures terbaru.",
+            "Memastikan bahwa User tidak melakukan jailbreak, root atau memodifikasi perangkat Mobile dan/atau Peralatan lainnya, atau mengunduh aplikasi yang tidak diizinkan karena hal ini dapat membuat perangkat lebih rentan terhadap virus dan malware."
+        ],
+        "kebijakan_privasi":[
+            
+            "Pemberitahuan privasi berikut ini menjelaskan bagaimana kami, Nunut mengumpulkan, menyimpan, menggunakan, mengolah, menguasai, mentransfer, mengungkapkan dan melindungi Informasi Pribadi anda. Pemberitahuan Privasi ini berlaku untuk semua Pengguna aplikasi seluler kami (termasuk aplikasi User), situs web, layanan, dan produk (bersama-sama disebut Aplikasi), kecuali diatur pada pemberitahuan privasi yang terpisah.",
+            "Dengan menyetujui Pemberitahuan Privasi, anda mengakui bahwa anda telah membaca dan memahami Pemberitahuan Privasi ini dan menyetujui segala ketentuannya. Secara khusus, anda setuju dan memberikan persetujuan kepada kami untuk mengumpulkan, menggunakan, membagikan, mengungkapkan, menyimpan, mentransfer, atau mengolah Informasi Pribadi anda sesuai dengan Pemberitahuan Privasi ini.",
+            "Dalam keadaan di mana anda menyediakan kepada kami Informasi Pribadi yang berkaitan dengan individu lain (seperti Informasi Pribadi yang berkaitan dengan pasangan anda, anggota keluarga, teman, atau pihak lain), anda menyatakan dan menjamin bahwa anda telah memperoleh persetujuan dari individu tersebut untuk, dan dengan ini menyetujui atas nama individu tersebut untuk, pengumpulan, penggunaan, pengungkapan dan pengolahan Informasi Pribadi mereka oleh kami."
+        ],
+        "penyelesaian_perselisihan":[
+            
+            "User setuju bahwa setiap perselisihan atau perbedaan pendapat yang timbul dari dan/atau berkenaan dengan pelaksanaan ketentuan Apps Nunut antara User dengan Nunut akan diselesaikan dengan cara musyawarah. Setiap perselisihan atau perbedaan pendapat yang tidak dapat diselesaikan secara musyawarah oleh User dengan Nunut akan diselesaikan dengan cara arbitrase. Arbitrase akan dilakukan di Jakarta, Indonesia, dan akan diatur oleh peraturan perundang-undangan Indonesia. Keputusan arbitrase akan menjadi keputusan yang bersifat final dan mengikat bagi User dan Nunut. User dan Nunut setuju untuk mematuhi keputusan arbitrase tersebut dan untuk tidak mengajukan tuntutan atau klaim lainnya yang berkaitan dengan perselisihan atau perbedaan pendapat yang sama. User dan Nunut setuju untuk mematuhi keputusan arbitrase tersebut dan untuk tidak mengajukan tuntutan atau klaim lainnya yang berkaitan dengan perselisihan atau perbedaan pendapat yang sama.",
+            "Setiap perselisihan atau perbedaan pendapat yang timbul dari dan/atau berkenaan dengan pelaksanaan ketentuan Apps Nunut antara User dengan Nunut akan diselesaikan dengan cara musyawarah. Setiap perselisihan atau perbedaan pendapat yang tidak dapat diselesaikan secara musyawarah oleh User dengan Nunut akan diselesaikan dengan cara arbitrase. Arbitrase akan dilakukan di Jakarta, Indonesia, dan akan diatur oleh peraturan perundang-undangan Indonesia. Keputusan arbitrase akan menjadi keputusan yang bersifat final dan mengikat bagi User dan Nunut. User dan Nunut setuju untuk mematuhi keputusan arbitrase tersebut dan untuk tidak mengajukan tuntutan atau klaim lainnya yang berkaitan dengan perselisihan atau perbedaan pendapat yang sama."
+        ],
+        "force_majeure":[
+            "User akan membebaskan Nunut dari segala tuntutan apapun, dalam hal Nunut tidak dapat melaksanakan perintah dari User baik sebagian maupun seluruhnya karena kejadian-kejadian atau sebab-sebab di luar kekuasaan atau kemampuan Nunut termasuk namun tidak terbatas pada bencana alam, perang, huru-hara, keadaan peralatan, sistem atau transmisi yang tidak berfungsi, gangguan listrik, gangguan telekomunikasi, kebijakan pemerintah, serta kejadian-kejadian atau sebab-sebab lain di luar kekuasaan atau kemampuan Nunut."
+        ]
+
+    
+    }
+}
