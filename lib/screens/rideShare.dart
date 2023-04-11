@@ -389,14 +389,14 @@ class _RideShareState extends State<RideShare> {
                                 ),
                                 SizedBox(height: 4),
                                 Container(
-                                  width: 290,
+                                  width: MediaQuery.of(context).size.width - 120,
                                   height: 40,
                                   child: TextFormField(
                                     enabled: !widget.fromUKP,
                                     readOnly: true,
                                     controller: pickUpController,
                                     decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.only(left: 20),
+                                      contentPadding: EdgeInsets.only(left: 15),
                                       filled: true,
                                       fillColor: Colors.grey[200],
                                       hintText: 'Pilih Lokasi Jemput',
@@ -440,14 +440,14 @@ class _RideShareState extends State<RideShare> {
                                 ),
                                 SizedBox(height: 4),
                                 Container(
-                                  width: 290,
+                                  width: MediaQuery.of(context).size.width - 120,
                                   height: 40,
                                   child: TextFormField(
                                     enabled: widget.fromUKP,
                                     readOnly: true,
                                     controller: destinationController,
                                     decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.only(left: 20),
+                                      contentPadding: EdgeInsets.only(left: 15),
                                       filled: true,
                                       fillColor: Colors.grey[200],
                                       hintText: 'Pilih Lokasi Tujuan',

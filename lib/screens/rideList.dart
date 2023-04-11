@@ -78,6 +78,9 @@ class _RideListState extends State<RideList> {
       _page++;
 
       rideScheduleList.addAll(rideSchedulePageList);
+      if (rideSchedulePageList.isEmpty) {
+        done = true;
+      }
 
       setState(() {
         isLoading = false;
@@ -90,6 +93,7 @@ class _RideListState extends State<RideList> {
     if (_scrollController!.offset >= _scrollController!.position.maxScrollExtent - 100 && !_scrollController!.position.outOfRange && !done) {
       if (rideSchedulePageList.isEmpty) {
         loadmore();
+        print("DONE : " + done.toString());
       } else {
         done = true;
       }

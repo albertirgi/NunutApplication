@@ -13,7 +13,6 @@ import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:flutter_dash/flutter_dash.dart';
 import 'package:nunut_application/widgets/popUpLoading.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:text_scroll/text_scroll.dart';
 
 class RideDetail extends StatefulWidget {
   final String rideScheduleId;
@@ -350,64 +349,70 @@ class _RideDetailState extends State<RideDetail> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            width: 10,
-                                            height: 10,
-                                            decoration: BoxDecoration(
-                                              color: nunutPrimaryColor,
-                                              shape: BoxShape.circle,
-                                            ),
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.only(left: 10),
-                                            child: SizedBox(
-                                              child: NunutText(
-                                                title: rideSchedule.meetingPoint!.name.toString(),
-                                                size: 16,
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              width: 10,
+                                              height: 10,
+                                              decoration: BoxDecoration(
+                                                color: nunutPrimaryColor,
+                                                shape: BoxShape.circle,
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      Container(
-                                        width: 10,
-                                        child: Dash(
-                                          direction: Axis.vertical,
-                                          length: 10,
-                                          dashLength: 2,
-                                          dashColor: Colors.black,
+                                            Container(
+                                              margin: EdgeInsets.only(left: 10),
+                                              width: MediaQuery.of(context).size.width * 0.75,
+                                              height: 20,
+                                              child: Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: NunutScrollText(
+                                                  title: rideSchedule.meetingPoint!.name.toString(),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Container(
-                                            width: 10,
-                                            height: 10,
-                                            decoration: BoxDecoration(
-                                              color: nunutBlueColor,
-                                              shape: BoxShape.circle,
-                                            ),
+                                        Container(
+                                          width: 10,
+                                          child: Dash(
+                                            direction: Axis.vertical,
+                                            length: 10,
+                                            dashLength: 2,
+                                            dashColor: Colors.black,
                                           ),
-                                          Container(
-                                            margin: EdgeInsets.only(left: 10),
-                                            child: TextScroll(
-                                              rideSchedule.destination!.name.toString(),
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.black,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              width: 10,
+                                              height: 10,
+                                              decoration: BoxDecoration(
+                                                color: nunutBlueColor,
+                                                shape: BoxShape.circle,
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                            Container(
+                                              margin: EdgeInsets.only(left: 10),
+                                              width: MediaQuery.of(context).size.width * 0.75,
+                                              child: Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: NunutScrollText(
+                                                  title: rideSchedule.destination!.name.toString(),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
