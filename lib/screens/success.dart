@@ -3,7 +3,7 @@ import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 
 class Success extends StatefulWidget {
-  const Success({super.key});
+  Success({super.key});
 
   @override
   State<Success> createState() => _SuccessState();
@@ -13,12 +13,11 @@ class _SuccessState extends State<Success> {
   @override
   Widget build(BuildContext context) {
     //take data fron previous page
-    final data = ModalRoute.of(context)!.settings.arguments;
-    final title = data.toString().split(',')[0].split(':')[1];
-    final desc = data.toString().split(',')[1].split(':')[1].split('}')[0];
-
-    // final titleDipake = title.substring(1, title.length - 1);
-    // final descDipake = desc.substring(1, desc.length - 1);
+    final arguments = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
+    final title = arguments["title"] as String?;
+    final desc = arguments["description"] as String?;
+    var afterBooking = arguments["afterBooking"] as String?;
+    afterBooking == null ? afterBooking = "false" : afterBooking = "true";
 
     return WillPopScope(
       onWillPop: () async => false,
@@ -32,7 +31,7 @@ class _SuccessState extends State<Success> {
               ),
               padding: const EdgeInsets.only(top: 70, bottom: 50),
               child: Center(
-                child: NunutText(title: title, fontWeight: FontWeight.bold, size: 30),
+                child: NunutText(title: title!, fontWeight: FontWeight.bold, size: 30),
               ),
             ),
             Container(
@@ -47,7 +46,7 @@ class _SuccessState extends State<Success> {
                 children: [
                   SizedBox(height: 100),
                   NunutText(
-                    title: desc,
+                    title: desc!,
                     fontWeight: FontWeight.bold,
                     size: 22,
                     textAlign: TextAlign.center,
@@ -63,9 +62,10 @@ class _SuccessState extends State<Success> {
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
+                        afterBooking == "true" ? Navigator.pushNamed(context, '/orderList') : null;
                       },
                       child: NunutText(
-                        title: "Kembali ke Halaman Utama",
+                        title: afterBooking == "true" ? "Lihat Daftar Pesanan" : "Kembali ke Halaman Utama",
                         fontWeight: FontWeight.bold,
                         size: 20,
                       ),

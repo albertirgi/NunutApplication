@@ -33,7 +33,7 @@ class _PromotionListState extends State<PromotionList> {
     });
 
     promotionList.clear();
-    promotionList = await promotionApi.getPromotionList(checkURL: true);
+    promotionList = await promotionApi.getPromotionList();
 
     setState(() {
       promotionListLoading = false;
@@ -120,7 +120,7 @@ class _PromotionListState extends State<PromotionList> {
                           },
                           child: ListView.separated(
                             shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: ScrollPhysics(),
                             padding: EdgeInsets.symmetric(
                               horizontal: 24,
                               vertical: 16,

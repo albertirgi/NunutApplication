@@ -257,7 +257,7 @@ class _AddRideScheduleState extends State<AddRideSchedule> {
                       _selectedMeetingPoint = result.mapId!;
                       _meetingPointController.text = result.name!;
                       if (!_meetingPointController.text.contains('Universitas Kristen Petra')) {
-                        _destinationController.text = 'Gedung Q Universitas Kristen Petra';
+                        _destinationController.text = 'Universitas Kristen Petra - Gedung W Torso';
                         _selectedDestination = "074d950a-44ab-408a-9c00-03f4f9da42c3";
                         lockDestination = true;
                       } else {
@@ -334,7 +334,7 @@ class _AddRideScheduleState extends State<AddRideSchedule> {
                       _selectedDestination = result.mapId!;
                       _destinationController.text = result.name!;
                       if (!_destinationController.text.contains('Universitas Kristen Petra')) {
-                        _meetingPointController.text = 'Gedung Q Universitas Kristen Petra';
+                        _meetingPointController.text = 'Universitas Kristen Petra - Gedung W Torso';
                         _selectedMeetingPoint = "074d950a-44ab-408a-9c00-03f4f9da42c3";
                         lockMeetingPoint = true;
                       } else {

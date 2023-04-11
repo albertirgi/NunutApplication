@@ -12,8 +12,8 @@ import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutBackground.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
-import 'package:intl/intl.dart';
 import 'package:nunut_application/widgets/popUpLoading.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Payment extends StatefulWidget {
   RideSchedule rideSchedule;
@@ -25,20 +25,18 @@ class Payment extends StatefulWidget {
 
 class _PaymentState extends State<Payment> {
   double biayaAdmin = 0;
-  double pajak = 0;
   double total = 0;
   bool isWalletEnough = false;
   PromotionModel? selectedPromotion;
   bool useVoucher = false;
+  bool isLoading = false;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    // biayaAdmin = widget.rideSchedule.biayaAdmin.toString();
-    pajak = (10 / 100 * widget.rideSchedule.price!);
-    total = widget.rideSchedule.price! + pajak;
     checkWalletEnough();
+    total = widget.rideSchedule.price!.toDouble();
   }
 
   void checkWalletEnough() {
@@ -48,6 +46,7 @@ class _PaymentState extends State<Payment> {
   }
 
   FutureOr onGoBack(dynamic value) {
+    isLoading = true;
     onRefresh();
   }
 
@@ -78,7 +77,7 @@ class _PaymentState extends State<Payment> {
             Container(
               margin: EdgeInsets.only(top: 8, left: 32),
               child: NunutText(
-                title: "Selesaikan pembayaran dalam ",
+                title: "Mohon selesaikan pembayaran Anda",
                 fontWeight: FontWeight.w500,
                 size: 14,
               ),
@@ -90,91 +89,6 @@ class _PaymentState extends State<Payment> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Container(
-                //   margin: EdgeInsets.only(left: 32),
-                //   child: Row(
-                //     children: [
-                //       Column(
-                //         children: [
-                //           Container(
-                //             decoration: BoxDecoration(
-                //               color: nunutPrimaryColor,
-                //               borderRadius: BorderRadius.circular(50),
-                //               border: Border.all(
-                //                 color: Colors.black,
-                //                 width: 2,
-                //               ),
-                //             ),
-                //             width: 50,
-                //             height: 50,
-                //             child: Center(
-                //               child: NunutText(title: "1", fontWeight: FontWeight.bold, size: 24),
-                //             ),
-                //           ),
-                //           SizedBox(height: 3),
-                //           NunutText(title: "Billing", size: 12, fontWeight: FontWeight.bold),
-                //         ],
-                //       ),
-                //       SizedBox(width: 3),
-                //       Container(
-                //         width: 35,
-                //         height: 2,
-                //         color: Colors.grey.withOpacity(0.4),
-                //       ),
-                //       SizedBox(width: 3),
-                //       Column(
-                //         children: [
-                //           Container(
-                //             decoration: BoxDecoration(
-                //               color: Colors.white,
-                //               borderRadius: BorderRadius.circular(50),
-                //               border: Border.all(
-                //                 color: Colors.grey.withOpacity(0.4),
-                //                 width: 2,
-                //               ),
-                //             ),
-                //             width: 50,
-                //             height: 50,
-                //             child: Center(
-                //               child: NunutText(title: "2", fontWeight: FontWeight.bold, size: 24, color: Colors.grey[400]),
-                //             ),
-                //           ),
-                //           SizedBox(height: 3),
-                //           NunutText(title: "Pilih Metode", size: 12, fontWeight: FontWeight.bold, color: Colors.grey[400]),
-                //         ],
-                //       ),
-                //       SizedBox(width: 3),
-                //       Container(
-                //         width: 35,
-                //         height: 2,
-                //         color: Colors.grey.withOpacity(0.4),
-                //       ),
-                //       SizedBox(width: 3),
-                //       Column(
-                //         children: [
-                //           Container(
-                //             decoration: BoxDecoration(
-                //               color: Colors.white,
-                //               borderRadius: BorderRadius.circular(50),
-                //               border: Border.all(
-                //                 color: Colors.grey.withOpacity(0.4),
-                //                 width: 2,
-                //               ),
-                //             ),
-                //             width: 50,
-                //             height: 50,
-                //             child: Center(
-                //               child: NunutText(title: "3", size: 24, fontWeight: FontWeight.bold, color: Colors.grey[400]),
-                //             ),
-                //           ),
-                //           SizedBox(height: 3),
-                //           NunutText(title: "Selesai!", size: 12, fontWeight: FontWeight.bold, color: Colors.grey[400]),
-                //         ],
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                // SizedBox(height: 20),
                 NunutText(title: "Perjalanan Anda", fontWeight: FontWeight.bold, size: 22),
                 SizedBox(height: 10),
                 Row(
@@ -196,27 +110,29 @@ class _PaymentState extends State<Payment> {
                       ],
                     ),
                     SizedBox(width: 8),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 40.0,
-                          child: Center(
-                            child: NunutText(title: widget.rideSchedule.meetingPoint!.name!),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: 40.0,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: NunutScrollText(
+                                title: widget.rideSchedule.meetingPoint!.name!,
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 2),
-                        Container(
-                          height: 40.0,
-                          margin: EdgeInsets.only(top: 4.0),
-                          child: Row(
-                            children: [
-                              NunutText(title: widget.rideSchedule.destination!.name!),
-                            ],
+                          SizedBox(height: 2),
+                          Container(
+                            height: 40.0,
+                            margin: EdgeInsets.only(top: 4.0),
+                            child: Align(alignment: Alignment.centerLeft, child: NunutScrollText(title: widget.rideSchedule.destination!.name!)),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -244,24 +160,6 @@ class _PaymentState extends State<Payment> {
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    NunutText(title: "Pajak (10%)", size: 14),
-                    Spacer(),
-                    NunutText(
-                      title: priceFormat(pajak.toString()),
-                      size: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ],
-                ),
-                // Row(
-                //   children: [
-                //     NunutText(title: "Biaya Admin", size: 14),
-                //     Spacer(),
-                //     NunutText(title: "1.000", size: 14, fontWeight: FontWeight.bold),
-                //   ],
-                // ),
                 useVoucher
                     ? Row(
                         children: [
@@ -342,7 +240,7 @@ class _PaymentState extends State<Payment> {
                       Spacer(),
                       InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, '/nunutPay');
+                          Navigator.pushNamed(context, '/nunutPay').then((value) => onGoBack(value));
                         },
                         child: Container(
                           margin: EdgeInsets.only(right: 4),
@@ -353,7 +251,7 @@ class _PaymentState extends State<Payment> {
                           ),
                           child: Row(
                             children: [
-                              NunutText(title: "IDR " + config.user.wallet.toString(), fontWeight: FontWeight.bold, size: 14),
+                              isLoading ? SpinKitThreeBounce(color: nunutPrimaryColor, size: 14) : NunutText(title: "IDR " + config.user.wallet.toString(), fontWeight: FontWeight.bold, size: 14),
                               SizedBox(width: 1),
                               Icon(Icons.add, color: Colors.black, size: 14),
                             ],
@@ -379,13 +277,8 @@ class _PaymentState extends State<Payment> {
                         return PopUpLoading(title: "Transaksi Sedang Diproses...", subtitle: "Harap Menunggu...");
                       },
                     );
-
                     bool result = await rideRequestApi.addRideRequest(
-                        rideScheduleId: widget.rideSchedule.id.toString(),
-                        status_ride: "REGISTERED",
-                        user_id: config.user.id!,
-                        checkUrl: true,
-                        voucherId: useVoucher ? selectedPromotion!.voucherId : "");
+                        rideScheduleId: widget.rideSchedule.id.toString(), status_ride: "REGISTERED", user_id: config.user.id!, voucherId: useVoucher ? selectedPromotion!.voucherId : "");
                     if (result) {
                       Wallet walletData = await MidtransApi.getWallet(config.user.id!);
                       priceFormat(walletData.balance.toString());
@@ -393,6 +286,7 @@ class _PaymentState extends State<Payment> {
                       Navigator.pushNamed(context, '/success', arguments: {
                         'title': "Pembayaran Berhasil!",
                         'description': "Pembayaran Anda Berhasil Dilakukan",
+                        'afterBooking': "true",
                       });
                     } else {
                       Navigator.pushNamed(context, '/success', arguments: {
@@ -412,9 +306,23 @@ class _PaymentState extends State<Payment> {
   }
 
   onRefresh() async {
+    setState(() {
+      isLoading = true;
+    });
     await Future.delayed(Duration(seconds: 1));
-    checkWalletEnough();
+    setState(() {
+      checkWalletEnough();
+    });
+    MidtransApi.getWallet(config.user.id!).then((value) {
+      setState(() {
+        config.user.wallet = priceFormat(value.balance!.toString());
+      });
+      return value;
+    });
     total = total;
     useVoucher = useVoucher;
+    setState(() {
+      isLoading = false;
+    });
   }
 }

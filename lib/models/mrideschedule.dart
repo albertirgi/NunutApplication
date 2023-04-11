@@ -40,15 +40,9 @@ class RideSchedule {
       time: parsedJson["time"] as String? ?? "",
       id: parsedJson["ride_schedule_id"] as String? ?? "",
       price: parsedJson["price"] as int? ?? 0,
-      meetingPoint: parsedJson["meeting_point"] != null
-          ? MapLocation.fromJson(parsedJson["meeting_point"])
-          : null,
-      destination: parsedJson["destination"] != null
-          ? MapLocation.fromJson(parsedJson["destination"])
-          : null,
-      isBookmarked: parsedJson.containsKey("is_bookmarked")
-          ? parsedJson["is_bookmarked"] as bool? ?? false
-          : false,
+      meetingPoint: parsedJson["meeting_point"] != null ? MapLocation.fromJson(parsedJson["meeting_point"]) : null,
+      destination: parsedJson["destination"] != null ? MapLocation.fromJson(parsedJson["destination"]) : null,
+      isBookmarked: parsedJson.containsKey("is_bookmarked") ? parsedJson["is_bookmarked"] as bool? ?? false : false,
       driver: parsedJson["driver_id"] != null
           ? parsedJson["driver_id"].runtimeType == String
               ? parsedJson["driver_id"] as String? ?? ""
@@ -62,9 +56,7 @@ class RideSchedule {
       capacity: parsedJson["capacity"] as int? ?? 0,
       rideRequest: parsedJson["ride_request_id"] != null ? (parsedJson["ride_request_id"] as List).map((i) => RideRequest.fromJson(i)).toList() : null,
       isActive: parsedJson["is_active"] as bool? ?? false,
-      rideRequestList: parsedJson["ride_request"] != null
-          ? parsedJson["ride_request"]
-          : null,
+      rideRequestList: parsedJson["ride_request"] != null ? parsedJson["ride_request"] : null,
     );
   }
 

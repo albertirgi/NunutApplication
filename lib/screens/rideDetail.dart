@@ -13,7 +13,6 @@ import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:flutter_dash/flutter_dash.dart';
 import 'package:nunut_application/widgets/popUpLoading.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:text_scroll/text_scroll.dart';
 
 class RideDetail extends StatefulWidget {
   final String rideScheduleId;
@@ -84,21 +83,107 @@ class _RideDetailState extends State<RideDetail> {
       //     ),
       //   ),
       // ),
-      body: Stack(
-        children: [
-          Align(
-            alignment: Alignment.topCenter,
-            child: Image(
-              image: AssetImage('assets/backgroundCircle/backgroundCircle2.png'),
-              fit: BoxFit.cover,
+      bottomNavigationBar: Container(
+        height: 150,
+        color: nunutPrimaryColor,
+        padding: EdgeInsets.only(top: 20),
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              width: 300,
+              height: 40,
+              margin: EdgeInsets.zero,
+              child: ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: true,
+                    builder: (BuildContext context) {
+                      return PopUpLoading(
+                        title: "Konfirmasi",
+                        subtitle: "Apakah anda yakin ingin menyelesaikan perjalanan?",
+                        isConfirmation: true,
+                      );
+                    },
+                  ).then((value) {
+                    if (value == true) {
+                      RideScheduleApi.rideScheduleDone(rideScheduleId: widget.rideScheduleId, checkUrl: true).then((value) {
+                        if (value) {
+                          Fluttertoast.showToast(msg: "Perjalanan selesai");
+                          Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
+                        } else {
+                          Fluttertoast.showToast(msg: "Gagal menyelesaikan perjalanan");
+                        }
+                      });
+                    } else {
+                      Fluttertoast.showToast(msg: "Gagal menyelesaikan perjalanan");
+                    }
+                  });
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    NunutText(
+                      title: "Perjalanan Selesai",
+                      color: Colors.white,
+                      size: 14,
+                      fontWeight: FontWeight.normal,
+                    ),
+                    SizedBox(width: 10),
+                    Icon(
+                      Icons.check_circle,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                  ],
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                    side: BorderSide(
+                      color: Colors.black,
+                      width: 1.0,
+                    ),
+                  ),
+                  elevation: 0.0,
+                ),
+              ),
             ),
-          ),
-          SingleChildScrollView(
-            child: Column(
+            SizedBox(height: 10),
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, '/pengaduanKendala');
+              },
+              child: NunutText(
+                title: "Ada masalah dengan perjalanan?",
+                fontWeight: FontWeight.w500,
+                size: 12,
+                color: Colors.black,
+                textDecoration: TextDecoration.underline,
+              ),
+            ),
+            SizedBox(height: 20),
+          ],
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Align(
+              alignment: Alignment.topCenter,
+              child: Image(
+                image: AssetImage('assets/backgroundCircle/backgroundCircle2.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: 100, left: 12),
+                  margin: EdgeInsets.only(top: 50, left: 12),
                   child: IconButton(
                     padding: EdgeInsets.zero,
                     icon: Icon(Icons.arrow_back, color: Colors.black),
@@ -264,64 +349,70 @@ class _RideDetailState extends State<RideDetail> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            width: 10,
-                                            height: 10,
-                                            decoration: BoxDecoration(
-                                              color: nunutPrimaryColor,
-                                              shape: BoxShape.circle,
-                                            ),
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.only(left: 10),
-                                            child: SizedBox(
-                                              child: NunutText(
-                                                title: rideSchedule.meetingPoint!.name.toString(),
-                                                size: 16,
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              width: 10,
+                                              height: 10,
+                                              decoration: BoxDecoration(
+                                                color: nunutPrimaryColor,
+                                                shape: BoxShape.circle,
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      Container(
-                                        width: 10,
-                                        child: Dash(
-                                          direction: Axis.vertical,
-                                          length: 10,
-                                          dashLength: 2,
-                                          dashColor: Colors.black,
+                                            Container(
+                                              margin: EdgeInsets.only(left: 10),
+                                              width: MediaQuery.of(context).size.width * 0.75,
+                                              height: 20,
+                                              child: Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: NunutScrollText(
+                                                  title: rideSchedule.meetingPoint!.name.toString(),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Container(
-                                            width: 10,
-                                            height: 10,
-                                            decoration: BoxDecoration(
-                                              color: nunutBlueColor,
-                                              shape: BoxShape.circle,
-                                            ),
+                                        Container(
+                                          width: 10,
+                                          child: Dash(
+                                            direction: Axis.vertical,
+                                            length: 10,
+                                            dashLength: 2,
+                                            dashColor: Colors.black,
                                           ),
-                                          Container(
-                                            margin: EdgeInsets.only(left: 10),
-                                            child: TextScroll(
-                                              rideSchedule.destination!.name.toString(),
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.black,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              width: 10,
+                                              height: 10,
+                                              decoration: BoxDecoration(
+                                                color: nunutBlueColor,
+                                                shape: BoxShape.circle,
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                            Container(
+                                              margin: EdgeInsets.only(left: 10),
+                                              width: MediaQuery.of(context).size.width * 0.75,
+                                              child: Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: NunutScrollText(
+                                                  title: rideSchedule.destination!.name.toString(),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
@@ -430,96 +521,11 @@ class _RideDetailState extends State<RideDetail> {
                           ],
                         ),
                 ),
-                SizedBox(height: 60),
-                Container(
-                  color: nunutPrimaryColor,
-                  padding: EdgeInsets.only(top: 20),
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 300,
-                        height: 40,
-                        margin: EdgeInsets.zero,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (BuildContext context) {
-                                return PopUpLoading(
-                                  title: "Konfirmasi",
-                                  subtitle: "Apakah anda yakin ingin menyelesaikan perjalanan?",
-                                  isConfirmation: true,
-                                );
-                              },
-                            ).then((value) {
-                              if (value == true) {
-                                RideScheduleApi.rideScheduleDone(rideScheduleId: widget.rideScheduleId, checkUrl: true).then((value) {
-                                  if (value) {
-                                    Fluttertoast.showToast(msg: "Perjalanan selesai");
-                                    Navigator.pushNamed(context, '/home');
-                                  } else {
-                                    Fluttertoast.showToast(msg: "Gagal menyelesaikan perjalanan");
-                                  }
-                                });
-                              } else {
-                                Fluttertoast.showToast(msg: "Gagal menyelesaikan perjalanan");
-                              }
-                            });
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              NunutText(
-                                title: "Perjalanan Selesai",
-                                color: Colors.white,
-                                size: 14,
-                                fontWeight: FontWeight.normal,
-                              ),
-                              SizedBox(width: 10),
-                              Icon(
-                                Icons.check_circle,
-                                color: Colors.white,
-                                size: 20,
-                              ),
-                            ],
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(24),
-                              side: BorderSide(
-                                color: Colors.black,
-                                width: 1.0,
-                              ),
-                            ),
-                            elevation: 0.0,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/pengaduanKendala');
-                        },
-                        child: NunutText(
-                          title: "Ada masalah dengan perjalanan?",
-                          fontWeight: FontWeight.w500,
-                          size: 12,
-                          color: Colors.black,
-                          textDecoration: TextDecoration.underline,
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                    ],
-                  ),
-                )
+                SizedBox(height: 20),
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/configuration.dart';
+import 'package:nunut_application/functions.dart';
 import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/resources/rideScheduleApi.dart';
 import 'package:nunut_application/screens/payment.dart';
@@ -53,7 +54,10 @@ class _RideBookDetailState extends State<RideBookDetail> {
                   color: Colors.black,
                 ),
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    String number = rideSchedule.driver.phoneNumber!;
+                    openwhatsapp(context, number);
+                  },
                   icon: Icon(
                     Icons.chat_bubble_outline_outlined,
                     color: Colors.white,
@@ -91,10 +95,10 @@ class _RideBookDetailState extends State<RideBookDetail> {
                   flex: 1,
                   child: NunutText(title: "JAM BERANGKAT", size: 12),
                 ),
-                Expanded(
-                  flex: 1,
-                  child: NunutText(title: "KAPASITAS TERSISA", size: 12),
-                ),
+                // Expanded(
+                //   flex: 1,
+                //   child: NunutText(title: "KAPASITAS TERSISA", size: 12),
+                // ),
               ],
             ),
           ),
@@ -111,10 +115,10 @@ class _RideBookDetailState extends State<RideBookDetail> {
                   flex: 1,
                   child: NunutText(title: rideSchedule.time.toString(), maxLines: 2, fontWeight: FontWeight.bold),
                 ),
-                Expanded(
-                  flex: 1,
-                  child: NunutText(title: availableSeat.toString(), fontWeight: FontWeight.bold),
-                ),
+                // Expanded(
+                //   flex: 1,
+                //   child: NunutText(title: availableSeat.toString(), fontWeight: FontWeight.bold),
+                // ),
               ],
             ),
           ),
@@ -134,6 +138,7 @@ class _RideBookDetailState extends State<RideBookDetail> {
               ],
             ),
           ),
+          SizedBox(height: 16),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 30),
             child: Row(
@@ -146,6 +151,39 @@ class _RideBookDetailState extends State<RideBookDetail> {
                 Expanded(
                   flex: 1,
                   child: NunutText(title: rideSchedule.destination!.name!, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 16),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: NunutText(title: "KAPASITAS TERSISA", size: 12),
+                    ),
+                    Expanded(
+                      child: SizedBox(),
+                      flex: 1,
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: NunutText(title: availableSeat.toString(), fontWeight: FontWeight.bold),
+                    ),
+                    Expanded(
+                      child: SizedBox(),
+                      flex: 1,
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -326,7 +364,7 @@ class _RideBookDetailState extends State<RideBookDetail> {
                           });
                           bool result;
                           rideSchedule.isBookmarked!
-                              ? result = await rideScheduleApi.deleteBookmarkByRideScheduleId(rideScheduleId: rideSchedule.id!, userId: config.user.id!, checkUrl: true)
+                              ? result = await rideScheduleApi.deleteBookmarkByRideScheduleId(rideScheduleId: rideSchedule.id!, userId: config.user.id!)
                               : result = await rideScheduleApi.updateBookmark(rideScheduleId: rideSchedule.id!, userId: config.user.id!);
                           if (result) {
                             rideSchedule.isBookmarked = !rideSchedule.isBookmarked!;

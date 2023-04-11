@@ -66,10 +66,10 @@ class PopUpLoading extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    NunutText(title: title, size: 20, fontWeight: FontWeight.bold),
+                    NunutText(title: title, size: 16, fontWeight: FontWeight.bold),
                     NunutText(
                       title: subtitle,
-                      size: 14,
+                      size: 12,
                       fontWeight: FontWeight.w500,
                       textAlign: TextAlign.center,
                     ),
@@ -83,9 +83,9 @@ class PopUpLoading extends StatelessWidget {
                                   onPressed: () {
                                     Navigator.pop(context, true);
                                   },
-                                  child: NunutText(title: "Ya", size: 14, fontWeight: FontWeight.w500),
+                                  child: NunutText(title: "No", size: 14, fontWeight: FontWeight.w500),
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white,
+                                    backgroundColor: nunutPrimaryColor3,
                                     foregroundColor: nunutPrimaryColor,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(18.0),
@@ -96,9 +96,9 @@ class PopUpLoading extends StatelessWidget {
                                   onPressed: () {
                                     Navigator.pop(context, false);
                                   },
-                                  child: NunutText(title: "Tidak", size: 14, fontWeight: FontWeight.w500),
+                                  child: NunutText(title: "Yes", size: 14, fontWeight: FontWeight.w500),
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white,
+                                    backgroundColor: nunutPrimaryColor4,
                                     foregroundColor: nunutPrimaryColor,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(18.0),

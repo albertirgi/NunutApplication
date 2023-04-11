@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
@@ -33,7 +34,7 @@ class DriverApi {
     return driverList;
   }
 
-  Future<Driver> getDriverById(String id) async {
+  static Future<Driver> getDriverById(String id) async {
     var url = Uri.parse(config.baseUrl + '/driver/' + id);
     var response = await http.get(
       url,
@@ -45,11 +46,10 @@ class DriverApi {
 
     Result result;
     Driver driver = Driver(driverId: "", aggrementLetter: "", drivingLicense: "", name: "", email: "", image: "", nik: "", phone: "", status: "", studentCard: "", userId: "");
-
     result = Result.fromJson(json.decode(response.body));
 
     if (result.status == 200) {
-      driver = Driver.fromJson(result.data[0]);
+      driver = Driver.fromJson(result.data);
     }
     return driver;
   }
@@ -83,11 +83,12 @@ class DriverApi {
     request.send();
   }
 
-  static Future<http.StreamedResponse> registerDriver(String fullname, String nik, String phone, File? ktmImage, File? drivingLicense, File? aggrementLetter) async {
+  static Future<Result> registerDriver(String fullname, String nik, String phone, File? ktmImage, File? drivingLicense, File? profilePicture) async {
     // Validate the form
-    if (ktmImage == null || drivingLicense == null || aggrementLetter == null) {
+    if (ktmImage == null || drivingLicense == null || (profilePicture == null && config.user.photo == "empty")) {
       print("Please fill all the field");
-      return http.StreamedResponse(Stream.empty(), 400);
+      Result result = Result(status: 400, message: "Please fill all the field");
+      return result;
     }
     var url = Uri.parse(config.baseUrl + '/driver');
     var request = http.MultipartRequest('POST', url);
@@ -96,15 +97,19 @@ class DriverApi {
     request.fields['phone'] = user.phone;
     request.fields['nik'] = user.nik;
     request.fields['user_id'] = user.id!;
-    request.fields['image'] = user.photo ?? "https://firebasestorage.googleapis.com/v0/b/nunut-da274.appspot.com/o/avatar.png?alt=media&token=62dfdb20-7aa0-4ca4-badf-31c282583b1b";
-    request.files.add(
-      http.MultipartFile(
-        'aggrement_letter',
-        aggrementLetter.readAsBytes().asStream(),
-        aggrementLetter.lengthSync(),
-        filename: aggrementLetter.path.split('/').last,
-      ),
-    );
+    if (profilePicture != null) {
+      request.files.add(
+        http.MultipartFile(
+          'image',
+          profilePicture.readAsBytes().asStream(),
+          profilePicture.lengthSync(),
+          filename: profilePicture.path.split('/').last,
+        ),
+      );
+    } else {
+      request.fields['image'] = user.photo ?? "https://firebasestorage.googleapis.com/v0/b/nunut-da274.appspot.com/o/avatar.png?alt=media&token=62dfdb20-7aa0-4ca4-badf-31c282583b1b";
+    }
+
     request.files.add(
       await http.MultipartFile(
         'driving_license',
@@ -127,6 +132,7 @@ class DriverApi {
       'Authorization': 'Bearer ${config.user.token}',
     });
     var response = await request.send();
-    return response;
+    Result result = Result.fromJson(await response.stream.bytesToString().then((value) => json.decode(value)));
+    return result;
   }
 }

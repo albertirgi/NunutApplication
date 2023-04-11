@@ -125,7 +125,6 @@ class RideScheduleApi {
         "user_id": userId,
       },
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': 'Bearer ${config.user.token}',
       },
     );
@@ -225,7 +224,6 @@ class RideScheduleApi {
     if (result.status == 200) {
       return true;
     } else {
-      log(result.message.toString());
       return false;
     }
   }

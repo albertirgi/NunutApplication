@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nunut_application/models/mmaplocation.dart';
 import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/screens/addRideSchedule.dart';
@@ -56,7 +57,11 @@ void main() async {
   );
   // await initializeDateFormatting('id_ID', null)
   //     .then((_) => runApp(const MyApp()));
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Than we setup preferred orientations,
+  // and only after it finished we run our app
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((value) => runApp(MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -113,7 +118,7 @@ class MyApp extends StatelessWidget {
         '/detailNotification': (context) => const DetailNotificationPage(),
         '/pengaduanKendala': (context) => const PengaduanKendalaPage(),
         '/batalkanTumpangan': (context) => const BatalkanTumpangan(),
-        '/success': (context) => const Success(),
+        '/success': (context) => Success(),
         '/home': (context) => const Home(),
         '/nunutPay': (context) => const NunutPay(),
         '/topUp': (context) => const TopUp(),

@@ -74,11 +74,7 @@ class _RideShareState extends State<RideShare> {
     tempParameter = initialParameter + tempParameter;
 
     rideScheduleList.clear();
-    rideScheduleList = await rideScheduleApi.getRideScheduleList(
-      parameter: tempParameter,
-      page: _page,
-      checkUrl: true,
-    );
+    rideScheduleList = await rideScheduleApi.getRideScheduleList(parameter: tempParameter, page: _page);
 
     setState(() {
       rideScheduleListLoading = false;
@@ -96,11 +92,7 @@ class _RideShareState extends State<RideShare> {
       initialParameter += widget.fromUKP ? "&meeting_point=UniversitasKristenPetra" : "&destination=UniversitasKristenPetra";
 
       rideSchedulePageList.clear();
-      rideSchedulePageList = await rideScheduleApi.getRideScheduleList(
-        parameter: initialParameter,
-        page: _page,
-        checkUrl: true,
-      );
+      rideSchedulePageList = await rideScheduleApi.getRideScheduleList(parameter: initialParameter, page: _page);
       _page++;
 
       rideScheduleList.addAll(rideSchedulePageList);
@@ -397,14 +389,14 @@ class _RideShareState extends State<RideShare> {
                                 ),
                                 SizedBox(height: 4),
                                 Container(
-                                  width: 290,
+                                  width: MediaQuery.of(context).size.width - 120,
                                   height: 40,
                                   child: TextFormField(
                                     enabled: !widget.fromUKP,
                                     readOnly: true,
                                     controller: pickUpController,
                                     decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.only(left: 20),
+                                      contentPadding: EdgeInsets.only(left: 15),
                                       filled: true,
                                       fillColor: Colors.grey[200],
                                       hintText: 'Pilih Lokasi Jemput',
@@ -448,14 +440,14 @@ class _RideShareState extends State<RideShare> {
                                 ),
                                 SizedBox(height: 4),
                                 Container(
-                                  width: 290,
+                                  width: MediaQuery.of(context).size.width - 120,
                                   height: 40,
                                   child: TextFormField(
                                     enabled: widget.fromUKP,
                                     readOnly: true,
                                     controller: destinationController,
                                     decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.only(left: 20),
+                                      contentPadding: EdgeInsets.only(left: 15),
                                       filled: true,
                                       fillColor: Colors.grey[200],
                                       hintText: 'Pilih Lokasi Tujuan',
@@ -672,8 +664,7 @@ class _RideShareState extends State<RideShare> {
                                                       });
                                                       bool result;
                                                       rideScheduleList[index].isBookmarked!
-                                                          ? result =
-                                                              await rideScheduleApi.deleteBookmarkByRideScheduleId(rideScheduleId: rideScheduleList[index].id!, userId: config.user.id!, checkUrl: true)
+                                                          ? result = await rideScheduleApi.deleteBookmarkByRideScheduleId(rideScheduleId: rideScheduleList[index].id!, userId: config.user.id!)
                                                           : result = await rideScheduleApi.updateBookmark(rideScheduleId: rideScheduleList[index].id!, userId: config.user.id!);
                                                       if (result) {
                                                         rideScheduleList[index].isBookmarked = !rideScheduleList[index].isBookmarked!;

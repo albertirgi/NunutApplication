@@ -33,7 +33,7 @@ class _RideBookmarkState extends State<RideBookmark> {
       bookmarkedListLoading = true;
     });
 
-    bookmarkedList = await rideScheduleApi.getBookmarkList(userId: config.user.id!, checkUrl: true);
+    bookmarkedList = await rideScheduleApi.getBookmarkList(userId: config.user.id!);
     setState(() {
       bookmarkedListLoading = false;
     });
@@ -113,7 +113,7 @@ class _RideBookmarkState extends State<RideBookmark> {
                                         TextButton(
                                           onPressed: () {
                                             Navigator.pop(context);
-                                            rideScheduleApi.deleteBookmarkByBookmarkId(bookmarkId: bookmarkedList[index].id, checkUrl: true);
+                                            rideScheduleApi.deleteBookmarkByBookmarkId(bookmarkId: bookmarkedList[index].id);
                                             Fluttertoast.showToast(msg: "Bookmark berhasil dihapus");
                                             setState(() {
                                               bookmarkedList.removeAt(index);

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/resources/authApi.dart';
+import 'package:nunut_application/screens/tnc.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 
@@ -22,20 +23,7 @@ class ProfilePageMenu {
 
 class _ProfilePageState extends State<ProfilePage> {
   AuthService authService = AuthService();
-  // UserModel user = UserModel(name: "", email: "", nik: "", phone: "");
-  @override
-  void initState() {
-    super.initState();
-  }
 
-  // void getUser() async {
-  //   UserModel user = await AuthService.getCurrentUser();
-  //   setState(() {
-  //     this.user = user;
-  //   });
-  // }
-
-  //data dictionary for profile page menu
   List<ProfilePageMenu> profilePageMenu = [
     ProfilePageMenu(
       title: "Promo",
@@ -53,15 +41,10 @@ class _ProfilePageState extends State<ProfilePage> {
       identifier: "kendaraanku",
     ),
     ProfilePageMenu(
-      title: "Data Driver",
-      icon: "assets/icons/dashboard.png",
-      identifier: "registerDriver",
+      title: "Syaratan & Ketentuan",
+      icon: "assets/icons/tnc.png",
+      identifier: "tnc",
     ),
-    // ProfilePageMenu(
-    //   title: "Profil Driver",
-    //   icon: "assets/icons/dashboard.png",
-    //   identifier: "profilDriver",
-    // ),
     ProfilePageMenu(
       title: "Keluar",
       icon: "assets/icons/out.png",
@@ -69,27 +52,19 @@ class _ProfilePageState extends State<ProfilePage> {
     ),
   ];
 
-  //function for remove driver menu from profile page menu
-  // List<ProfilePageMenu> removeDriverMenu() {
-  //   List<ProfilePageMenu> newProfilePageMenu = [];
-  //   for (var i = 0; i < profilePageMenu.length; i++) {
-  //     if (profilePageMenu[i].identifier != "registerDriver") {
-  //       newProfilePageMenu.add(profilePageMenu[i]);
-  //     }
-  //   }
-  //   return newProfilePageMenu;
-  // }
-
-  // //function for add driver menu from profile page menu
-  // List<ProfilePageMenu> addDriverMenu() {
-  //   List<ProfilePageMenu> newProfilePageMenu = [];
-  //   for (var i = 0; i < profilePageMenu.length; i++) {
-  //     if (profilePageMenu[i].identifier != "profilDriver") {
-  //       newProfilePageMenu.add(profilePageMenu[i]);
-  //     }
-  //   }
-  //   return newProfilePageMenu;
-  // }
+  @override
+  void initState() {
+    super.initState();
+    if (config.user.driverId == "empty") {
+      profilePageMenu.insert(
+          3,
+          ProfilePageMenu(
+            title: "Profil Driver",
+            icon: "assets/icons/dashboard.png",
+            identifier: "registerDriver",
+          ));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -301,6 +276,13 @@ class _ProfilePageState extends State<ProfilePage> {
                               Navigator.pushNamed(context, '/myVehicle');
                             } else if (profilePageMenu[index].identifier == "registerDriver") {
                               Navigator.pushNamed(context, '/driverRegistration', arguments: config.user);
+                            } else if (profilePageMenu[index].identifier == "tnc") {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => WebViewContainer(),
+                                ),
+                              );
                             }
                           },
                           child: Row(

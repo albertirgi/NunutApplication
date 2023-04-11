@@ -6,7 +6,7 @@ import 'package:nunut_application/models/mpromotion.dart';
 
 class PromotionApi {
   Future<List<PromotionModel>> getPromotionList({bool checkURL = false}) async {
-    var url = Uri.parse(config.baseUrl + '/voucher');
+    var url = Uri.parse(config.baseUrl + '/voucher?user=${config.user.id}');
     if (checkURL) print(url);
     var response = await http.get(
       url,
