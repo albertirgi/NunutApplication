@@ -85,7 +85,7 @@ class DriverApi {
 
   static Future<Result> registerDriver(String fullname, String nik, String phone, File? ktmImage, File? drivingLicense, File? profilePicture) async {
     // Validate the form
-    if (ktmImage == null || drivingLicense == null || profilePicture == null) {
+    if (ktmImage == null || drivingLicense == null || (profilePicture == null && config.user.photo == "empty")) {
       print("Please fill all the field");
       Result result = Result(status: 400, message: "Please fill all the field");
       return result;
@@ -97,7 +97,7 @@ class DriverApi {
     request.fields['phone'] = user.phone;
     request.fields['nik'] = user.nik;
     request.fields['user_id'] = user.id!;
-    if (profilePicture != File("")) {
+    if (profilePicture != null) {
       request.files.add(
         http.MultipartFile(
           'image',

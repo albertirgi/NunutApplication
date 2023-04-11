@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -443,6 +445,17 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                         child: NunutButton(
                           title: "Simpan Data",
                           onPressed: () async {
+                            if (_ktmImage == null || _drivingLicense == null || (_profilePicture == null && (config.user.photo == "empty"))) {
+                              Fluttertoast.showToast(
+                                  msg: "Harap lengkapi semua data yang dibutuhkan termasuk foto profil",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.green,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
+                              return;
+                            }
                             setState(() {
                               _isLoading = true;
                               showDialog(
@@ -470,7 +483,11 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                                   backgroundColor: Colors.green,
                                   textColor: Colors.white,
                                   fontSize: 16.0);
-                              Navigator.pop(context);
+                              UserService service = UserService();
+                              service.getUserByID(config.user.id!).then((value) {
+                                config.user = value;
+                                Navigator.pop(context);
+                              });
                             } else {
                               Fluttertoast.showToast(
                                   msg: "Pendaftaran driver gagal. Silahkan coba lagi",
