@@ -81,7 +81,7 @@ class PopUpLoading extends StatelessWidget {
                               children: [
                                 ElevatedButton(
                                   onPressed: () {
-                                    Navigator.pop(context, true);
+                                    Navigator.pop(context, false);
                                   },
                                   child: NunutText(title: "No", size: 14, fontWeight: FontWeight.w500),
                                   style: ElevatedButton.styleFrom(
@@ -94,7 +94,7 @@ class PopUpLoading extends StatelessWidget {
                                 ),
                                 ElevatedButton(
                                   onPressed: () {
-                                    Navigator.pop(context, false);
+                                    Navigator.pop(context, true);
                                   },
                                   child: NunutText(title: "Yes", size: 14, fontWeight: FontWeight.w500),
                                   style: ElevatedButton.styleFrom(
