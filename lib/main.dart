@@ -34,6 +34,7 @@ import 'package:nunut_application/screens/rideBookmark.dart';
 import 'package:nunut_application/screens/rideShare.dart';
 import 'package:nunut_application/screens/splashscreen.dart';
 import 'package:nunut_application/screens/rideList.dart';
+import 'package:nunut_application/screens/termsCons.dart';
 import 'package:nunut_application/screens/topUp.dart';
 import 'package:nunut_application/screens/topUpPayment.dart';
 import 'package:nunut_application/screens/tripHistory.dart';
@@ -133,6 +134,7 @@ class MyApp extends StatelessWidget {
                 'image': 'assets/images/topup.png',
               },
             ),
+        '/termsandcons':(context) => TermAndConsPage()
       },
     );
   }
