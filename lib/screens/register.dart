@@ -1,14 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:nunut_application/configuration.dart';
-import 'package:nunut_application/screens/tnc.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutTextFormField.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../resources/authApi.dart';
 import '../widgets/nunutText.dart';
@@ -196,12 +191,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             style: TextStyle(color: Colors.blue),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => WebViewContainer(),
-                                  ),
-                                );
+                                Navigator.pushNamed(context, '/termsandcons');
                               },
                           ),
                         ],

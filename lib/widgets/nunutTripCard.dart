@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
-import 'package:text_scroll/text_scroll.dart';
 
 class NunutTripCard extends StatelessWidget {
   final List<String> images;

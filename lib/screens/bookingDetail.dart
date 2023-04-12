@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nunut_application/configuration.dart';
-import 'package:nunut_application/models/mriderequest.dart';
 import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:nunut_application/functions.dart';
-import 'dart:developer';
 
 class BookingDetail extends StatelessWidget {
   final RideSchedule rideSchedule;
@@ -64,7 +62,7 @@ class BookingDetail extends StatelessWidget {
                 ),
                 child: InkWell(
                   onTap: () {
-                    String number = rideSchedule.driver != null ? rideSchedule.driver.phone.toString().replaceFirst("08", "6") : "6282256640981";
+                    String number = rideSchedule.driver != null ? "+62" + rideSchedule.driver.phoneNumber! : "6282256640981";
                     openwhatsapp(context, number);
                   },
                   child: Icon(

@@ -65,21 +65,21 @@ class _RideBookDetailState extends State<RideBookDetail> {
                 ),
               ),
               SizedBox(width: 16),
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.black,
-                ),
-                child: IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.call_rounded,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
+              // Container(
+              //   width: 40,
+              //   height: 40,
+              //   decoration: BoxDecoration(
+              //     shape: BoxShape.circle,
+              //     color: Colors.black,
+              //   ),
+              //   child: IconButton(
+              //     onPressed: () {},
+              //     icon: Icon(
+              //       Icons.call_rounded,
+              //       color: Colors.white,
+              //     ),
+              //   ),
+              // ),
             ],
           ),
           SizedBox(height: 32),
