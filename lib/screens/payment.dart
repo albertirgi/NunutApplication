@@ -35,13 +35,13 @@ class _PaymentState extends State<Payment> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    checkWalletEnough();
     total = widget.rideSchedule.price!.toDouble();
+    checkWalletEnough();
   }
 
   void checkWalletEnough() {
     setState(() {
-      isWalletEnough = widget.rideSchedule.price! <= double.parse(config.user.wallet!.replaceAll(".", ""));
+      isWalletEnough = total <= double.parse(config.user.wallet!.replaceAll(".", ""));
     });
   }
 
@@ -181,7 +181,12 @@ class _PaymentState extends State<Payment> {
                           setState(() {
                             useVoucher = true;
                             selectedPromotion = popResult.results;
+                            total = widget.rideSchedule.price!.toDouble();
                             total = total - selectedPromotion!.maximumDiscount;
+                            if (total < 0) {
+                              total = 0;
+                            }
+                            checkWalletEnough();
                           });
                         } else {
                           // pop to previous page
@@ -214,9 +219,10 @@ class _PaymentState extends State<Payment> {
                     NunutText(title: "Total Harga", fontWeight: FontWeight.bold, size: 14),
                     Spacer(),
                     NunutText(
-                      title: priceFormat(total.toString()),
+                      title: total == 0 ? "Gratis!" : priceFormat(total.toString()),
                       fontWeight: FontWeight.bold,
                       size: 22,
+                      color: total <= 0 ? nunutPrimaryColor4 : Colors.black,
                     ),
                   ],
                 ),
