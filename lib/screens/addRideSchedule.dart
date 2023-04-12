@@ -1,15 +1,10 @@
-import 'dart:math';
-
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/models/mmaplocation.dart';
 import 'package:nunut_application/models/mvehicle.dart';
-import 'package:nunut_application/resources/mapLocationApi.dart';
 import 'package:nunut_application/resources/rideScheduleApi.dart';
 import 'package:nunut_application/resources/vehicleApi.dart';
 import 'package:nunut_application/screens/mapList.dart';
@@ -58,10 +53,10 @@ class _AddRideScheduleState extends State<AddRideSchedule> {
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(24),
+          margin: EdgeInsets.only(top: 50),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 15),
               NunutText(
                 title: "Buat Tumpangan Baru",
                 color: Colors.black,

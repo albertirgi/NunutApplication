@@ -157,12 +157,12 @@ class NunutTripCard extends StatelessWidget {
               child: Container(
                 margin: EdgeInsets.only(right: 16, bottom: 8),
                 child: NunutButton(
-                  title: isUser ? "LIHAT" : (isActive ? "BERANGKAT" : "SELESAI"),
+                  title: isUser ? "Lihat" : (isActive ? "Berangkat" : "Selesai"),
                   backgroundColor: Colors.black,
                   textColor: Colors.white,
                   textSize: 14,
                   onPressed: isUser ? onPressed! : (isActive ? onPressed! : () {}),
-                  iconButton: Icon(Icons.verified, size: 16),
+                  iconButton: isUser ? null : (isActive ? null : Icon(Icons.verified, size: 16)),
                   widthButton: 130,
                   heightButton: 30,
                 ),
