@@ -17,7 +17,9 @@ class _SuccessState extends State<Success> {
     final title = arguments["title"] as String?;
     final desc = arguments["description"] as String?;
     var afterBooking = arguments["afterBooking"] as String?;
+    var isSuccess = arguments["isSuccess"] as String?;
     afterBooking == null ? afterBooking = "false" : afterBooking = "true";
+    isSuccess == null ? isSuccess = "false" : isSuccess = "true";
 
     return WillPopScope(
       onWillPop: () async => false,
@@ -53,7 +55,7 @@ class _SuccessState extends State<Success> {
                   ),
                   SizedBox(height: 30),
                   Image(
-                    image: AssetImage('assets/check.png'),
+                    image: AssetImage(isSuccess == "true" ? 'assets/check.png' : 'assets/gagal.png'),
                     width: 100,
                   ),
                   SizedBox(height: 50),

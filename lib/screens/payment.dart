@@ -293,6 +293,7 @@ class _PaymentState extends State<Payment> {
                         'title': "Pembayaran Berhasil!",
                         'description': "Pembayaran Anda Berhasil Dilakukan",
                         'afterBooking': "true",
+                        'isSuccess': "true",
                       });
                     } else {
                       Navigator.pushNamed(context, '/success', arguments: {
