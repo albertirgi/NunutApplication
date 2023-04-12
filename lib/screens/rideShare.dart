@@ -485,7 +485,7 @@ class _RideShareState extends State<RideShare> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
-                                      width: 230,
+                                      width: MediaQuery.of(context).size.width - 185,
                                       height: 40,
                                       child: TextFormField(
                                         style: TextStyle(fontSize: 12),
