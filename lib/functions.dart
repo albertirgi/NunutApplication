@@ -1,9 +1,7 @@
-import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/models/mmaplocation.dart';
@@ -13,7 +11,7 @@ import 'package:intl/intl.dart';
 openwhatsapp(BuildContext context, String number) async {
   // var whatsappURl_android = "https://wa.me/" + number;
   // var whatappURL_ios = "https://api.whatsapp.com/send?phone=$number";
-  launchUrl(Uri.parse('https://wa.me/$number?text=Hi'), mode: LaunchMode.externalApplication);
+  launchUrl(Uri.parse('https://wa.me/$number?text=Halo, saya ${config.user.name} penumpang nunut ...'), mode: LaunchMode.externalApplication);
   // if (Platform.isIOS) {
   //   // for iOS phone only
   //   if (await canLaunchUrl(Uri.parse(whatappURL_ios))) {

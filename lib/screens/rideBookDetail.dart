@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/configuration.dart';
-import 'package:nunut_application/functions.dart';
 import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/resources/rideScheduleApi.dart';
 import 'package:nunut_application/screens/payment.dart';
@@ -46,25 +45,25 @@ class _RideBookDetailState extends State<RideBookDetail> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.black,
-                ),
-                child: IconButton(
-                  onPressed: () {
-                    String number = rideSchedule.driver.phoneNumber!;
-                    openwhatsapp(context, number);
-                  },
-                  icon: Icon(
-                    Icons.chat_bubble_outline_outlined,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              SizedBox(width: 16),
+              // Container(
+              //   width: 40,
+              //   height: 40,
+              //   decoration: BoxDecoration(
+              //     shape: BoxShape.circle,
+              //     color: Colors.black,
+              //   ),
+              //   child: IconButton(
+              //     onPressed: () {
+              //       String number = rideSchedule.driver.phoneNumber!;
+              //       openwhatsapp(context, number);
+              //     },
+              //     icon: Icon(
+              //       Icons.chat_bubble_outline_outlined,
+              //       color: Colors.white,
+              //     ),
+              //   ),
+              // ),
+              // SizedBox(width: 16),
               // Container(
               //   width: 40,
               //   height: 40,
