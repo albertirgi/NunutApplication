@@ -4,6 +4,7 @@ import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
+import 'package:nunut_application/widgets/popUpLoading.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:nunut_application/functions.dart';
 
@@ -20,7 +21,6 @@ class _BookingDetailState extends State<BookingDetail> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("booking detail");
   }
 
   Widget bookingDetailContent(String headingTitle, String contentData) {
@@ -128,7 +128,7 @@ class _BookingDetailState extends State<BookingDetail> {
         elevation: 0,
         toolbarHeight: 100,
         centerTitle: true,
-        title: NunutText(title: "Booking Nunut #" + rideScheduleId, fontWeight: FontWeight.bold),
+        title: NunutText(title: "Detail Booking Nunut", fontWeight: FontWeight.bold),
         backgroundColor: nunutPrimaryColor,
       ),
       body: SafeArea(
@@ -195,6 +195,39 @@ class _BookingDetailState extends State<BookingDetail> {
               widthBorder: 0,
               borderColor: Colors.transparent,
               fontWeight: FontWeight.bold,
+            ),
+            SizedBox(height: 16),
+            NunutButton(
+              title: "Batalkan Booking",
+              fontWeight: FontWeight.bold,
+              onPressed: () async {
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) {
+                    return PopUpLoading(
+                      title: "Konfirmasi",
+                      subtitle: "Apakah anda yakin ingin membatalkan booking?",
+                      isConfirmation: true,
+                    );
+                  },
+                ).then((value) async {
+                  if (value) {
+                    // rideRequestApi.deleteRideRequestById(rideRequestId: widget.rideSchedule.rideRequestList!['ride_request_id']).then((value) {
+                    //   if (value) {
+                    //     Fluttertoast.showToast(msg: "Berhasil membatalkan booking");
+                    //   } else {
+                    //     Fluttertoast.showToast(msg: "Gagal membatalkan booking");
+                    //   }
+                    //   Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
+                    // });
+                  }
+                });
+              },
+              borderRadius: 8,
+              widthBorder: 0,
+              borderColor: Colors.transparent,
+              backgroundColor: nunutPrimaryColor3.withOpacity(0.7),
             ),
             SizedBox(height: 16),
             NunutButton(

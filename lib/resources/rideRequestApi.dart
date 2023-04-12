@@ -36,6 +36,27 @@ class RideRequestApi {
     return rideRequestList;
   }
 
+  Future<bool> deleteRideRequestById({required String rideRequestId, bool checkUrl = false}) async {
+    var url = Uri.parse(config.baseUrl + '/rde-request/$rideRequestId');
+    var response = await http.delete(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${config.user.token}',
+      },
+    );
+    if (checkUrl) print(url);
+
+    Result result;
+    result = Result.fromJson(json.decode(response.body));
+
+    if (result.status == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   Future<List<RideSchedule>> getOrderList({String parameter = "", bool checkUrl = false, int page = 0}) async {
     String _parameter = "";
     if (page > 0) _parameter = "/list/$page";
