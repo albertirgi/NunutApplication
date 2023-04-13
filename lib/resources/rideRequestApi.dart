@@ -48,6 +48,7 @@ class RideRequestApi {
     if (checkUrl) print(url);
 
     Result result;
+    print("BAMBANG : " + json.encode(response.body));
     result = Result.fromJson(json.decode(response.body));
 
     if (result.status == 200) {

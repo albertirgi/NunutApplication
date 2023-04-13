@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/models/mrideschedule.dart';
+import 'package:nunut_application/resources/rideRequestApi.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
@@ -213,14 +215,14 @@ class _BookingDetailState extends State<BookingDetail> {
                   },
                 ).then((value) async {
                   if (value) {
-                    // rideRequestApi.deleteRideRequestById(rideRequestId: widget.rideSchedule.rideRequestList!['ride_request_id']).then((value) {
-                    //   if (value) {
-                    //     Fluttertoast.showToast(msg: "Berhasil membatalkan booking");
-                    //   } else {
-                    //     Fluttertoast.showToast(msg: "Gagal membatalkan booking");
-                    //   }
-                    //   Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
-                    // });
+                    rideRequestApi.deleteRideRequestById(rideRequestId: widget.rideSchedule.rideRequestList!['ride_request_id']).then((value) {
+                      if (value) {
+                        Fluttertoast.showToast(msg: "Berhasil membatalkan booking");
+                      } else {
+                        Fluttertoast.showToast(msg: "Gagal membatalkan booking");
+                      }
+                      Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
+                    });
                   }
                 });
               },
