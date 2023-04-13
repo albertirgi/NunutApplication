@@ -165,7 +165,7 @@ class _PaymentState extends State<Payment> {
                         children: [
                           NunutText(title: "Diskon", size: 14, color: nunutPrimaryColor4),
                           Spacer(),
-                          NunutText(title: "- " + priceFormat(selectedPromotion!.maximumDiscount.toString()), size: 14, fontWeight: FontWeight.bold, color: nunutPrimaryColor4),
+                          NunutText(title: "- " + priceFormat(selectedPromotion!.discount.toString()), size: 14, fontWeight: FontWeight.bold, color: nunutPrimaryColor4),
                         ],
                       )
                     : Container(),
@@ -182,7 +182,7 @@ class _PaymentState extends State<Payment> {
                             useVoucher = true;
                             selectedPromotion = popResult.results;
                             total = widget.rideSchedule.price!.toDouble();
-                            total = total - selectedPromotion!.maximumDiscount;
+                            total = total - selectedPromotion!.discount;
                             if (total < 0) {
                               total = 0;
                             }
