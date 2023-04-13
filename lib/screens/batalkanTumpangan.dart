@@ -1,6 +1,8 @@
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:nunut_application/theme.dart';
+import 'package:nunut_application/widgets/nunutButton.dart';
+import 'package:nunut_application/widgets/nunutText.dart';
 import '../widgets/nunutTextFormField.dart';
 
 class BatalkanTumpangan extends StatefulWidget {
@@ -43,17 +45,7 @@ class _BatalkanTumpanganState extends State<BatalkanTumpangan> {
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 24, 0, 7),
-                    child: BorderedText(
-                      child: Text(
-                        "Batalkan Tumpangan",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 38,
-                        ),
-                      ),
-                      strokeWidth: 3.0,
-                      strokeColor: Colors.black,
-                    ),
+                    child: NunutText(title: "Batalkan Tumpangan", size: 32, isTitle: true),
                   ),
                   SizedBox(height: 20),
                   Padding(
@@ -102,35 +94,12 @@ class _BatalkanTumpanganState extends State<BatalkanTumpangan> {
                     ),
                   ),
                   SizedBox(height: 30),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
-                    child: Container(
-                      width: double.infinity,
-                      height: 50,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: nunutPrimaryColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/success', arguments: {
-                            'title': "Pembatalan Tumpangan Berhasil",
-                            'description': "Pembatalan tumpangan berhasil!",
-                          });
-                        },
-                        child: Text(
-                          "Batalkan Tumpangan",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  NunutButton(
+                    title: "Batalkan Tumpangan",
+                    margin: EdgeInsets.only(left: 20, right: 20),
+                    borderColor: Colors.transparent,
+                    onPressed: () {},
+                  )
                 ],
               ),
             ),
