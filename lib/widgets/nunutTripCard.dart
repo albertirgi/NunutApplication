@@ -18,6 +18,7 @@ class NunutTripCard extends StatelessWidget {
   final bool isActive;
   final bool isUser;
   final Function()? onPressed;
+  final Function()? cancelTap;
 
   NunutTripCard({
     Key? key,
@@ -33,6 +34,7 @@ class NunutTripCard extends StatelessWidget {
     this.onPressed,
     this.isActive = false,
     this.isUser = false,
+    this.cancelTap,
   }) : super(key: key);
 
   final GlobalKey widgetKey = GlobalKey();
@@ -206,10 +208,9 @@ class NunutTripCard extends StatelessWidget {
                             ? Container(
                                 margin: EdgeInsets.only(top: 5),
                                 child: InkWell(
-                                    onTap: () {
-                                      Navigator.pushNamed(context, '/batalkanTumpangan');
-                                    },
-                                    child: NunutText(title: "ingin membatalkan?", size: 10, textDecoration: TextDecoration.underline)),
+                                  onTap: cancelTap,
+                                  child: NunutText(title: "ingin membatalkan?", size: 10, textDecoration: TextDecoration.underline),
+                                ),
                               )
                             : Container()),
                   ],

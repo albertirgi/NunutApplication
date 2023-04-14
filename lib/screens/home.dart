@@ -28,10 +28,9 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    onRefresh();
-    // WidgetsBinding.instance.addPostFrameCallback((_) async {
-    //   initSaldo();
-    // });
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      onRefresh();
+    });
   }
 
   FutureOr onGoBack(dynamic value) {

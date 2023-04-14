@@ -32,36 +32,12 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
   }
 
-  //checkToken
-  // void checkToken() async {
-  //   setState(() {
-  //     tokenLoading = true;
-  //   });
-
-  //   SharedPreferences prefs = await SharedPreferences.getInstance().then((value) {
-  //     var email = value.getString('email');
-  //     var token = value.getString("token");
-  //     var id = value.getString("id");
-  //     if (token != "" && email != "") {
-  //       print(email);
-  //       print(" MAMBU BANGET ");
-  //       print(token);
-  //     }
-  //     return value;
-  //   });
-
-  //   if (prefs.getString("token") != null) {
-  //     haveToken = true;
-  //     config.user = await UserService().getUserByID(prefs.getString("id")!);
-  //     Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
-  //   } else {
-  //     haveToken = false;
-  //   }
-
-  //   setState(() {
-  //     tokenLoading = false;
-  //   });
-  // }
+  @override
+  void dispose() {
+    username.dispose();
+    password.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

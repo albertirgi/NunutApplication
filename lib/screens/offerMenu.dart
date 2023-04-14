@@ -23,6 +23,16 @@ class _OfferMenuState extends State<OfferMenu> {
   int _capacityValue = 1;
 
   @override
+  void dispose() {
+    _dateController.dispose();
+    _timeController.dispose();
+    _meetingPointController.dispose();
+    _destinationController.dispose();
+    _vehicleController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(

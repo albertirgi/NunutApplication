@@ -83,6 +83,14 @@ class _WithdrawState extends State<Withdraw> {
   }
 
   @override
+  void dispose() {
+    WithdrawController.dispose();
+    _accountTextEditingController.dispose();
+    _accountHolderNameTextEditingController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(

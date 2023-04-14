@@ -69,6 +69,12 @@ class _TopUpState extends State<TopUp> {
   ];
 
   @override
+  void dispose() {
+    topUpController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(

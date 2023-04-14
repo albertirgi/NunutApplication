@@ -36,19 +36,26 @@ class RideRequestApi {
     return rideRequestList;
   }
 
-  Future<bool> deleteRideRequestById({required String rideRequestId, bool checkUrl = false}) async {
-    var url = Uri.parse(config.baseUrl + '/rde-request/$rideRequestId');
-    var response = await http.delete(
+  Future<bool> deleteRideRequestById({required String rideRequestId, required String title, required String description, bool checkUrl = false}) async {
+    var url = Uri.parse(config.baseUrl + '/cancel-user');
+    var body = jsonEncode({
+      "ride_request_id": rideRequestId,
+      "title": title,
+      "description": description,
+      "user_id": config.user.id,
+    });
+
+    var response = await http.post(
       url,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ${config.user.token}',
       },
+      body: body,
     );
     if (checkUrl) print(url);
 
     Result result;
-    print("BAMBANG : " + json.encode(response.body));
     result = Result.fromJson(json.decode(response.body));
 
     if (result.status == 200) {

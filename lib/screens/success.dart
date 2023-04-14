@@ -31,7 +31,7 @@ class _SuccessState extends State<Success> {
               decoration: BoxDecoration(
                 color: nunutPrimaryColor,
               ),
-              padding: const EdgeInsets.only(top: 70, bottom: 50),
+              padding: const EdgeInsets.only(top: 70, bottom: 50, left: 30, right: 30),
               child: Center(
                 child: NunutText(title: title!, fontWeight: FontWeight.bold, size: 30),
               ),

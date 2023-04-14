@@ -215,13 +215,11 @@ class _BookingDetailState extends State<BookingDetail> {
                   },
                 ).then((value) async {
                   if (value) {
-                    rideRequestApi.deleteRideRequestById(rideRequestId: widget.rideSchedule.rideRequestList!['ride_request_id']).then((value) {
-                      if (value) {
-                        Fluttertoast.showToast(msg: "Berhasil membatalkan booking");
-                      } else {
-                        Fluttertoast.showToast(msg: "Gagal membatalkan booking");
-                      }
-                      Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
+                    Navigator.pushNamed(context, '/pengaduanKendala', arguments: {
+                      'ride_request_id': widget.rideSchedule.rideRequestList!['ride_request_id'],
+                      'title': 'Pembatalan Booking',
+                      'lockTitle': 'true',
+                      'isiTitle': 'Pembatalan Booking',
                     });
                   }
                 });
@@ -236,7 +234,10 @@ class _BookingDetailState extends State<BookingDetail> {
               title: "Ada Masalah?",
               fontWeight: FontWeight.bold,
               onPressed: () {
-                Navigator.pushNamed(context, '/pengaduanKendala', arguments: {'rideSchedule': widget.rideSchedule});
+                Navigator.pushNamed(context, '/pengaduanKendala', arguments: {
+                  'ride_request_id': widget.rideSchedule.rideRequestList!['ride_request_id'],
+                  'title': 'Pengaduan Kendala',
+                });
               },
               borderRadius: 8,
               widthBorder: 0,

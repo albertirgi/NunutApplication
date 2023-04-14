@@ -35,6 +35,12 @@ class _RideDetailState extends State<RideDetail> {
     initRideScheduleDetail();
   }
 
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
   initRideScheduleDetail() async {
     setState(() {
       rideScheduleLoading = true;
@@ -69,20 +75,6 @@ class _RideDetailState extends State<RideDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Colors.grey[50],
-      //   elevation: 0,
-      //   toolbarHeight: 100,
-      //   leading: Container(
-      //     margin: EdgeInsets.only(top: 52),
-      //     child: IconButton(
-      //       icon: Icon(Icons.arrow_back, color: Colors.black),
-      //       onPressed: () {
-      //         Navigator.pop(context);
-      //       },
-      //     ),
-      //   ),
-      // ),
       bottomNavigationBar: Container(
         height: 150,
         color: nunutPrimaryColor,
@@ -155,10 +147,15 @@ class _RideDetailState extends State<RideDetail> {
             SizedBox(height: 10),
             InkWell(
               onTap: () {
-                Navigator.pushNamed(context, '/pengaduanKendala');
+                Navigator.pushNamed(context, '/pengaduanKendala', arguments: {
+                  'title': 'Pembatalan Tumpangan',
+                  'isiTitle': 'Pembatalan Tumpangan',
+                  'lockTitle': 'true',
+                  'ride_schedule_id': widget.rideScheduleId,
+                });
               },
               child: NunutText(
-                title: "Ada masalah dengan perjalanan?",
+                title: "Ingin membatalkan tumpangan ?",
                 fontWeight: FontWeight.w500,
                 size: 12,
                 color: Colors.black,

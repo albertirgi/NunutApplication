@@ -28,6 +28,18 @@ class _RegisterPageState extends State<RegisterPage> {
   bool agree = false;
 
   @override
+  void dispose() {
+    email.dispose();
+    fullName.dispose();
+    userName.dispose();
+    password.dispose();
+    confirmPassword.dispose();
+    nik.dispose();
+    noTelp.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: nunutPrimaryColor,

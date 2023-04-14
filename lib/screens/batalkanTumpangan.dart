@@ -15,6 +15,14 @@ class BatalkanTumpangan extends StatefulWidget {
 class _BatalkanTumpanganState extends State<BatalkanTumpangan> {
   TextEditingController title = TextEditingController();
   TextEditingController description = TextEditingController();
+
+  @override
+  void dispose() {
+    title.dispose();
+    description.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

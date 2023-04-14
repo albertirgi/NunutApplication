@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/resources/rideRequestApi.dart';
 import 'package:nunut_application/screens/bookingDetail.dart';
-import 'package:nunut_application/screens/orderDetail.dart';
-import 'package:nunut_application/screens/rideDetail.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:nunut_application/widgets/nunutTripCard.dart';
 import 'package:nunut_application/configuration.dart';
@@ -33,11 +31,19 @@ class _OrderListState extends State<OrderList> {
   ScrollController? _scrollController;
   int _page = 1;
 
+  @override
   void initState() {
     super.initState();
     initRideScheduleList();
     _scrollController = ScrollController();
     _scrollController!.addListener(scrollListener);
+  }
+
+  @override
+  void dispose() {
+    _scrollController!.removeListener(scrollListener);
+    _scrollController!.dispose();
+    super.dispose();
   }
 
   initRideScheduleList() async {
@@ -83,12 +89,6 @@ class _OrderListState extends State<OrderList> {
         done = true;
       }
     }
-  }
-
-  void dispose() {
-    _scrollController!.removeListener(scrollListener);
-    _scrollController!.dispose();
-    super.dispose();
   }
 
   @override

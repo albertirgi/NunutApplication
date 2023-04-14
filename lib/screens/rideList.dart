@@ -43,11 +43,19 @@ class _RideListState extends State<RideList> {
   ScrollController? _scrollController;
   int _page = 1;
 
+  @override
   void initState() {
     super.initState();
     initRideScheduleList();
     _scrollController = ScrollController();
     _scrollController!.addListener(scrollListener);
+  }
+
+  @override
+  void dispose() {
+    _scrollController!.removeListener(scrollListener);
+    _scrollController!.dispose();
+    super.dispose();
   }
 
   initRideScheduleList() async {
@@ -93,17 +101,10 @@ class _RideListState extends State<RideList> {
     if (_scrollController!.offset >= _scrollController!.position.maxScrollExtent - 100 && !_scrollController!.position.outOfRange && !done) {
       if (rideSchedulePageList.isEmpty) {
         loadmore();
-        print("DONE : " + done.toString());
       } else {
         done = true;
       }
     }
-  }
-
-  void dispose() {
-    _scrollController!.removeListener(scrollListener);
-    _scrollController!.dispose();
-    super.dispose();
   }
 
   @override
@@ -206,6 +207,14 @@ class _RideListState extends State<RideList> {
                                     pickupLocation: rideScheduleList[index].meetingPoint!.name!,
                                     destination: rideScheduleList[index].destination!.name!,
                                     isActive: rideScheduleList[index].isActive!,
+                                    cancelTap: () {
+                                      Navigator.pushNamed(context, '/pengaduanKendala', arguments: {
+                                        'title': 'Pembatalan Tumpangan',
+                                        'isiTitle': 'Pembatalan Tumpangan',
+                                        'lockTitle': 'true',
+                                        'ride_schedule_id': rideScheduleList[index].id!,
+                                      });
+                                    },
                                     onPressed: () {
                                       Navigator.push(
                                         context,

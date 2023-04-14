@@ -30,29 +30,6 @@ class ReportApi {
       return false;
     }
   }
-
-  Future<List<ReportModel>> getReportList() async {
-    var url = Uri.parse(config.baseUrl + '/report');
-    var response = await http.get(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ${config.user.token}',
-      },
-    );
-
-    Result result;
-    List<ReportModel> reportList = [];
-
-    result = Result.fromJson(json.decode(response.body));
-    if (result.status == 200) {
-      result.data.forEach((item) {
-        reportList.add(ReportModel.fromJson(item));
-      });
-    }
-
-    return reportList;
-  }
 }
 
 final reportApi = ReportApi();

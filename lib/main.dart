@@ -16,36 +16,28 @@ import 'package:nunut_application/screens/driverRegistration.dart';
 import 'package:nunut_application/screens/home.dart';
 import 'package:nunut_application/screens/login.dart';
 import 'package:nunut_application/screens/mainScreen.dart';
-import 'package:nunut_application/screens/myProfilePage.dart';
 import 'package:nunut_application/screens/success.dart';
 import 'package:nunut_application/screens/nunutPay.dart';
 import 'package:nunut_application/screens/offerMenu.dart';
 import 'package:nunut_application/screens/orderList.dart';
 import 'package:nunut_application/screens/parkingList.dart';
 import 'package:nunut_application/screens/parkingSlotDetail.dart';
-import 'package:nunut_application/screens/payment.dart';
 import 'package:nunut_application/screens/pengaduanKendala.dart';
 import 'package:nunut_application/screens/promotionDetail.dart';
 import 'package:nunut_application/screens/promotionList.dart';
 import 'package:nunut_application/screens/qrCode.dart';
 import 'package:nunut_application/screens/register.dart';
-import 'package:nunut_application/screens/rideBookDetail.dart';
 import 'package:nunut_application/screens/rideBookmark.dart';
-import 'package:nunut_application/screens/rideShare.dart';
 import 'package:nunut_application/screens/splashscreen.dart';
 import 'package:nunut_application/screens/rideList.dart';
 import 'package:nunut_application/screens/termsCons.dart';
 import 'package:nunut_application/screens/topUp.dart';
 import 'package:nunut_application/screens/topUpPayment.dart';
 import 'package:nunut_application/screens/tripHistory.dart';
-import 'package:nunut_application/screens/rideDetail.dart';
 import 'package:nunut_application/screens/myVehicle.dart';
 import 'package:nunut_application/screens/withdraw.dart';
 import 'package:nunut_application/screens/withdrawConfirmation.dart';
-import 'package:nunut_application/screens/snap.dart';
 import 'package:nunut_application/screens/addVehicle.dart';
-import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:month_year_picker/month_year_picker.dart';
 
@@ -134,7 +126,7 @@ class MyApp extends StatelessWidget {
                 'image': 'assets/images/topup.png',
               },
             ),
-        '/termsandcons':(context) => TermAndConsPage()
+        '/termsandcons': (context) => TermAndConsPage()
       },
     );
   }

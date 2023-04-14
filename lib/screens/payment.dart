@@ -195,16 +195,7 @@ class _PaymentState extends State<Payment> {
                       }
                     });
                   },
-                  iconButton: useVoucher
-                      ? Icon(
-                          Icons.verified_outlined,
-                          color: Colors.green,
-                        )
-                      : Icon(
-                          Icons.arrow_forward_ios,
-                          color: Colors.white,
-                          size: 14,
-                        ),
+                  iconButton: useVoucher ? Icon(Icons.verified_outlined, color: Colors.green) : Icon(Icons.arrow_forward_ios, color: Colors.white, size: 14),
                   backgroundColor: Colors.white,
                   widthButton: 325,
                   borderRadius: 12,

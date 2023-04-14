@@ -55,6 +55,17 @@ class _AddVehicleState extends State<AddVehicle> {
   }
 
   @override
+  void dispose() {
+    _carTypeController.dispose();
+    _vehicleTypeController.dispose();
+    _licensePlateController.dispose();
+    _expiredDateController.dispose();
+    _vehicleColorController.dispose();
+    _vehicleNoteController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -99,8 +110,7 @@ class _AddVehicleState extends State<AddVehicle> {
                     obscureText: false,
                     controller: _carTypeController,
                     decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                       isDense: true,
                       hintText: "e.g. Honda Jazz, Toyota Avanza, etc.",
                       hintStyle: TextStyle(
@@ -137,10 +147,7 @@ class _AddVehicleState extends State<AddVehicle> {
                       items: vehicleTypes
                           .map((item) => DropdownMenuItem<String>(
                                 value: item.id,
-                                child: NunutText(
-                                    title: item.name!,
-                                    size: 14,
-                                    overflow: TextOverflow.ellipsis),
+                                child: NunutText(title: item.name!, size: 14, overflow: TextOverflow.ellipsis),
                               ))
                           .toList(),
                       value: _selectedVehicleType,
@@ -238,8 +245,7 @@ class _AddVehicleState extends State<AddVehicle> {
                               obscureText: false,
                               controller: _licensePlateController,
                               decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 10),
+                                contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                                 isDense: true,
                                 hintText: "e.g. L 1234 XX",
                                 hintStyle: TextStyle(
@@ -281,19 +287,15 @@ class _AddVehicleState extends State<AddVehicle> {
                               onTap: () async {
                                 final selectedDate = await showMonthYearPicker(
                                   context: context,
-                                  initialDate:
-                                      DateTime.now().add(Duration(days: 30)),
-                                  firstDate:
-                                      DateTime.now().add(Duration(days: 30)),
+                                  initialDate: DateTime.now().add(Duration(days: 30)),
+                                  firstDate: DateTime.now().add(Duration(days: 30)),
                                   lastDate: DateTime(2030),
                                 );
 
                                 if (selectedDate != null) {
                                   setState(() {
                                     _licensePlateExpireDate = selectedDate;
-                                    _expiredDateController.text =
-                                        DateFormat('MM/yyyy')
-                                            .format(_licensePlateExpireDate);
+                                    _expiredDateController.text = DateFormat('MM/yyyy').format(_licensePlateExpireDate);
                                   });
                                 }
                               },
@@ -305,8 +307,7 @@ class _AddVehicleState extends State<AddVehicle> {
                               obscureText: false,
                               controller: _expiredDateController,
                               decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 10),
+                                contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                                 isDense: true,
                                 hintText: "e.g. 11/2024",
                                 hintStyle: TextStyle(
@@ -358,8 +359,7 @@ class _AddVehicleState extends State<AddVehicle> {
                               obscureText: false,
                               controller: _vehicleColorController,
                               decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 10),
+                                contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                                 isDense: true,
                                 hintStyle: TextStyle(
                                   color: Colors.grey,
@@ -405,8 +405,7 @@ class _AddVehicleState extends State<AddVehicle> {
                               obscureText: false,
                               controller: _vehicleNoteController,
                               decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 10),
+                                contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                                 isDense: true,
                                 hintStyle: TextStyle(
                                   color: Colors.grey,

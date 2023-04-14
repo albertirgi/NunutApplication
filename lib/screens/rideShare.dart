@@ -57,9 +57,15 @@ class _RideShareState extends State<RideShare> {
     widget.fromUKP ? pickUpController.text = "Universitas Kristen Petra" : destinationController.text = "Universitas Kristen Petra";
   }
 
+  @override
+  //dispose
   void dispose() {
-    _scrollController!.removeListener(scrollListener);
     _scrollController!.dispose();
+    mapController!.dispose();
+    pickUpController.dispose();
+    destinationController.dispose();
+    dateController.dispose();
+    timeController.dispose();
     super.dispose();
   }
 
