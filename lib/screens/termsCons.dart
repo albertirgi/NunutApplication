@@ -85,6 +85,7 @@ class _TermAndConsPageState extends State<TermAndConsPage> {
     }
 
     log("data definisi: $definisi");
+    setState(() {});
   }
 
   @override
