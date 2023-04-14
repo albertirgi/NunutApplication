@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nunut_application/models/mriderequest.dart';
 import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/resources/rideRequestApi.dart';
@@ -13,6 +14,7 @@ import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:flutter_dash/flutter_dash.dart';
 import 'package:nunut_application/widgets/popUpLoading.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RideDetail extends StatefulWidget {
   final String rideScheduleId;
@@ -415,14 +417,30 @@ class _RideDetailState extends State<RideDetail> {
                               ),
                             ),
                             SizedBox(height: 16),
-                            NunutButton(
-                              title: "Peta",
-                              widthButton: 90,
-                              heightButton: 35,
-                              textSize: 14,
-                              borderColor: Colors.transparent,
-                              iconButton: Icon(Icons.map_outlined, color: Colors.black),
-                              onPressed: () {},
+                            Row(
+                              children: [
+                                // NunutButton(
+                                //   title: "Peta",
+                                //   widthButton: 90,
+                                //   heightButton: 35,
+                                //   textSize: 14,
+                                //   borderColor: Colors.transparent,
+                                //   iconButton: Icon(Icons.map_outlined, color: Colors.black),
+                                //   onPressed: () {},
+                                // ),
+                                NunutButton(
+                                  title: "Book Parkir",
+                                  iconButton: Icon(
+                                    FontAwesomeIcons.squareParking,
+                                    color: Colors.black,
+                                  ),
+                                  widthButton: 140,
+                                  heightButton: 35,
+                                  onPressed: () {
+                                    launchUrl(Uri.parse("https://docs.google.com/forms/d/e/1FAIpQLSdw9J9tls5ebdaByw6DvK5LnCfnYFVWYgsdsgN2YzWqDDH89g/viewform?usp=sf_link"));
+                                  },
+                                )
+                              ],
                             ),
                             SizedBox(height: 16),
                             Divider(color: Colors.grey, thickness: 0.5),
