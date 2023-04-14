@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/models/mresult.dart';
@@ -89,6 +90,7 @@ class RideRequestApi {
     if (result.status == 200) {
       result.data.forEach((item) {
         rideScheduleList.add(RideSchedule.fromJson(item));
+        rideScheduleList.last.priceAfter = item['price_after'];
       });
     }
     return rideScheduleList;

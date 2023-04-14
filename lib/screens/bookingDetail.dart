@@ -143,7 +143,8 @@ class _BookingDetailState extends State<BookingDetail> {
             bookingDetailContent("Jam Berangkat", widget.rideSchedule.time.toString()),
             bookingDetailContent("Meeting Point", widget.rideSchedule.meetingPoint!.name!),
             bookingDetailContent("Destination", widget.rideSchedule.destination!.name!),
-            bookingDetailContent("Harga", "IDR " + priceFormat(widget.rideSchedule.price.toString())),
+            widget.rideSchedule.price != widget.rideSchedule.priceAfter ? bookingDetailContent("Harga Nunut Sebelum Diskon", "IDR " + priceFormat(widget.rideSchedule.price.toString())) : Container(),
+            bookingDetailContent("Harga Akhir", "IDR " + priceFormat(widget.rideSchedule.priceAfter.toString())),
             SizedBox(height: 32),
             NunutButton(
               title: "Lihat QR Code",

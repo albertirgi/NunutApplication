@@ -8,6 +8,7 @@ class RideSchedule {
   String? time;
   String? id;
   int? price;
+  int? priceAfter;
   MapLocation? meetingPoint;
   MapLocation? destination;
   bool? isBookmarked;
@@ -23,6 +24,7 @@ class RideSchedule {
     this.time,
     this.id,
     this.price,
+    this.priceAfter = 0,
     this.meetingPoint,
     this.destination,
     this.isBookmarked = false,

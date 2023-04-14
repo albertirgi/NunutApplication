@@ -84,7 +84,6 @@ class _TermAndConsPageState extends State<TermAndConsPage> {
       force_majeure.add(data["force_majeure"][i]);
     }
 
-    log("data definisi: $definisi");
     setState(() {});
   }
 
