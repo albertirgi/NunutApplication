@@ -115,6 +115,55 @@ String priceFormat(String price) {
   return currencyFormatter.format(numValue);
 }
 
+//from April 1, 2021 to 2021-04-01
+String dateFormat(String date) {
+  String day;
+  String month;
+  String year;
+  day = date.split(" ")[1].split(",")[0];
+  month = date.split(" ")[0];
+  year = date.split(" ")[2];
+  switch (month) {
+    case "January":
+      month = "01";
+      break;
+    case "February":
+      month = "02";
+      break;
+    case "March":
+      month = "03";
+      break;
+    case "April":
+      month = "04";
+      break;
+    case "May":
+      month = "05";
+      break;
+    case "June":
+      month = "06";
+      break;
+    case "July":
+      month = "07";
+      break;
+    case "August":
+      month = "08";
+      break;
+    case "September":
+      month = "09";
+      break;
+    case "October":
+      month = "10";
+      break;
+    case "November":
+      month = "11";
+      break;
+    case "December":
+      month = "12";
+      break;
+  }
+  return year + "-" + month + "-" + day;
+}
+
 class PopWithResults<T> {
   /// poped from this page
   final String fromPage;
