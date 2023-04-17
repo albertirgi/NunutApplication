@@ -87,7 +87,7 @@ class _AddRideScheduleState extends State<AddRideSchedule> {
                           controller: _dateController,
                           onTap: () async {
                             FocusScope.of(context).requestFocus(new FocusNode());
-                            DateTime? pickedDate = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(2000), lastDate: DateTime(2101));
+                            DateTime? pickedDate = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime(2101));
 
                             if (pickedDate != null) {
                               String formattedDate = DateFormat('MMMM dd, yyyy').format(pickedDate);

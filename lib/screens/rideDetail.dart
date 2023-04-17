@@ -29,6 +29,7 @@ class _RideDetailState extends State<RideDetail> {
   List<RideRequest> rideRequestList = [];
   TextEditingController searchController = TextEditingController();
   bool rideScheduleLoading = true;
+  bool isUserAlreadyAbsent = true;
   // bool rideRequestListLoading = true;
 
   @override
@@ -51,6 +52,7 @@ class _RideDetailState extends State<RideDetail> {
     rideSchedule = RideSchedule();
     rideSchedule = await rideScheduleApi.getRideScheduleById(id: widget.rideScheduleId, parameter: "driver&vehicle");
     await initRideRequestList();
+    await checkUserAbsent();
 
     setState(() {
       rideScheduleLoading = false;
@@ -70,8 +72,18 @@ class _RideDetailState extends State<RideDetail> {
     // });
   }
 
+  checkUserAbsent() {
+    isUserAlreadyAbsent = false;
+    for (var i = 0; i < rideRequestList.length; i++) {
+      if (rideRequestList[i].status == "ONGOING") {
+        isUserAlreadyAbsent = true;
+      }
+    }
+  }
+
   FutureOr onGoBack(dynamic value) {
     onRefresh();
+    checkUserAbsent();
   }
 
   @override
@@ -80,13 +92,13 @@ class _RideDetailState extends State<RideDetail> {
       bottomNavigationBar: Container(
         height: 150,
         color: nunutPrimaryColor,
-        padding: EdgeInsets.only(top: 20),
+        padding: EdgeInsets.only(top: isUserAlreadyAbsent ? 50 : 30),
         width: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              width: 300,
+              width: MediaQuery.of(context).size.width * 0.7,
               height: 40,
               margin: EdgeInsets.zero,
               child: ElevatedButton(
@@ -156,13 +168,15 @@ class _RideDetailState extends State<RideDetail> {
                   'ride_schedule_id': widget.rideScheduleId,
                 });
               },
-              child: NunutText(
-                title: "Ingin membatalkan tumpangan ?",
-                fontWeight: FontWeight.w500,
-                size: 12,
-                color: Colors.black,
-                textDecoration: TextDecoration.underline,
-              ),
+              child: !isUserAlreadyAbsent
+                  ? NunutText(
+                      title: "Ingin membatalkan tumpangan ?",
+                      fontWeight: FontWeight.w500,
+                      size: 12,
+                      color: Colors.black,
+                      textDecoration: TextDecoration.underline,
+                    )
+                  : Container(),
             ),
             SizedBox(height: 20),
           ],
