@@ -428,18 +428,20 @@ class _RideDetailState extends State<RideDetail> {
                                 //   iconButton: Icon(Icons.map_outlined, color: Colors.black),
                                 //   onPressed: () {},
                                 // ),
-                                NunutButton(
-                                  title: "Book Parkir",
-                                  iconButton: Icon(
-                                    FontAwesomeIcons.squareParking,
-                                    color: Colors.black,
-                                  ),
-                                  widthButton: 140,
-                                  heightButton: 35,
-                                  onPressed: () {
-                                    launchUrl(Uri.parse("https://docs.google.com/forms/d/e/1FAIpQLSdw9J9tls5ebdaByw6DvK5LnCfnYFVWYgsdsgN2YzWqDDH89g/viewform?usp=sf_link"));
-                                  },
-                                )
+                                rideSchedule.rideRequest != null && rideSchedule.rideRequest!.length > 1
+                                    ? NunutButton(
+                                        title: "Book Parkir",
+                                        iconButton: Icon(
+                                          FontAwesomeIcons.squareParking,
+                                          color: Colors.black,
+                                        ),
+                                        widthButton: 140,
+                                        heightButton: 35,
+                                        onPressed: () {
+                                          launchUrl(Uri.parse("https://docs.google.com/forms/d/e/1FAIpQLSdw9J9tls5ebdaByw6DvK5LnCfnYFVWYgsdsgN2YzWqDDH89g/viewform?usp=sf_link"));
+                                        },
+                                      )
+                                    : Container(),
                               ],
                             ),
                             SizedBox(height: 16),
