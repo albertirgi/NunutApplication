@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutTextFormField.dart';
+import 'package:nunut_application/widgets/popUpLoading.dart';
 
 import '../resources/authApi.dart';
 import '../widgets/nunutText.dart';
@@ -221,10 +222,30 @@ class _RegisterPageState extends State<RegisterPage> {
                       ? () {
                           //all field must be filled
                           if (email.text.isNotEmpty && fullName.text.isNotEmpty && password.text.isNotEmpty && confirmPassword.text.isNotEmpty && nik.text.isNotEmpty && noTelp.text.isNotEmpty) {
-                            final bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email.text); // check email valid or not
+                            var domain = email.text.split('@')[1];
+                            if (domain.isEmpty || !domain.contains("petra.ac.id")) {
+                              Fluttertoast.showToast(
+                                  msg: "Email harus menggunakan email petra.ac.id",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.green,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
+                              return;
+                            }
+                            final bool emailValid =
+                                RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.(?:[a-zA-Z]+|\bpetra\.ac\.id\b)").hasMatch(email.text); // check email valid or not
                             if (emailValid) {
                               if (password.text.length >= 8) {
                                 if (password.text == confirmPassword.text) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => PopUpLoading(
+                                      title: "Loading",
+                                      subtitle: "Mohon menunggu sebentar",
+                                    ),
+                                  );
                                   Future.delayed(
                                     Duration(seconds: 3),
                                     () async {
