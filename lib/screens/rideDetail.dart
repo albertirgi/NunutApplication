@@ -428,7 +428,7 @@ class _RideDetailState extends State<RideDetail> {
                                 //   iconButton: Icon(Icons.map_outlined, color: Colors.black),
                                 //   onPressed: () {},
                                 // ),
-                                rideSchedule.rideRequest != null && rideSchedule.rideRequest!.length > 1
+                                rideRequestList.length > 1
                                     ? NunutButton(
                                         title: "Book Parkir",
                                         iconButton: Icon(

@@ -324,14 +324,16 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                   // ),
                   SizedBox(height: 20),
                   Container(
-                      margin: EdgeInsets.only(top: 0, left: 20, right: 20),
-                      child: NunutButton(
-                          title: "Simpan Data",
-                          onPressed: () {
-                            userService.updateUser(user: UserModel(email: user.email, name: fullName.text, nik: nik.text, phone: noTelp.text), profile_picture: _profilePicture ?? null).then((value) {
-                              Navigator.pop(context);
-                            });
-                          })),
+                    margin: EdgeInsets.only(top: 0, left: 20, right: 20),
+                    child: NunutButton(
+                      title: "Simpan Data",
+                      onPressed: () {
+                        userService.updateUser(user: UserModel(email: user.email, name: fullName.text, nik: nik.text, phone: noTelp.text), profile_picture: _profilePicture ?? null).then((value) {
+                          Navigator.pop(context);
+                        });
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),
