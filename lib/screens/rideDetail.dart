@@ -160,12 +160,17 @@ class _RideDetailState extends State<RideDetail> {
             ),
             SizedBox(height: 10),
             InkWell(
-              onTap: () {
+              onTap: () async {
+                await initRideRequestList();
+                if (!rideSchedule.isActive!) {
+                  Fluttertoast.showToast(msg: "Tumpangan sudah selesai, tidak bisa dibatalkan");
+                  return;
+                }
                 Navigator.pushNamed(context, '/pengaduanKendala', arguments: {
                   'title': 'Pembatalan Tumpangan',
                   'isiTitle': 'Pembatalan Tumpangan',
                   'lockTitle': 'true',
-                  'ride_schedule_id': widget.rideScheduleId,
+                  'ride_schedule_id': rideSchedule.id,
                 });
               },
               child: !isUserAlreadyAbsent

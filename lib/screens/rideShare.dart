@@ -516,7 +516,6 @@ class _RideShareState extends State<RideShare> {
                                               dateController.text = formattedDate;
                                             });
                                           }
-                                          // print("Date: " + dateController.text);
                                         },
                                       ),
                                     ),
@@ -649,7 +648,7 @@ class _RideShareState extends State<RideShare> {
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) => RideBookDetail(
-                                                    rideSchedule: rideScheduleList[index],
+                                                    rideScheduleId: rideScheduleList[index].id!,
                                                   ),
                                                 ),
                                               ).then((value) => onGoBack(value));
