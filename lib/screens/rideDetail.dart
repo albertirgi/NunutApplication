@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nunut_application/models/mriderequest.dart';
 import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/resources/rideRequestApi.dart';
@@ -13,6 +14,7 @@ import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:flutter_dash/flutter_dash.dart';
 import 'package:nunut_application/widgets/popUpLoading.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RideDetail extends StatefulWidget {
   final String rideScheduleId;
@@ -27,12 +29,19 @@ class _RideDetailState extends State<RideDetail> {
   List<RideRequest> rideRequestList = [];
   TextEditingController searchController = TextEditingController();
   bool rideScheduleLoading = true;
+  bool isUserAlreadyAbsent = true;
   // bool rideRequestListLoading = true;
 
   @override
   void initState() {
     super.initState();
     initRideScheduleDetail();
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
   }
 
   initRideScheduleDetail() async {
@@ -43,6 +52,7 @@ class _RideDetailState extends State<RideDetail> {
     rideSchedule = RideSchedule();
     rideSchedule = await rideScheduleApi.getRideScheduleById(id: widget.rideScheduleId, parameter: "driver&vehicle");
     await initRideRequestList();
+    await checkUserAbsent();
 
     setState(() {
       rideScheduleLoading = false;
@@ -62,37 +72,33 @@ class _RideDetailState extends State<RideDetail> {
     // });
   }
 
+  checkUserAbsent() {
+    isUserAlreadyAbsent = false;
+    for (var i = 0; i < rideRequestList.length; i++) {
+      if (rideRequestList[i].status == "ONGOING") {
+        isUserAlreadyAbsent = true;
+      }
+    }
+  }
+
   FutureOr onGoBack(dynamic value) {
     onRefresh();
+    checkUserAbsent();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Colors.grey[50],
-      //   elevation: 0,
-      //   toolbarHeight: 100,
-      //   leading: Container(
-      //     margin: EdgeInsets.only(top: 52),
-      //     child: IconButton(
-      //       icon: Icon(Icons.arrow_back, color: Colors.black),
-      //       onPressed: () {
-      //         Navigator.pop(context);
-      //       },
-      //     ),
-      //   ),
-      // ),
       bottomNavigationBar: Container(
         height: 150,
         color: nunutPrimaryColor,
-        padding: EdgeInsets.only(top: 20),
+        padding: EdgeInsets.only(top: isUserAlreadyAbsent ? 50 : 30),
         width: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              width: 300,
+              width: MediaQuery.of(context).size.width * 0.7,
               height: 40,
               margin: EdgeInsets.zero,
               child: ElevatedButton(
@@ -154,16 +160,28 @@ class _RideDetailState extends State<RideDetail> {
             ),
             SizedBox(height: 10),
             InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, '/pengaduanKendala');
+              onTap: () async {
+                await initRideRequestList();
+                if (!rideSchedule.isActive!) {
+                  Fluttertoast.showToast(msg: "Tumpangan sudah selesai, tidak bisa dibatalkan");
+                  return;
+                }
+                Navigator.pushNamed(context, '/pengaduanKendala', arguments: {
+                  'title': 'Pembatalan Tumpangan',
+                  'isiTitle': 'Pembatalan Tumpangan',
+                  'lockTitle': 'true',
+                  'ride_schedule_id': rideSchedule.id,
+                });
               },
-              child: NunutText(
-                title: "Ada masalah dengan perjalanan?",
-                fontWeight: FontWeight.w500,
-                size: 12,
-                color: Colors.black,
-                textDecoration: TextDecoration.underline,
-              ),
+              child: !isUserAlreadyAbsent
+                  ? NunutText(
+                      title: "Ingin membatalkan tumpangan ?",
+                      fontWeight: FontWeight.w500,
+                      size: 12,
+                      color: Colors.black,
+                      textDecoration: TextDecoration.underline,
+                    )
+                  : Container(),
             ),
             SizedBox(height: 20),
           ],
@@ -418,14 +436,32 @@ class _RideDetailState extends State<RideDetail> {
                               ),
                             ),
                             SizedBox(height: 16),
-                            NunutButton(
-                              title: "Peta",
-                              widthButton: 90,
-                              heightButton: 35,
-                              textSize: 14,
-                              borderColor: Colors.transparent,
-                              iconButton: Icon(Icons.map_outlined, color: Colors.black),
-                              onPressed: () {},
+                            Row(
+                              children: [
+                                // NunutButton(
+                                //   title: "Peta",
+                                //   widthButton: 90,
+                                //   heightButton: 35,
+                                //   textSize: 14,
+                                //   borderColor: Colors.transparent,
+                                //   iconButton: Icon(Icons.map_outlined, color: Colors.black),
+                                //   onPressed: () {},
+                                // ),
+                                rideRequestList.length > 1
+                                    ? NunutButton(
+                                        title: "Book Parkir",
+                                        iconButton: Icon(
+                                          FontAwesomeIcons.squareParking,
+                                          color: Colors.black,
+                                        ),
+                                        widthButton: 140,
+                                        heightButton: 35,
+                                        onPressed: () {
+                                          launchUrl(Uri.parse("https://docs.google.com/forms/d/e/1FAIpQLSdw9J9tls5ebdaByw6DvK5LnCfnYFVWYgsdsgN2YzWqDDH89g/viewform?usp=sf_link"));
+                                        },
+                                      )
+                                    : Container(),
+                              ],
                             ),
                             SizedBox(height: 16),
                             Divider(color: Colors.grey, thickness: 0.5),

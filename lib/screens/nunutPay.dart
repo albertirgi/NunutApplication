@@ -264,7 +264,9 @@ class _NunutPayState extends State<NunutPay> {
                                                         NunutText(
                                                             title: transactions[index].type == "topup"
                                                                 ? "Top Up"
-                                                                : (transactions[index].type == "withdraw" ? "Withdraw" : (type == "Wallet" ? "Nunut Ride" : type)),
+                                                                : (transactions[index].type == "withdraw"
+                                                                    ? "Withdraw"
+                                                                    : (type == "Wallet" && transactions[index].method == "PAYRIDE" ? "Nunut Ride" : transactions[index].method ?? "WALLET")),
                                                             fontWeight: FontWeight.bold),
                                                         NunutText(title: type == "Wallet" ? "Wallet" : "Bank Transfer"),
                                                       ],
@@ -274,10 +276,13 @@ class _NunutPayState extends State<NunutPay> {
                                                       crossAxisAlignment: CrossAxisAlignment.end,
                                                       children: [
                                                         NunutText(
-                                                          title: transactions[index].type == "topup"
+                                                          title: transactions[index].type == "topup" || (transactions[index].type == "WALLET" && transactions[index].method == "REFUND")
                                                               ? "+ " + priceFormat(transactions[index].amount.toString())
                                                               : "- " + priceFormat(transactions[index].amount.toString()),
                                                           fontWeight: FontWeight.bold,
+                                                          color: transactions[index].type == "topup" || (transactions[index].type == "WALLET" && transactions[index].method == "REFUND")
+                                                              ? Colors.green
+                                                              : Colors.red,
                                                         ),
                                                         NunutText(
                                                           title: status,

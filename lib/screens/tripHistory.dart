@@ -25,6 +25,19 @@ class _TripHistoryState extends State<TripHistory> {
   ];
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("Trip History");
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -73,8 +86,7 @@ class _TripHistoryState extends State<TripHistory> {
                             color: Colors.grey,
                             fontSize: 14,
                           ),
-                          contentPadding:
-                              EdgeInsets.only(top: 16, bottom: 16, left: 16),
+                          contentPadding: EdgeInsets.only(top: 16, bottom: 16, left: 16),
                           filled: true,
                           fillColor: Colors.white,
                           enabledBorder: OutlineInputBorder(

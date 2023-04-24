@@ -57,9 +57,15 @@ class _RideShareState extends State<RideShare> {
     widget.fromUKP ? pickUpController.text = "Universitas Kristen Petra" : destinationController.text = "Universitas Kristen Petra";
   }
 
+  @override
+  //dispose
   void dispose() {
-    _scrollController!.removeListener(scrollListener);
     _scrollController!.dispose();
+    mapController!.dispose();
+    pickUpController.dispose();
+    destinationController.dispose();
+    dateController.dispose();
+    timeController.dispose();
     super.dispose();
   }
 
@@ -485,7 +491,7 @@ class _RideShareState extends State<RideShare> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
-                                      width: 230,
+                                      width: MediaQuery.of(context).size.width - 185,
                                       height: 40,
                                       child: TextFormField(
                                         style: TextStyle(fontSize: 12),
@@ -510,7 +516,6 @@ class _RideShareState extends State<RideShare> {
                                               dateController.text = formattedDate;
                                             });
                                           }
-                                          // print("Date: " + dateController.text);
                                         },
                                       ),
                                     ),
@@ -643,7 +648,7 @@ class _RideShareState extends State<RideShare> {
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) => RideBookDetail(
-                                                    rideSchedule: rideScheduleList[index],
+                                                    rideScheduleId: rideScheduleList[index].id!,
                                                   ),
                                                 ),
                                               ).then((value) => onGoBack(value));

@@ -35,13 +35,13 @@ class _PaymentState extends State<Payment> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    checkWalletEnough();
     total = widget.rideSchedule.price!.toDouble();
+    checkWalletEnough();
   }
 
   void checkWalletEnough() {
     setState(() {
-      isWalletEnough = widget.rideSchedule.price! <= double.parse(config.user.wallet!.replaceAll(".", ""));
+      isWalletEnough = total <= double.parse(config.user.wallet!.replaceAll(".", ""));
     });
   }
 
@@ -165,7 +165,7 @@ class _PaymentState extends State<Payment> {
                         children: [
                           NunutText(title: "Diskon", size: 14, color: nunutPrimaryColor4),
                           Spacer(),
-                          NunutText(title: "- " + priceFormat(selectedPromotion!.maximumDiscount.toString()), size: 14, fontWeight: FontWeight.bold, color: nunutPrimaryColor4),
+                          NunutText(title: "- " + priceFormat(selectedPromotion!.discount.toString()), size: 14, fontWeight: FontWeight.bold, color: nunutPrimaryColor4),
                         ],
                       )
                     : Container(),
@@ -181,7 +181,12 @@ class _PaymentState extends State<Payment> {
                           setState(() {
                             useVoucher = true;
                             selectedPromotion = popResult.results;
-                            total = total - selectedPromotion!.maximumDiscount;
+                            total = widget.rideSchedule.price!.toDouble();
+                            total = total - selectedPromotion!.discount;
+                            if (total < 0) {
+                              total = 0;
+                            }
+                            checkWalletEnough();
                           });
                         } else {
                           // pop to previous page
@@ -190,16 +195,7 @@ class _PaymentState extends State<Payment> {
                       }
                     });
                   },
-                  iconButton: useVoucher
-                      ? Icon(
-                          Icons.verified_outlined,
-                          color: Colors.green,
-                        )
-                      : Icon(
-                          Icons.arrow_forward_ios,
-                          color: Colors.white,
-                          size: 14,
-                        ),
+                  iconButton: useVoucher ? Icon(Icons.verified_outlined, color: Colors.green) : Icon(Icons.arrow_forward_ios, color: Colors.white, size: 14),
                   backgroundColor: Colors.white,
                   widthButton: 325,
                   borderRadius: 12,
@@ -214,9 +210,10 @@ class _PaymentState extends State<Payment> {
                     NunutText(title: "Total Harga", fontWeight: FontWeight.bold, size: 14),
                     Spacer(),
                     NunutText(
-                      title: priceFormat(total.toString()),
+                      title: total == 0 ? "Gratis!" : priceFormat(total.toString()),
                       fontWeight: FontWeight.bold,
                       size: 22,
+                      color: total <= 0 ? nunutPrimaryColor4 : Colors.black,
                     ),
                   ],
                 ),
@@ -287,6 +284,7 @@ class _PaymentState extends State<Payment> {
                         'title': "Pembayaran Berhasil!",
                         'description': "Pembayaran Anda Berhasil Dilakukan",
                         'afterBooking': "true",
+                        'isSuccess': "true",
                       });
                     } else {
                       Navigator.pushNamed(context, '/success', arguments: {

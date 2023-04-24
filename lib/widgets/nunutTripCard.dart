@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
-import 'package:text_scroll/text_scroll.dart';
 
 class NunutTripCard extends StatelessWidget {
   final List<String> images;
@@ -19,6 +18,7 @@ class NunutTripCard extends StatelessWidget {
   final bool isActive;
   final bool isUser;
   final Function()? onPressed;
+  final Function()? cancelTap;
 
   NunutTripCard({
     Key? key,
@@ -34,6 +34,7 @@ class NunutTripCard extends StatelessWidget {
     this.onPressed,
     this.isActive = false,
     this.isUser = false,
+    this.cancelTap,
   }) : super(key: key);
 
   final GlobalKey widgetKey = GlobalKey();
@@ -158,12 +159,12 @@ class NunutTripCard extends StatelessWidget {
               child: Container(
                 margin: EdgeInsets.only(right: 16, bottom: 8),
                 child: NunutButton(
-                  title: isUser ? "LIHAT" : (isActive ? "BERANGKAT" : "SELESAI"),
+                  title: isUser ? "Lihat" : (isActive ? "Berangkat" : "Selesai"),
                   backgroundColor: Colors.black,
                   textColor: Colors.white,
                   textSize: 14,
                   onPressed: isUser ? onPressed! : (isActive ? onPressed! : () {}),
-                  iconButton: Icon(Icons.verified, size: 16),
+                  iconButton: isUser ? null : (isActive ? null : Icon(Icons.verified, size: 16)),
                   widthButton: 130,
                   heightButton: 30,
                 ),
@@ -207,10 +208,9 @@ class NunutTripCard extends StatelessWidget {
                             ? Container(
                                 margin: EdgeInsets.only(top: 5),
                                 child: InkWell(
-                                    onTap: () {
-                                      Navigator.pushNamed(context, '/batalkanTumpangan');
-                                    },
-                                    child: NunutText(title: "ingin membatalkan?", size: 10, textDecoration: TextDecoration.underline)),
+                                  onTap: cancelTap,
+                                  child: NunutText(title: "ingin membatalkan?", size: 10, textDecoration: TextDecoration.underline),
+                                ),
                               )
                             : Container()),
                   ],

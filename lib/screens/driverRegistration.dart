@@ -44,6 +44,14 @@ class _DriverRegistrationState extends State<DriverRegistration> {
   File? _profilePicture = null;
 
   @override
+  void dispose() {
+    fullName.dispose();
+    nik.dispose();
+    noTelp.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     UserModel user = ModalRoute.of(context)!.settings.arguments as UserModel;
 

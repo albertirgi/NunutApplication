@@ -6,6 +6,7 @@ import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:nunut_application/configuration.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class OfferMenu extends StatefulWidget {
   const OfferMenu({super.key});
@@ -21,6 +22,16 @@ class _OfferMenuState extends State<OfferMenu> {
   TextEditingController _destinationController = TextEditingController();
   TextEditingController _vehicleController = TextEditingController();
   int _capacityValue = 1;
+
+  @override
+  void dispose() {
+    _dateController.dispose();
+    _timeController.dispose();
+    _meetingPointController.dispose();
+    _destinationController.dispose();
+    _vehicleController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +60,8 @@ class _OfferMenuState extends State<OfferMenu> {
                   fontWeight: FontWeight.bold,
                 ),
                 SizedBox(height: 10),
-                NunutText(title: "Yuk tawarkan tumpangan!", isTitle: true, size: 32),
+                NunutText(
+                    title: "Yuk tawarkan tumpangan!", isTitle: true, size: 32),
                 // BorderedText(
                 //   child: Text(
                 //     "Yuk tawarkan tumpangan!",
@@ -95,7 +107,8 @@ class _OfferMenuState extends State<OfferMenu> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.of(context).pushNamed('/addRideSchedule', arguments: true);
+                          Navigator.of(context)
+                              .pushNamed('/addRideSchedule', arguments: true);
                         },
                         child: Column(
                           children: [
@@ -187,11 +200,7 @@ class _OfferMenuState extends State<OfferMenu> {
                                 borderRadius: BorderRadius.circular(20),
                                 color: nunutPrimaryColor,
                               ),
-                              child: Icon(
-                                Icons.car_crash,
-                                size: 50,
-                                color: Colors.black,
-                              ),
+                              child: Icon(FontAwesomeIcons.car, size: 30),
                             ),
                             SizedBox(
                               height: 10,

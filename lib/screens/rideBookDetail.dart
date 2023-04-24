@@ -1,17 +1,19 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/configuration.dart';
-import 'package:nunut_application/functions.dart';
 import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/resources/rideScheduleApi.dart';
 import 'package:nunut_application/screens/payment.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
+import 'package:shimmer/shimmer.dart';
 
 class RideBookDetail extends StatefulWidget {
-  RideSchedule rideSchedule;
-  RideBookDetail({super.key, required this.rideSchedule});
+  String rideScheduleId;
+  RideBookDetail({super.key, required this.rideScheduleId});
 
   @override
   State<RideBookDetail> createState() => _RideBookDetailState();
@@ -21,12 +23,26 @@ class _RideBookDetailState extends State<RideBookDetail> {
   int availableSeat = 0;
   RideSchedule rideSchedule = RideSchedule();
   bool isBookmarking = false;
+  bool rideScheduleLoading = true;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    rideSchedule = widget.rideSchedule;
+    initRideScheduleDetail();
+  }
+
+  initRideScheduleDetail() async {
+    setState(() {
+      rideScheduleLoading = true;
+    });
+
+    rideSchedule = RideSchedule();
+    rideSchedule = await rideScheduleApi.getRideScheduleById(id: widget.rideScheduleId, parameter: "user_view=true&ride_request&user=${config.user.id}&driver&vehicle", checkUrl: true);
     availableSeat = rideSchedule.capacity! - rideSchedule.rideRequest!.length;
+
+    setState(() {
+      rideScheduleLoading = false;
+    });
   }
 
   @override
@@ -46,40 +62,40 @@ class _RideBookDetailState extends State<RideBookDetail> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.black,
-                ),
-                child: IconButton(
-                  onPressed: () {
-                    String number = rideSchedule.driver.phoneNumber!;
-                    openwhatsapp(context, number);
-                  },
-                  icon: Icon(
-                    Icons.chat_bubble_outline_outlined,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              SizedBox(width: 16),
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.black,
-                ),
-                child: IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.call_rounded,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
+              // Container(
+              //   width: 40,
+              //   height: 40,
+              //   decoration: BoxDecoration(
+              //     shape: BoxShape.circle,
+              //     color: Colors.black,
+              //   ),
+              //   child: IconButton(
+              //     onPressed: () {
+              //       String number = rideSchedule.driver.phoneNumber!;
+              //       openwhatsapp(context, number);
+              //     },
+              //     icon: Icon(
+              //       Icons.chat_bubble_outline_outlined,
+              //       color: Colors.white,
+              //     ),
+              //   ),
+              // ),
+              // SizedBox(width: 16),
+              // Container(
+              //   width: 40,
+              //   height: 40,
+              //   decoration: BoxDecoration(
+              //     shape: BoxShape.circle,
+              //     color: Colors.black,
+              //   ),
+              //   child: IconButton(
+              //     onPressed: () {},
+              //     icon: Icon(
+              //       Icons.call_rounded,
+              //       color: Colors.white,
+              //     ),
+              //   ),
+              // ),
             ],
           ),
           SizedBox(height: 32),
@@ -138,7 +154,6 @@ class _RideBookDetailState extends State<RideBookDetail> {
               ],
             ),
           ),
-          SizedBox(height: 16),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 30),
             child: Row(
@@ -314,35 +329,246 @@ class _RideBookDetailState extends State<RideBookDetail> {
                 icon: Icon(Icons.arrow_back),
               ),
             ),
-            Align(
-              alignment: Alignment.topCenter,
-              child: Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 10,
-                          color: Colors.grey,
-                          spreadRadius: 0.1,
+            !rideScheduleLoading
+                ? Align(
+                    alignment: Alignment.topCenter,
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 10,
+                                color: Colors.grey,
+                                spreadRadius: 0.1,
+                              ),
+                            ],
+                          ),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: 110,
+                            child: CircleAvatar(
+                              backgroundImage: NetworkImage(rideSchedule.driver.image),
+                              radius: 100,
+                            ), //CircleAvatar
+                          ),
                         ),
+                        content(),
                       ],
                     ),
-                    child: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: 110,
-                      child: CircleAvatar(
-                        backgroundImage: NetworkImage(rideSchedule.driver.image),
-                        radius: 100,
-                      ), //CircleAvatar
+                  )
+                // shimmer loading
+                : Align(
+                    alignment: Alignment.topCenter,
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 10,
+                                color: Colors.grey,
+                                spreadRadius: 0.1,
+                              ),
+                            ],
+                          ),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: 110,
+                            child: Shimmer.fromColors(
+                              baseColor: Colors.grey[200]!,
+                              highlightColor: Colors.grey[350]!,
+                              period: Duration(milliseconds: 800),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.grey[200],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Column(
+                          children: [
+                            SizedBox(height: 24),
+                            NunutText(title: "NUNUT SAMA"),
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey[200]!,
+                              highlightColor: Colors.grey[350]!,
+                              period: Duration(milliseconds: 800),
+                              child: Container(
+                                height: 20,
+                                width: Random().nextInt(60) + 150,
+                                color: Colors.grey[200],
+                              ),
+                            ),
+                            SizedBox(height: 32),
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 30),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: NunutText(title: "TANGGAL", size: 12),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: NunutText(title: "JAM BERANGKAT", size: 12),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 30),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: Shimmer.fromColors(
+                                      baseColor: Colors.grey[200]!,
+                                      highlightColor: Colors.grey[350]!,
+                                      period: Duration(milliseconds: 800),
+                                      child: Container(
+                                        height: 20,
+                                        width: Random().nextInt(60) + 70,
+                                        color: Colors.grey[200],
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 8),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Shimmer.fromColors(
+                                      baseColor: Colors.grey[200]!,
+                                      highlightColor: Colors.grey[350]!,
+                                      period: Duration(milliseconds: 800),
+                                      child: Container(
+                                        height: 20,
+                                        width: Random().nextInt(60) + 70,
+                                        color: Colors.grey[200],
+                                      ),
+                                    ),
+                                  ),
+                                  // Expanded(
+                                  //   flex: 1,
+                                  //   child: NunutText(title: availableSeat.toString(), fontWeight: FontWeight.bold),
+                                  // ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 16),
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 30),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: NunutText(title: "MEETING POINT", size: 12),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: NunutText(title: "DESTINATION POINT", size: 12),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 16),
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 30),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: Shimmer.fromColors(
+                                      baseColor: Colors.grey[200]!,
+                                      highlightColor: Colors.grey[350]!,
+                                      period: Duration(milliseconds: 800),
+                                      child: Container(
+                                        height: 20,
+                                        width: Random().nextInt(60) + 70,
+                                        color: Colors.grey[200],
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 8),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Shimmer.fromColors(
+                                      baseColor: Colors.grey[200]!,
+                                      highlightColor: Colors.grey[350]!,
+                                      period: Duration(milliseconds: 800),
+                                      child: Container(
+                                        height: 20,
+                                        width: Random().nextInt(60) + 70,
+                                        color: Colors.grey[200],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 16),
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 30),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        child: NunutText(title: "KAPASITAS TERSISA", size: 12),
+                                      ),
+                                      Expanded(
+                                        child: SizedBox(),
+                                        flex: 1,
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        child: Shimmer.fromColors(
+                                          baseColor: Colors.grey[200]!,
+                                          highlightColor: Colors.grey[350]!,
+                                          period: Duration(milliseconds: 800),
+                                          child: Container(
+                                            height: 20,
+                                            width: Random().nextInt(60) + 100,
+                                            color: Colors.grey[200],
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: SizedBox(),
+                                        flex: 1,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 32),
+                            NunutButton(
+                              widthButton: 200,
+                              heightButton: 45,
+                              borderColor: Colors.white,
+                              title: "Nunut!",
+                              fontWeight: FontWeight.bold,
+                              onPressed: () {},
+                            ),
+                          ],
+                        )
+                      ],
                     ),
                   ),
-                  content(),
-                ],
-              ),
-            ),
             Align(
               alignment: Alignment.topRight,
               child: Container(
@@ -357,7 +583,7 @@ class _RideBookDetailState extends State<RideBookDetail> {
                   color: Colors.white,
                 ),
                 child: IconButton(
-                  onPressed: !isBookmarking
+                  onPressed: !isBookmarking && !rideScheduleLoading
                       ? () async {
                           setState(() {
                             isBookmarking = true;
@@ -380,8 +606,8 @@ class _RideBookDetailState extends State<RideBookDetail> {
                         }
                       : null,
                   icon: Icon(
-                    rideSchedule.isBookmarked! ? Icons.bookmark : Icons.bookmark_border,
-                    color: rideSchedule.isBookmarked! ? nunutPrimaryColor : Colors.black,
+                    rideSchedule.isBookmarked! && !rideScheduleLoading ? Icons.bookmark : Icons.bookmark_border,
+                    color: rideSchedule.isBookmarked! && !rideScheduleLoading ? nunutPrimaryColor : Colors.black,
                   ),
                 ),
               ),

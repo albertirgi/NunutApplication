@@ -116,6 +116,35 @@ class RideScheduleApi {
     return rideSchedule;
   }
 
+  Future<bool> deleteRideScheduleById({required String rideScheduleId, required String title, required String description, bool checkUrl = false}) async {
+    var url = Uri.parse(config.baseUrl + '/cancel-driver');
+    var body = jsonEncode({
+      "ride_schedule_id": rideScheduleId,
+      "title": title,
+      "description": description,
+      "driver_id": config.user.driverId,
+    });
+
+    var response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${config.user.token}',
+      },
+      body: body,
+    );
+    if (checkUrl) print(url);
+
+    Result result;
+    result = Result.fromJson(json.decode(response.body));
+
+    if (result.status == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   Future<bool> updateBookmark({required String rideScheduleId, required String userId}) async {
     var url = Uri.parse(config.baseUrl + '/bookmark/');
     var response = await http.post(

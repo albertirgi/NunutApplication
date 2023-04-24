@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/models/mresult.dart';
@@ -36,6 +37,35 @@ class RideRequestApi {
     return rideRequestList;
   }
 
+  Future<bool> deleteRideRequestById({required String rideRequestId, required String title, required String description, bool checkUrl = false}) async {
+    var url = Uri.parse(config.baseUrl + '/cancel-user');
+    var body = jsonEncode({
+      "ride_request_id": rideRequestId,
+      "title": title,
+      "description": description,
+      "user_id": config.user.id,
+    });
+
+    var response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${config.user.token}',
+      },
+      body: body,
+    );
+    if (checkUrl) print(url);
+
+    Result result;
+    result = Result.fromJson(json.decode(response.body));
+
+    if (result.status == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   Future<List<RideSchedule>> getOrderList({String parameter = "", bool checkUrl = false, int page = 0}) async {
     String _parameter = "";
     if (page > 0) _parameter = "/list/$page";
@@ -60,6 +90,7 @@ class RideRequestApi {
     if (result.status == 200) {
       result.data.forEach((item) {
         rideScheduleList.add(RideSchedule.fromJson(item));
+        rideScheduleList.last.priceAfter = item['price_after'];
       });
     }
     return rideScheduleList;

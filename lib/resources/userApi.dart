@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,7 +8,6 @@ import 'package:nunut_application/functions.dart';
 import 'package:nunut_application/models/mresult.dart';
 import 'package:nunut_application/models/muser.dart';
 import 'package:http/http.dart' as http;
-import 'package:nunut_application/resources/authApi.dart';
 import 'package:nunut_application/resources/midtransApi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/mwallet.dart';
@@ -80,11 +78,9 @@ class UserService {
   Future<void> updateUser({required UserModel user, File? profile_picture}) async {
     try {
       User? userAuth = FirebaseAuth.instance.currentUser;
-      DocumentReference docRef = collectionRef.doc(userAuth!.uid);
-      var url = Uri.parse(config.baseUrl + '/user/' + userAuth.uid);
+      var url = Uri.parse(config.baseUrl + '/user/' + userAuth!.uid);
       var request = http.MultipartRequest('PUT', url);
       request.fields['name'] = user.name.toString();
-      // request.fields['email'] = user.email.toString();
       request.fields['phone'] = user.phone.toString();
       request.fields['nik'] = user.nik.toString();
       request.fields['user_id'] = userAuth.uid;
@@ -125,13 +121,9 @@ class UserService {
         driverId: config.user.driverId,
         wallet: config.user.wallet,
         token: config.user.token,
+        driverStatus: config.user.driverStatus,
       );
       config.user = newUser;
-
-      // await docRef
-      //     .update(user.toJson())
-      //     .whenComplete(() => print("Data Berhasil Diupdate"))
-      //     .catchError((e) => print(e.toString()));
     } catch (e) {
       throw e;
     }

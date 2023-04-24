@@ -14,6 +14,12 @@ class _ChatInsidePageState extends State<ChatInsidePage> {
   bool _keyboardVisible = false;
 
   @override
+  void dispose() {
+    messageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -38,10 +44,7 @@ class _ChatInsidePageState extends State<ChatInsidePage> {
                 height: 45,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  image: DecorationImage(
-                      image: NetworkImage(
-                          "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiO"),
-                      fit: BoxFit.fill),
+                  image: DecorationImage(image: NetworkImage("https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiO"), fit: BoxFit.fill),
                 ),
               ),
               SizedBox(

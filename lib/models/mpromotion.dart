@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final promotion = promotionFromJson(jsonString);
-
 import 'dart:convert';
 
 Promotion promotionFromJson(String str) => Promotion.fromJson(json.decode(str));
@@ -53,7 +49,7 @@ class PromotionModel {
   List<String> tnc;
   String image;
   String type;
-  dynamic discount;
+  int discount;
 
   factory PromotionModel.fromJson(Map<String, dynamic> json) => PromotionModel(
         voucherId: json["voucher_id"],

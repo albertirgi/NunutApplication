@@ -1,17 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/configuration.dart';
-import 'package:nunut_application/models/mriderequest.dart';
 import 'package:nunut_application/models/mrideschedule.dart';
+import 'package:nunut_application/resources/rideRequestApi.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
+import 'package:nunut_application/widgets/popUpLoading.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:nunut_application/functions.dart';
-import 'dart:developer';
 
-class BookingDetail extends StatelessWidget {
+class BookingDetail extends StatefulWidget {
   final RideSchedule rideSchedule;
-  const BookingDetail({super.key, required this.rideSchedule});
+  BookingDetail({super.key, required this.rideSchedule});
+
+  @override
+  State<StatefulWidget> createState() => _BookingDetailState();
+}
+
+class _BookingDetailState extends State<BookingDetail> {
+  int difference = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    DateTime now = DateTime.now();
+    DateTime departureTime = DateTime.parse(dateFormat(widget.rideSchedule.date!) + " " + widget.rideSchedule.time!);
+    difference = departureTime.difference(now).inHours;
+  }
 
   Widget bookingDetailContent(String headingTitle, String contentData) {
     return Container(
@@ -50,7 +66,7 @@ class BookingDetail extends StatelessWidget {
               Expanded(
                 flex: 4,
                 child: NunutText(
-                  title: rideSchedule.driver!.name!,
+                  title: widget.rideSchedule.driver!.name!,
                   size: 20,
                   fontWeight: FontWeight.bold,
                 ),
@@ -64,7 +80,7 @@ class BookingDetail extends StatelessWidget {
                 ),
                 child: InkWell(
                   onTap: () {
-                    String number = rideSchedule.driver != null ? rideSchedule.driver.phone.toString().replaceFirst("08", "6") : "6282256640981";
+                    String number = widget.rideSchedule.driver != null ? "+62" + widget.rideSchedule.driver.phone! : "6282256640981";
                     openwhatsapp(context, number);
                   },
                   child: Icon(
@@ -74,28 +90,10 @@ class BookingDetail extends StatelessWidget {
                   ),
                 ),
               ),
-              // Expanded(
-              //   flex: 1,
-              //   child: Container(
-              //     padding: EdgeInsets.all(8),
-              //     decoration: BoxDecoration(
-              //       shape: BoxShape.circle,
-              //       color: Colors.black,
-              //     ),
-              //     child: InkWell(
-              //       onTap: () {},
-              //       child: Icon(
-              //         Icons.call_outlined,
-              //         color: Colors.white,
-              //         size: 20,
-              //       ),
-              //     ),
-              //   ),
-              // ),
             ],
           ),
           NunutText(
-            title: rideSchedule.vehicle!.transportationType! + " | " + rideSchedule.vehicle!.licensePlate!,
+            title: widget.rideSchedule.vehicle!.transportationType! + " | " + widget.rideSchedule.vehicle!.licensePlate!,
             color: Colors.grey[700],
             size: 14,
           ),
@@ -106,19 +104,13 @@ class BookingDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String rideScheduleId = "12345";
-    if (rideSchedule.id!.length < 5) {
-      rideScheduleId = "12345";
-    } else {
-      rideScheduleId = rideSchedule.id.toString().substring(rideSchedule.id!.length - 5);
-    }
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
         elevation: 0,
         toolbarHeight: 100,
         centerTitle: true,
-        title: NunutText(title: "Booking Nunut #" + rideScheduleId, fontWeight: FontWeight.bold),
+        title: NunutText(title: "Detail Booking Nunut", fontWeight: FontWeight.bold),
         backgroundColor: nunutPrimaryColor,
       ),
       body: SafeArea(
@@ -127,11 +119,12 @@ class BookingDetail extends StatelessWidget {
           children: [
             bookingDetailContent("Penumpang", config.user.name),
             driverBookingDetailContent("Driver", context),
-            bookingDetailContent("Tanggal", rideSchedule.date.toString()),
-            bookingDetailContent("Jam Berangkat", rideSchedule.time.toString()),
-            bookingDetailContent("Meeting Point", rideSchedule.meetingPoint!.name!),
-            bookingDetailContent("Destination", rideSchedule.destination!.name!),
-            bookingDetailContent("Harga", "IDR " + priceFormat(rideSchedule.price.toString())),
+            bookingDetailContent("Tanggal", widget.rideSchedule.date.toString()),
+            bookingDetailContent("Jam Berangkat", widget.rideSchedule.time.toString()),
+            bookingDetailContent("Meeting Point", widget.rideSchedule.meetingPoint!.name!),
+            bookingDetailContent("Destination", widget.rideSchedule.destination!.name!),
+            widget.rideSchedule.price != widget.rideSchedule.priceAfter ? bookingDetailContent("Harga Nunut Sebelum Diskon", "IDR " + priceFormat(widget.rideSchedule.price.toString())) : Container(),
+            bookingDetailContent("Harga Akhir", "IDR " + priceFormat(widget.rideSchedule.priceAfter.toString())),
             SizedBox(height: 32),
             NunutButton(
               title: "Lihat QR Code",
@@ -161,7 +154,7 @@ class BookingDetail extends StatelessWidget {
                             ),
                           ),
                           QrImage(
-                            data: rideSchedule.rideRequestList!['ride_request_id'],
+                            data: widget.rideSchedule.rideRequestList!['ride_request_id'],
                             // embeddedImage: AssetImage("assets/icon.png"),
                             // embeddedImageStyle: QrEmbeddedImageStyle(
                             //   size: Size(75, 75),
@@ -187,11 +180,59 @@ class BookingDetail extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
             SizedBox(height: 16),
+            widget.rideSchedule.isActive!
+                ? NunutButton(
+                    title: "Batalkan Booking",
+                    fontWeight: FontWeight.bold,
+                    borderRadius: 8,
+                    widthBorder: 0,
+                    borderColor: Colors.transparent,
+                    backgroundColor: difference > 3 ? nunutPrimaryColor3.withOpacity(0.7) : Colors.grey.withOpacity(0.7),
+                    onPressed: () async {
+                      if (difference < 3) {
+                        Fluttertoast.showToast(
+                          msg: "Maaf, anda tidak dapat membatalkan booking 3 jam sebelum keberangkatan",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
+                      } else {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: true,
+                          builder: (BuildContext context) {
+                            return PopUpLoading(
+                              title: "Konfirmasi",
+                              subtitle: "Apakah anda yakin ingin membatalkan booking?",
+                              isConfirmation: true,
+                            );
+                          },
+                        ).then((value) async {
+                          if (value) {
+                            Navigator.pushNamed(context, '/pengaduanKendala', arguments: {
+                              'ride_request_id': widget.rideSchedule.rideRequestList!['ride_request_id'],
+                              'title': 'Pembatalan Booking',
+                              'lockTitle': 'true',
+                              'isiTitle': 'Pembatalan Booking',
+                            });
+                          }
+                        });
+                      }
+                    },
+                  )
+                : Container(),
+            SizedBox(height: 16),
             NunutButton(
               title: "Ada Masalah?",
               fontWeight: FontWeight.bold,
               onPressed: () {
-                Navigator.pushNamed(context, '/pengaduanKendala', arguments: {'rideSchedule': rideSchedule});
+                Navigator.pushNamed(context, '/pengaduanKendala', arguments: {
+                  'ride_request_id': widget.rideSchedule.rideRequestList!['ride_request_id'],
+                  'title': 'Pengaduan Kendala',
+                });
               },
               borderRadius: 8,
               widthBorder: 0,

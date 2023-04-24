@@ -15,6 +15,7 @@ class NunutTextFormField extends StatelessWidget {
   final TextInputType keyboardType;
   final Widget suffixIcon;
   final bool is_currency;
+  final bool enabled;
 
   const NunutTextFormField({
     super.key,
@@ -26,6 +27,7 @@ class NunutTextFormField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.suffixIcon = const SizedBox(),
     this.is_currency = false,
+    this.enabled = true,
   });
 
   @override
@@ -67,6 +69,7 @@ class NunutTextFormField extends StatelessWidget {
                 borderSide: BorderSide(color: Colors.black, width: width),
               ),
               suffixIcon: suffixIcon,
+              enabled: enabled,
             ),
           ),
         ],

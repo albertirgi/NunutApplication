@@ -1,11 +1,9 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/configuration.dart';
-import 'package:nunut_application/models/mdriver.dart';
 import 'package:nunut_application/resources/driverApi.dart';
 import 'package:nunut_application/screens/rideShare.dart';
 import 'package:nunut_application/widgets/customDialog.dart';
@@ -13,9 +11,7 @@ import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:flutter_dash/flutter_dash.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
-import 'package:intl/intl.dart';
 import '../functions.dart';
-import '../models/mwallet.dart';
 import '../resources/midtransApi.dart';
 
 class Home extends StatefulWidget {
@@ -32,9 +28,9 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback((_) async {
-    //   initSaldo();
-    // });
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      onRefresh();
+    });
   }
 
   FutureOr onGoBack(dynamic value) {
@@ -360,7 +356,9 @@ class _HomeState extends State<Home> {
                           children: [
                             InkWell(
                               child: NunutText(title: "Pelajari syaratnya", size: 12, color: Colors.white),
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.pushNamed(context, '/termsandcons');
+                              },
                             ),
                             Icon(Icons.arrow_forward_ios, size: 15, color: Colors.white)
                           ],

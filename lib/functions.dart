@@ -1,9 +1,7 @@
-import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/models/mmaplocation.dart';
@@ -13,7 +11,7 @@ import 'package:intl/intl.dart';
 openwhatsapp(BuildContext context, String number) async {
   // var whatsappURl_android = "https://wa.me/" + number;
   // var whatappURL_ios = "https://api.whatsapp.com/send?phone=$number";
-  launchUrl(Uri.parse('https://wa.me/$number?text=Hi'), mode: LaunchMode.externalApplication);
+  launchUrl(Uri.parse('https://wa.me/$number?text=Halo, saya ${config.user.name} penumpang nunut ...'), mode: LaunchMode.externalApplication);
   // if (Platform.isIOS) {
   //   // for iOS phone only
   //   if (await canLaunchUrl(Uri.parse(whatappURL_ios))) {
@@ -115,6 +113,55 @@ String priceFormat(String price) {
   double numValue = double.parse(price);
   NumberFormat currencyFormatter = NumberFormat.simpleCurrency(locale: "id", decimalDigits: 0, name: "");
   return currencyFormatter.format(numValue);
+}
+
+//from April 1, 2021 to 2021-04-01
+String dateFormat(String date) {
+  String day;
+  String month;
+  String year;
+  day = date.split(" ")[1].split(",")[0];
+  month = date.split(" ")[0];
+  year = date.split(" ")[2];
+  switch (month) {
+    case "January":
+      month = "01";
+      break;
+    case "February":
+      month = "02";
+      break;
+    case "March":
+      month = "03";
+      break;
+    case "April":
+      month = "04";
+      break;
+    case "May":
+      month = "05";
+      break;
+    case "June":
+      month = "06";
+      break;
+    case "July":
+      month = "07";
+      break;
+    case "August":
+      month = "08";
+      break;
+    case "September":
+      month = "09";
+      break;
+    case "October":
+      month = "10";
+      break;
+    case "November":
+      month = "11";
+      break;
+    case "December":
+      month = "12";
+      break;
+  }
+  return year + "-" + month + "-" + day;
 }
 
 class PopWithResults<T> {

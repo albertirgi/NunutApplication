@@ -148,7 +148,7 @@ class _PromotionListState extends State<PromotionList> {
                                 },
                                 child: CouponCard(
                                   title:
-                                      "Diskon Rp. ${priceFormat(promotionList[index].maximumDiscount.toString())} dengan minimal transaksi Rp. ${priceFormat(promotionList[index].minimumPuchase.toString())}",
+                                      "Diskon Rp. ${priceFormat(promotionList[index].discount.toString())} dengan minimal transaksi Rp. ${priceFormat(promotionList[index].minimumPuchase.toString())}",
                                   imagePath: promotionList[index].image,
                                   date: NunutText(
                                     title: promotionList[index].expiredAt,
