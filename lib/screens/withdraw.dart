@@ -386,7 +386,7 @@ class _WithdrawState extends State<Withdraw> {
                                         decoration: InputDecoration(
                                           contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                                           isDense: true,
-                                          hintText: "e.g. L 1234 XX",
+                                          hintText: "e.g. 581XXXXX",
                                           hintStyle: TextStyle(
                                             color: Colors.grey,
                                             fontSize: 12,
@@ -433,7 +433,7 @@ class _WithdrawState extends State<Withdraw> {
                                         decoration: InputDecoration(
                                           contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                                           isDense: true,
-                                          hintText: "e.g. 11/2024",
+                                          hintText: "e.g. John Doe",
                                           hintStyle: TextStyle(
                                             color: Colors.grey,
                                             fontSize: 12,
