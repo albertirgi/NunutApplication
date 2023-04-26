@@ -47,7 +47,7 @@ class _NunutPayState extends State<NunutPay> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
-        Navigator.popAndPushNamed(context, '/main');
+        Navigator.pop(context);
         return Future.value(false);
       },
       child: Scaffold(
