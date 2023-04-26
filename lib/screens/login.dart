@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/configuration.dart';
@@ -96,31 +97,36 @@ class _LoginPageState extends State<LoginPage> {
                   title: "Masuk",
                   widthButton: 200,
                   onPressed: () async {
-                    if (username.text == "" || password.text == "") {
-                      Fluttertoast.showToast(msg: "Email dan password harus diisi", textColor: Colors.white);
+                    final connectivityResult = await (Connectivity().checkConnectivity());
+                    if (connectivityResult == ConnectivityResult.none) {
+                      Fluttertoast.showToast(msg: "Mohon cek kembali koneksi internet anda", textColor: Colors.white);
                     } else {
-                      showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          return PopUpLoading(title: "Sedang Login...", subtitle: "Harap Menunggu...");
-                        },
-                      );
-
-                      String token = await AuthService.getToken(username.text, password.text);
-                      config.user.token = token;
-                      tmpUser = await AuthService.signIn(email: username.text, password: password.text, context: context);
-
-                      if (tmpUser.email != "") {
-                        config.user = tmpUser;
-                        config.user.token = token;
-                        SharedPreferences prefs = await SharedPreferences.getInstance();
-                        prefs.setString("email", config.user.email);
-                        prefs.setString("token", config.user.token!);
-                        prefs.setString("id", config.user.id!);
-                        Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
+                      if (username.text == "" || password.text == "") {
+                        Fluttertoast.showToast(msg: "Email dan password harus diisi", textColor: Colors.white);
                       } else {
-                        Fluttertoast.showToast(msg: "Email atau password salah", textColor: Colors.white);
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return PopUpLoading(title: "Sedang Login...", subtitle: "Harap Menunggu...");
+                          },
+                        );
+
+                        String token = await AuthService.getToken(username.text, password.text);
+                        config.user.token = token;
+                        tmpUser = await AuthService.signIn(email: username.text, password: password.text, context: context);
+
+                        if (tmpUser.email != "") {
+                          config.user = tmpUser;
+                          config.user.token = token;
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          prefs.setString("email", config.user.email);
+                          prefs.setString("token", config.user.token!);
+                          prefs.setString("id", config.user.id!);
+                          Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
+                        } else {
+                          Fluttertoast.showToast(msg: "Email atau password salah", textColor: Colors.white);
+                        }
                       }
                     }
                   },

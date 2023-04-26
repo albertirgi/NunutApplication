@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -26,6 +27,20 @@ class _MainPageState extends State<MainPage> {
     // TODO: implement initState
     config.selectedNavbar = 1;
     super.initState();
+    final connectivityResult = Connectivity().checkConnectivity().then(
+          (value) => {
+            if (value == ConnectivityResult.none)
+              Fluttertoast.showToast(
+                msg: "Mohon periksa kembali koneksi internet anda",
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 2,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0,
+              )
+          },
+        );
   }
 
   @override
