@@ -27,16 +27,32 @@ class NunutPay extends StatefulWidget {
 }
 
 class _NunutPayState extends State<NunutPay> {
-  bool isLoading = true;
+  bool transactionLoading = true;
+  bool isLoading = false;
   bool userGenerated = false;
   Wallet wallet = Wallet();
   int walletBalance = 0;
   List<Transaction> transactions = [];
+  List<Transaction> transactionPageList = [];
   int transactionLength = 0;
+  String walletId = "";
+  int _page = 1;
+  bool done = false;
+  ScrollController? _scrollController;
+
   @override
   void initState() {
     super.initState();
+    _scrollController = ScrollController();
+    _scrollController!.addListener(scrollListener);
     getUserInfo();
+  }
+
+  @override
+  void dispose() {
+    _scrollController!.removeListener(scrollListener);
+    _scrollController!.dispose();
+    super.dispose();
   }
 
   FutureOr onGoBack(dynamic value) {
@@ -56,6 +72,7 @@ class _NunutPayState extends State<NunutPay> {
             onRefresh();
           },
           child: SingleChildScrollView(
+            controller: _scrollController,
             child: Stack(
               children: [
                 Positioned(
@@ -226,7 +243,7 @@ class _NunutPayState extends State<NunutPay> {
                               child: Column(
                                 children: [
                                   NunutText(title: "Transaksi", size: 20, fontWeight: FontWeight.w500),
-                                  isLoading
+                                  transactionLoading
                                       ? Container(
                                           padding: EdgeInsets.all(40),
                                           child: Center(
@@ -246,62 +263,74 @@ class _NunutPayState extends State<NunutPay> {
                                                 ),
                                               ),
                                             )
-                                          : ListView.separated(
-                                              physics: NeverScrollableScrollPhysics(),
-                                              shrinkWrap: true,
-                                              itemBuilder: (context, index) {
-                                                String status = transactions[index].status ?? "Pending";
-                                                status = status[0].toUpperCase() + status.toLowerCase().substring(1);
-                                                String type = transactions[index].type![0].toUpperCase() + transactions[index].type!.toLowerCase().substring(1);
-                                                return Row(
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                                  children: [
-                                                    Icon(Icons.arrow_upward),
-                                                    SizedBox(width: 10),
-                                                    Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                          : Column(
+                                              children: [
+                                                ListView.separated(
+                                                  physics: NeverScrollableScrollPhysics(),
+                                                  shrinkWrap: true,
+                                                  itemBuilder: (context, index) {
+                                                    String status = transactions[index].status ?? "Pending";
+                                                    status = status[0].toUpperCase() + status.toLowerCase().substring(1);
+                                                    String type = transactions[index].type![0].toUpperCase() + transactions[index].type!.toLowerCase().substring(1);
+                                                    return Row(
+                                                      crossAxisAlignment: CrossAxisAlignment.center,
                                                       children: [
-                                                        NunutText(
-                                                            title: transactions[index].type == "topup"
-                                                                ? "Top Up"
-                                                                : (transactions[index].type == "withdraw"
-                                                                    ? "Withdraw"
-                                                                    : (type == "Wallet" && transactions[index].method == "PAYRIDE" ? "Nunut Ride" : transactions[index].method ?? "WALLET")),
-                                                            fontWeight: FontWeight.bold),
-                                                        NunutText(title: type == "Wallet" ? "Wallet" : "Bank Transfer"),
+                                                        Icon(Icons.arrow_upward),
+                                                        SizedBox(width: 10),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: [
+                                                            NunutText(
+                                                                title: transactions[index].type == "topup"
+                                                                    ? "Top Up"
+                                                                    : (transactions[index].type == "withdraw"
+                                                                        ? "Withdraw"
+                                                                        : (type == "Wallet" && transactions[index].method == "PAYRIDE" ? "Nunut Ride" : transactions[index].method ?? "WALLET")),
+                                                                fontWeight: FontWeight.bold),
+                                                            NunutText(title: type == "Wallet" ? "Wallet" : "Bank Transfer"),
+                                                          ],
+                                                        ),
+                                                        Spacer(),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                                          children: [
+                                                            NunutText(
+                                                              title: transactions[index].type == "topup" || (transactions[index].type == "WALLET" && transactions[index].method == "REFUND")
+                                                                  ? "+ " + priceFormat(transactions[index].amount.toString())
+                                                                  : "- " + priceFormat(transactions[index].amount.toString()),
+                                                              fontWeight: FontWeight.bold,
+                                                              color: transactions[index].type == "topup" || (transactions[index].type == "WALLET" && transactions[index].method == "REFUND")
+                                                                  ? Colors.green
+                                                                  : Colors.red,
+                                                            ),
+                                                            NunutText(
+                                                              title: status,
+                                                              fontWeight: FontWeight.bold,
+                                                            ),
+                                                            NunutText(
+                                                              title: DateFormat("d MMMM yyyy, hh:MM", "id_ID").format(transactions[index].transaction_time!), //"20 Desember 2022, 12:50",
+                                                              color: Colors.grey,
+                                                              size: 12,
+                                                            ),
+                                                          ],
+                                                        ),
                                                       ],
-                                                    ),
-                                                    Spacer(),
-                                                    Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.end,
-                                                      children: [
-                                                        NunutText(
-                                                          title: transactions[index].type == "topup" || (transactions[index].type == "WALLET" && transactions[index].method == "REFUND")
-                                                              ? "+ " + priceFormat(transactions[index].amount.toString())
-                                                              : "- " + priceFormat(transactions[index].amount.toString()),
-                                                          fontWeight: FontWeight.bold,
-                                                          color: transactions[index].type == "topup" || (transactions[index].type == "WALLET" && transactions[index].method == "REFUND")
-                                                              ? Colors.green
-                                                              : Colors.red,
+                                                    );
+                                                  },
+                                                  separatorBuilder: (context, index) {
+                                                    return SizedBox(height: 30);
+                                                  },
+                                                  itemCount: transactionLength,
+                                                ),
+                                                isLoading
+                                                    ? Container(
+                                                        margin: EdgeInsets.only(bottom: 20, top: 5),
+                                                        child: Center(
+                                                          child: CircularProgressIndicator(),
                                                         ),
-                                                        NunutText(
-                                                          title: status,
-                                                          fontWeight: FontWeight.bold,
-                                                        ),
-                                                        NunutText(
-                                                          title: DateFormat("d MMMM yyyy, hh:MM", "id_ID").format(transactions[index].transaction_time!), //"20 Desember 2022, 12:50",
-                                                          color: Colors.grey,
-                                                          size: 12,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                );
-                                              },
-                                              separatorBuilder: (context, index) {
-                                                return SizedBox(height: 30);
-                                              },
-                                              itemCount: transactionLength,
+                                                      )
+                                                    : Container(),
+                                              ],
                                             ),
                                 ],
                               ),
@@ -333,21 +362,52 @@ class _NunutPayState extends State<NunutPay> {
       setState(() {
         config.user.wallet = priceFormat(walletBalance.toString());
       });
-      getTransaction(value.id);
+      walletId = value.id!;
+      getTransaction();
       return value;
     });
   }
 
-  void getTransaction(String wallet_id) async {
+  void getTransaction() async {
     setState(() {
-      isLoading = true;
+      transactionLoading = true;
     });
-    transactions = await MidtransApi.getTransactionByWallet(wallet_id);
+    transactions = await MidtransApi.getTransactionByWallet(wallet_id: walletId, page: _page);
     setState(() {
-      isLoading = false;
+      transactionLoading = false;
       transactionLength = transactions.length;
       transactions.sort((a, b) => b.transaction_time!.compareTo(a.transaction_time!));
     });
+  }
+
+  loadmore() async {
+    if (!isLoading) {
+      setState(() {
+        isLoading = true;
+      });
+
+      _page++;
+      transactionPageList.clear();
+      transactionPageList = await MidtransApi.getTransactionByWallet(wallet_id: walletId, page: _page);
+
+      transactions.addAll(transactionPageList);
+      transactionLength = transactions.length;
+      if (transactionPageList.length < 10 || transactionPageList.isEmpty) {
+        done = true;
+      }
+
+      setState(() {
+        isLoading = false;
+        _page = _page;
+      });
+    }
+  }
+
+  scrollListener() {
+    if (_scrollController!.offset >= _scrollController!.position.maxScrollExtent - 100 && !_scrollController!.position.outOfRange && !done) {
+      loadmore();
+      print("loadmore");
+    }
   }
 
   onRefresh() {

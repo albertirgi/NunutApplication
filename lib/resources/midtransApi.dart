@@ -102,8 +102,10 @@ class MidtransApi {
     return result;
   }
 
-  static Future getTransactionByWallet(String wallet_id) async {
-    var url = Uri.parse(config.baseUrl + '/get-transaction-by-wallet/');
+  static Future getTransactionByWallet({required String wallet_id, bool checkURL = false, int page = 1}) async {
+    var url = Uri.parse(config.baseUrl + '/get-transaction-by-wallet/list/$page');
+    if (checkURL) print(url);
+
     var response = await http.post(
       url,
       headers: <String, String>{
