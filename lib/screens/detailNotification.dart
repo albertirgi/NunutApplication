@@ -11,12 +11,9 @@ class DetailNotificationPage extends StatefulWidget {
 }
 
 class _DetailNotificationPageState extends State<DetailNotificationPage> {
-  //take data from notification page
-
   @override
   Widget build(BuildContext context) {
-    final data =
-        ModalRoute.of(context)!.settings.arguments as NotificationModel;
+    final data = ModalRoute.of(context)!.settings.arguments as NotificationModel;
     final title = data.title;
     final Image = data.image;
     final description = data.description;
@@ -43,8 +40,7 @@ class _DetailNotificationPageState extends State<DetailNotificationPage> {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(
-                      Image),
+                  image: NetworkImage(Image),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -64,16 +60,7 @@ class _DetailNotificationPageState extends State<DetailNotificationPage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  // Text(
-                  //   "Notification SubTitle",
-                  //   style: TextStyle(
-                  //     fontSize: 20,
-                  //     fontWeight: FontWeight.w400,
-                  //   ),
-                  // ),
-                  SizedBox(
-                    height: 30,
-                  ),
+                  SizedBox(height: 30),
                   Text(
                     description,
                     style: TextStyle(

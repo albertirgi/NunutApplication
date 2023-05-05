@@ -27,8 +27,6 @@ class _ParkingListState extends State<ParkingList> {
   @override
   void initState() {
     super.initState();
-
-    //log("isiParkingBuildingList : " + ParkingBuildingList[0].name.toString());
   }
 
   @override
@@ -52,17 +50,10 @@ class _ParkingListState extends State<ParkingList> {
 
   initParkingBuilding(String id) async {
     ParkingBuildingList.clear();
-    ParkingBuildingList = await parkingBuildingApi
-        .getParkingBuildingAndParkingSlotByParkingPlaceId(id);
+    ParkingBuildingList = await parkingBuildingApi.getParkingBuildingAndParkingSlotByParkingPlaceId(id);
     setState(() {
       ParkingBuildingList = ParkingBuildingList;
     });
-
-    // log("isi parking building list : " +
-    //     jsonEncode(ParkingBuildingList).toString());
-
-    // log("isi parking building list : " +
-    //     jsonEncode(ParkingBuildingList[0].parkingSlot[0]).toString());
     int total = 0;
     for (int i = 0; i < ParkingBuildingList.length; i++) {
       total += ParkingBuildingList[i].parkingSlot.length;
@@ -72,8 +63,6 @@ class _ParkingListState extends State<ParkingList> {
 
   @override
   Widget build(BuildContext context) {
-    //log("IdRide : " + idRide);
-    // log("data Image :" + Image);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 280,
@@ -187,9 +176,7 @@ class _ParkingListState extends State<ParkingList> {
                                     Expanded(
                                       flex: 7,
                                       child: Text(
-                                        ParkingBuildingList[index]
-                                            .name
-                                            .toString(),
+                                        ParkingBuildingList[index].name.toString(),
                                         style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
@@ -199,20 +186,14 @@ class _ParkingListState extends State<ParkingList> {
                                     Expanded(
                                       flex: 2,
                                       child: Text(
-                                        ParkingBuildingList[index]
-                                                .parkingSlot
-                                                .length
-                                                .toString() +
-                                            " slot",
+                                        ParkingBuildingList[index].parkingSlot.length.toString() + " slot",
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                     ),
-                                    ParkingBuildingList[index]
-                                            .parkingSlot
-                                            .isNotEmpty
+                                    ParkingBuildingList[index].parkingSlot.isNotEmpty
                                         ? Expanded(
                                             flex: 1,
                                             child: Icon(
@@ -232,37 +213,24 @@ class _ParkingListState extends State<ParkingList> {
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (context, indexChild) {
-                                return ParkingBuildingList[index]
-                                            .parkingSlot[indexChild]
-                                            .status ==
-                                        true
+                                return ParkingBuildingList[index].parkingSlot[indexChild].status == true
                                     ? InkWell(
-                                        onTap: () => Navigator.pushNamed(
-                                            context, "/parkingSlotDetail",
-                                            arguments: {
-                                              "data": ParkingBuildingList[index]
-                                                  .parkingSlot[indexChild],
-                                              "idRide": idRide,
-                                            }),
+                                        onTap: () => Navigator.pushNamed(context, "/parkingSlotDetail", arguments: {
+                                          "data": ParkingBuildingList[index].parkingSlot[indexChild],
+                                          "idRide": idRide,
+                                        }),
                                         child: Padding(
                                           padding: EdgeInsets.symmetric(
                                             vertical: 15,
                                             horizontal: 20,
                                           ),
                                           child: Container(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 10),
+                                            padding: EdgeInsets.symmetric(vertical: 10),
                                             decoration: BoxDecoration(
                                               border: Border(
-                                                bottom: indexChild !=
-                                                        ParkingBuildingList[
-                                                                    index]
-                                                                .parkingSlot
-                                                                .length -
-                                                            1
+                                                bottom: indexChild != ParkingBuildingList[index].parkingSlot.length - 1
                                                     ? BorderSide(
-                                                        color: Colors.grey
-                                                            .withOpacity(0.3),
+                                                        color: Colors.grey.withOpacity(0.3),
                                                         width: 1,
                                                       )
                                                     : BorderSide.none,
@@ -277,14 +245,10 @@ class _ParkingListState extends State<ParkingList> {
                                                 Expanded(
                                                   flex: 6,
                                                   child: Text(
-                                                    ParkingBuildingList[index]
-                                                        .parkingSlot[indexChild]
-                                                        .title
-                                                        .toString(),
+                                                    ParkingBuildingList[index].parkingSlot[indexChild].title.toString(),
                                                     style: TextStyle(
                                                       fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w400,
+                                                      fontWeight: FontWeight.w400,
                                                     ),
                                                   ),
                                                 ),
@@ -294,8 +258,7 @@ class _ParkingListState extends State<ParkingList> {
                                                     "Tersedia",
                                                     style: TextStyle(
                                                       fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      fontWeight: FontWeight.bold,
                                                       color: nunutPrimaryColor,
                                                     ),
                                                   ),
@@ -318,13 +281,11 @@ class _ParkingListState extends State<ParkingList> {
                                           horizontal: 20,
                                         ),
                                         child: Container(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 10),
+                                          padding: EdgeInsets.symmetric(vertical: 10),
                                           decoration: BoxDecoration(
                                             border: Border(
                                               bottom: BorderSide(
-                                                color: Colors.grey
-                                                    .withOpacity(0.3),
+                                                color: Colors.grey.withOpacity(0.3),
                                                 width: 1,
                                               ),
                                             ),
@@ -338,10 +299,7 @@ class _ParkingListState extends State<ParkingList> {
                                               Expanded(
                                                 flex: 6,
                                                 child: Text(
-                                                  ParkingBuildingList[index]
-                                                      .parkingSlot[indexChild]
-                                                      .title
-                                                      .toString(),
+                                                  ParkingBuildingList[index].parkingSlot[indexChild].title.toString(),
                                                   style: TextStyle(
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.w400,
@@ -368,8 +326,7 @@ class _ParkingListState extends State<ParkingList> {
                                         ),
                                       );
                               },
-                              itemCount:
-                                  ParkingBuildingList[index].parkingSlot.length,
+                              itemCount: ParkingBuildingList[index].parkingSlot.length,
                             )
                           : SizedBox(),
                     ],

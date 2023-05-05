@@ -66,10 +66,8 @@ class NunutScrollText extends StatelessWidget {
   final String title;
   final Color? color;
   final double? size;
-  // final int? maxLines;
   final FontWeight? fontWeight;
   final TextDecoration textDecoration;
-  // final TextOverflow? overflow;
   final bool isTitle;
   final double height;
   final TextAlign? textAlign;
@@ -79,10 +77,8 @@ class NunutScrollText extends StatelessWidget {
     required this.title,
     this.color = Colors.black,
     this.size = 16,
-    // this.maxLines = 999,
     this.fontWeight = FontWeight.normal,
     this.textDecoration = TextDecoration.none,
-    // this.overflow = TextOverflow.ellipsis,
     this.isTitle = false,
     this.height = 1.5,
     this.textAlign,

@@ -155,10 +155,6 @@ class _BookingDetailState extends State<BookingDetail> {
                           ),
                           QrImage(
                             data: widget.rideSchedule.rideRequestList!['ride_request_id'],
-                            // embeddedImage: AssetImage("assets/icon.png"),
-                            // embeddedImageStyle: QrEmbeddedImageStyle(
-                            //   size: Size(75, 75),
-                            // ),
                             size: 120,
                             backgroundColor: Colors.white,
                             padding: EdgeInsets.all(0),

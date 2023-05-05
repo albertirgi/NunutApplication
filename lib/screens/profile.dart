@@ -33,11 +33,6 @@ class _ProfilePageState extends State<ProfilePage> {
       identifier: "bookmark",
     ),
     ProfilePageMenu(
-      title: "Kendaraanku",
-      icon: "assets/icons/car.png",
-      identifier: "kendaraanku",
-    ),
-    ProfilePageMenu(
       title: "Syaratan & Ketentuan",
       icon: "assets/icons/tnc.png",
       identifier: "tnc",
@@ -54,12 +49,22 @@ class _ProfilePageState extends State<ProfilePage> {
     super.initState();
     if (config.user.driverId == "empty") {
       profilePageMenu.insert(
-          3,
-          ProfilePageMenu(
-            title: "Profil Driver",
-            icon: "assets/icons/dashboard.png",
-            identifier: "registerDriver",
-          ));
+        3,
+        ProfilePageMenu(
+          title: "Daftar Driver",
+          icon: "assets/icons/dashboard.png",
+          identifier: "registerDriver",
+        ),
+      );
+    } else {
+      profilePageMenu.insert(
+        3,
+        ProfilePageMenu(
+          title: "Kendaraanku",
+          icon: "assets/icons/car.png",
+          identifier: "kendaraanku",
+        ),
+      );
     }
   }
 
@@ -78,33 +83,8 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: [
-                  //     IconButton(
-                  //       padding: EdgeInsets.zero,
-                  //       icon: Icon(Icons.arrow_back, color: Colors.black),
-                  //       onPressed: () {
-                  //         Navigator.pop(context);
-                  //       },
-                  //     ),
-                  //     //icon chat
-                  //   ],
-                  // ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 24, 0, 7),
-                    //   child: BorderedText(
-                    //     child: Text(
-                    //       "Profilku",
-                    //       style: TextStyle(
-                    //         color: Colors.white,
-                    //         fontSize: 38,
-                    //       ),
-                    //     ),
-                    //     strokeWidth: 3.0,
-                    //     strokeColor: Colors.black,
-                    //   ),
-                    // ),
                     child: NunutText(title: "Profilku", isTitle: true, size: 32),
                   ),
                   Padding(
@@ -127,7 +107,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           Container(
                             margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                             child: CircleAvatar(
-                              //border circle avatar black
                               backgroundColor: Colors.black,
                               radius: 30,
                               backgroundImage: config.user.photo == null
@@ -141,7 +120,6 @@ class _ProfilePageState extends State<ProfilePage> {
                               children: [
                                 SizedBox(height: 20),
                                 Text(
-                                  // user.name == "" ? "Loading..." : user.name,
                                   config.user.name,
                                   style: TextStyle(
                                     color: Colors.black,
@@ -151,7 +129,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  // user.phone == "" ? "Loading..." : user.phone,
                                   config.user.phone,
                                   style: TextStyle(
                                     color: Color.fromARGB(255, 28, 27, 27),
@@ -160,7 +137,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  // user.email == "" ? "Loading..." : user.email,
                                   config.user.email,
                                   style: TextStyle(
                                     color: Color.fromARGB(255, 28, 27, 27),
@@ -226,15 +202,6 @@ class _ProfilePageState extends State<ProfilePage> {
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
-                        // if (config.user.driverId == null){
-                        //  profilePageMenu = removeDriverMenu();
-                        // }
-                        // else {
-                        //   profilePageMenu = addDriverMenu();
-                        // }
-                        // setState(() {
-                        //   profilePageMenu = profilePageMenu;
-                        // });
                         return InkWell(
                           onTap: () {
                             if (profilePageMenu[index].identifier == "keluar") {
@@ -282,8 +249,6 @@ class _ProfilePageState extends State<ProfilePage> {
                             children: [
                               Expanded(
                                 flex: 1,
-                                // child: Icon(Icons.account_circle,
-                                //     color: Colors.black)),
                                 child: Image.asset(profilePageMenu[index].icon, width: 20, height: 20),
                               ),
                               Expanded(
@@ -329,14 +294,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  // NunutButton(
-                  //   title: "Logout",
-                  //   onPressed: () {
-                  //     AuthService.signOut();
-                  //     Navigator.pushNamedAndRemoveUntil(
-                  //         context, '/login', (route) => false);
-                  //   },
-                  // )
                 ],
               ),
             ),

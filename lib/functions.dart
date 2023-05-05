@@ -9,26 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 
 openwhatsapp(BuildContext context, String number) async {
-  // var whatsappURl_android = "https://wa.me/" + number;
-  // var whatappURL_ios = "https://api.whatsapp.com/send?phone=$number";
   launchUrl(Uri.parse('https://wa.me/$number?text=Halo, saya ${config.user.name} penumpang nunut ...'), mode: LaunchMode.externalApplication);
-  // if (Platform.isIOS) {
-  //   // for iOS phone only
-  //   if (await canLaunchUrl(Uri.parse(whatappURL_ios))) {
-  //     await launchUrl(Uri.parse(whatappURL_ios));
-  //   } else {
-  //     Fluttertoast.showToast(
-  //         msg: "whatsapp no installed", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.CENTER, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
-  //   }
-  // } else {
-  //   // android , web
-  //   if (await canLaunchUrl(Uri.parse(whatsappURl_android))) {
-  //     await launchUrl(Uri.parse(whatsappURl_android));
-  //   } else {
-  //     Fluttertoast.showToast(
-  //         msg: "whatsapp no installed", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.CENTER, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
-  //   }
-  // }
 }
 
 double calculateDistance(lat1, lon1, lat2, lon2) {

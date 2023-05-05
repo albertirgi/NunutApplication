@@ -106,9 +106,6 @@ class _NunutPayState extends State<NunutPay> {
                             Container(
                               margin: EdgeInsets.only(left: 20, top: 5),
                               child: Row(
-                                //baseline
-                                // crossAxisAlignment: CrossAxisAlignment.baseline,
-                                // textBaseline: TextBaseline.alphabetic,
                                 children: [
                                   Image.asset(
                                     "assets/logoNoText.png",
@@ -225,21 +222,6 @@ class _NunutPayState extends State<NunutPay> {
                             Container(
                               width: MediaQuery.of(context).size.width,
                               padding: EdgeInsets.only(left: 20, right: 20, top: 20),
-                              // decoration: BoxDecoration(
-                              //   color: Colors.transparent,
-                              //   borderRadius: BorderRadius.only(
-                              //     topLeft: Radius.circular(28),
-                              //     topRight: Radius.circular(28),
-                              //   ),
-                              // boxShadow: [
-                              //   BoxShadow(
-                              //     color: Colors.grey.withOpacity(0.5),
-                              //     spreadRadius: 3,
-                              //     blurRadius: 7,
-                              //     offset: Offset(0, 3), // changes position of shadow
-                              //   ),
-                              // ],
-                              // ),
                               child: Column(
                                 children: [
                                   NunutText(title: "Transaksi", size: 20, fontWeight: FontWeight.w500),
@@ -406,7 +388,6 @@ class _NunutPayState extends State<NunutPay> {
   scrollListener() {
     if (_scrollController!.offset >= _scrollController!.position.maxScrollExtent - 100 && !_scrollController!.position.outOfRange && !done) {
       loadmore();
-      print("loadmore");
     }
   }
 

@@ -13,6 +13,7 @@ import 'package:nunut_application/widgets/nunutRadioButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:nunut_application/widgets/nunutTextFormField.dart';
 import 'package:intl/intl.dart';
+import 'package:nunut_application/widgets/popUpLoading.dart';
 
 class TopUp extends StatefulWidget {
   const TopUp({super.key});
@@ -131,7 +132,6 @@ class _TopUpState extends State<TopUp> {
           child: Container(
             margin: EdgeInsets.only(left: 20, right: 20, top: 20),
             width: MediaQuery.of(context).size.width,
-            // height: MediaQuery.of(context).size.height * 0.75,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -193,64 +193,6 @@ class _TopUpState extends State<TopUp> {
                 SizedBox(height: 30),
                 NunutText(title: "Pilih Metode Pembayaran", fontWeight: FontWeight.bold, size: 20),
                 SizedBox(height: 20),
-                // Theme(
-                //   data: Theme.of(context).copyWith(
-                //     dividerColor: Colors.transparent,
-                //   ),
-                //   child: ExpansionTile(
-                //     title: NunutText(
-                //       title: "E-Money",
-                //       fontWeight: FontWeight.bold,
-                //     ),
-                //     children: [
-                //       NunutRadioButton(
-                //         label: "GO-PAY",
-                //         groupValue: _isPaymentSelected,
-                //         value: "GO-PAY",
-                //         onChanged: (value) {
-                //           setState(() {
-                //             _isPaymentSelected = value;
-                //           });
-                //         },
-                //       ),
-                //       // NunutRadioButton(
-                //       //   label: "OVO",
-                //       //   groupValue: _isPaymentSelected,
-                //       //   value: "OVO",
-                //       //   onChanged: (value) {
-                //       //     setState(() {
-                //       //       _isPaymentSelected = value;
-                //       //     });
-                //       //   },
-                //       // ),
-                //       // NunutRadioButton(
-                //       //   label: "Shopee Pay",
-                //       //   groupValue: _isPaymentSelected,
-                //       //   value: "Shopee Pay",
-                //       //   onChanged: (value) {
-                //       //     setState(() {
-                //       //       _isPaymentSelected = value;
-                //       //     });
-                //       //   },
-                //       // ),
-                //       // NunutRadioButton(
-                //       //   label: "LinkAja",
-                //       //   groupValue: _isPaymentSelected,
-                //       //   value: "LinkAja",
-                //       //   onChanged: (value) {
-                //       //     setState(() {
-                //       //       _isPaymentSelected = value;
-                //       //     });
-                //       //   },
-                //       // ),
-                //     ],
-                //     onExpansionChanged: (value) {
-                //       setState(() {
-                //         isExpanded = value;
-                //       });
-                //     },
-                //   ),
-                // ),
                 !isExpanded ? Divider(height: 1) : Container(),
                 SizedBox(height: 20),
                 Theme(
@@ -313,36 +255,6 @@ class _TopUpState extends State<TopUp> {
                           });
                         },
                       ),
-                      // NunutRadioButton(
-                      //   label: "OVO",
-                      //   groupValue: _isPaymentSelected,
-                      //   value: "OVO",
-                      //   onChanged: (value) {
-                      //     setState(() {
-                      //       _isPaymentSelected = value;
-                      //     });
-                      //   },
-                      // ),
-                      // NunutRadioButton(
-                      //   label: "Shopee Pay",
-                      //   groupValue: _isPaymentSelected,
-                      //   value: "Shopee Pay",
-                      //   onChanged: (value) {
-                      //     setState(() {
-                      //       _isPaymentSelected = value;
-                      //     });
-                      //   },
-                      // ),
-                      // NunutRadioButton(
-                      //   label: "LinkAja",
-                      //   groupValue: _isPaymentSelected,
-                      //   value: "LinkAja",
-                      //   onChanged: (value) {
-                      //     setState(() {
-                      //       _isPaymentSelected = value;
-                      //     });
-                      //   },
-                      // ),
                     ],
                     onExpansionChanged: (value) {
                       setState(() {
@@ -351,33 +263,6 @@ class _TopUpState extends State<TopUp> {
                     },
                   ),
                 ),
-                // NunutButton(
-                //   title: "ATM / Bank Transfer",
-                //   onPressed: () {},
-                //   backgroundColor: Colors.white,
-                //   widthButton: MediaQuery.of(context).size.width,
-                //   borderRadius: 12,
-                //   type: 3,
-                //   onPressedArrowButton: () {
-                //     print("TEST");
-                //   },
-                //   borderColor: Colors.grey[300],
-                //   elevation: 3,
-                // ),
-                // SizedBox(height: 20),
-                // NunutButton(
-                //   title: "Direct Debit",
-                //   onPressed: () {},
-                //   backgroundColor: Colors.white,
-                //   widthButton: MediaQuery.of(context).size.width,
-                //   borderRadius: 12,
-                //   type: 3,
-                //   onPressedArrowButton: () {
-                //     print("TEST");
-                //   },
-                //   borderColor: Colors.grey[300],
-                //   elevation: 3,
-                // ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.2),
                 Container(
                   margin: EdgeInsets.only(bottom: 20),
@@ -389,44 +274,7 @@ class _TopUpState extends State<TopUp> {
                         context: context,
                         barrierDismissible: true,
                         builder: (BuildContext context) {
-                          return Dialog(
-                            backgroundColor: Colors.transparent,
-                            child: Container(
-                              height: 150,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                color: nunutPrimaryColor,
-                                borderRadius: BorderRadius.circular(18),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Center(
-                                    child: Container(
-                                      margin: EdgeInsets.only(top: 25.0),
-                                      child: CircularProgressIndicator(
-                                        value: null,
-                                        strokeWidth: 5.0,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 25.0),
-                                    child: Center(
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          NunutText(title: "Loading...", color: Colors.white, size: 20, fontWeight: FontWeight.w500),
-                                          NunutText(title: "Mohon Tunggu", color: Colors.white, size: 20, fontWeight: FontWeight.w500),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
+                          return PopUpLoading(title: "Loading...", subtitle: "Mohon Tunggu", height: 175);
                         },
                       );
                       setState(() {

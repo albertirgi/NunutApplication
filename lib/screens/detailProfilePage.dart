@@ -80,17 +80,6 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.fromLTRB(20, 24, 0, 7),
-                              // child: BorderedText(
-                              //   child: Text(
-                              //     "Data Diri",
-                              //     style: TextStyle(
-                              //       color: Colors.white,
-                              //       fontSize: 38,
-                              //     ),
-                              //   ),
-                              //   strokeWidth: 3.0,
-                              //   strokeColor: Colors.black,
-                              // ),
                               child: NunutText(title: "Data Diri", isTitle: true, size: 32),
                             ),
                             SizedBox(height: 3),
@@ -188,7 +177,6 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                                       color: Colors.black,
                                       width: 1.5,
                                     ),
-                                    //color: nunutPrimaryColor,
                                   ),
                                   child: Center(
                                     child: NunutText(
@@ -229,100 +217,7 @@ class _DetailProfilePageState extends State<DetailProfilePage> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 10),
-                  // Container(
-                  //   margin: EdgeInsets.only(top: 0, left: 20, right: 20),
-                  //   child: Column(
-                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                  //     children: [
-                  //       NunutText(
-                  //         title: "Data Kendaraan",
-                  //         fontWeight: FontWeight.bold,
-                  //       ),
-                  //       Row(
-                  //         children: [
-                  //           Container(
-                  //             decoration: BoxDecoration(
-                  //               border: Border.all(
-                  //                 color: Colors.black,
-                  //                 width: 1.5,
-                  //               ),
-                  //               borderRadius: BorderRadius.circular(12),
-                  //             ),
-                  //             child: Column(
-                  //               crossAxisAlignment: CrossAxisAlignment.start,
-                  //               children: [
-                  //                 //ogoKendaraan
-                  //                 Padding(
-                  //                   padding: const EdgeInsets.fromLTRB(
-                  //                       10, 20, 10, 0),
-                  //                   child: Image(
-                  //                     image: AssetImage("assets/toyota.png"),
-                  //                     height: 20,
-                  //                   ),
-                  //                 ),
-                  //                 SizedBox(height: 5),
-                  //                 //NamaKendaraan
-                  //                 Padding(
-                  //                   padding:
-                  //                       const EdgeInsets.fromLTRB(10, 0, 80, 0),
-                  //                   child: NunutText(
-                  //                     title: "Toyota",
-                  //                     fontWeight: FontWeight.bold,
-                  //                   ),
-                  //                 ),
-                  //                 //platnomor
-                  //                 Padding(
-                  //                   padding: const EdgeInsets.fromLTRB(
-                  //                       10, 0, 10, 20),
-                  //                   child: NunutText(
-                  //                     title: "B 1234 ABC",
-                  //                   ),
-                  //                 ),
-                  //               ],
-                  //             ),
-                  //           ),
-                  //           Container(
-                  //             margin: EdgeInsets.only(left: 10),
-                  //             child: Column(
-                  //               children: [
-                  //                 //ogoKendaraan
-                  //                 Padding(
-                  //                   padding:
-                  //                       const EdgeInsets.fromLTRB(10, 20, 0, 0),
-                  //                   child: Icon(
-                  //                     Icons.add_circle,
-                  //                     color: Colors.black,
-                  //                     size: 27,
-                  //                   ),
-                  //                 ),
-                  //                 SizedBox(height: 5),
-                  //                 //NamaKendaraan
-                  //                 NunutText(
-                  //                   title: "Tambah Kendaraan",
-                  //                 ),
-                  //               ],
-                  //             ),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  // SizedBox(height: 10),
-                  // Container(
-                  //   margin: EdgeInsets.only(top: 0, left: 20, right: 20),
-                  //   child: Column(
-                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                  //     children: [
-                  //       NunutText(
-                  //         title: "Persyaratan",
-                  //         fontWeight: FontWeight.bold,
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 30),
                   Container(
                     margin: EdgeInsets.only(top: 0, left: 20, right: 20),
                     child: NunutButton(

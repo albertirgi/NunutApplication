@@ -48,12 +48,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // await initializeDateFormatting('id_ID', null)
-  //     .then((_) => runApp(const MyApp()));
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Than we setup preferred orientations,
-  // and only after it finished we run our app
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((value) => runApp(MyApp()));
 }
 
@@ -90,22 +86,17 @@ class MyApp extends StatelessWidget {
         '/register': (context) => const RegisterPage(),
         '/chat': (context) => const ChatPage(),
         '/chatInside': (context) => const ChatInsidePage(),
-        // '/payment': (context) => const Payment(),
         '/bookingParkir': (context) => const BookingParkir(),
         '/parkingList': (context) => const ParkingList(),
         '/parkingSlotDetail': (context) => const parkingSpotDetail(),
         '/rideList': (context) => const RideList(),
-        // '/rideDetail': (context) => RideDetail(),
         '/tripHistory': (context) => const TripHistory(),
         '/qrCode': (context) => QRCode(),
-        // '/rideBookDetail': (context) => const RideBookDetail(),
         '/rideBookmark': (context) => const RideBookmark(),
         '/offerMenu': (context) => const OfferMenu(),
         '/myVehicle': (context) => const MyVehicle(),
         '/addVehicle': (context) => const AddVehicle(),
         '/addRideSchedule': (context) => const AddRideSchedule(),
-        // '/rideShare': (context) => rideShare(),
-        // '/profile': (context) => const ProfilePage(),
         '/detailprofile': (context) => const DetailProfilePage(),
         '/driverRegistration': (context) => const DriverRegistration(),
         '/detailNotification': (context) => const DetailNotificationPage(),

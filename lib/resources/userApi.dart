@@ -35,7 +35,6 @@ class UserService {
 
   Future<UserModel> getUserByID(String id) async {
     try {
-      // DocumentSnapshot snapshot = await collectionRef.doc(id).get();
       var urlUser = Uri.parse("https://ayonunut.com/api/v1/user/$id");
       var responseUser = await http.get(
         urlUser,
@@ -67,7 +66,6 @@ class UserService {
         driverId: result.status == 200 ? result.data["driver_id"] : "empty",
         driverStatus: result.status == 200 ? result.data["status"] : "empty",
         wallet: priceFormat(walletData.balance.toString()),
-        // token: _token,
         token: config.user.token,
       );
     } catch (e) {

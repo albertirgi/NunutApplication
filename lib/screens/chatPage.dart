@@ -27,14 +27,7 @@ class _ChatPageState extends State<ChatPage> {
     NotificationList = await notificationApi.getNotificationList();
     setState(() {
       NotificationList = NotificationList;
-      //log("isi notif list : " + jsonEncode(NotificationList));
     });
-    //log("isi length " + NotificationList.length.toString());
-    //log("isi NotificationList " + NotificationList.toString());
-    //log("isi NotificationList " + NotificationList[0].title.toString());
-    // for(int i = 0; i < NotificationList.length; i++){
-    //   log("isi NotificationList " + NotificationList[i].title.toString());
-    // }
   }
 
   @override
@@ -60,38 +53,6 @@ class _ChatPageState extends State<ChatPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // BorderedText(
-              //   child: Text(
-              //     "Chat Saya",
-              //     style: TextStyle(
-              //       color: Colors.white,
-              //       fontSize: 32,
-              //     ),
-              //   ),
-              //   strokeWidth: 3.0,
-              //   strokeColor: Colors.black,
-              // ),
-              // SizedBox(height: 20),
-              // ListView.builder(
-              //   shrinkWrap: true,
-              //   physics: NeverScrollableScrollPhysics(),
-              //   itemBuilder: (context, index) {
-              //     return InkWell(
-              //       onTap: () => Navigator.pushNamed(context, '/chatInside'),
-              //       child: ChatCard(
-              //         margin: EdgeInsets.all(5),
-              //         name: "Nunut",
-              //         chatSpoil: "Halo, apa kabar?",
-              //         time: "12:00",
-              //         imagePath:
-              //             "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiO",
-              //         chatCount: 1,
-              //       ),
-              //     );
-              //   },
-              //   itemCount: 5,
-              // ),
-              // SizedBox(height: 20),
               BorderedText(
                 child: Text(
                   "Notifikasi",
@@ -114,12 +75,7 @@ class _ChatPageState extends State<ChatPage> {
                       itemCount: NotificationList.length,
                       itemBuilder: (context, index) {
                         return InkWell(
-                          //onTap Passing data to detail page with navigator pushnamed
-                          onTap: () => Navigator.pushNamed(
-                              context, '/detailNotification',
-                              arguments: NotificationList[index]),
-                          // onTap: () => Navigator.pushNamed(
-                          //     context, '/detailNotification'),
+                          onTap: () => Navigator.pushNamed(context, '/detailNotification', arguments: NotificationList[index]),
                           child: NotifCard(
                             margin: EdgeInsets.all(5),
                             title: NotificationList[index].title,
@@ -131,13 +87,12 @@ class _ChatPageState extends State<ChatPage> {
                   } else {
                     return Center(
                       child: CircularProgressIndicator(
-                        color:nunutPrimaryColor,
+                        color: nunutPrimaryColor,
                       ),
                     );
                   }
                 },
               ),
-              
             ],
           ),
         ),

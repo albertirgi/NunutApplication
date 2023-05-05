@@ -136,10 +136,6 @@ class _PaymentState extends State<Payment> {
                     ),
                   ],
                 ),
-                // Container(
-                //   margin: EdgeInsets.only(left: 24),
-                //   child: NunutText(title: "12.4km", fontWeight: FontWeight.bold, size: 18, color: Colors.grey[400]),
-                // ),
                 SizedBox(height: 50),
                 Container(
                   height: 1,
@@ -173,7 +169,6 @@ class _PaymentState extends State<Payment> {
                 NunutButton(
                   title: useVoucher ? "Promo Berhasil Digunakan" : "Gunakan Promo",
                   onPressed: () {
-                    // Navigator.pushNamed(context, '/promotionList');
                     Navigator.of(context).pushNamed('/promotionList', arguments: {'isFromProfile': false}).then((results) {
                       if (results is PopWithResults) {
                         PopWithResults popResult = results;

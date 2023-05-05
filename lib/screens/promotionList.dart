@@ -128,12 +128,6 @@ class _PromotionListState extends State<PromotionList> {
                             itemBuilder: (context, index) {
                               return InkWell(
                                 onTap: () {
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) => PromotionDetail(promotion: promotionList[index]),
-                                  //   ),
-                                  // );
                                   Navigator.of(context).pushNamed('/promotionDetail', arguments: {'promotion': promotionList[index], 'isFromProfile': isFromProfile}).then((results) {
                                     if (results is PopWithResults) {
                                       PopWithResults popResult = results;

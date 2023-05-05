@@ -60,45 +60,7 @@ class _OfferMenuState extends State<OfferMenu> {
                   fontWeight: FontWeight.bold,
                 ),
                 SizedBox(height: 10),
-                NunutText(
-                    title: "Yuk tawarkan tumpangan!", isTitle: true, size: 32),
-                // BorderedText(
-                //   child: Text(
-                //     "Yuk tawarkan tumpangan!",
-                //     style: TextStyle(
-                //       color: Colors.white,
-                //       fontSize: 32,
-                //     ),
-                //   ),
-                //   strokeWidth: 3.0,
-                //   strokeColor: Colors.black,
-                // ),
-                // SizedBox(
-                //   height: 20,
-                // ),
-                // Container(
-                //   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                //   width: 190,
-                //   decoration: BoxDecoration(
-                //     color: Colors.white,
-                //     border: Border.all(
-                //       color: Colors.black,
-                //       width: 2,
-                //     ),
-                //     borderRadius: BorderRadius.circular(50),
-                //   ),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     children: [
-                //       Icon(Icons.money_outlined),
-                //       NunutText(
-                //         title: "IDR 50.000",
-                //         fontWeight: FontWeight.bold,
-                //         size: 18,
-                //       ),
-                //     ],
-                //   ),
-                // ),
+                NunutText(title: "Yuk tawarkan tumpangan!", isTitle: true, size: 32),
                 SizedBox(height: 20),
                 Expanded(
                   child: GridView.count(
@@ -107,8 +69,7 @@ class _OfferMenuState extends State<OfferMenu> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.of(context)
-                              .pushNamed('/addRideSchedule', arguments: true);
+                          Navigator.of(context).pushNamed('/addRideSchedule', arguments: true);
                         },
                         child: Column(
                           children: [
@@ -164,30 +125,6 @@ class _OfferMenuState extends State<OfferMenu> {
                           ],
                         ),
                       ),
-                      // Column(
-                      //   children: [
-                      //     Container(
-                      //       padding: EdgeInsets.all(40),
-                      //       decoration: BoxDecoration(
-                      //         borderRadius: BorderRadius.circular(20),
-                      //         color: nunutPrimaryColor,
-                      //       ),
-                      //       child: Icon(
-                      //         Icons.chat_bubble,
-                      //         size: 50,
-                      //         color: Colors.black,
-                      //       ),
-                      //     ),
-                      //     SizedBox(
-                      //       height: 10,
-                      //     ),
-                      //     NunutText(
-                      //       title: "Chat",
-                      //       fontWeight: FontWeight.bold,
-                      //       size: 18,
-                      //     ),
-                      //   ],
-                      // ),
                       InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, "/myVehicle");

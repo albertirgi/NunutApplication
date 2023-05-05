@@ -47,11 +47,7 @@ class NunutTripCard extends StatelessWidget {
       displayBelowWidget: true,
       triangleDirection: TriangleDirection.Straight,
       popupElevation: 10,
-
-      ///you can also add border radius
-      ////popupBorderRadius:,
       item: CustomPointedPopupItem(itemWidget: popupWidget ?? SizedBox()),
-
       onClickWidget: (onClickMenu) {
         print('popup item clicked');
       },
@@ -183,24 +179,6 @@ class NunutTripCard extends StatelessWidget {
                 padding: EdgeInsets.only(left: 16, right: 16),
                 child: Row(
                   children: [
-                    // ImageStack(
-                    //   imageList: images,
-                    //   totalCount: 2,
-                    //   imageCount: 2,
-                    //   imageBorderWidth: 0.0,
-                    // ),
-                    // SizedBox(width: 8),
-                    // Text("+3 more"),
-                    // SizedBox(width: 8),
-                    // InkWell(
-                    //     key: widgetKey,
-                    //     onTap: () {
-                    //       getCustomPointedPopup(context)
-                    //         ..show(
-                    //           widgetKey: widgetKey,
-                    //         );
-                    //     },
-                    //     child: Icon(Icons.keyboard_arrow_down, size: 18)),
                     Spacer(),
                     isUser
                         ? Container()

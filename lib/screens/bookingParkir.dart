@@ -27,14 +27,7 @@ class _BookingParkirState extends State<BookingParkir> {
     ParkingPlaceList = await parkingPlaceApi.getParkingPlace();
     setState(() {
       ParkingPlaceList = ParkingPlaceList;
-      //log("isi notif list : " + jsonEncode(NotificationList));
     });
-    //log("isi length " + NotificationList.length.toString());
-    //log("isi NotificationList " + NotificationList.toString());
-    //log("isi NotificationList " + NotificationList[0].title.toString());
-    // for(int i = 0; i < NotificationList.length; i++){
-    //   log("isi NotificationList " + NotificationList[i].title.toString());
-    // }
   }
 
   @override
@@ -83,12 +76,10 @@ class _BookingParkirState extends State<BookingParkir> {
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         return InkWell(
-                          onTap: () => Navigator.pushNamed(
-                              context, '/parkingList',
-                              arguments: {
-                                'data': ParkingPlaceList[index],
-                                'idRide': IdRide,
-                              }),
+                          onTap: () => Navigator.pushNamed(context, '/parkingList', arguments: {
+                            'data': ParkingPlaceList[index],
+                            'idRide': IdRide,
+                          }),
                           child: profileParkingCard(
                             image: ParkingPlaceList[index].image,
                             title: ParkingPlaceList[index].name,

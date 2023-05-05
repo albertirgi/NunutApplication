@@ -59,7 +59,6 @@ class NunutButton extends StatelessWidget {
               size: textSize,
               fontWeight: fontWeight,
             ),
-            //if (iconButton != null) SizedBox(width: 8),
             if (iconButton != null) Spacer(),
             if (iconButton != null) iconButton as Widget,
             if (type == 2 || type == 3) Spacer(),
