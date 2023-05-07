@@ -270,6 +270,7 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                               service.getUserByID(config.user.id!).then((value) {
                                 config.user = value;
                                 Navigator.pop(context);
+                                Navigator.pop(context);
                               });
                             } else {
                               Fluttertoast.showToast(

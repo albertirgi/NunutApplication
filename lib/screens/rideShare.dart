@@ -732,7 +732,6 @@ class _RideShareState extends State<RideShare> {
     widget.fromUKP
         ? destinationController.text.isNotEmpty
             ? _parameter += "&destination=${destinationController.text.replaceAll(" ", "")}"
-            // ? print("destination: ${destinationController.text.replaceAll(" ", "")}")
             : _parameter += ""
         : pickUpController.text.isNotEmpty
             ? _parameter += "&meeting_point=${pickUpController.text.replaceAll(" ", "")}"

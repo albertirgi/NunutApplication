@@ -38,6 +38,11 @@ class _ProfilePageState extends State<ProfilePage> {
       identifier: "tnc",
     ),
     ProfilePageMenu(
+      title: "Pengaduan Kendala",
+      icon: "assets/icons/headset.png",
+      identifier: "kendala",
+    ),
+    ProfilePageMenu(
       title: "Keluar",
       icon: "assets/icons/out.png",
       identifier: "keluar",
@@ -242,6 +247,11 @@ class _ProfilePageState extends State<ProfilePage> {
                               Navigator.pushNamed(context, '/driverRegistration', arguments: config.user);
                             } else if (profilePageMenu[index].identifier == "tnc") {
                               Navigator.pushNamed(context, '/termsandcons');
+                            } else if (profilePageMenu[index].identifier == "kendala") {
+                              Navigator.pushNamed(context, '/pengaduanKendala', arguments: {
+                                'ride_request_id': "",
+                                'title': 'Pengaduan Kendala',
+                              });
                             }
                           },
                           child: Row(
