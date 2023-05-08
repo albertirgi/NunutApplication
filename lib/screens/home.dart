@@ -22,7 +22,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  // String balance = "0";
   bool isLoading = false;
 
   @override
@@ -34,7 +33,7 @@ class _HomeState extends State<Home> {
   }
 
   FutureOr onGoBack(dynamic value) {
-    isLoading = false;
+    isLoading = true;
     onRefresh();
   }
 
@@ -75,30 +74,8 @@ class _HomeState extends State<Home> {
     );
   }
 
-  // void didchangeDependencies() {
-  //   super.didChangeDependencies();
-  //   initSaldo();
-  // }
-
-  // initSaldo() async {
-  //   Wallet walletData = await MidtransApi.getWallet(config.user.id!);
-  //   setState(() {
-  //     double numValue = double.parse(walletData.balance.toString());
-  //     NumberFormat currencyFormatter = NumberFormat.simpleCurrency(locale: "id", decimalDigits: 0, name: "");
-  //     balance = currencyFormatter.format(numValue);
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
-    // MidtransApi.getWallet(config.user.id!).then((value) {
-    //   setState(() {
-    //     double numValue = double.parse(value.balance.toString());
-    //     NumberFormat currencyFormatter = NumberFormat.simpleCurrency(
-    //         locale: "id", decimalDigits: 0, name: "");
-    //     balance = currencyFormatter.format(numValue);
-    //   });
-    // });
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -125,13 +102,9 @@ class _HomeState extends State<Home> {
                     child: Row(
                       children: [
                         Spacer(),
-
-                        // SizedBox(width: 10),
                         Container(
                           width: 40,
                           height: 40,
-                          // margin:
-                          //     EdgeInsets.only(top: 62, bottom: 10, right: 10),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(24),
                             color: Colors.white,
@@ -155,8 +128,6 @@ class _HomeState extends State<Home> {
                         Container(
                           width: 40,
                           height: 40,
-                          // margin:
-                          //     EdgeInsets.only(top: 62, bottom: 10, right: 10),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(24),
                             color: Colors.white,
@@ -176,30 +147,6 @@ class _HomeState extends State<Home> {
                             },
                           ),
                         ),
-                        //icon task
-                        // Container(
-                        //   width: 40,
-                        //   height: 40,
-                        //   // margin:
-                        //   //     EdgeInsets.only(top: 62, bottom: 10, right: 20),
-                        //   decoration: BoxDecoration(
-                        //     borderRadius: BorderRadius.circular(24),
-                        //     color: Colors.white,
-                        //     boxShadow: [
-                        //       BoxShadow(
-                        //         color: Colors.grey.withOpacity(0.5),
-                        //         spreadRadius: 2,
-                        //         blurRadius: 5,
-                        //         offset:
-                        //             Offset(0, 0), // changes position of shadow
-                        //       ),
-                        //     ],
-                        //   ),
-                        //   child: IconButton(
-                        //     icon: Icon(Icons.menu, color: Colors.black),
-                        //     onPressed: () {},
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),
@@ -236,7 +183,6 @@ class _HomeState extends State<Home> {
                                   ],
                                 ),
                                 onTap: () {
-                                  // ChooseBuildingAlertDialog(false);
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -265,7 +211,6 @@ class _HomeState extends State<Home> {
                                   ],
                                 ),
                                 onTap: () {
-                                  // ChooseBuildingAlertDialog(true);
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(

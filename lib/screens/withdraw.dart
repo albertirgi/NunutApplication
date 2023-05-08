@@ -147,7 +147,6 @@ class _WithdrawState extends State<Withdraw> {
           child: Container(
             margin: EdgeInsets.only(left: 20, right: 20, top: 20),
             width: MediaQuery.of(context).size.width,
-            // height: MediaQuery.of(context).size.height * 0.75,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -382,11 +381,10 @@ class _WithdrawState extends State<Withdraw> {
                                         ),
                                         cursorColor: Colors.black,
                                         obscureText: false,
-                                        // controller: _licensePlateController,
                                         decoration: InputDecoration(
                                           contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                                           isDense: true,
-                                          hintText: "e.g. L 1234 XX",
+                                          hintText: "e.g. 581XXXXX",
                                           hintStyle: TextStyle(
                                             color: Colors.grey,
                                             fontSize: 12,
@@ -429,11 +427,10 @@ class _WithdrawState extends State<Withdraw> {
                                         ),
                                         cursorColor: Colors.black,
                                         obscureText: false,
-                                        // controller: _licensePlateController,
                                         decoration: InputDecoration(
                                           contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                                           isDense: true,
-                                          hintText: "e.g. 11/2024",
+                                          hintText: "e.g. John Doe",
                                           hintStyle: TextStyle(
                                             color: Colors.grey,
                                             fontSize: 12,

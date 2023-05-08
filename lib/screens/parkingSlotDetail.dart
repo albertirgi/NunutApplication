@@ -28,7 +28,6 @@ class _parkingSpotDetailState extends State<parkingSpotDetail> {
     final arg = ModalRoute.of(context)!.settings.arguments as Map;
     final data = arg['data'] as ParkingSlot;
     final idRide = arg['idRide'] as String;
-    //log("isi data " + jsonEncode(data).toString());
     image = data.image;
     title = data.title;
     subTitle = data.subtitle;
@@ -109,8 +108,6 @@ class _parkingSpotDetailState extends State<parkingSpotDetail> {
                     itemBuilder: (context, index) {
                       return Row(
                         children: [
-                          //icon bullet
-
                           Expanded(
                             child: Text(
                               "${index + 1}." + instruction[index],
@@ -141,20 +138,13 @@ class _parkingSpotDetailState extends State<parkingSpotDetail> {
                     child: NunutButton(
                       title: "Pesan",
                       onPressed: () async {
-                        var status_post =
-                            await BookingParkirApi.SendBookingParkir(
-                                parking_slot_id, id_ride);
-                        var status_update_slot =
-                            await BookingParkirApi.UpdateStatusSlotParkir(
-                                parking_slot_id);
+                        var status_post = await BookingParkirApi.SendBookingParkir(parking_slot_id, id_ride);
+                        var status_update_slot = await BookingParkirApi.UpdateStatusSlotParkir(parking_slot_id);
                         log("status post " + status_post.toString());
-                        log("status update slot " +
-                            status_update_slot.toString());
+                        log("status update slot " + status_update_slot.toString());
                         if (status_post == true && status_update_slot == true) {
                           Fluttertoast.showToast(msg: "Booking Parkir Sukses");
-                          //Navigator.pop(context);
-                          Navigator.popUntil(
-                              context, ModalRoute.withName('/rideList'));
+                          Navigator.popUntil(context, ModalRoute.withName('/rideList'));
                         } else {
                           Fluttertoast.showToast(msg: "Booking Parkir Gagal");
                         }

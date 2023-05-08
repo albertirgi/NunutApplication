@@ -58,46 +58,6 @@ class _RideBookDetailState extends State<RideBookDetail> {
             size: 35,
           ),
           NunutText(title: "${rideSchedule.vehicle.transportationType} | ${rideSchedule.vehicle.licensePlate}"),
-          SizedBox(height: 24),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Container(
-              //   width: 40,
-              //   height: 40,
-              //   decoration: BoxDecoration(
-              //     shape: BoxShape.circle,
-              //     color: Colors.black,
-              //   ),
-              //   child: IconButton(
-              //     onPressed: () {
-              //       String number = rideSchedule.driver.phoneNumber!;
-              //       openwhatsapp(context, number);
-              //     },
-              //     icon: Icon(
-              //       Icons.chat_bubble_outline_outlined,
-              //       color: Colors.white,
-              //     ),
-              //   ),
-              // ),
-              // SizedBox(width: 16),
-              // Container(
-              //   width: 40,
-              //   height: 40,
-              //   decoration: BoxDecoration(
-              //     shape: BoxShape.circle,
-              //     color: Colors.black,
-              //   ),
-              //   child: IconButton(
-              //     onPressed: () {},
-              //     icon: Icon(
-              //       Icons.call_rounded,
-              //       color: Colors.white,
-              //     ),
-              //   ),
-              // ),
-            ],
-          ),
           SizedBox(height: 32),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 30),
@@ -111,10 +71,6 @@ class _RideBookDetailState extends State<RideBookDetail> {
                   flex: 1,
                   child: NunutText(title: "JAM BERANGKAT", size: 12),
                 ),
-                // Expanded(
-                //   flex: 1,
-                //   child: NunutText(title: "KAPASITAS TERSISA", size: 12),
-                // ),
               ],
             ),
           ),
@@ -131,10 +87,6 @@ class _RideBookDetailState extends State<RideBookDetail> {
                   flex: 1,
                   child: NunutText(title: rideSchedule.time.toString(), maxLines: 2, fontWeight: FontWeight.bold),
                 ),
-                // Expanded(
-                //   flex: 1,
-                //   child: NunutText(title: availableSeat.toString(), fontWeight: FontWeight.bold),
-                // ),
               ],
             ),
           ),
@@ -270,10 +222,6 @@ class _RideBookDetailState extends State<RideBookDetail> {
                                 NunutText(title: rideSchedule.driver.name),
                               ],
                             ),
-                            // SizedBox(height: 12),
-                            // Row(
-                            //   children: [Icon(Icons.money), SizedBox(width: 8), NunutText(title: "IDR 15.000")],
-                            // ),
                             SizedBox(height: 16),
                             NunutButton(
                               title: "Konfirmasi",
@@ -454,10 +402,6 @@ class _RideBookDetailState extends State<RideBookDetail> {
                                       ),
                                     ),
                                   ),
-                                  // Expanded(
-                                  //   flex: 1,
-                                  //   child: NunutText(title: availableSeat.toString(), fontWeight: FontWeight.bold),
-                                  // ),
                                 ],
                               ),
                             ),

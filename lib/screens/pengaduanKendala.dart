@@ -59,7 +59,6 @@ class _PengaduanKendalaPageState extends State<PengaduanKendalaPage> {
                           Navigator.pop(context);
                         },
                       ),
-                      //icon chat
                     ],
                   ),
                   Padding(

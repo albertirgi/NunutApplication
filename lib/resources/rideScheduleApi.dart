@@ -10,15 +10,7 @@ import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/resources/mapLocationApi.dart';
 
 class RideScheduleApi {
-  static Future PostRideSchedule(
-    date,
-    time,
-    meeting_point_id,
-    destination_id,
-    vehicle_id,
-    capacity,
-    driver_id,
-  ) async {
+  static Future PostRideSchedule(date, time, meeting_point_id, destination_id, vehicle_id, capacity, driver_id) async {
     var url = Uri.parse(config.baseUrl + '/ride-schedule/');
     var price = 10000;
     var meetingPoint = await mapLocationApi.getMapListById(meeting_point_id);

@@ -46,9 +46,7 @@ class NunutTextFormField extends StatelessWidget {
             inputFormatters: is_currency
                 ? [
                     FilteringTextInputFormatter.digitsOnly,
-                    // Fit the validating format.
-                    //fazer o formater para dinheiro
-                    CurrencyInputFormatter()
+                    CurrencyInputFormatter(),
                   ]
                 : null,
             cursorColor: Colors.black,

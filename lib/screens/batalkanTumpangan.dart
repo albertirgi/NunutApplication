@@ -48,7 +48,6 @@ class _BatalkanTumpanganState extends State<BatalkanTumpangan> {
                           Navigator.pop(context);
                         },
                       ),
-                      //icon chat
                     ],
                   ),
                   Padding(

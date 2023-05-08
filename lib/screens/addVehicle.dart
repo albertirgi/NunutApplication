@@ -187,43 +187,6 @@ class _AddVehicleState extends State<AddVehicle> {
                     ),
                   ),
                   SizedBox(height: 20),
-
-                  // TextFormField(
-                  //   style: TextStyle(
-                  //     color: Colors.black,
-                  //     fontSize: 16,
-                  //   ),
-                  //   cursorColor: Colors.black,
-                  //   obscureText: false,
-                  //   controller: _vehicleTypeController,
-                  //   decoration: InputDecoration(
-                  //     contentPadding:
-                  //         EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  //     isDense: true,
-                  //     hintText: "e.g. SUV, City Car, MPV, etc.",
-                  //     hintStyle: TextStyle(
-                  //       color: Colors.grey,
-                  //       fontSize: 16,
-                  //     ),
-                  //     filled: true,
-                  //     fillColor: Colors.grey[300],
-                  //     border: OutlineInputBorder(
-                  //       borderRadius: BorderRadius.circular(50),
-                  //       borderSide: const BorderSide(
-                  //         width: 0,
-                  //         style: BorderStyle.none,
-                  //       ),
-                  //     ),
-                  //     focusedBorder: OutlineInputBorder(
-                  //       borderRadius: BorderRadius.circular(50),
-                  //       borderSide: const BorderSide(
-                  //         width: 0,
-                  //         style: BorderStyle.none,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  // SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

@@ -30,7 +30,6 @@ class _RideDetailState extends State<RideDetail> {
   TextEditingController searchController = TextEditingController();
   bool rideScheduleLoading = true;
   bool isUserAlreadyAbsent = true;
-  // bool rideRequestListLoading = true;
 
   @override
   void initState() {
@@ -60,16 +59,8 @@ class _RideDetailState extends State<RideDetail> {
   }
 
   initRideRequestList() async {
-    // setState(() {
-    //   rideRequestListLoading = true;
-    // });
-
     rideRequestList.clear();
     rideRequestList = await rideRequestApi.getRideRequestList(rideScheduleId: widget.rideScheduleId, parameter: "user");
-
-    // setState(() {
-    //   rideRequestListLoading = false;
-    // });
   }
 
   checkUserAbsent() {
@@ -438,15 +429,6 @@ class _RideDetailState extends State<RideDetail> {
                             SizedBox(height: 16),
                             Row(
                               children: [
-                                // NunutButton(
-                                //   title: "Peta",
-                                //   widthButton: 90,
-                                //   heightButton: 35,
-                                //   textSize: 14,
-                                //   borderColor: Colors.transparent,
-                                //   iconButton: Icon(Icons.map_outlined, color: Colors.black),
-                                //   onPressed: () {},
-                                // ),
                                 rideRequestList.length > 1
                                     ? NunutButton(
                                         title: "Book Parkir",
@@ -502,13 +484,6 @@ class _RideDetailState extends State<RideDetail> {
                                       return Row(
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
-                                          // CircleAvatar(
-                                          //   radius: 20,
-                                          //   backgroundImage: NetworkImage(
-                                          //     "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=80",
-                                          //   ),
-                                          // ),
-                                          // SizedBox(width: 10),
                                           NunutText(title: rideRequestList[index].user!.name, fontWeight: FontWeight.w500, size: 14),
                                           Flexible(
                                             child: Row(
@@ -530,30 +505,7 @@ class _RideDetailState extends State<RideDetail> {
                                     },
                                     itemCount: rideRequestList.length,
                                   ),
-                            SizedBox(height: 10),
-                            // Divider(color: Colors.grey, thickness: 0.5),
-                            // SizedBox(height: 10),
-                            // NunutText(title: "Tempat Parkir", fontWeight: FontWeight.bold, size: 16),
-                            // SizedBox(height: 5),
-                            // NunutText(title: "Yuk pesan tempat parkir sekarang!", fontWeight: FontWeight.w500, size: 14),
-                            // SizedBox(height: 20),
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.end,
-                            //   children: [
-                            //     NunutButton(
-                            //       title: "Pesan",
-                            //       textSize: 14,
-                            //       widthButton: 120,
-                            //       heightButton: 40,
-                            //       fontWeight: FontWeight.w600,
-                            //       borderColor: Colors.transparent,
-                            //       onPressed: () {
-                            //         Navigator.pushNamed(context, '/bookingParkir', arguments: widget.rideScheduleId);
-                            //       },
-                            //     ),
-                            //   ],
-                            // ),
-                            SizedBox(height: 20),
+                            SizedBox(height: 30),
                           ],
                         ),
                 ),

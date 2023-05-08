@@ -40,9 +40,7 @@ class _TermAndConsPageState extends State<TermAndConsPage> {
   _initDataJson() async {
     var read_json = await rootBundle.loadString('assets/tnc.json');
     var data = await json.decode(read_json);
-    // log("data definisi: $data['definisi']");
 
-    //log("data len : " + data["definisi"].length.toString());
     for (var i = 0; i < data["definisi"].length; i++) {
       definisi.add(data["definisi"][i]);
     }
@@ -139,7 +137,6 @@ class _TermAndConsPageState extends State<TermAndConsPage> {
                     padding: EdgeInsets.zero,
                     itemBuilder: (context, index) {
                       return Container(
-                        //margin: const EdgeInsets.only(top: 16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -181,7 +178,6 @@ class _TermAndConsPageState extends State<TermAndConsPage> {
                     padding: EdgeInsets.zero,
                     itemBuilder: (context, index) {
                       return Container(
-                        //margin: const EdgeInsets.only(top: 16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -325,7 +321,6 @@ class _TermAndConsPageState extends State<TermAndConsPage> {
                     padding: EdgeInsets.zero,
                     itemBuilder: (context, index) {
                       return Container(
-                        //margin: const EdgeInsets.only(top: 16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -454,7 +449,6 @@ class _TermAndConsPageState extends State<TermAndConsPage> {
                     padding: EdgeInsets.zero,
                     itemBuilder: (context, index) {
                       return Container(
-                        //margin: const EdgeInsets.only(top: 16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -525,7 +519,6 @@ class _TermAndConsPageState extends State<TermAndConsPage> {
                     padding: EdgeInsets.zero,
                     itemBuilder: (context, index) {
                       return Container(
-                        //margin: const EdgeInsets.only(top: 16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -567,7 +560,6 @@ class _TermAndConsPageState extends State<TermAndConsPage> {
                     padding: EdgeInsets.zero,
                     itemBuilder: (context, index) {
                       return Container(
-                        //margin: const EdgeInsets.only(top: 16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -609,7 +601,6 @@ class _TermAndConsPageState extends State<TermAndConsPage> {
                     padding: EdgeInsets.zero,
                     itemBuilder: (context, index) {
                       return Container(
-                        //margin: const EdgeInsets.only(top: 16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

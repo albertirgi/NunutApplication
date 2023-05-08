@@ -71,7 +71,6 @@ class Vehicle2 {
       licensePlate: json['license_plate'],
       expiredAt: json['expired_at'],
       transportationType: json['transportation_type'],
-      // vehileType: json['vehicle_type'],
       note: json['note'],
       isMain: json['is_main'],
     );

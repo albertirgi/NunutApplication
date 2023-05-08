@@ -110,20 +110,6 @@ class _RideListState extends State<RideList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Colors.grey[50],
-      //   elevation: 0,
-      //   toolbarHeight: 100,
-      //   leading: Container(
-      //     margin: EdgeInsets.only(top: 52),
-      //     child: IconButton(
-      //       icon: Icon(Icons.arrow_back, color: Colors.black),
-      //       onPressed: () {
-      //         Navigator.pop(context);
-      //       },
-      //     ),
-      //   ),
-      // ),
       body: Stack(
         children: [
           Positioned(

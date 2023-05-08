@@ -85,8 +85,6 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                               Navigator.pop(context);
                             },
                           ),
-                          //icon chat
-                          //Profile Picture
                           Container(
                             height: 90,
                             padding: const EdgeInsets.only(left: 40),
@@ -94,7 +92,6 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                               alignment: Alignment.topRight,
                               children: [
                                 CircleAvatar(
-                                  //border circle avatar black
                                   backgroundColor: Colors.black,
                                   radius: 50,
                                   backgroundImage: config.user.photo != null
@@ -136,17 +133,6 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.fromLTRB(20, 24, 0, 7),
-                                  // child: BorderedText(
-                                  //   child: Text(
-                                  //     "Data Diri",
-                                  //     style: TextStyle(
-                                  //       color: Colors.white,
-                                  //       fontSize: 38,
-                                  //     ),
-                                  //   ),
-                                  //   strokeWidth: 3.0,
-                                  //   strokeColor: Colors.black,
-                                  // ),
                                   child: NunutText(title: "Daftar Driver", isTitle: true, size: 32),
                                 ),
                                 SizedBox(height: 3),
@@ -166,182 +152,7 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                           ),
                         ],
                       ),
-                      // SizedBox(height: 10),
-                      Container(
-                        margin: EdgeInsets.only(top: 0, left: 20, right: 20),
-                        child: Column(
-                          children: [
-                            // NunutTextFormField(
-                            //   title: "Nama Lengkap",
-                            //   hintText: "Nama Lengkap",
-                            //   obsecureText: false,
-                            //   controller: fullName,
-                            //   width: 1.5,
-                            // ),
-                            // NunutTextFormField(
-                            //   title: "NIK",
-                            //   hintText: "NIK ",
-                            //   obsecureText: false,
-                            //   controller: nik,
-                            //   width: 1.5,
-                            // ),
-                            // Column(
-                            //   crossAxisAlignment: CrossAxisAlignment.start,
-                            //   children: [
-                            //     NunutText(
-                            //       title: "Nomor Telepon",
-                            //       fontWeight: FontWeight.bold,
-                            //     ),
-                            //     SizedBox(height: 2),
-                            //     Row(
-                            //       children: [
-                            //         Container(
-                            //           width: 50,
-                            //           height: 50,
-                            //           decoration: BoxDecoration(
-                            //             borderRadius: BorderRadius.circular(12),
-                            //             border: Border.all(
-                            //               color: Colors.black,
-                            //               width: 1.5,
-                            //             ),
-                            //             //color: nunutPrimaryColor,
-                            //           ),
-                            //           child: Center(
-                            //             child: NunutText(
-                            //               title: "+62",
-                            //               fontWeight: FontWeight.bold,
-                            //             ),
-                            //           ),
-                            //         ),
-                            //         SizedBox(width: 10),
-                            //         Expanded(
-                            //           child: TextFormField(
-                            //             cursorColor: Colors.black,
-                            //             obscureText: false,
-                            //             controller: noTelp,
-                            //             decoration: InputDecoration(
-                            //               hintText: "Nomor Telepon",
-                            //               border: OutlineInputBorder(
-                            //                 borderRadius:
-                            //                     BorderRadius.circular(12),
-                            //                 borderSide: BorderSide(
-                            //                   color: Colors.black,
-                            //                   width: 1.5,
-                            //                 ),
-                            //               ),
-                            //               focusedBorder: OutlineInputBorder(
-                            //                 borderRadius:
-                            //                     BorderRadius.circular(12),
-                            //                 borderSide: BorderSide(
-                            //                   color: Colors.black,
-                            //                   width: 1.5,
-                            //                 ),
-                            //               ),
-                            //             ),
-                            //           ),
-                            //         ),
-                            //       ],
-                            //     )
-                            //   ],
-                            // ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 10),
-
-                      // Container(
-                      //   margin: EdgeInsets.only(top: 0, left: 20, right: 20),
-                      //   child: Column(
-                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                      //     children: [
-                      //       NunutText(
-                      //         title: "Data Kendaraan",
-                      //         fontWeight: FontWeight.bold,
-                      //       ),
-                      //       Row(
-                      //         children: [
-                      //           Container(
-                      //             decoration: BoxDecoration(
-                      //               border: Border.all(
-                      //                 color: Colors.black,
-                      //                 width: 1.5,
-                      //               ),
-                      //               borderRadius: BorderRadius.circular(12),
-                      //             ),
-                      //             child: Column(
-                      //               crossAxisAlignment: CrossAxisAlignment.start,
-                      //               children: [
-                      //                 //ogoKendaraan
-                      //                 Padding(
-                      //                   padding: const EdgeInsets.fromLTRB(
-                      //                       10, 20, 10, 0),
-                      //                   child: Image(
-                      //                     image: AssetImage("assets/toyota.png"),
-                      //                     height: 20,
-                      //                   ),
-                      //                 ),
-                      //                 SizedBox(height: 5),
-                      //                 //NamaKendaraan
-                      //                 Padding(
-                      //                   padding:
-                      //                       const EdgeInsets.fromLTRB(10, 0, 80, 0),
-                      //                   child: NunutText(
-                      //                     title: "Toyota",
-                      //                     fontWeight: FontWeight.bold,
-                      //                   ),
-                      //                 ),
-                      //                 //platnomor
-                      //                 Padding(
-                      //                   padding: const EdgeInsets.fromLTRB(
-                      //                       10, 0, 10, 20),
-                      //                   child: NunutText(
-                      //                     title: "B 1234 ABC",
-                      //                   ),
-                      //                 ),
-                      //               ],
-                      //             ),
-                      //           ),
-                      //           Container(
-                      //             margin: EdgeInsets.only(left: 10),
-                      //             child: Column(
-                      //               children: [
-                      //                 //ogoKendaraan
-                      //                 Padding(
-                      //                   padding:
-                      //                       const EdgeInsets.fromLTRB(10, 20, 0, 0),
-                      //                   child: Icon(
-                      //                     Icons.add_circle,
-                      //                     color: Colors.black,
-                      //                     size: 27,
-                      //                   ),
-                      //                 ),
-                      //                 SizedBox(height: 5),
-                      //                 //NamaKendaraan
-                      //                 NunutText(
-                      //                   title: "Tambah Kendaraan",
-                      //                 ),
-                      //               ],
-                      //             ),
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      // SizedBox(height: 10),
-                      // Container(
-                      //   margin: EdgeInsets.only(top: 0, left: 20, right: 20),
-                      //   child: Column(
-                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                      //     children: [
-                      //       NunutText(
-                      //         title: "Persyaratan Berkas Driver",
-                      //         fontWeight: FontWeight.bold,
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 30),
                       Container(
                         margin: EdgeInsets.only(top: 0, left: 20, right: 20),
                         child: Column(
@@ -411,43 +222,7 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 20),
-                      // Container(
-                      //   margin: EdgeInsets.only(top: 0, left: 20, right: 20),
-                      //   child: Column(
-                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                      //     children: [
-                      //       NunutText(
-                      //         title: "Surat Persetujuan",
-                      //         fontWeight: FontWeight.bold,
-                      //       ),
-                      //       SizedBox(height: 2),
-                      //       NunutButton(
-                      //         title: aggrementLetterButtonTitle,
-                      //         iconButton: Icon(Icons.file_upload, color: Colors.black),
-                      //         heightButton: 45,
-                      //         onPressed: () {
-                      //           FilePicker.platform.pickFiles().then(
-                      //             (value) {
-                      //               FilePickerResult? result = value;
-                      //               if (result != null) {
-                      //                 File file = File(result.files.single.path!);
-                      //                 setState(() {
-                      //                   _aggrementLetter = file;
-                      //                   aggrementLetterButtonTitle = WrappingFileName(result.files.single.name);
-                      //                 });
-                      //               } else {
-                      //                 // User canceled the picker
-                      //               }
-                      //             },
-                      //           );
-                      //         },
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
                       Expanded(child: Container()),
-                      SizedBox(height: 100),
                       Container(
                         margin: EdgeInsets.only(top: 0, left: 20, right: 20),
                         child: NunutButton(
@@ -494,6 +269,7 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                               UserService service = UserService();
                               service.getUserByID(config.user.id!).then((value) {
                                 config.user = value;
+                                Navigator.pop(context);
                                 Navigator.pop(context);
                               });
                             } else {

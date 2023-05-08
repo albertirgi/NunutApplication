@@ -75,7 +75,6 @@ class _WithdrawConfirmationState extends State<WithdrawConfirmation> {
           child: Container(
             margin: EdgeInsets.only(left: 20, right: 20, top: 20),
             width: MediaQuery.of(context).size.width,
-            // height: MediaQuery.of(context).size.height * 0.75,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -138,7 +137,6 @@ class _WithdrawConfirmationState extends State<WithdrawConfirmation> {
                     NunutText(title: priceFormat(_total.toString()), fontWeight: FontWeight.bold, size: 18),
                   ],
                 ),
-                // SizedBox(height: isExpanded ? MediaQuery.of(context).size.height * 0.1 : MediaQuery.of(context).size.height * 0.35),
                 Container(
                   margin: EdgeInsets.only(bottom: 20, top: MediaQuery.of(context).size.height * 0.3),
                   child: NunutButton(
