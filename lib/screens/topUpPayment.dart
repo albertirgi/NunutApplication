@@ -165,6 +165,7 @@ class _TopUpPaymentState extends State<TopUpPayment> {
                                     child: CircularProgressIndicator(
                                       value: null,
                                       strokeWidth: 5.0,
+                                      color: nunutPrimaryColor,
                                     ),
                                   ),
                                 ),

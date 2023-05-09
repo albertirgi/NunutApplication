@@ -183,7 +183,9 @@ class _DistanceState extends State<Distance> {
             left: 50,
             child: mapLocationListLoading
                 ? Container(
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(
+                      color: nunutPrimaryColor,
+                    ),
                   )
                 : Container(
                     padding: EdgeInsets.all(5),

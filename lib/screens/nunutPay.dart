@@ -308,7 +308,9 @@ class _NunutPayState extends State<NunutPay> {
                                                     ? Container(
                                                         margin: EdgeInsets.only(bottom: 20, top: 5),
                                                         child: Center(
-                                                          child: CircularProgressIndicator(),
+                                                          child: CircularProgressIndicator(
+                                                            color: nunutPrimaryColor,
+                                                          ),
                                                         ),
                                                       )
                                                     : Container(),

@@ -305,7 +305,9 @@ class _RideDetailState extends State<RideDetail> {
                             Container(
                               height: 150,
                               child: Center(
-                                child: CircularProgressIndicator(),
+                                child: CircularProgressIndicator(
+                                  color: nunutPrimaryColor,
+                                ),
                               ),
                             ),
                             Divider(color: Colors.grey, thickness: 0.5),
@@ -429,7 +431,7 @@ class _RideDetailState extends State<RideDetail> {
                             SizedBox(height: 16),
                             Row(
                               children: [
-                                rideRequestList.length > 1
+                                rideRequestList.length >= 1
                                     ? NunutButton(
                                         title: "Book Parkir",
                                         iconButton: Icon(

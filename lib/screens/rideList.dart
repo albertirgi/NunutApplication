@@ -170,7 +170,9 @@ class _RideListState extends State<RideList> {
                     ? Container(
                         margin: EdgeInsets.only(top: 50),
                         child: Center(
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(
+                            color: nunutPrimaryColor,
+                          ),
                         ),
                       )
                     : Expanded(
@@ -223,7 +225,9 @@ class _RideListState extends State<RideList> {
                                 ? Container(
                                     margin: EdgeInsets.only(top: 20, bottom: 20),
                                     child: Center(
-                                      child: CircularProgressIndicator(),
+                                      child: CircularProgressIndicator(
+                                        color: nunutPrimaryColor,
+                                      ),
                                     ),
                                   )
                                 : Container(),

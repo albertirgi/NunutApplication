@@ -106,7 +106,11 @@ class _PromotionListState extends State<PromotionList> {
             ),
           ),
           promotionListLoading!
-              ? Center(child: CircularProgressIndicator())
+              ? Center(
+                  child: CircularProgressIndicator(
+                    color: nunutPrimaryColor,
+                  ),
+                )
               : promotionList.isNotEmpty
                   ? Positioned(
                       top: MediaQuery.of(context).size.height * 0.22,
