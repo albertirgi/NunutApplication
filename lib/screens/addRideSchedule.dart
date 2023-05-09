@@ -487,8 +487,7 @@ class _AddRideScheduleState extends State<AddRideSchedule> {
                         _destinationController.text = "";
                         _capacityValue = 1;
                       });
-                      Navigator.pop(context);
-                      Navigator.pop(context);
+                      Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
                       Navigator.of(context).pushNamed('/rideList');
                     } else {
                       Fluttertoast.showToast(
