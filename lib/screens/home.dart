@@ -179,7 +179,7 @@ class _HomeState extends State<Home> {
                                     NunutText(title: "Dari", size: 8),
                                     NunutText(title: "Lokasi Jemput", size: 12, fontWeight: FontWeight.bold),
                                     NunutText(title: "Pergi Ke", size: 8),
-                                    NunutText(title: "UK Petra", size: 12, fontWeight: FontWeight.bold),
+                                    NunutText(title: "PCU", size: 12, fontWeight: FontWeight.bold),
                                   ],
                                 ),
                                 onTap: () {
@@ -205,7 +205,7 @@ class _HomeState extends State<Home> {
                                   children: [
                                     Image.asset('assets/graduation.png'),
                                     NunutText(title: "Dari", size: 8),
-                                    NunutText(title: "UK Petra", size: 12, fontWeight: FontWeight.bold),
+                                    NunutText(title: "PCU", size: 12, fontWeight: FontWeight.bold),
                                     NunutText(title: "Pergi Ke", size: 8),
                                     NunutText(title: "Lokasi Tujuan", size: 12, fontWeight: FontWeight.bold),
                                   ],
