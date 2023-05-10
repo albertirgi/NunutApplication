@@ -95,7 +95,7 @@ class _RideShareState extends State<RideShare> {
         isLoading = true;
       });
 
-      String initialParameter = "user_view&ride_request&user=${config.user.id}&driver&vehicle";
+      String initialParameter = "user_view=true&ride_request&user=${config.user.id}&driver&vehicle";
       initialParameter += widget.fromUKP ? "&meeting_point=UniversitasKristenPetra" : "&destination=UniversitasKristenPetra";
 
       rideSchedulePageList.clear();
