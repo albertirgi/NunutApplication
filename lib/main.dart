@@ -117,7 +117,7 @@ class MyApp extends StatelessWidget {
                 'image': 'assets/images/topup.png',
               },
             ),
-        '/termsandcons': (context) => TermAndConsPage()
+        '/termsandcons': (context) => TermAndConsPage(),
       },
     );
   }

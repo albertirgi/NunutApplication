@@ -1,7 +1,7 @@
 enum Environment { Local, Dev, Prod }
 
 class Config {
-  static Map<String, dynamic> _config = _ConfigMap.localConfig;
+  static Map<String, dynamic> _config = _ConfigMap.prodConfig;
 
   static void setEnvironment(Environment env) {
     switch (env) {
@@ -49,21 +49,9 @@ class _ConfigMap {
   static const MIDTRANS_URL = "MIDTRANS_URL";
   static const MIDTRANS_CLIENT_KEY = "MIDTRANS_CLIENT_KEY";
 
-  static Map<String, dynamic> localConfig = {
-    BASE_URL: "http://localhost:3000",
-    MIDTRANS_URL: "https://app.sandbox.midtrans.com/snap/snap.js",
-    MIDTRANS_CLIENT_KEY: "SB-Mid-client-5TcCUhLDAoRnAsCq"
-  };
+  static Map<String, dynamic> localConfig = {BASE_URL: "http://localhost:3000", MIDTRANS_URL: "https://app.sandbox.midtrans.com/snap/snap.js", MIDTRANS_CLIENT_KEY: "SB-Mid-client-5TcCUhLDAoRnAsCq"};
 
-  static Map<String, dynamic> devConfig = {
-    BASE_URL: "http://localhost:5000",
-    MIDTRANS_URL: "https://app.sandbox.midtrans.com/snap/snap.js",
-    MIDTRANS_CLIENT_KEY: "SB-Mid-client-5TcCUhLDAoRnAsCq"
-  };
+  static Map<String, dynamic> devConfig = {BASE_URL: "http://localhost:5000", MIDTRANS_URL: "https://app.sandbox.midtrans.com/snap/snap.js", MIDTRANS_CLIENT_KEY: "SB-Mid-client-5TcCUhLDAoRnAsCq"};
 
-  static Map<String, dynamic> prodConfig = {
-    BASE_URL: "http://localhost:5000",
-    MIDTRANS_URL: "https://app.sandbox.midtrans.com/snap/snap.js",
-    MIDTRANS_CLIENT_KEY: "SB-Mid-client-5TcCUhLDAoRnAsCq"
-  };
+  static Map<String, dynamic> prodConfig = {BASE_URL: "https://ayonunut.com/api/v1/", MIDTRANS_URL: "https://app.midtrans.com/snap/snap.js", MIDTRANS_CLIENT_KEY: "Mid-client--XRbVedkdIW_kGcG"};
 }
