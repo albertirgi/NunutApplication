@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -5,6 +7,8 @@ import 'package:nunut_application/functions.dart';
 import 'package:nunut_application/models/muser.dart';
 import 'package:nunut_application/resources/authApi.dart';
 import 'package:nunut_application/resources/midtransApi.dart';
+import 'package:nunut_application/resources/walletApi.dart';
+import 'package:nunut_application/screens/snap.dart';
 import 'package:nunut_application/screens/topUpPayment.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutBackground.dart';
@@ -14,6 +18,7 @@ import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:nunut_application/widgets/nunutTextFormField.dart';
 import 'package:intl/intl.dart';
 import 'package:nunut_application/widgets/popUpLoading.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TopUp extends StatefulWidget {
   const TopUp({super.key});
@@ -191,78 +196,78 @@ class _TopUpState extends State<TopUp> {
                   ],
                 ),
                 SizedBox(height: 30),
-                NunutText(title: "Pilih Metode Pembayaran", fontWeight: FontWeight.bold, size: 20),
-                SizedBox(height: 20),
-                !isExpanded ? Divider(height: 1) : Container(),
-                SizedBox(height: 20),
-                Theme(
-                  data: Theme.of(context).copyWith(
-                    dividerColor: Colors.transparent,
-                  ),
-                  child: ExpansionTile(
-                    title: NunutText(
-                      title: "ATM / Bank Transfer",
-                      fontWeight: FontWeight.bold,
-                    ),
-                    children: [
-                      NunutRadioButton(
-                        label: "BCA",
-                        groupValue: _isPaymentSelected,
-                        value: "bca",
-                        onChanged: (value) {
-                          setState(() {
-                            _isPaymentSelected = value;
-                          });
-                        },
-                      ),
-                      NunutRadioButton(
-                        label: "BNI",
-                        groupValue: _isPaymentSelected,
-                        value: "bni",
-                        onChanged: (value) {
-                          setState(() {
-                            _isPaymentSelected = value;
-                          });
-                        },
-                      ),
-                      NunutRadioButton(
-                        label: "BRI",
-                        groupValue: _isPaymentSelected,
-                        value: "bri",
-                        onChanged: (value) {
-                          setState(() {
-                            _isPaymentSelected = value;
-                          });
-                        },
-                      ),
-                      NunutRadioButton(
-                        label: "Mandiri",
-                        groupValue: _isPaymentSelected,
-                        value: "echannel",
-                        onChanged: (value) {
-                          setState(() {
-                            _isPaymentSelected = value;
-                          });
-                        },
-                      ),
-                      NunutRadioButton(
-                        label: "Permata",
-                        groupValue: _isPaymentSelected,
-                        value: "permata",
-                        onChanged: (value) {
-                          setState(() {
-                            _isPaymentSelected = value;
-                          });
-                        },
-                      ),
-                    ],
-                    onExpansionChanged: (value) {
-                      setState(() {
-                        isExpanded = value;
-                      });
-                    },
-                  ),
-                ),
+                // NunutText(title: "Pilih Metode Pembayaran", fontWeight: FontWeight.bold, size: 20),
+                // SizedBox(height: 20),
+                // !isExpanded ? Divider(height: 1) : Container(),
+                // SizedBox(height: 20),
+                // Theme(
+                //   data: Theme.of(context).copyWith(
+                //     dividerColor: Colors.transparent,
+                //   ),
+                //   child: ExpansionTile(
+                //     title: NunutText(
+                //       title: "ATM / Bank Transfer",
+                //       fontWeight: FontWeight.bold,
+                //     ),
+                //     children: [
+                //       NunutRadioButton(
+                //         label: "BCA",
+                //         groupValue: _isPaymentSelected,
+                //         value: "bca",
+                //         onChanged: (value) {
+                //           setState(() {
+                //             _isPaymentSelected = value;
+                //           });
+                //         },
+                //       ),
+                //       NunutRadioButton(
+                //         label: "BNI",
+                //         groupValue: _isPaymentSelected,
+                //         value: "bni",
+                //         onChanged: (value) {
+                //           setState(() {
+                //             _isPaymentSelected = value;
+                //           });
+                //         },
+                //       ),
+                //       NunutRadioButton(
+                //         label: "BRI",
+                //         groupValue: _isPaymentSelected,
+                //         value: "bri",
+                //         onChanged: (value) {
+                //           setState(() {
+                //             _isPaymentSelected = value;
+                //           });
+                //         },
+                //       ),
+                //       NunutRadioButton(
+                //         label: "Mandiri",
+                //         groupValue: _isPaymentSelected,
+                //         value: "echannel",
+                //         onChanged: (value) {
+                //           setState(() {
+                //             _isPaymentSelected = value;
+                //           });
+                //         },
+                //       ),
+                //       NunutRadioButton(
+                //         label: "Permata",
+                //         groupValue: _isPaymentSelected,
+                //         value: "permata",
+                //         onChanged: (value) {
+                //           setState(() {
+                //             _isPaymentSelected = value;
+                //           });
+                //         },
+                //       ),
+                //     ],
+                //     onExpansionChanged: (value) {
+                //       setState(() {
+                //         isExpanded = value;
+                //       });
+                //     },
+                //   ),
+                // ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.2),
                 Container(
                   margin: EdgeInsets.only(bottom: 20),
@@ -270,6 +275,17 @@ class _TopUpState extends State<TopUp> {
                     title: "Lanjutkan",
                     fontWeight: FontWeight.w500,
                     onPressed: () async {
+                      if (topUpController.text == "" || topUpController.text == null) {
+                        Fluttertoast.showToast(
+                            msg: "Nominal top-up tidak boleh kosong",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.green,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                        return;
+                      }
                       showDialog(
                         context: context,
                         barrierDismissible: true,
@@ -285,7 +301,8 @@ class _TopUpState extends State<TopUp> {
                         setState(() {
                           isLoading = false;
                         });
-                        if (res["status"] == 500 || res["status"] == 400) {
+                        log(res.toString());
+                        if (res == null || res == "") {
                           Fluttertoast.showToast(
                               msg: "Transaksi gagal, silahkan coba lagi",
                               toastLength: Toast.LENGTH_SHORT,
@@ -296,12 +313,28 @@ class _TopUpState extends State<TopUp> {
                               fontSize: 16.0);
                           return;
                         }
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => TopUpPayment(data: res),
-                          ),
-                        );
+                        var uri = Uri(scheme: 'https', host: 'app.midtrans.com', path: '/snap/v2/vtweb/$res');
+                        if (await canLaunchUrl(uri)) {
+                          await launchUrl(uri, mode: LaunchMode.externalApplication).then((value) => Navigator.pop(context));
+                        } else {
+                          Fluttertoast.showToast(
+                              msg: "Transaksi gagal, silahkan coba lagi",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.green,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
+                          return;
+                        }
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => SnapScreen(
+                        //       transactionToken: res.toString(),
+                        //     ),
+                        //   ),
+                        // );
                       }
                     },
                     borderColor: Colors.transparent,
@@ -317,34 +350,35 @@ class _TopUpState extends State<TopUp> {
   }
 
   topup() async {
-    UserModel user = await AuthService.getCurrentUser();
-    String payment_type = _isPaymentSelected!;
-    String bank = _isPaymentSelected!;
-    switch (_isPaymentSelected) {
-      case "bca":
-        payment_type = "bank_transfer";
-        bank = "bca";
-        break;
-      case "bni":
-        payment_type = "bank_transfer";
-        bank = "bni";
-        break;
-      case "bri":
-        payment_type = "bank_transfer";
-        bank = "bri";
-        break;
-      case "echannel":
-        payment_type = "echannel";
-        bank = "mandiri";
-        break;
-      case "permata":
-        payment_type = "permata";
-        bank = "permata";
-        break;
-      default:
-    }
+    // UserModel user = await AuthService.getCurrentUser();
+    // String payment_type = _isPaymentSelected!;
+    // String bank = _isPaymentSelected!;
+    // switch (_isPaymentSelected) {
+    //   case "bca":
+    //     payment_type = "bank_transfer";
+    //     bank = "bca";
+    //     break;
+    //   case "bni":
+    //     payment_type = "bank_transfer";
+    //     bank = "bni";
+    //     break;
+    //   case "bri":
+    //     payment_type = "bank_transfer";
+    //     bank = "bri";
+    //     break;
+    //   case "echannel":
+    //     payment_type = "echannel";
+    //     bank = "mandiri";
+    //     break;
+    //   case "permata":
+    //     payment_type = "permata";
+    //     bank = "permata";
+    //     break;
+    //   default:
+    // }
     String amount = topUpController.text.replaceAll(RegExp(r'[A-Za-z\. ]'), "");
-    return await MidtransApi.Topup(int.parse(amount), user.name, "", user.email, user.phone, user.id!, payment_type, bank);
+    // return await MidtransApi.Topup(int.parse(amount), user.name, "", user.email, user.phone, user.id!, payment_type, bank);
+    return await WalletApi.topup(int.parse(amount));
   }
 }
 

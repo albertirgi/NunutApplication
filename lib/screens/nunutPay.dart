@@ -376,6 +376,7 @@ class _NunutPayState extends State<NunutPay> {
 
       transactions.addAll(transactionPageList);
       transactionLength = transactions.length;
+      transactions.sort((a, b) => b.transaction_time!.compareTo(a.transaction_time!));
       if (transactionPageList.length < 10 || transactionPageList.isEmpty) {
         done = true;
       }
@@ -394,6 +395,8 @@ class _NunutPayState extends State<NunutPay> {
   }
 
   onRefresh() {
+    _page = 1;
+    done = false;
     getUserInfo();
   }
 }
