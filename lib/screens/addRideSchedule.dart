@@ -461,6 +461,17 @@ class _AddRideScheduleState extends State<AddRideSchedule> {
                 child: NunutButton(
                   title: "Buat",
                   onPressed: () async {
+                    if (_dateController.text.isEmpty || _timeController.text.isEmpty || _meetingPointController.text.isEmpty || _destinationController.text.isEmpty || _selectedVehicle.isEmpty) {
+                      Fluttertoast.showToast(
+                          msg: "Semua field harus diisi",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
+                      return;
+                    }
                     var postRideScheduleStatus = await RideScheduleApi.PostRideSchedule(
                       _dateController.text.toString(),
                       _timeController.text.toString(),
