@@ -16,6 +16,7 @@ class Configuration extends InheritedWidget {
   String token = "";
   int selectedNavbar = 1;
   String? selectedBuilding;
+  String mapIdPetra = "074d950a-44ab-408a-9c00-03f4f9da42c3";
 }
 
 Configuration config = Configuration();

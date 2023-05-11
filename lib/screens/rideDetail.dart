@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/models/mriderequest.dart';
 import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/resources/rideRequestApi.dart';
@@ -431,7 +432,7 @@ class _RideDetailState extends State<RideDetail> {
                             SizedBox(height: 16),
                             Row(
                               children: [
-                                rideRequestList.length >= 1
+                                rideRequestList.length >= 1 && rideSchedule.destination!.mapId == config.mapIdPetra
                                     ? NunutButton(
                                         title: "Book Parkir",
                                         iconButton: Icon(
