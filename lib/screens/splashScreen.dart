@@ -46,9 +46,9 @@ class _SplashScreenState extends State<SplashScreen> {
           config.user.token = token;
         } else {
           goToMain = false;
-          // SharedPreferences.getInstance().then((prefs) {
-          //   prefs.clear();
-          // });
+          SharedPreferences.getInstance().then((prefs) {
+            prefs.clear();
+          });
         }
       });
     } else {
