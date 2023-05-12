@@ -3,9 +3,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:nunut_application/configuration.dart';
+import 'package:nunut_application/models/mresult.dart';
 import 'package:nunut_application/models/muser.dart';
 import 'package:nunut_application/resources/userApi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -15,13 +17,13 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  bool haveToken = false;
+  bool goToMain = false;
   @override
   void initState() {
     checkToken();
-    // TODO: implement initState
+    //kalau ada token di shared preferences tapi tidak ada di database maka hapus token di shared preferences dan arahkan ke login
     Timer(Duration(seconds: 3), () {
-      haveToken ? Navigator.pushReplacementNamed(context, '/main') : Navigator.pushReplacementNamed(context, '/login');
+      goToMain ? Navigator.pushReplacementNamed(context, '/main') : Navigator.pushReplacementNamed(context, '/login');
     });
     super.initState();
   }
@@ -29,13 +31,28 @@ class _SplashScreenState extends State<SplashScreen> {
   void checkToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getString("token") != null) {
-      haveToken = true;
-      String token = await prefs.getString("token")!;
-      config.user.token = token;
-      config.user = await UserService().getUserByID(prefs.getString("id")!);
-      config.user.token = token;
+      var url = Uri.parse(config.baseUrl + '/check-token/${prefs.getString("token")}');
+      http.get(
+        url,
+        headers: {"Content-Type": "application/json"},
+      ).then((value) {
+        Result result;
+        result = Result.fromJson(json.decode(value.body));
+        if (result.data) {
+          goToMain = true;
+          String token = prefs.getString("token")!;
+          config.user.token = token;
+          UserService().getUserByID(prefs.getString("id")!).then((value) => config.user = value);
+          config.user.token = token;
+        } else {
+          goToMain = false;
+          // SharedPreferences.getInstance().then((prefs) {
+          //   prefs.clear();
+          // });
+        }
+      });
     } else {
-      haveToken = false;
+      goToMain = false;
     }
   }
 

@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/configuration.dart';
@@ -114,16 +115,30 @@ class _LoginPageState extends State<LoginPage> {
 
                         String token = await AuthService.getToken(username.text, password.text);
                         config.user.token = token;
-                        tmpUser = await AuthService.signIn(email: username.text, password: password.text, context: context);
+                        tmpUser = await AuthService.signIn(email: username.text, password: password.text);
+                        Navigator.pop(context);
 
                         if (tmpUser.email != "") {
-                          config.user = tmpUser;
-                          config.user.token = token;
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
-                          prefs.setString("email", config.user.email);
-                          prefs.setString("token", config.user.token!);
-                          prefs.setString("id", config.user.id!);
-                          Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
+                          FirebaseAuth auth = FirebaseAuth.instance;
+                          if (!auth.currentUser!.emailVerified) {
+                            Fluttertoast.showToast(
+                              msg: "Mohon cek email anda untuk verifikasi",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+                          } else {
+                            config.user = tmpUser;
+                            config.user.token = token;
+                            SharedPreferences prefs = await SharedPreferences.getInstance();
+                            prefs.setString("email", config.user.email);
+                            prefs.setString("token", config.user.token!);
+                            prefs.setString("id", config.user.id!);
+                            Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
+                          }
                         } else {
                           Fluttertoast.showToast(msg: "Email atau password salah", textColor: Colors.white);
                         }
