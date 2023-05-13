@@ -21,7 +21,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     checkToken();
-    //kalau ada token di shared preferences tapi tidak ada di database maka hapus token di shared preferences dan arahkan ke login
     Timer(Duration(seconds: 3), () {
       goToMain ? Navigator.pushReplacementNamed(context, '/main') : Navigator.pushReplacementNamed(context, '/login');
     });
@@ -34,16 +33,19 @@ class _SplashScreenState extends State<SplashScreen> {
       var url = Uri.parse(config.baseUrl + '/check-token/${prefs.getString("token")}');
       http.get(
         url,
-        headers: {"Content-Type": "application/json"},
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer ${prefs.getString("token")}',
+        },
       ).then((value) {
         Result result;
         result = Result.fromJson(json.decode(value.body));
+        print(jsonEncode(json.decode(value.body)));
         if (result.data) {
           goToMain = true;
           String token = prefs.getString("token")!;
           config.user.token = token;
           UserService().getUserByID(prefs.getString("id")!).then((value) => config.user = value);
-          config.user.token = token;
         } else {
           goToMain = false;
           SharedPreferences.getInstance().then((prefs) {

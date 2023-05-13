@@ -53,7 +53,7 @@ class AuthService {
       return user;
     } catch (e) {
       Fluttertoast.showToast(msg: "Password atau Email Salah", backgroundColor: nunutPrimaryColor, textColor: Colors.white);
-      throw e;
+      return UserModel(email: "", name: "", nik: "", phone: "");
     }
   }
 

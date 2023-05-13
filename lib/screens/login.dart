@@ -23,10 +23,9 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
   bool passwordVisible = false;
+  bool sendEmailVerification = false;
 
   late UserModel tmpUser = UserModel(email: "", name: "", nik: "", phone: "");
-  var haveToken = false;
-  bool tokenLoading = true;
 
   @override
   void initState() {
@@ -98,6 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                   title: "Masuk",
                   widthButton: 200,
                   onPressed: () async {
+                    FocusManager.instance.primaryFocus?.unfocus();
                     final connectivityResult = await (Connectivity().checkConnectivity());
                     if (connectivityResult == ConnectivityResult.none) {
                       Fluttertoast.showToast(msg: "Mohon cek kembali koneksi internet anda", textColor: Colors.white);
@@ -115,9 +115,11 @@ class _LoginPageState extends State<LoginPage> {
 
                         String token = await AuthService.getToken(username.text, password.text);
                         config.user.token = token;
-                        tmpUser = await AuthService.signIn(email: username.text, password: password.text);
-                        Navigator.pop(context);
 
+                        await AuthService.signIn(email: username.text, password: password.text).then((value) => {
+                              Navigator.pop(context),
+                              tmpUser = value,
+                            });
                         if (tmpUser.email != "") {
                           FirebaseAuth auth = FirebaseAuth.instance;
                           if (!auth.currentUser!.emailVerified) {
@@ -130,6 +132,8 @@ class _LoginPageState extends State<LoginPage> {
                               textColor: Colors.white,
                               fontSize: 16.0,
                             );
+                            sendEmailVerification = true;
+                            setState(() {});
                           } else {
                             config.user = tmpUser;
                             config.user.token = token;
@@ -139,8 +143,6 @@ class _LoginPageState extends State<LoginPage> {
                             prefs.setString("id", config.user.id!);
                             Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
                           }
-                        } else {
-                          Fluttertoast.showToast(msg: "Email atau password salah", textColor: Colors.white);
                         }
                       }
                     }
@@ -163,7 +165,41 @@ class _LoginPageState extends State<LoginPage> {
                   onTap: () {
                     Navigator.pushNamed(context, '/register');
                   },
-                )
+                ),
+                SizedBox(height: 24),
+                sendEmailVerification
+                    ? InkWell(
+                        child: NunutText(
+                          title: "Kirim ulang email verifikasi",
+                          size: 13,
+                          color: greyFontColor,
+                          textDecoration: TextDecoration.underline,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        onTap: () async {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (BuildContext context) {
+                              return PopUpLoading(title: "Loading", subtitle: "Harap Menunggu...");
+                            },
+                          );
+                          await FirebaseAuth.instance.currentUser!.sendEmailVerification();
+                          Navigator.pop(context);
+                          Fluttertoast.showToast(
+                            msg: "Email verifikasi berhasil dikirim",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 2,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
+                          sendEmailVerification = false;
+                          setState(() {});
+                        },
+                      )
+                    : Container(),
               ],
             ),
           ),
