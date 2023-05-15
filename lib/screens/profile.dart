@@ -134,7 +134,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  config.user.phone,
+                                  "+62" + config.user.phone,
                                   style: TextStyle(
                                     color: Color.fromARGB(255, 28, 27, 27),
                                     fontSize: 12,

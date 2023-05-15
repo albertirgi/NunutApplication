@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 
 import '../theme.dart';
@@ -14,10 +15,7 @@ class TermAndConsPage extends StatefulWidget {
 }
 
 class _TermAndConsPageState extends State<TermAndConsPage> {
-  // print the parsed JSON data
-
   List dataKeseluruhan = [];
-
   List definisi = [];
   List penyimpanan_data_pribadi_user = [];
   List user_pengguna = [];
@@ -592,32 +590,46 @@ class _TermAndConsPageState extends State<TermAndConsPage> {
                     ),
                   ],
                 ),
-                FutureBuilder(builder: (context, snapshot) {
-                  var num = 1;
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: force_majeure.length,
-                    physics: ScrollPhysics(),
-                    padding: EdgeInsets.zero,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            NunutText(
-                              title: "${num++}. ${force_majeure[index]}",
-                              size: 16,
-                              color: Colors.black,
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                          ],
-                        ),
-                      );
+                FutureBuilder(
+                  builder: (context, snapshot) {
+                    var num = 1;
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: force_majeure.length,
+                      physics: ScrollPhysics(),
+                      padding: EdgeInsets.zero,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              NunutText(
+                                title: "${num++}. ${force_majeure[index]}",
+                                size: 16,
+                                color: Colors.black,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+                SizedBox(height: 16),
+                //button back to home
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 16),
+                  child: NunutButton(
+                    title: "Kembali",
+                    borderColor: Colors.transparent,
+                    onPressed: () {
+                      Navigator.pop(context);
                     },
-                  );
-                }),
+                  ),
+                )
               ],
             ),
           ),

@@ -9,6 +9,7 @@ import 'package:nunut_application/functions.dart';
 import 'package:nunut_application/models/mbookmark.dart';
 import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/screens/rideBookDetail.dart';
+import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:nunut_application/widgets/twoColumnView.dart';
 import 'package:intl/intl.dart';
@@ -78,7 +79,11 @@ class _RideBookmarkState extends State<RideBookmark> {
             ),
           ),
           bookmarkedListLoading!
-              ? Center(child: CircularProgressIndicator())
+              ? Center(
+                  child: CircularProgressIndicator(
+                    color: nunutPrimaryColor,
+                  ),
+                )
               : bookmarkedList.isNotEmpty
                   ? Positioned(
                       top: MediaQuery.of(context).size.height * 0.22,

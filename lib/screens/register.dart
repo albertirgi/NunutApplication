@@ -258,7 +258,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       );
 
                                       Fluttertoast.showToast(
-                                          msg: "Akun berhasil dibuat, silahkan login menggunakan akun yang telah dibuat!",
+                                          msg: "Akun berhasil dibuat, mohon cek email anda untuk melakukan verifikasi",
                                           toastLength: Toast.LENGTH_SHORT,
                                           gravity: ToastGravity.BOTTOM,
                                           timeInSecForIosWeb: 1,

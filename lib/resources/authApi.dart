@@ -31,6 +31,9 @@ class AuthService {
         phone: phone,
       );
 
+      //send verification email
+      await userCredential.user!.sendEmailVerification();
+
       final registeredUser = await UserService().tambahData(user: user, userCredential: userCredential).then((value) {
         return UserService().getUserByID(userCredential.user!.uid);
       });
@@ -43,16 +46,14 @@ class AuthService {
   static Future<UserModel> signIn({
     required String email,
     required String password,
-    required BuildContext context,
   }) async {
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(email: email, password: password);
       UserModel user = await UserService().getUserByID(userCredential.user!.uid);
       return user;
     } catch (e) {
-      Navigator.pop(context);
       Fluttertoast.showToast(msg: "Password atau Email Salah", backgroundColor: nunutPrimaryColor, textColor: Colors.white);
-      throw e;
+      return UserModel(email: "", name: "", nik: "", phone: "");
     }
   }
 

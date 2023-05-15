@@ -253,7 +253,7 @@ class _AddRideScheduleState extends State<AddRideSchedule> {
                       _meetingPointController.text = result.name!;
                       if (!_meetingPointController.text.contains('Universitas Kristen Petra')) {
                         _destinationController.text = 'Universitas Kristen Petra - Gedung W Torso';
-                        _selectedDestination = "074d950a-44ab-408a-9c00-03f4f9da42c3";
+                        _selectedDestination = config.mapIdPetra;
                         lockDestination = true;
                       } else {
                         lockDestination = false;
@@ -330,7 +330,7 @@ class _AddRideScheduleState extends State<AddRideSchedule> {
                       _destinationController.text = result.name!;
                       if (!_destinationController.text.contains('Universitas Kristen Petra')) {
                         _meetingPointController.text = 'Universitas Kristen Petra - Gedung W Torso';
-                        _selectedMeetingPoint = "074d950a-44ab-408a-9c00-03f4f9da42c3";
+                        _selectedMeetingPoint = config.mapIdPetra;
                         lockMeetingPoint = true;
                       } else {
                         lockMeetingPoint = false;
@@ -461,6 +461,17 @@ class _AddRideScheduleState extends State<AddRideSchedule> {
                 child: NunutButton(
                   title: "Buat",
                   onPressed: () async {
+                    if (_dateController.text.isEmpty || _timeController.text.isEmpty || _meetingPointController.text.isEmpty || _destinationController.text.isEmpty || _selectedVehicle.isEmpty) {
+                      Fluttertoast.showToast(
+                          msg: "Semua field harus diisi",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
+                      return;
+                    }
                     var postRideScheduleStatus = await RideScheduleApi.PostRideSchedule(
                       _dateController.text.toString(),
                       _timeController.text.toString(),
@@ -487,8 +498,7 @@ class _AddRideScheduleState extends State<AddRideSchedule> {
                         _destinationController.text = "";
                         _capacityValue = 1;
                       });
-                      Navigator.pop(context);
-                      Navigator.pop(context);
+                      Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
                       Navigator.of(context).pushNamed('/rideList');
                     } else {
                       Fluttertoast.showToast(

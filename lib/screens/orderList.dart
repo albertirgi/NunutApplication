@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nunut_application/models/mrideschedule.dart';
 import 'package:nunut_application/resources/rideRequestApi.dart';
 import 'package:nunut_application/screens/bookingDetail.dart';
+import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
 import 'package:nunut_application/widgets/nunutTripCard.dart';
 import 'package:nunut_application/configuration.dart';
@@ -154,7 +155,9 @@ class _OrderListState extends State<OrderList> {
                     ? Container(
                         margin: EdgeInsets.only(top: 100),
                         child: Center(
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(
+                            color: nunutPrimaryColor,
+                          ),
                         ),
                       )
                     : rideScheduleList.isNotEmpty
@@ -201,7 +204,9 @@ class _OrderListState extends State<OrderList> {
                                     ? Container(
                                         margin: EdgeInsets.only(top: 20, bottom: 20),
                                         child: Center(
-                                          child: CircularProgressIndicator(),
+                                          child: CircularProgressIndicator(
+                                            color: nunutPrimaryColor,
+                                          ),
                                         ),
                                       )
                                     : Container(),

@@ -170,66 +170,77 @@ class _RideListState extends State<RideList> {
                     ? Container(
                         margin: EdgeInsets.only(top: 50),
                         child: Center(
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(
+                            color: nunutPrimaryColor,
+                          ),
                         ),
                       )
-                    : Expanded(
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: ListView.separated(
-                                padding: EdgeInsets.only(top: 0),
-                                shrinkWrap: true,
-                                physics: BouncingScrollPhysics(),
-                                controller: _scrollController,
-                                itemBuilder: (context, index) {
-                                  return NunutTripCard(
-                                    images: images,
-                                    date: rideScheduleList[index].date!,
-                                    totalPerson: rideScheduleList[index].capacity!.toString(),
-                                    time: rideScheduleList[index].time!,
-                                    carName: rideScheduleList[index].vehicle!.transportationType!,
-                                    plateNumber: rideScheduleList[index].vehicle!.licensePlate!,
-                                    pickupLocation: rideScheduleList[index].meetingPoint!.name!,
-                                    destination: rideScheduleList[index].destination!.name!,
-                                    isActive: rideScheduleList[index].isActive!,
-                                    cancelTap: () {
-                                      Navigator.pushNamed(context, '/pengaduanKendala', arguments: {
-                                        'title': 'Pembatalan Tumpangan',
-                                        'isiTitle': 'Pembatalan Tumpangan',
-                                        'lockTitle': 'true',
-                                        'ride_schedule_id': rideScheduleList[index].id!,
-                                      });
-                                    },
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => RideDetail(
-                                            rideScheduleId: rideScheduleList[index].id!,
-                                          ),
-                                        ),
+                    : rideScheduleList.length == 0
+                        ? Container(
+                            margin: EdgeInsets.only(top: 70),
+                            child: Center(
+                              child: NunutText(title: "Data tidak ditemukan", size: 18, color: Colors.grey),
+                            ),
+                          )
+                        : Expanded(
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: ListView.separated(
+                                    padding: EdgeInsets.only(top: 0),
+                                    shrinkWrap: true,
+                                    physics: BouncingScrollPhysics(),
+                                    controller: _scrollController,
+                                    itemBuilder: (context, index) {
+                                      return NunutTripCard(
+                                        images: images,
+                                        date: rideScheduleList[index].date!,
+                                        totalPerson: rideScheduleList[index].capacity!.toString(),
+                                        time: rideScheduleList[index].time!,
+                                        carName: rideScheduleList[index].vehicle!.transportationType!,
+                                        plateNumber: rideScheduleList[index].vehicle!.licensePlate!,
+                                        pickupLocation: rideScheduleList[index].meetingPoint!.name!,
+                                        destination: rideScheduleList[index].destination!.name!,
+                                        isActive: rideScheduleList[index].isActive!,
+                                        cancelTap: () {
+                                          Navigator.pushNamed(context, '/pengaduanKendala', arguments: {
+                                            'title': 'Pembatalan Tumpangan',
+                                            'isiTitle': 'Pembatalan Tumpangan',
+                                            'lockTitle': 'true',
+                                            'ride_schedule_id': rideScheduleList[index].id!,
+                                          });
+                                        },
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => RideDetail(
+                                                rideScheduleId: rideScheduleList[index].id!,
+                                              ),
+                                            ),
+                                          );
+                                        },
                                       );
                                     },
-                                  );
-                                },
-                                separatorBuilder: (context, index) {
-                                  return SizedBox(height: 12);
-                                },
-                                itemCount: rideScheduleList.length,
-                              ),
+                                    separatorBuilder: (context, index) {
+                                      return SizedBox(height: 12);
+                                    },
+                                    itemCount: rideScheduleList.length,
+                                  ),
+                                ),
+                                isLoading
+                                    ? Container(
+                                        margin: EdgeInsets.only(top: 20, bottom: 20),
+                                        child: Center(
+                                          child: CircularProgressIndicator(
+                                            color: nunutPrimaryColor,
+                                          ),
+                                        ),
+                                      )
+                                    : Container(),
+                              ],
                             ),
-                            isLoading
-                                ? Container(
-                                    margin: EdgeInsets.only(top: 20, bottom: 20),
-                                    child: Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                  )
-                                : Container(),
-                          ],
-                        ),
-                      ),
+                          ),
               ],
             ),
           ),

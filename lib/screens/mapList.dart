@@ -166,7 +166,9 @@ class _MapListState extends State<MapList> {
                 SizedBox(height: 20),
                 mapLocationListLoading
                     ? Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(
+                          color: nunutPrimaryColor,
+                        ),
                       )
                     : Expanded(
                         child: Column(
@@ -187,7 +189,9 @@ class _MapListState extends State<MapList> {
                                 ? Container(
                                     margin: EdgeInsets.only(bottom: 20, top: 5),
                                     child: Center(
-                                      child: CircularProgressIndicator(),
+                                      child: CircularProgressIndicator(
+                                        color: nunutPrimaryColor,
+                                      ),
                                     ),
                                   )
                                 : Container(),

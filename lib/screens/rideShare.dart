@@ -95,7 +95,7 @@ class _RideShareState extends State<RideShare> {
         isLoading = true;
       });
 
-      String initialParameter = "user_view&ride_request&user=${config.user.id}&driver&vehicle";
+      String initialParameter = "user_view=true&ride_request&user=${config.user.id}&driver&vehicle";
       initialParameter += widget.fromUKP ? "&meeting_point=UniversitasKristenPetra" : "&destination=UniversitasKristenPetra";
 
       rideSchedulePageList.clear();
@@ -626,7 +626,9 @@ class _RideShareState extends State<RideShare> {
                   rideScheduleListLoading!
                       ? Center(
                           heightFactor: 5,
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(
+                            color: nunutPrimaryColor,
+                          ),
                         )
                       : rideScheduleList.isNotEmpty
                           ? Expanded(
@@ -693,7 +695,9 @@ class _RideShareState extends State<RideShare> {
                                         ? Container(
                                             margin: EdgeInsets.only(top: 10, bottom: 10),
                                             child: Center(
-                                              child: CircularProgressIndicator(),
+                                              child: CircularProgressIndicator(
+                                                color: nunutPrimaryColor,
+                                              ),
                                             ),
                                           )
                                         : Container(),
