@@ -40,7 +40,6 @@ class _SplashScreenState extends State<SplashScreen> {
       ).then((value) {
         Result result;
         result = Result.fromJson(json.decode(value.body));
-        print(jsonEncode(json.decode(value.body)));
         if (result.data) {
           goToMain = true;
           String token = prefs.getString("token")!;

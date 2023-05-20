@@ -34,6 +34,7 @@ class _PromotionListState extends State<PromotionList> {
 
     promotionList.clear();
     promotionList = await promotionApi.getPromotionList();
+    promotionList.removeWhere((element) => DateTime.parse(element.expiredAt).isBefore(DateTime.now()));
 
     setState(() {
       promotionListLoading = false;

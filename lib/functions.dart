@@ -145,6 +145,19 @@ String dateFormat(String date) {
   return year + "-" + month + "-" + day;
 }
 
+String calculateMinimumPrice(String price, int totalPerson, {int discount = 0}) {
+  double minimumPrice;
+
+  if (totalPerson == 1) {
+    minimumPrice = double.parse(price) - discount;
+    return priceFormat(minimumPrice.toString());
+  }
+  minimumPrice = ((double.parse(price.replaceAll(".", "")) / 2.8) * (totalPerson + 2)) / totalPerson;
+  minimumPrice = (minimumPrice / 100).ceil() * 100;
+  minimumPrice -= discount;
+  return priceFormat(minimumPrice.toString());
+}
+
 class PopWithResults<T> {
   /// poped from this page
   final String fromPage;

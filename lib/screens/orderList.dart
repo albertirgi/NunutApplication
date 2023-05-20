@@ -70,7 +70,8 @@ class _OrderListState extends State<OrderList> {
       });
 
       rideSchedulePageList.clear();
-      rideSchedulePageList = await rideRequestApi.getOrderList(parameter: "ride_schedule_only=${config.user.id}&status_ride=${isActiveClicked ? "active" : "inactive"}&driver&vehicle", page: _page);
+      rideSchedulePageList =
+          await rideRequestApi.getOrderList(parameter: "ride_schedule_only=${config.user.id}&status_ride=${isActiveClicked ? "active" : "inactive"}&driver&vehicle&ride_request", page: _page);
       _page++;
 
       rideScheduleList.addAll(rideSchedulePageList);
