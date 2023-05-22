@@ -26,7 +26,7 @@ class _BookingDetailState extends State<BookingDetail> {
     super.initState();
     DateTime now = DateTime.now();
     DateTime departureTime = DateTime.parse(dateFormat(widget.rideSchedule.date!) + " " + widget.rideSchedule.time!);
-    difference = departureTime.difference(now).inHours;
+    difference = departureTime.difference(now).inMinutes;
   }
 
   Widget bookingDetailContent(String headingTitle, String contentData) {
@@ -123,8 +123,14 @@ class _BookingDetailState extends State<BookingDetail> {
             bookingDetailContent("Jam Berangkat", widget.rideSchedule.time.toString()),
             bookingDetailContent("Meeting Point", widget.rideSchedule.meetingPoint!.name!),
             bookingDetailContent("Destination", widget.rideSchedule.destination!.name!),
-            widget.rideSchedule.price != widget.rideSchedule.priceAfter ? bookingDetailContent("Harga Nunut Sebelum Diskon", "IDR " + priceFormat(widget.rideSchedule.price.toString())) : Container(),
-            bookingDetailContent("Harga Akhir", "IDR " + priceFormat(widget.rideSchedule.priceAfter.toString())),
+            widget.rideSchedule.price != widget.rideSchedule.priceAfter
+                ? bookingDetailContent("Harga Nunut Sebelum Diskon", "IDR " + calculateMinimumPrice(widget.rideSchedule.price.toString(), widget.rideSchedule.rideRequest!.length))
+                : Container(),
+            bookingDetailContent(
+                "Harga Akhir",
+                "IDR " +
+                    calculateMinimumPrice(widget.rideSchedule.price.toString(), widget.rideSchedule.rideRequest!.length, discount: (widget.rideSchedule.price! - widget.rideSchedule.priceAfter!))),
+            NunutText(title: "* Harga dihitung berdasarkan jumlah penumpang saat ini", size: 14, color: Colors.red),
             SizedBox(height: 32),
             NunutButton(
               title: "Lihat QR Code",
@@ -183,11 +189,11 @@ class _BookingDetailState extends State<BookingDetail> {
                     borderRadius: 8,
                     widthBorder: 0,
                     borderColor: Colors.transparent,
-                    backgroundColor: difference > 3 ? nunutPrimaryColor3.withOpacity(0.7) : Colors.grey.withOpacity(0.7),
+                    backgroundColor: difference > 60 ? nunutPrimaryColor3.withOpacity(0.7) : Colors.grey.withOpacity(0.7),
                     onPressed: () async {
-                      if (difference < 3) {
+                      if (difference < 60) {
                         Fluttertoast.showToast(
-                          msg: "Maaf, anda tidak dapat membatalkan booking 3 jam sebelum keberangkatan",
+                          msg: "Maaf, anda tidak dapat membatalkan booking 1 jam sebelum keberangkatan",
                           toastLength: Toast.LENGTH_LONG,
                           gravity: ToastGravity.BOTTOM,
                           timeInSecForIosWeb: 1,

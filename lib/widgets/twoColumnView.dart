@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:image_stack/image_stack.dart';
+import 'package:nunut_application/functions.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutButton.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
@@ -32,6 +33,8 @@ class TwoColumnView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // double minimumPrice = (double.parse(price.replaceAll(".", "")) / 2.8) * (capacity + 2);
+    // minimumPrice = (minimumPrice / 100).ceil() * 100;
     return Container(
       height: 280,
       width: MediaQuery.of(context).size.width / 2 - 10,
@@ -118,19 +121,20 @@ class TwoColumnView extends StatelessWidget {
                   NunutText(title: name, fontWeight: FontWeight.bold, size: 14, maxLines: 1),
                   NunutText(title: destination, size: 10, maxLines: 1, overflow: TextOverflow.ellipsis),
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      NunutText(title: "IDR", size: 12),
+                      SizedBox(width: 5),
+                      NunutText(title: calculateMinimumPrice(price, capacity) + " - " + price, fontWeight: FontWeight.bold, size: 14, maxLines: 1, overflow: TextOverflow.ellipsis),
+                    ],
+                  ),
+                  SizedBox(height: 2),
+                  Row(
                     children: [
                       Icon(Icons.person, size: 14),
                       NunutText(title: totalBooked.toString() + "/" + capacity.toString(), fontWeight: FontWeight.bold, size: 12),
                       Spacer(),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.baseline,
-                        textBaseline: TextBaseline.alphabetic,
-                        children: [
-                          NunutText(title: "IDR", size: 12),
-                          SizedBox(width: 5),
-                          NunutText(title: price, fontWeight: FontWeight.bold, size: 18),
-                        ],
-                      ),
                     ],
                   ),
                 ],

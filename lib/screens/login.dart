@@ -123,6 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                         if (tmpUser.email != "") {
                           FirebaseAuth auth = FirebaseAuth.instance;
                           if (!auth.currentUser!.emailVerified) {
+                            await FirebaseAuth.instance.currentUser!.sendEmailVerification();
                             Fluttertoast.showToast(
                               msg: "Mohon cek email anda untuk verifikasi",
                               toastLength: Toast.LENGTH_SHORT,

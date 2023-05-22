@@ -3,7 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/configuration.dart';
+import 'package:nunut_application/functions.dart';
 import 'package:nunut_application/models/mrideschedule.dart';
+import 'package:nunut_application/resources/rideRequestApi.dart';
 import 'package:nunut_application/resources/rideScheduleApi.dart';
 import 'package:nunut_application/screens/payment.dart';
 import 'package:nunut_application/theme.dart';
@@ -135,7 +137,7 @@ class _RideBookDetailState extends State<RideBookDetail> {
                       child: NunutText(title: "KAPASITAS TERSISA", size: 12),
                     ),
                     Expanded(
-                      child: SizedBox(),
+                      child: NunutText(title: "HARGA", size: 12),
                       flex: 1,
                     ),
                   ],
@@ -147,7 +149,27 @@ class _RideBookDetailState extends State<RideBookDetail> {
                       child: NunutText(title: availableSeat.toString(), fontWeight: FontWeight.bold),
                     ),
                     Expanded(
+                      child: NunutText(
+                        title: "IDR " + calculateMinimumPrice(rideSchedule.price.toString(), rideSchedule.capacity!) + " - " + priceFormat(rideSchedule.price.toString()),
+                        fontWeight: FontWeight.bold,
+                      ),
+                      flex: 1,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 2),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
                       child: SizedBox(),
+                    ),
+                    Expanded(
+                      child: NunutText(
+                        title: "* Harga bervariasi mengikuti total penumpang",
+                        size: 12,
+                        color: Colors.red,
+                      ),
                       flex: 1,
                     ),
                   ],
@@ -230,7 +252,7 @@ class _RideBookDetailState extends State<RideBookDetail> {
                               borderColor: Colors.white,
                               widthBorder: 0,
                               fontWeight: FontWeight.bold,
-                              onPressed: () {
+                              onPressed: () async {
                                 Navigator.pop(context);
                                 Navigator.pop(context);
                                 Navigator.push(
@@ -470,7 +492,7 @@ class _RideBookDetailState extends State<RideBookDetail> {
                                         child: NunutText(title: "KAPASITAS TERSISA", size: 12),
                                       ),
                                       Expanded(
-                                        child: SizedBox(),
+                                        child: NunutText(title: "HARGA", size: 12),
                                         flex: 1,
                                       ),
                                     ],
@@ -490,8 +512,18 @@ class _RideBookDetailState extends State<RideBookDetail> {
                                           ),
                                         ),
                                       ),
+                                      SizedBox(width: 8),
                                       Expanded(
-                                        child: SizedBox(),
+                                        child: Shimmer.fromColors(
+                                          baseColor: Colors.grey[200]!,
+                                          highlightColor: Colors.grey[350]!,
+                                          period: Duration(milliseconds: 800),
+                                          child: Container(
+                                            height: 20,
+                                            width: Random().nextInt(60) + 100,
+                                            color: Colors.grey[200],
+                                          ),
+                                        ),
                                         flex: 1,
                                       ),
                                     ],
@@ -503,6 +535,7 @@ class _RideBookDetailState extends State<RideBookDetail> {
                             NunutButton(
                               widthButton: 200,
                               heightButton: 45,
+                              isDisabled: true,
                               borderColor: Colors.white,
                               title: "Nunut!",
                               fontWeight: FontWeight.bold,

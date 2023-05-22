@@ -212,6 +212,14 @@ class _PaymentState extends State<Payment> {
                     ),
                   ],
                 ),
+                SizedBox(height: 10),
+                NunutText(title: "* Biaya yang fluktuatif menyesuaikan jumlah penumpang, Apabila terdapat perbedaan harga, maka akan dikembalikan ke saldo Anda", size: 14, color: Colors.red),
+                SizedBox(height: 10),
+                Container(
+                  height: 1,
+                  color: Colors.grey.withOpacity(0.4),
+                  width: MediaQuery.of(context).size.width,
+                ),
                 SizedBox(height: 20),
                 Container(
                   decoration: BoxDecoration(
@@ -272,9 +280,6 @@ class _PaymentState extends State<Payment> {
                     bool result = await rideRequestApi.addRideRequest(
                         rideScheduleId: widget.rideSchedule.id.toString(), status_ride: "REGISTERED", user_id: config.user.id!, voucherId: useVoucher ? selectedPromotion!.voucherId : "");
                     if (result) {
-                      Wallet walletData = await MidtransApi.getWallet(config.user.id!);
-                      priceFormat(walletData.balance.toString());
-
                       Navigator.pushNamed(context, '/success', arguments: {
                         'title': "Pembayaran Berhasil!",
                         'description': "Pembayaran Anda Berhasil Dilakukan",

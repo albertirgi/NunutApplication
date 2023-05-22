@@ -28,7 +28,6 @@ class WalletApi {
     );
     if (response.statusCode == 200) {
       var result = json.decode(response.body.toString());
-      log(result.toString());
       return result['token'];
     } else {
       throw Exception('Failed to topup');
