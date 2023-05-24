@@ -149,7 +149,7 @@ String calculateMinimumPrice(String price, int totalPerson, {int discount = 0}) 
   double minimumPrice;
 
   if (totalPerson == 1) {
-    minimumPrice = double.parse(price) - discount;
+    minimumPrice = double.parse(price.replaceAll(".", "")) - discount;
     return priceFormat(minimumPrice.toString());
   }
   minimumPrice = ((double.parse(price.replaceAll(".", "")) / 2.8) * (totalPerson + 2)) / totalPerson;

@@ -26,6 +26,7 @@ class _RideBookDetailState extends State<RideBookDetail> {
   RideSchedule rideSchedule = RideSchedule();
   bool isBookmarking = false;
   bool rideScheduleLoading = true;
+  bool isOnePerson = false;
   @override
   void initState() {
     // TODO: implement initState
@@ -41,6 +42,8 @@ class _RideBookDetailState extends State<RideBookDetail> {
     rideSchedule = RideSchedule();
     rideSchedule = await rideScheduleApi.getRideScheduleById(id: widget.rideScheduleId, parameter: "user_view=true&ride_request&user=${config.user.id}&driver&vehicle", checkUrl: true);
     availableSeat = rideSchedule.capacity! - rideSchedule.rideRequest!.length;
+    isOnePerson = rideSchedule.capacity! == 1 ? true : false;
+    print(isOnePerson);
 
     setState(() {
       rideScheduleLoading = false;
@@ -150,7 +153,10 @@ class _RideBookDetailState extends State<RideBookDetail> {
                     ),
                     Expanded(
                       child: NunutText(
-                        title: "IDR " + calculateMinimumPrice(rideSchedule.price.toString(), rideSchedule.capacity!) + " - " + priceFormat(rideSchedule.price.toString()),
+                        title: "IDR " +
+                            (!isOnePerson
+                                ? calculateMinimumPrice(rideSchedule.price.toString(), rideSchedule.capacity!) + " - " + priceFormat(rideSchedule.price.toString())
+                                : priceFormat(rideSchedule.price.toString())),
                         fontWeight: FontWeight.bold,
                       ),
                       flex: 1,
@@ -165,11 +171,13 @@ class _RideBookDetailState extends State<RideBookDetail> {
                       child: SizedBox(),
                     ),
                     Expanded(
-                      child: NunutText(
-                        title: "* Harga bervariasi mengikuti total penumpang",
-                        size: 12,
-                        color: Colors.red,
-                      ),
+                      child: !isOnePerson
+                          ? NunutText(
+                              title: "* Harga bervariasi mengikuti total penumpang",
+                              size: 12,
+                              color: Colors.red,
+                            )
+                          : SizedBox(),
                       flex: 1,
                     ),
                   ],
