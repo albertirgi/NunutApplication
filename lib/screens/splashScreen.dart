@@ -24,18 +24,21 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     checkToken();
-    newVersion
-        ? Timer(Duration(seconds: 3), () {
-            goToMain ? Navigator.pushReplacementNamed(context, '/main') : Navigator.pushReplacementNamed(context, '/login');
-          })
-        : null;
+    checkNewVersion().then((value) => {
+          newVersion = value,
+          !newVersion
+              ? Timer(Duration(seconds: 3), () {
+                  goToMain ? Navigator.pushReplacementNamed(context, '/main') : Navigator.pushReplacementNamed(context, '/login');
+                })
+              : null
+        });
+
     super.initState();
   }
 
-  void checkToken() async {
+  Future<bool> checkNewVersion() async {
     final status = await NewVersion().getVersionStatus();
     if (status!.canUpdate) {
-      newVersion = true;
       NewVersion().showUpdateDialog(
         context: context,
         versionStatus: status,
@@ -44,8 +47,13 @@ class _SplashScreenState extends State<SplashScreen> {
         allowDismissal: false,
         updateButtonText: 'Update sekarang',
       );
-      return;
+      return true;
+    } else {
+      return false;
     }
+  }
+
+  checkToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getString("token") != null) {
       var url = Uri.parse(config.baseUrl + '/check-token/${prefs.getString("token")}');
