@@ -301,7 +301,6 @@ class _TopUpState extends State<TopUp> {
                         setState(() {
                           isLoading = false;
                         });
-                        log(res.toString());
                         if (res == null || res == "") {
                           Fluttertoast.showToast(
                               msg: "Transaksi gagal, silahkan coba lagi",
@@ -318,13 +317,14 @@ class _TopUpState extends State<TopUp> {
                           await launchUrl(uri, mode: LaunchMode.externalApplication).then((value) => Navigator.pop(context));
                         } else {
                           Fluttertoast.showToast(
-                              msg: "Transaksi gagal, silahkan coba lagi",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.green,
-                              textColor: Colors.white,
-                              fontSize: 16.0);
+                            msg: "Transaksi gagal, silahkan coba lagi",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.green,
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
                           return;
                         }
                         // Navigator.push(
@@ -350,34 +350,7 @@ class _TopUpState extends State<TopUp> {
   }
 
   topup() async {
-    // UserModel user = await AuthService.getCurrentUser();
-    // String payment_type = _isPaymentSelected!;
-    // String bank = _isPaymentSelected!;
-    // switch (_isPaymentSelected) {
-    //   case "bca":
-    //     payment_type = "bank_transfer";
-    //     bank = "bca";
-    //     break;
-    //   case "bni":
-    //     payment_type = "bank_transfer";
-    //     bank = "bni";
-    //     break;
-    //   case "bri":
-    //     payment_type = "bank_transfer";
-    //     bank = "bri";
-    //     break;
-    //   case "echannel":
-    //     payment_type = "echannel";
-    //     bank = "mandiri";
-    //     break;
-    //   case "permata":
-    //     payment_type = "permata";
-    //     bank = "permata";
-    //     break;
-    //   default:
-    // }
     String amount = topUpController.text.replaceAll(RegExp(r'[A-Za-z\. ]'), "");
-    // return await MidtransApi.Topup(int.parse(amount), user.name, "", user.email, user.phone, user.id!, payment_type, bank);
     return await WalletApi.topup(int.parse(amount));
   }
 }

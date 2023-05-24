@@ -126,7 +126,8 @@ class TwoColumnView extends StatelessWidget {
                     children: [
                       NunutText(title: "IDR", size: 12),
                       SizedBox(width: 5),
-                      NunutText(title: calculateMinimumPrice(price, capacity) + " - " + price, fontWeight: FontWeight.bold, size: 14, maxLines: 1, overflow: TextOverflow.ellipsis),
+                      NunutText(
+                          title: capacity > 1 ? calculateMinimumPrice(price, capacity) + " - " + price : price, fontWeight: FontWeight.bold, size: 14, maxLines: 1, overflow: TextOverflow.ellipsis),
                     ],
                   ),
                   SizedBox(height: 2),
