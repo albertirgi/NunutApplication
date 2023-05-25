@@ -256,7 +256,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                         password: password.text,
                                         phone: noTelp.text,
                                       );
-
                                       Fluttertoast.showToast(
                                           msg: "Akun berhasil dibuat, mohon cek email anda untuk melakukan verifikasi",
                                           toastLength: Toast.LENGTH_SHORT,

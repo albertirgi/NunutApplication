@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/functions.dart';
 import 'package:nunut_application/models/mresult.dart';
@@ -124,6 +125,35 @@ class UserService {
       config.user = newUser;
     } catch (e) {
       throw e;
+    }
+  }
+
+  Future<void> deleteUser({bool checkUrl = false}) async {
+    var url = Uri.parse(config.baseUrl + '/user/' + config.user.id.toString());
+    var response = await http.delete(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${config.user.token}',
+      },
+    );
+    if (checkUrl) print(url);
+
+    Result result;
+    result = Result.fromJson(json.decode(response.body));
+
+    if (result.status == 200) {
+      User? user = FirebaseAuth.instance.currentUser;
+      await user!
+          .delete()
+          .whenComplete(() => {
+                Fluttertoast.showToast(msg: "Akun Berhasil Dihapus"),
+              })
+          .catchError((e) => Fluttertoast.showToast(msg: e.toString()));
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      await preferences.clear();
+    } else {
+      Fluttertoast.showToast(msg: "Akun Gagal Dihapus");
     }
   }
 }
