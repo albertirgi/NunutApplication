@@ -643,7 +643,7 @@ class _RideShareState extends State<RideShare> {
                                       physics: BouncingScrollPhysics(),
                                       shrinkWrap: true,
                                       itemCount: rideScheduleList.length,
-                                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.65, crossAxisSpacing: 15, mainAxisSpacing: 15),
+                                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.6, crossAxisSpacing: 10, mainAxisSpacing: 10),
                                       itemBuilder: (context, index) {
                                         return InkWell(
                                           onTap: () {
