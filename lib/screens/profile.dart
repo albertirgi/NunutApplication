@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nunut_application/configuration.dart';
 import 'package:nunut_application/resources/authApi.dart';
+import 'package:nunut_application/resources/userApi.dart';
 import 'package:nunut_application/theme.dart';
 import 'package:nunut_application/widgets/nunutText.dart';
+import 'package:nunut_application/widgets/popUpLoading.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -46,6 +49,11 @@ class _ProfilePageState extends State<ProfilePage> {
       title: "Keluar",
       icon: "assets/icons/out.png",
       identifier: "keluar",
+    ),
+    ProfilePageMenu(
+      title: "Hapus Akun",
+      icon: "assets/icons/trash-bin.png",
+      identifier: "delete",
     ),
   ];
 
@@ -215,7 +223,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 builder: (BuildContext context) {
                                   return AlertDialog(
                                     title: NunutText(title: "Keluar", fontWeight: FontWeight.bold, size: 18),
-                                    content: NunutText(title: "Apakah anda yakin ingin keluar?", color: Colors.black),
+                                    content: NunutText(title: "Apakah anda yakin ingin keluar ?", color: Colors.black),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
@@ -252,6 +260,41 @@ class _ProfilePageState extends State<ProfilePage> {
                                 'ride_request_id': "",
                                 'title': 'Pengaduan Kendala',
                               });
+                            } else if (profilePageMenu[index].identifier == "delete") {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: NunutText(title: "Hapus Akun", fontWeight: FontWeight.bold, size: 18),
+                                    content: NunutText(title: "Apakah anda yakin ingin menghapus akun anda ?", color: Colors.black),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        child: NunutText(title: "Tidak", color: Colors.red),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                      TextButton(
+                                        child: NunutText(title: "Ya", color: Colors.green),
+                                        onPressed: () async {
+                                          showDialog(
+                                            context: context,
+                                            barrierDismissible: false,
+                                            builder: (BuildContext context) {
+                                              return PopUpLoading(title: "Sedang Memproses...", subtitle: "Harap Menunggu...");
+                                            },
+                                          );
+                                          await UserService().deleteUser();
+                                          Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
                             }
                           },
                           child: Row(
