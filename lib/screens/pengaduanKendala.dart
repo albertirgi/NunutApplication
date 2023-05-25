@@ -131,7 +131,7 @@ class _PengaduanKendalaPageState extends State<PengaduanKendalaPage> {
                               Navigator.pushNamed(context, '/success', arguments: {
                                 'title': "Pengaduan Kendala Berhasil Terkirim!",
                                 'description': "Mohon menunggu balasan dari Nunut pada email anda!",
-                                'isSuccess': true,
+                                'isSuccess': "true",
                               });
                               setState(() {
                                 titleController.text = "";
