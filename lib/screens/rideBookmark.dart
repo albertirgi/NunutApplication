@@ -100,7 +100,12 @@ class _RideBookmarkState extends State<RideBookmark> {
                             shrinkWrap: true,
                             physics: AlwaysScrollableScrollPhysics(),
                             itemCount: bookmarkedList.length,
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.7, crossAxisSpacing: 15, mainAxisSpacing: 15),
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: 0.6,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                            ),
                             itemBuilder: (context, index) {
                               return InkWell(
                                 onTap: () {

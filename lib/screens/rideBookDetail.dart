@@ -43,7 +43,6 @@ class _RideBookDetailState extends State<RideBookDetail> {
     rideSchedule = await rideScheduleApi.getRideScheduleById(id: widget.rideScheduleId, parameter: "user_view=true&ride_request&user=${config.user.id}&driver&vehicle", checkUrl: true);
     availableSeat = rideSchedule.capacity! - rideSchedule.rideRequest!.length;
     isOnePerson = rideSchedule.capacity! == 1 ? true : false;
-    print(isOnePerson);
 
     setState(() {
       rideScheduleLoading = false;
