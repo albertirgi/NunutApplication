@@ -277,11 +277,13 @@ class _NunutPayState extends State<NunutPay> {
                                                           crossAxisAlignment: CrossAxisAlignment.end,
                                                           children: [
                                                             NunutText(
-                                                              title: transactions[index].type == "topup" || (transactions[index].type == "WALLET" && transactions[index].method == "REFUND")
+                                                              title: transactions[index].type == "topup" ||
+                                                                      (transactions[index].type == "WALLET" && transactions[index].method == "REFUND" || transactions[index].method == "NUNUTRIDE")
                                                                   ? "+ " + priceFormat(transactions[index].amount.toString())
                                                                   : "- " + priceFormat(transactions[index].amount.toString()),
                                                               fontWeight: FontWeight.bold,
-                                                              color: transactions[index].type == "topup" || (transactions[index].type == "WALLET" && transactions[index].method == "REFUND")
+                                                              color: transactions[index].type == "topup" ||
+                                                                      (transactions[index].type == "WALLET" && transactions[index].method == "REFUND" || transactions[index].method == "NUNUTRIDE")
                                                                   ? Colors.green
                                                                   : Colors.red,
                                                             ),
