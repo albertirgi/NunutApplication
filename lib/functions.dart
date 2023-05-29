@@ -68,7 +68,7 @@ startCalculate(double startLat, double startLong, double endLat, double endLong)
     config.googleAPiKey,
     PointLatLng(startLocation.latitude, startLocation.longitude),
     PointLatLng(endLocation.latitude, endLocation.longitude),
-    travelMode: TravelMode.driving,
+    travelMode: TravelMode.walking,
   );
 
   if (result.points.isNotEmpty) {
