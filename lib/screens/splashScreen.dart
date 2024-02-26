@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<bool> checkNewVersion() async {
     final status = await NewVersion().getVersionStatus();
-    if (status!.canUpdate) {
+    if (status != null && status.canUpdate) {
       NewVersion().showUpdateDialog(
         context: context,
         versionStatus: status,
