@@ -92,6 +92,29 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                 ),
+                SizedBox(height: 5),
+                InkWell(
+                  child: NunutText(
+                    title: "Lupa Password?",
+                    size: 14,
+                    color: greyFontColor,
+                    fontWeight: FontWeight.w800,
+                  ),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/lupaPassword');
+                  },
+                ),
+                InkWell(
+                  child: NunutText(
+                    title: "Tes OTP",
+                    size: 14,
+                    color: greyFontColor,
+                    fontWeight: FontWeight.w800,
+                  ),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/otp');
+                  },
+                ),
                 SizedBox(height: 24),
                 NunutButton(
                   title: "Masuk",
@@ -160,7 +183,6 @@ class _LoginPageState extends State<LoginPage> {
                     title: "Daftar Sekarang",
                     size: 14,
                     color: greyFontColor,
-                    textDecoration: TextDecoration.underline,
                     fontWeight: FontWeight.w800,
                   ),
                   onTap: () {

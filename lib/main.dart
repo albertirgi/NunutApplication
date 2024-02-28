@@ -40,6 +40,8 @@ import 'package:nunut_application/screens/withdrawConfirmation.dart';
 import 'package:nunut_application/screens/addVehicle.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:month_year_picker/month_year_picker.dart';
+import 'package:nunut_application/screens/lupaPassword.dart';
+import 'package:nunut_application/screens/otp.dart';
 
 import 'firebase_options.dart';
 
@@ -118,6 +120,8 @@ class MyApp extends StatelessWidget {
               },
             ),
         '/termsandcons': (context) => TermAndConsPage(),
+        '/lupaPassword': (context) => LupaPasswordPage(),
+        '/otp' : (context) => OTPPage(),
       },
     );
   }
